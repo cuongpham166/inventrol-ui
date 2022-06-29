@@ -5,7 +5,7 @@ import { PlusOutlined } from '@ant-design/icons';
 
 const { Title } = Typography;
 
-const Toolbar = (props) => {
+const Topbar = (props) => {
     const title = props.toolbarData.title;
     const subtitle = props.toolbarData.subtitle;
     return (
@@ -31,4 +31,4 @@ const Toolbar = (props) => {
     );
 };
 
-export default Toolbar;
+export default Topbar;

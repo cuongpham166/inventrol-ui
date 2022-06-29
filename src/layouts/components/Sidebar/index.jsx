@@ -32,7 +32,6 @@ const Sidebar = (props) => {
             onCollapse={(value) => setCollapsed(value)}
             style={{
                 overflow: 'auto',
-                height: '100vh',
             }}
         >
             <Menu theme="light" defaultSelectedKeys={['dashboard']} mode="inline" items={items} />
