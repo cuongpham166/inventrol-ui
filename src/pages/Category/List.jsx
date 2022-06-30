@@ -1,7 +1,7 @@
 import React from 'react';
 
-const CategoryPage = (props) => {
+const CategoryList = (props) => {
     return <div>CategoryPage</div>;
 };
 
-export default CategoryPage;
+export default CategoryList;

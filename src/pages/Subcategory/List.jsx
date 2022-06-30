@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
-import Topbar from '../components/Topbar';
-import Toolbar from '../components/Toolbar';
+import Topbar from '../../components/Topbar';
+import Toolbar from '../../components/Toolbar';
 import { Table } from 'antd';
 
-import * as subcategoryService from '../api/services/Subcategory';
+import * as subcategoryService from '../../api/services/Subcategory';
 
-const SubcategoryPage = (props) => {
+const SubcategoryList = (props) => {
     const [dataSource, setDataSource] = useState([]);
 
     useEffect(() => {
@@ -46,10 +46,15 @@ const SubcategoryPage = (props) => {
         },
     ];
 
-    const toolbarData = {
+    const topbarData = {
         title: 'List of Subcategories',
         subtitle: 'Product Managment',
         buttonText: 'Create Subcategory',
+        searchbarPlaceholder: 'Search a Subcategory',
+    };
+
+    const toolbarData = {
+        searchPlaceholder: 'Search a Subcategory',
     };
 
     const getAllData = async () => {
@@ -59,9 +64,9 @@ const SubcategoryPage = (props) => {
 
     return (
         <div style={{ padding: '50px' }}>
-            <Topbar toolbarData={toolbarData} />
+            <Topbar topbarData={topbarData} />
             <div style={{ padding: '35px', backgroundColor: 'whitesmoke' }}>
-                <Toolbar />
+                <Toolbar toolbarData={toolbarData} />
                 <Table
                     columns={columns}
                     dataSource={dataSource}
@@ -77,4 +82,4 @@ const SubcategoryPage = (props) => {
     );
 };
 
-export default SubcategoryPage;
+export default SubcategoryList;
