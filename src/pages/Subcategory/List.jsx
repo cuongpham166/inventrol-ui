@@ -1,57 +1,19 @@
 import React, { useState, useEffect } from 'react';
 
-import Topbar from '../../components/Topbar';
-import Toolbar from '../../components/Toolbar';
 import { Table } from 'antd';
 
+import Topbar from '../../components/Topbar';
+import Toolbar from '../../components/Toolbar';
 import * as subcategoryService from '../../api/services/Subcategory';
-
-const columns = [
-    {
-        title: 'ID',
-        dataIndex: 'id',
-        key: 'id',
-    },
-    {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-    },
-    {
-        title: 'Notice',
-        dataIndex: 'notice',
-        key: 'notice',
-    },
-    {
-        title: 'Updated Date',
-        dataIndex: 'updatedDate',
-        key: 'updatedDate',
-    },
-    {
-        title: 'Updated Time',
-        dataIndex: 'updatedTime',
-        key: 'updatedTime',
-    },
-    {
-        title: 'isDeleted',
-        dataIndex: 'isDeleted',
-        key: 'isDeleted',
-    },
-];
-
-const topbarData = {
-    title: 'List of Subcategories',
-    subtitle: 'Product Managment',
-    buttonText: 'Create Subcategory',
-    searchbarPlaceholder: 'Search a Subcategory',
-};
-
-const toolbarData = {
-    searchPlaceholder: 'Search a Subcategory',
-};
+import * as componentProps from '../Subcategory/props';
+import ActionMenu from '../../components/ActionMenu';
 
 const SubcategoryList = (props) => {
     const [dataSource, setDataSource] = useState([]);
+
+    const tableColumns = componentProps.tableColumns;
+    const topbarProps = componentProps.topbar;
+    const toolbarProps = componentProps.toolbar;
 
     useEffect(() => {
         getAllData();
@@ -70,17 +32,21 @@ const SubcategoryList = (props) => {
 
     return (
         <div style={{ padding: '50px' }}>
-            <Topbar topbarData={topbarData} />
+            <Topbar topbar={topbarProps} />
             <div style={{ padding: '35px', backgroundColor: 'whitesmoke' }}>
-                <Toolbar toolbarData={toolbarData} getSearchValue={getSearchValue} />
+                <Toolbar toolbar={toolbarProps} getSearchValue={getSearchValue} />
                 <Table
-                    columns={columns}
+                    columns={tableColumns}
                     dataSource={dataSource}
                     rowKey="id"
                     pagination={{
                         defaultPageSize: 5,
                         showSizeChanger: true,
                         pageSizeOptions: ['5', '10', '20', '30'],
+                        total: dataSource.totalElements,
+                        showTotal: (total, range) => {
+                            return `${range[0]}-${range[1]} of ${total} items`;
+                        },
                     }}
                 />
             </div>

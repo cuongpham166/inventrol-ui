@@ -3,7 +3,7 @@ import { Row, Col, Input } from 'antd';
 
 const { Search } = Input;
 const Toolbar = (props) => {
-    const searchPlaceholder = props.toolbarData.searchPlaceholder;
+    const searchPlaceholder = props.toolbar.searchPlaceholder;
     const onSearch = (value) => {
         props.getSearchValue(value);
     };

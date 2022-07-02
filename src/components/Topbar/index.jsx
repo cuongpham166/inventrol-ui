@@ -6,8 +6,10 @@ import { PlusOutlined } from '@ant-design/icons';
 const { Title } = Typography;
 
 const Topbar = (props) => {
-    const title = props.topbarData.title;
-    const subtitle = props.topbarData.subtitle;
+    const title = props.topbar.title;
+    const subtitle = props.topbar.subtitle;
+    const buttonText = props.topbar.buttonText;
+
     return (
         <Row justify="space-between">
             <Col span={8}>
@@ -18,13 +20,13 @@ const Topbar = (props) => {
                 )}
                 {subtitle && (
                     <Title level={5} style={{ marginTop: '0px', fontWeight: '300' }}>
-                        {props.topbarData.subtitle}
+                        {subtitle}
                     </Title>
                 )}
             </Col>
             <Col span={12}>
                 <Button type="primary" icon={<PlusOutlined />} style={{ float: 'right' }}>
-                    {props.topbarData.buttonText}
+                    {buttonText}
                 </Button>
             </Col>
         </Row>
