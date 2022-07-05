@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import ActionMenu from '../../components/ActionMenu';
 export const tableColumns = [
     {
         title: 'ID',
@@ -26,11 +25,6 @@ export const tableColumns = [
         title: 'Notice',
         dataIndex: 'notice',
         key: 'notice',
-    },
-    {
-        title: 'Action',
-        key: 'action',
-        render: () => <ActionMenu />,
     },
 ];
 
