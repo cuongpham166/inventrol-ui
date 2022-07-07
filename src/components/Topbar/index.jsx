@@ -8,7 +8,6 @@ const { Title } = Typography;
 const Topbar = (props) => {
     const title = props.topbar.title;
     const subtitle = props.topbar.subtitle;
-    const buttonText = props.topbar.buttonText;
 
     return (
         <Row justify="space-between">
@@ -24,11 +23,7 @@ const Topbar = (props) => {
                     </Title>
                 )}
             </Col>
-            <Col span={12}>
-                <Button type="primary" icon={<PlusOutlined />} style={{ float: 'right' }}>
-                    {buttonText}
-                </Button>
-            </Col>
+            <Col span={12}></Col>
         </Row>
     );
 };

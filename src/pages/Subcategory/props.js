@@ -29,10 +29,8 @@ export const tableColumns = [
 ];
 
 export const topbar = {
-    title: 'List of Subcategories',
-    subtitle: 'Product Managment',
-    buttonText: 'Create Subcategory',
-    searchbarPlaceholder: 'Search a Subcategory',
+    list: { title: 'List of Subcategories', subtitle: 'Product Managment' },
+    new: { title: 'Create new Subcategory', subtitle: 'Product Managment' },
 };
 
 export const toolbar = {

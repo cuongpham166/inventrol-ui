@@ -1,9 +1,12 @@
 import React from 'react';
-import { Row, Col, Input } from 'antd';
+import { Link } from 'react-router-dom';
+import { Row, Col, Input, Button } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 
 const { Search } = Input;
 const Toolbar = (props) => {
     const searchPlaceholder = props.toolbar.searchPlaceholder;
+
     const onSearch = (value) => {
         props.getSearchValue(value);
     };
@@ -14,7 +17,13 @@ const Toolbar = (props) => {
                     <Search placeholder={searchPlaceholder} onSearch={onSearch} enterButton />
                 </Col>
                 <Col span={12}>
-                    <Row></Row>
+                    <Row style={{ float: 'right' }}>
+                        <Link to={'/subcategory/add'}>
+                            <Button type="primary" icon={<PlusOutlined />}>
+                                Add New
+                            </Button>
+                        </Link>
+                    </Row>
                 </Col>
             </Row>
         </div>

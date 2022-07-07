@@ -15,7 +15,7 @@ const SubcategoryList = (props) => {
         dataSource: dataSource,
     });
 
-    const topbarProps = componentProps.topbar;
+    const topbarProps = componentProps.topbar.list;
     const toolbarProps = componentProps.toolbar;
 
     useEffect(() => {
