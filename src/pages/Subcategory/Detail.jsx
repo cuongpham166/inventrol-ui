@@ -1,8 +1,20 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+
+import * as subcategoryService from '../../api/services/Subcategory';
 
 const SubcategoryDetail = (props) => {
     const { id } = useParams();
+
+    const dataId = parseInt(id);
+    const getResultById = async (dataId) => {
+        const result = await subcategoryService.getById(dataId);
+        console.log(result);
+    };
+
+    useEffect(() => {
+        getResultById(dataId);
+    }, []);
     return <div>SubcategoryDetail - ID:{id}</div>;
 };
 

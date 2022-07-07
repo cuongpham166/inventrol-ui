@@ -41,3 +41,10 @@ export const form = {
         },
     },
 };
+
+export const message = {
+    top: 50,
+    duration: 3,
+    maxCount: 3,
+    rtl: true,
+};

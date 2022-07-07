@@ -1,27 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { Button, Form, Input, Space, Row, Col, Select, message } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
-import Topbar from '../../components/Topbar';
-import * as componentProps from '../Subcategory/props';
-import * as layoutConfig from '../../utils/config/layout';
+import * as subcategoryService from '../../api/services/Subcategory';
 import * as categoryService from '../../api/services/Category';
+import * as layoutConfig from '../../utils/config/layout';
 
 const { Option } = Select;
 
-const NewSubcategory = (props) => {
+const EditSubcategory = (props) => {
+    const [form] = Form.useForm();
     const { id } = useParams();
     console.log(id);
-    const [form] = Form.useForm();
-    const [categoryDataSource, setCategpryDataSource] = useState([]);
     const navigate = useNavigate();
+    const [categoryDataSource, setCategpryDataSource] = useState([]);
+    const [formValues, setFormValues] = useState({});
 
-    const topbarProps = componentProps.topbar.new;
     const formLayout = layoutConfig.form;
-    const validateMessages = formLayout.validateMessages;
 
-    message.config(layoutConfig.message);
+    const dataId = parseInt(id);
+
+    const getResultById = async (dataId) => {
+        const result = await subcategoryService.getById(dataId);
+        await setFormValues(result);
+    };
+
+    const getAllCategories = async () => {
+        const result = await categoryService.getAll();
+        setCategpryDataSource(result);
+    };
 
     const onFinish = (values) => {
         form.resetFields();
@@ -43,26 +51,25 @@ const NewSubcategory = (props) => {
     };
 
     useEffect(() => {
+        getResultById(dataId);
         getAllCategories();
     }, []);
 
-    const getAllCategories = async () => {
-        const result = await categoryService.getAll();
-        setCategpryDataSource(result);
-    };
+    useEffect(() => {
+        form.setFieldsValue(formValues);
+    }, [form, formValues]);
 
+    console.log(formValues);
     return (
         <div style={{ padding: '50px' }}>
-            <Topbar topbar={topbarProps} />
             <Row style={{ padding: '35px', backgroundColor: 'whitesmoke' }} justify="center">
                 <Col span={15}>
                     <Form
                         {...formLayout.mainLayout}
                         form={form}
                         name="control-hooks"
+                        initialValues={{ formValues }}
                         onFinish={onFinish}
-                        validateMessages={validateMessages}
-                        initialValues={{}}
                     >
                         <Form.Item
                             label="Name"
@@ -78,7 +85,7 @@ const NewSubcategory = (props) => {
                         </Form.Item>
 
                         <Form.Item
-                            name="category"
+                            name="categoryId"
                             label="Category"
                             hasFeedback
                             rules={[
@@ -94,10 +101,6 @@ const NewSubcategory = (props) => {
                                     </Option>
                                 ))}
                             </Select>
-                        </Form.Item>
-
-                        <Form.Item label="Notice" name="notice">
-                            <Input.TextArea allowClear showCount />
                         </Form.Item>
 
                         <Form.Item {...formLayout.tailLayout}>
@@ -126,4 +129,4 @@ const NewSubcategory = (props) => {
     );
 };
 
-export default NewSubcategory;
+export default EditSubcategory;

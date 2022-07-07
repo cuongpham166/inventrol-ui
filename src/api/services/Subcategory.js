@@ -8,6 +8,15 @@ export const getAll = async () => {
     }
 };
 
+export const getById = async (id) => {
+    try {
+        const res = await httpRequest.get('subcategory/' + id);
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 export const search = async (query) => {
     try {
         const res = await httpRequest.get('subcategory', { params: { q: query } });

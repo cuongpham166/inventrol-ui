@@ -13,6 +13,7 @@ const SubcategoryList = (props) => {
     const { DataTable, selectedRow, currentPage, pageSize, resetPagination } = useDataTable({
         columns: componentProps.tableColumns,
         dataSource: dataSource,
+        updateEntity: 'subcategory',
     });
 
     const topbarProps = componentProps.topbar.list;

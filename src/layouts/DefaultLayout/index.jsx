@@ -3,6 +3,7 @@ import { Layout } from 'antd';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Sidebar from '../components/Sidebar';
+
 const { Content } = Layout;
 const DefaultLayout = ({ children }) => {
     return (

@@ -5,12 +5,12 @@ import useActionMenu from './useActionMenu';
 const DEFAULT_PAGE_SIZE = 10;
 const DEFAULT_PAGE_NUMBER = 0;
 
-const useDataTable = ({ columns, dataSource }) => {
+const useDataTable = ({ columns, dataSource, updateEntity }) => {
     const [selectedRow, setSelectedRow] = useState(null);
     const [currentPage, setCurrentPage] = useState(DEFAULT_PAGE_NUMBER);
     const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
 
-    const [actionMenuView] = useActionMenu(selectedRow);
+    const [actionMenuView] = useActionMenu({ selectedRow, updateEntity });
 
     const updatedColumns = [
         ...columns,

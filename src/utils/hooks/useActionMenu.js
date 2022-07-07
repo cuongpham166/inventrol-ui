@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Dropdown, Menu } from 'antd';
 import { MoreOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
-
-const useActionMenu = (selectedRow) => {
+import { useNavigate } from 'react-router-dom';
+const useActionMenu = ({ selectedRow, updateEntity }) => {
+    const navigate = useNavigate();
     const actionMenuItems = [
         {
             key: 'edit',
@@ -17,8 +18,17 @@ const useActionMenu = (selectedRow) => {
     ];
 
     const handleMenuClick = (action) => {
-        console.log('handleMenuClick');
-        console.log(selectedRow);
+        switch (action.key) {
+            case 'edit':
+                navigate('/' + updateEntity + '/' + selectedRow.id + '/edit');
+                break;
+            case 'delete':
+                console.log('delete');
+                break;
+            default:
+                console.log('default');
+                break;
+        }
     };
 
     const actionMenu = <Menu onClick={handleMenuClick} items={actionMenuItems} />;

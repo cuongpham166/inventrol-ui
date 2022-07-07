@@ -1,6 +1,5 @@
 import React from 'react';
-
-import { Row, Col, Typography, Button } from 'antd';
+import { Row, Col, Typography } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
 const { Title } = Typography;
@@ -11,7 +10,7 @@ const Topbar = (props) => {
 
     return (
         <Row justify="space-between">
-            <Col span={8}>
+            <Col>
                 {title && (
                     <Title level={3} strong style={{ marginBottom: '0px' }}>
                         {title}
@@ -23,7 +22,6 @@ const Topbar = (props) => {
                     </Title>
                 )}
             </Col>
-            <Col span={12}></Col>
         </Row>
     );
 };
