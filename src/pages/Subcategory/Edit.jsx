@@ -12,7 +12,6 @@ const { Option } = Select;
 const EditSubcategory = (props) => {
     const [form] = Form.useForm();
     const { id } = useParams();
-    console.log(id);
     const navigate = useNavigate();
     const [categoryDataSource, setCategpryDataSource] = useState([]);
     const [formValues, setFormValues] = useState({});
@@ -31,11 +30,11 @@ const EditSubcategory = (props) => {
         setCategpryDataSource(result);
     };
 
-    const onFinish = (values) => {
-        form.resetFields();
+    const onFinish = (value) => {
+        //form.resetFields();
 
-        message.success('Sucess: New Subcategory has been created');
-        console.log('Success:', values);
+        message.success('Sucess: Existing Subcategory has been updated');
+        console.log('Success:', value);
     };
 
     const onReset = () => {
@@ -56,10 +55,22 @@ const EditSubcategory = (props) => {
     }, []);
 
     useEffect(() => {
-        form.setFieldsValue(formValues);
+        const { name, categoryId } = formValues;
+        let foundCategory = categoryDataSource.find((result) => result.id === categoryId);
+        let updatedCategoryData = categoryDataSource.filter((category) => category.id !== categoryId);
+        setCategpryDataSource(updatedCategoryData);
+
+        if (foundCategory) {
+            let categoryValue = foundCategory.name;
+            form.setFieldsValue({ name: name, categoryId: categoryValue });
+        }
     }, [form, formValues]);
 
-    console.log(formValues);
+    const handleSelectChange = (value) => {
+        //console.log('handleSelectChange');
+        //console.log(value);
+    };
+
     return (
         <div style={{ padding: '50px' }}>
             <Row style={{ padding: '35px', backgroundColor: 'whitesmoke' }} justify="center">
@@ -94,7 +105,7 @@ const EditSubcategory = (props) => {
                                 },
                             ]}
                         >
-                            <Select placeholder="Please select a category">
+                            <Select placeholder="Please select a category" onChange={handleSelectChange}>
                                 {categoryDataSource.map((option) => (
                                     <Option key={option.id} value={'' + option.id}>
                                         {option.name}
