@@ -12,9 +12,9 @@ const DefaultLayout = ({ children }) => {
                 minHeight: '100vh',
             }}
         >
-            <Header />
+            <Sidebar />
             <Layout>
-                <Sidebar />
+                <Header />
                 <Layout>
                     <Content>{children}</Content>
                     <Footer />

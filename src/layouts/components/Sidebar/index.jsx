@@ -45,9 +45,14 @@ const Sidebar = (props) => {
         setSelectedKey(selectedKeyValue);
     }, [location]);
 
+    const logoStyle = {
+        height: '32px',
+        margin: '16px',
+        background: 'rgba(255, 255, 255, 0.3)',
+    };
     return (
         <Sider
-            theme="light"
+            theme="dark"
             collapsible
             collapsed={collapsed}
             onCollapse={(value) => setCollapsed(value)}
@@ -55,7 +60,8 @@ const Sidebar = (props) => {
                 overflow: 'auto',
             }}
         >
-            <Menu theme="light" selectedKeys={[selectedKey]} mode="inline" items={items} onClick={onClickMenu} />
+            <div className="logo" style={logoStyle} />
+            <Menu theme="dark" selectedKeys={[selectedKey]} mode="inline" items={items} onClick={onClickMenu} />
         </Sider>
     );
 };

@@ -1,25 +1,47 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Breadcrumb } from 'antd';
-
-const routes = [
-    {
-        path: 'index',
-        breadcrumbName: 'home',
-        children: [
-            {
-                path: '/subcategory',
-                breadcrumbName: 'Subcategory',
-            },
-        ],
-    },
-];
-const itemRender = (route, params, routes, paths) => {
-    const last = routes.indexOf(route) === routes.length - 1;
-    return last ? <span>{route.breadcrumbName}</span> : <Link to={paths.join('/')}>{route.breadcrumbName}</Link>;
+import { Link, useLocation } from 'react-router-dom';
+import { Breadcrumb as AntBreadcrumb } from 'antd';
+import { HomeOutlined } from '@ant-design/icons';
+import { Space } from 'antd';
+const Breadcrumb = () => {
+    const location = useLocation();
+    const { pathname } = location;
+    const pathnames = pathname.split('/').filter((item) => item);
+    const capatilize = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+    return (
+        <div>
+            <AntBreadcrumb>
+                {pathnames.length > 0 ? (
+                    <AntBreadcrumb.Item>
+                        <Link to="/">
+                            <Space>
+                                <HomeOutlined />
+                                Home
+                            </Space>
+                        </Link>
+                    </AntBreadcrumb.Item>
+                ) : (
+                    <AntBreadcrumb.Item>
+                        <Space>
+                            <HomeOutlined />
+                            Home
+                        </Space>
+                    </AntBreadcrumb.Item>
+                )}
+                {pathnames.map((name, index) => {
+                    const routeTo = `/${pathnames.slice(0, index + 1).join('/')}`;
+                    const isLast = index === pathnames.length - 1;
+                    return isLast ? (
+                        <AntBreadcrumb.Item key={index}>{capatilize(name)}</AntBreadcrumb.Item>
+                    ) : (
+                        <AntBreadcrumb.Item key={index}>
+                            <Link to={`${routeTo}`}>{capatilize(name)}</Link>
+                        </AntBreadcrumb.Item>
+                    );
+                })}
+            </AntBreadcrumb>
+        </div>
+    );
 };
-const Name = (props) => {
-    return <Breadcrumb itemRender={itemRender} routes={routes} />;
-};
 
-export default Name;
+export default Breadcrumb;
