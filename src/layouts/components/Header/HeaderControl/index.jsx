@@ -10,20 +10,29 @@ const HeaderControl = (props) => {
         console.log(`selected ${value}`);
     };
 
+    const selectBefore = (
+        <Select
+            defaultValue="subcategory"
+            style={{
+                width: 120,
+            }}
+            onChange={handleChange}
+        >
+            <Option value="subcategory">Subcategory</Option>
+            <Option value="category">Category</Option>
+        </Select>
+    );
+
     return (
         <span style={{ float: 'right' }}>
             <Space size={'large'}>
-                <Search placeholder="input search text" style={{ display: 'block' }} onSearch={onSearch} enterButton />
-                <Select
-                    defaultValue="subcategory"
-                    style={{
-                        width: 120,
-                    }}
-                    onChange={handleChange}
-                >
-                    <Option value="subcategory">Subcategory</Option>
-                    <Option value="category">Category</Option>
-                </Select>
+                <Search
+                    placeholder="input search text"
+                    addonBefore={selectBefore}
+                    style={{ display: 'block' }}
+                    onSearch={onSearch}
+                    enterButton
+                />
 
                 <Tooltip title="Support">
                     <Button shape="circle" icon={<CustomerServiceOutlined />}></Button>
