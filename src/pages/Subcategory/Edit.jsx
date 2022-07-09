@@ -3,9 +3,8 @@ import { useParams } from 'react-router-dom';
 import { Button, Form, Input, Space, Row, Col, Select, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
-import * as subcategoryService from '../../api/services/Subcategory';
-import * as categoryService from '../../api/services/Category';
 import * as layoutConfig from '../../utils/config/layout';
+import * as service from '../../api/services';
 
 const { Option } = Select;
 
@@ -21,13 +20,12 @@ const EditSubcategory = (props) => {
     const dataId = parseInt(id);
 
     const getResultById = async (dataId) => {
-        const result = await subcategoryService.getById(dataId);
+        const result = await service.getById('subcategory', dataId);
         await setFormValues(result);
-        console.log('3');
     };
 
     const getAllCategories = async () => {
-        const result = await categoryService.getAll();
+        const result = await service.getAll('category');
         setCategpryDataSource(result);
     };
 
@@ -50,22 +48,20 @@ const EditSubcategory = (props) => {
     };
 
     useEffect(() => {
-        console.log('1');
         getResultById(dataId);
         getAllCategories();
     }, []);
 
     useEffect(() => {
-        console.log('2');
-
         const { name, categoryId } = formValues;
+        form.setFieldsValue({ name: name });
+
         let foundCategory = categoryDataSource.find((result) => result.id === categoryId);
         let updatedCategoryData = categoryDataSource.filter((category) => category.id !== categoryId);
         setCategpryDataSource(updatedCategoryData);
-
-        if (foundCategory) {
+        if (foundCategory !== undefined) {
             let categoryValue = foundCategory.name;
-            form.setFieldsValue({ name: name, categoryId: categoryValue });
+            form.setFieldsValue({ categoryId: categoryValue });
         }
     }, [form, formValues]);
 

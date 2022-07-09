@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Table } from 'antd';
 import useActionMenu from './useActionMenu';
+import useToolbar from './useToolbar';
+
 import * as service from '../../api/services';
 const DEFAULT_PAGE_SIZE = 10;
 const DEFAULT_PAGE_NUMBER = 0;
@@ -11,8 +13,8 @@ const useDataTable = ({ columns, table }) => {
     const [currentPage, setCurrentPage] = useState(DEFAULT_PAGE_NUMBER);
     const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
 
-    //const [actionMenuView] = useActionMenu({ selectedRow, table });
     const { deleteClick, actionMenuView } = useActionMenu({ selectedRow, table });
+    const { searchValue, Toolbar } = useToolbar({ table });
 
     const updatedColumns = [
         ...columns,
@@ -35,8 +37,17 @@ const useDataTable = ({ columns, table }) => {
         }
     }, [deleteClick]);
 
+    useEffect(() => {
+        getSearchData(searchValue);
+    }, [searchValue]);
+
     const getAllData = async () => {
         const result = await service.getAll(table);
+        setDataSource(result);
+    };
+
+    const getSearchData = async (searchInput) => {
+        const result = await service.search(table, searchInput);
         setDataSource(result);
     };
 
@@ -74,6 +85,7 @@ const useDataTable = ({ columns, table }) => {
 
     return {
         DataTable,
+        Toolbar,
         selectedRow,
         currentPage,
         pageSize,

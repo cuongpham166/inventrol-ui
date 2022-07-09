@@ -16,3 +16,12 @@ export const getById = async (table, id) => {
         console.log(error);
     }
 };
+
+export const search = async (table, query) => {
+    try {
+        const res = await httpRequest.get(table, { params: { q: query } });
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+};

@@ -33,10 +33,6 @@ export const topbar = {
     new: { title: 'Create new Subcategory', subtitle: 'Product Managment' },
 };
 
-export const toolbar = {
-    searchPlaceholder: 'Search a Subcategory',
-};
-
 export const formComponents = [
     {
         component: 'input',

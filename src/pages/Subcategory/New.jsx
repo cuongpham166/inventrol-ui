@@ -6,7 +6,7 @@ import { Button, Form, Input, Space, Row, Col, Select, message } from 'antd';
 import Topbar from '../../components/Topbar';
 import * as componentProps from '../Subcategory/props';
 import * as layoutConfig from '../../utils/config/layout';
-import * as categoryService from '../../api/services/Category';
+import * as service from '../../api/services';
 
 const { Option } = Select;
 
@@ -47,7 +47,7 @@ const NewSubcategory = (props) => {
     }, []);
 
     const getAllCategories = async () => {
-        const result = await categoryService.getAll();
+        const result = await service.getAll('category');
         setCategpryDataSource(result);
     };
 
