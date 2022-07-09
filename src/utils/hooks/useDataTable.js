@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table } from 'antd';
 import useActionMenu from './useActionMenu';
-
+import * as service from '../../api/services';
 const DEFAULT_PAGE_SIZE = 10;
 const DEFAULT_PAGE_NUMBER = 0;
 
-const useDataTable = ({ columns, dataSource, updateEntity }) => {
+const useDataTable = ({ columns, table }) => {
+    const [dataSource, setDataSource] = useState([]);
     const [selectedRow, setSelectedRow] = useState(null);
     const [currentPage, setCurrentPage] = useState(DEFAULT_PAGE_NUMBER);
     const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
 
-    const [actionMenuView] = useActionMenu({ selectedRow, updateEntity });
+    //const [actionMenuView] = useActionMenu({ selectedRow, table });
+    const { deleteClick, actionMenuView } = useActionMenu({ selectedRow, table });
 
     const updatedColumns = [
         ...columns,
@@ -20,6 +22,23 @@ const useDataTable = ({ columns, dataSource, updateEntity }) => {
             render: () => actionMenuView,
         },
     ];
+
+    useEffect(() => {
+        getAllData();
+    }, []);
+
+    useEffect(() => {
+        if (selectedRow !== null) {
+            const deletedElementId = selectedRow.id;
+            const updatedSource = dataSource.filter((result) => result.id !== deletedElementId);
+            setDataSource(updatedSource);
+        }
+    }, [deleteClick]);
+
+    const getAllData = async () => {
+        const result = await service.getAll(table);
+        setDataSource(result);
+    };
 
     const resetPagination = () => {
         setCurrentPage(DEFAULT_PAGE_NUMBER);

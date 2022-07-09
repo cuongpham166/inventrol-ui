@@ -23,6 +23,7 @@ const EditSubcategory = (props) => {
     const getResultById = async (dataId) => {
         const result = await subcategoryService.getById(dataId);
         await setFormValues(result);
+        console.log('3');
     };
 
     const getAllCategories = async () => {
@@ -32,7 +33,6 @@ const EditSubcategory = (props) => {
 
     const onFinish = (value) => {
         //form.resetFields();
-
         message.success('Sucess: Existing Subcategory has been updated');
         console.log('Success:', value);
     };
@@ -50,11 +50,14 @@ const EditSubcategory = (props) => {
     };
 
     useEffect(() => {
+        console.log('1');
         getResultById(dataId);
         getAllCategories();
     }, []);
 
     useEffect(() => {
+        console.log('2');
+
         const { name, categoryId } = formValues;
         let foundCategory = categoryDataSource.find((result) => result.id === categoryId);
         let updatedCategoryData = categoryDataSource.filter((category) => category.id !== categoryId);

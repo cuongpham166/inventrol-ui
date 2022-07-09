@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { Dropdown, Menu } from 'antd';
 import { MoreOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-const useActionMenu = ({ selectedRow, updateEntity }) => {
+const useActionMenu = ({ selectedRow, table }) => {
     const navigate = useNavigate();
+    const [deleteClick, setDeleteClick] = useState(true);
     const actionMenuItems = [
         {
             key: 'edit',
@@ -20,10 +21,10 @@ const useActionMenu = ({ selectedRow, updateEntity }) => {
     const handleMenuClick = (action) => {
         switch (action.key) {
             case 'edit':
-                navigate('/' + updateEntity + '/' + selectedRow.id + '/edit');
+                navigate('/' + table + '/' + selectedRow.id + '/edit');
                 break;
             case 'delete':
-                console.log('delete');
+                setDeleteClick(deleteClick === true ? false : true);
                 break;
             default:
                 console.log('default');
@@ -43,7 +44,11 @@ const useActionMenu = ({ selectedRow, updateEntity }) => {
         </span>
     );
 
-    return [actionMenuView];
+    // return [actionMenuView];
+    return {
+        deleteClick,
+        actionMenuView,
+    };
 };
 
 export default useActionMenu;
