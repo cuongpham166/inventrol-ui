@@ -1,52 +1,22 @@
 import React from 'react';
-import { UserOutlined, NotificationFilled, CustomerServiceOutlined, SettingOutlined } from '@ant-design/icons';
-import { Avatar, Badge, Space, Button, Tooltip, Input, Select, Row } from 'antd';
-const { Search } = Input;
-const { Option } = Select;
+import { Space } from 'antd';
 
+import HeaderSearch from './components/HeaderSearch';
+import HeaderSetting from './components/HeaderSetting';
+import HeaderNotification from './components/HeaderNotification';
+import HeaderSupport from './components/HeaderSupport';
+import HeaderUser from './components/HeaderUser';
 const HeaderControl = (props) => {
-    const onSearch = (value) => console.log(value);
-    const handleChange = (value) => {
-        console.log(`selected ${value}`);
-    };
-
-    const selectBefore = (
-        <Select
-            defaultValue="subcategory"
-            style={{
-                width: 120,
-            }}
-            onChange={handleChange}
-        >
-            <Option value="subcategory">Subcategory</Option>
-            <Option value="category">Category</Option>
-        </Select>
-    );
-
     return (
-        <span style={{ float: 'right' }}>
-            <Space size={'large'}>
-                <Search
-                    placeholder="input search text"
-                    addonBefore={selectBefore}
-                    style={{ display: 'block' }}
-                    onSearch={onSearch}
-                    enterButton
-                />
-
-                <Tooltip title="Support">
-                    <Button shape="circle" icon={<CustomerServiceOutlined />}></Button>
-                </Tooltip>
-                <Tooltip title="Settings">
-                    <Button shape="circle" icon={<SettingOutlined />}></Button>
-                </Tooltip>
-                <Badge dot>
-                    <Avatar icon={<NotificationFilled />} />
-                </Badge>
-
-                <Avatar icon={<UserOutlined />} />
+        <Space size={'middle'} style={{ float: 'right' }}>
+            <Space size={'middle'}>
+                <HeaderSearch />
+                <HeaderSupport />
+                <HeaderSetting />
+                <HeaderNotification />
+                <HeaderUser />
             </Space>
-        </span>
+        </Space>
     );
 };
 

@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { AppstoreOutlined, ShopOutlined, CodeSandboxOutlined, TagOutlined, TagsOutlined } from '@ant-design/icons';
+import {
+    AppstoreOutlined,
+    ShopOutlined,
+    CodeSandboxOutlined,
+    TagOutlined,
+    TagsOutlined,
+    SolutionOutlined,
+    UserOutlined,
+} from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -17,10 +25,12 @@ const getItem = (label, key, icon, children) => {
 const items = [
     getItem('Dashboard', 'dashboard', <AppstoreOutlined />),
     getItem('Inventory', 'inventory', <ShopOutlined />),
-    getItem('Product Management', 'product management', <CodeSandboxOutlined />, [
+    getItem('Products', 'product', <CodeSandboxOutlined />, [
         getItem('Category', 'category', <TagOutlined />),
         getItem('Subcategory', 'subcategory', <TagsOutlined />),
     ]),
+    getItem('Suppliers', 'supplier', <SolutionOutlined />),
+    getItem('Customers', 'customer', <UserOutlined />),
 ];
 
 const Sidebar = (props) => {

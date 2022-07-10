@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "baseUrl": "./src",
+        "paths": {
+            "@services": ["./api/services"],
+            "@auth": ["./api/auth"],
+            "@components": ["./components"],
+            "@layouts": ["./layouts"],
+            "@pages": ["./pages"],
+            "@routes": ["./routes"],
+            "@ultis": ["./ultis"],
+            "@hooks": ["./ultis/hooks"],
+            "@config": ["./ultis/config"]
+        }
+    },
+    "exclude": ["node_modules"]
+}

@@ -16,7 +16,6 @@ const Breadcrumb = () => {
                         <Link to="/">
                             <Space>
                                 <HomeOutlined />
-                                Home
                             </Space>
                         </Link>
                     </AntBreadcrumb.Item>
@@ -24,7 +23,6 @@ const Breadcrumb = () => {
                     <AntBreadcrumb.Item>
                         <Space>
                             <HomeOutlined />
-                            Home
                         </Space>
                     </AntBreadcrumb.Item>
                 )}

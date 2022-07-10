@@ -17,10 +17,10 @@ const Header = (props) => {
                 <Col span={24} md={6}>
                     <Breadcrumb />
                 </Col>
-                <Col span={24} md={4}>
+                <Col span={24} md={5}>
                     <HeaderClock />
                 </Col>
-                <Col span={24} md={14}>
+                <Col span={24} md={13}>
                     <HeaderControl />
                 </Col>
             </Row>
