@@ -53,22 +53,11 @@ const EditSubcategory = (props) => {
     }, []);
 
     useEffect(() => {
-        const { name, categoryId } = formValues;
-        form.setFieldsValue({ name: name });
-
-        let foundCategory = categoryDataSource.find((result) => result.id === categoryId);
-        let updatedCategoryData = categoryDataSource.filter((category) => category.id !== categoryId);
-        setCategpryDataSource(updatedCategoryData);
-        if (foundCategory !== undefined) {
-            let categoryValue = foundCategory.name;
-            form.setFieldsValue({ categoryId: categoryValue });
-        }
+        const { name, category, notice } = formValues;
+        form.setFieldsValue({ name: name, category: category, notice: notice });
     }, [form, formValues]);
 
-    const handleSelectChange = (value) => {
-        //console.log('handleSelectChange');
-        //console.log(value);
-    };
+    const handleSelectChange = (value) => {};
 
     return (
         <div style={{ padding: '50px' }}>
@@ -95,7 +84,7 @@ const EditSubcategory = (props) => {
                         </Form.Item>
 
                         <Form.Item
-                            name="categoryId"
+                            name="category"
                             label="Category"
                             hasFeedback
                             rules={[
@@ -111,6 +100,10 @@ const EditSubcategory = (props) => {
                                     </Option>
                                 ))}
                             </Select>
+                        </Form.Item>
+
+                        <Form.Item label="Notice" name="notice">
+                            <Input.TextArea allowClear showCount />
                         </Form.Item>
 
                         <Form.Item {...formLayout.tailLayout}>

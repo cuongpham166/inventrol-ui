@@ -1,3 +1,17 @@
+import {
+    AppstoreOutlined,
+    ShopOutlined,
+    CodeSandboxOutlined,
+    TagOutlined,
+    TagsOutlined,
+    SolutionOutlined,
+    UserOutlined,
+    FileTextOutlined,
+    FilePdfOutlined,
+    FileWordOutlined,
+    FileExcelOutlined,
+} from '@ant-design/icons';
+
 export const form = {
     mainLayout: {
         labelCol: {
@@ -48,3 +62,74 @@ export const message = {
     maxCount: 3,
     rtl: true,
 };
+
+const getItem = (label, key, icon, children, type) => {
+    return {
+        key,
+        icon,
+        children,
+        label,
+        type,
+    };
+};
+
+/*export const sidebarItems = [
+    getItem('Dashboard', 'dashboard', <AppstoreOutlined />),
+    getItem('Inventory', 'inventory', <ShopOutlined />),
+    getItem('Products', 'product', <CodeSandboxOutlined />, [
+        getItem('Category', 'category', <TagOutlined />),
+        getItem('Subcategory', 'subcategory', <TagsOutlined />),
+        getItem('Brand', 'brand', <TagOutlined />),
+        getItem('Tag', 'tag', <TagOutlined />),
+        getItem('Attribute', 'attribute', <TagOutlined />),
+        getItem('AttributeValue', 'attributeValue', <TagOutlined />),
+    ]),
+    getItem('Suppliers', 'supplier', <SolutionOutlined />),
+    getItem('Customers', 'customer', <UserOutlined />),
+];*/
+
+export const sidebarItems = [
+    getItem('Dashboard', 'dashboard', <AppstoreOutlined />),
+    getItem('Inventory', 'inventory', <ShopOutlined />),
+    getItem(
+        'Management',
+        'management',
+        null,
+        [
+            getItem('Products', 'product', <CodeSandboxOutlined />, [
+                getItem('Category', 'category', <TagOutlined />),
+                getItem('Subcategory', 'subcategory', <TagsOutlined />),
+                getItem('Brand', 'brand', <TagOutlined />),
+                getItem('Tag', 'tag', <TagOutlined />),
+                getItem('Attribute', 'attribute', <TagOutlined />),
+                getItem('AttributeValue', 'attributeValue', <TagOutlined />),
+            ]),
+            getItem('Suppliers', 'supplier', <SolutionOutlined />),
+            getItem('Customers', 'customer', <UserOutlined />),
+        ],
+        'group',
+    ),
+];
+
+export const exportItems = [
+    {
+        label: 'Export as PDF',
+        key: 'pdf',
+        icon: <FilePdfOutlined />,
+    },
+    {
+        label: 'Export as Word',
+        key: 'word',
+        icon: <FileWordOutlined />,
+    },
+    {
+        label: 'Export as CSV',
+        key: 'csv',
+        icon: <FileTextOutlined />,
+    },
+    {
+        label: 'Export as Excel',
+        key: 'excel',
+        icon: <FileExcelOutlined />,
+    },
+];

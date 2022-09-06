@@ -7,12 +7,13 @@ import Topbar from '../../components/Topbar';
 import * as componentProps from '../Subcategory/props';
 import * as layoutConfig from '../../utils/config/layout';
 import * as service from '../../api/services';
+import * as subcategoryService from '../../api/services/Subcategory';
 
 const { Option } = Select;
 
 const NewSubcategory = (props) => {
     const { id } = useParams();
-    console.log(id);
+    //console.log(id);
     const [form] = Form.useForm();
     const [categoryDataSource, setCategpryDataSource] = useState([]);
     const navigate = useNavigate();
@@ -23,11 +24,16 @@ const NewSubcategory = (props) => {
 
     message.config(layoutConfig.message);
 
-    const onFinish = (values) => {
+    const onFinish = async (values) => {
         form.resetFields();
 
         message.success('Sucess: New Subcategory has been created');
         console.log('Success:', values);
+
+        //create new subcategory
+        const res = await subcategoryService.create('subcategory', values);
+        console.log('res');
+        console.log(res);
     };
 
     const onReset = () => {
@@ -89,7 +95,7 @@ const NewSubcategory = (props) => {
                         >
                             <Select placeholder="Please select a category">
                                 {categoryDataSource.map((option) => (
-                                    <Option key={option.id} value={'' + option.id}>
+                                    <Option key={option.id} value={option.name}>
                                         {option.name}
                                     </Option>
                                 ))}
@@ -97,7 +103,7 @@ const NewSubcategory = (props) => {
                         </Form.Item>
 
                         <Form.Item label="Notice" name="notice">
-                            <Input.TextArea allowClear showCount />
+                            <Input.TextArea allowClear showCount defaultValue="" />
                         </Form.Item>
 
                         <Form.Item {...formLayout.tailLayout}>

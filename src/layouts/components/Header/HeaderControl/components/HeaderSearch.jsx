@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Select, AutoComplete } from 'antd';
+import { Select, AutoComplete, Space } from 'antd';
 import debounce from 'lodash/debounce';
 
 import * as service from '@services';
@@ -59,7 +59,7 @@ const HeaderSearch = (props) => {
     };
 
     return (
-        <span>
+        <Space size={2}>
             <Select
                 defaultValue={selectValue}
                 style={{
@@ -79,7 +79,7 @@ const HeaderSearch = (props) => {
                 placeholder={autocompletePlaceholder}
                 notFoundContent
             />
-        </span>
+        </Space>
     );
 };
 

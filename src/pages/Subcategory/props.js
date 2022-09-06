@@ -1,15 +1,21 @@
 import { Link } from 'react-router-dom';
 export const tableColumns = [
     {
-        title: 'ID',
+        title: '#',
         dataIndex: 'id',
         key: 'id',
+        width: 60,
     },
     {
         title: 'Name',
         dataIndex: 'name',
         key: 'name',
         render: (text, record) => <Link to={'/subcategory/' + record.id}>{text}</Link>,
+    },
+    {
+        title: 'Category',
+        dataIndex: 'category',
+        key: 'category',
     },
     {
         title: 'Updated Date',

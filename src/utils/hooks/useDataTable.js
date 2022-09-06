@@ -4,6 +4,7 @@ import useActionMenu from './useActionMenu';
 import useToolbar from './useToolbar';
 
 import * as service from '../../api/services';
+
 const DEFAULT_PAGE_SIZE = 10;
 const DEFAULT_PAGE_NUMBER = 0;
 
@@ -43,7 +44,8 @@ const useDataTable = ({ columns, table }) => {
 
     const getAllData = async () => {
         const result = await service.getAll(table);
-        setDataSource(result);
+        const tableData = result.filter((element) => element.isDeleted === false);
+        setDataSource(tableData);
     };
 
     const getSearchData = async (searchInput) => {

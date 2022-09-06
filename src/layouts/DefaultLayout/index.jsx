@@ -16,7 +16,7 @@ const DefaultLayout = ({ children }) => {
             <Layout>
                 <Header />
                 <Layout>
-                    <Content>{children}</Content>
+                    <Content style={{ padding: '30px' }}>{children}</Content>
                     <Footer />
                 </Layout>
             </Layout>

@@ -1,37 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import {
-    AppstoreOutlined,
-    ShopOutlined,
-    CodeSandboxOutlined,
-    TagOutlined,
-    TagsOutlined,
-    SolutionOutlined,
-    UserOutlined,
-} from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
 import { useNavigate, useLocation } from 'react-router-dom';
 
+import { sidebarItems } from 'utils/config/layout';
+
 const { Sider } = Layout;
-
-const getItem = (label, key, icon, children) => {
-    return {
-        key,
-        icon,
-        children,
-        label,
-    };
-};
-
-const items = [
-    getItem('Dashboard', 'dashboard', <AppstoreOutlined />),
-    getItem('Inventory', 'inventory', <ShopOutlined />),
-    getItem('Products', 'product', <CodeSandboxOutlined />, [
-        getItem('Category', 'category', <TagOutlined />),
-        getItem('Subcategory', 'subcategory', <TagsOutlined />),
-    ]),
-    getItem('Suppliers', 'supplier', <SolutionOutlined />),
-    getItem('Customers', 'customer', <UserOutlined />),
-];
 
 const Sidebar = (props) => {
     const navigate = useNavigate();
@@ -71,7 +44,13 @@ const Sidebar = (props) => {
             }}
         >
             <div className="logo" style={logoStyle} />
-            <Menu theme="dark" selectedKeys={[selectedKey]} mode="inline" items={items} onClick={onClickMenu} />
+            <Menu
+                theme="dark"
+                selectedKeys={[selectedKey]}
+                mode="vertical"
+                items={sidebarItems}
+                onClick={onClickMenu}
+            />
         </Sider>
     );
 };

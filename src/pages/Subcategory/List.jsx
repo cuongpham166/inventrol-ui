@@ -1,4 +1,5 @@
 import React from 'react';
+import { Col, Row } from 'antd';
 
 import Topbar from '../../components/Topbar';
 import * as componentProps from '../Subcategory/props';
@@ -13,13 +14,20 @@ const SubcategoryList = (props) => {
     const topbarProps = componentProps.topbar.list;
 
     return (
-        <div style={{ padding: '50px' }}>
-            <Topbar topbar={topbarProps} />
-            <div style={{ padding: '35px', backgroundColor: 'whitesmoke' }}>
+        <>
+            <Row gutter={[16, 16]}>
+                <Col span={24}>
+                    <Topbar topbar={topbarProps} />
+                </Col>
+            </Row>
+            <Row gutter={[64, 64]} justify="space-between" style={{ marginBottom: '20px', marginTop: '10px' }}>
                 <Toolbar />
+            </Row>
+
+            <Row gutter={[16, 16]}>
                 <DataTable />
-            </div>
-        </div>
+            </Row>
+        </>
     );
 };
 
