@@ -16,4 +16,9 @@ export const post = async (path, data, options = {}) => {
     return response;
 };
 
+export const softDelete = async (path, data, options = {}) => {
+    const response = await httpRequest.put(path, data, options);
+    return response;
+};
+
 export default httpRequest;

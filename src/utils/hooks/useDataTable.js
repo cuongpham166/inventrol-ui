@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Table } from 'antd';
+import { Table, message } from 'antd';
 import useActionMenu from './useActionMenu';
 import useToolbar from './useToolbar';
 
 import * as service from '../../api/services';
+import * as layoutConfig from '../../utils/config/layout';
 
 const DEFAULT_PAGE_SIZE = 10;
 const DEFAULT_PAGE_NUMBER = 0;
@@ -16,6 +17,8 @@ const useDataTable = ({ columns, table }) => {
 
     const { deleteClick, actionMenuView } = useActionMenu({ selectedRow, table });
     const { searchValue, Toolbar } = useToolbar({ table });
+
+    message.config(layoutConfig.message);
 
     const updatedColumns = [
         ...columns,
@@ -35,6 +38,9 @@ const useDataTable = ({ columns, table }) => {
             const deletedElementId = selectedRow.id;
             const updatedSource = dataSource.filter((result) => result.id !== deletedElementId);
             setDataSource(updatedSource);
+            //softDelete
+            deleteElement(deletedElementId);
+            //softDelete
         }
     }, [deleteClick]);
 
@@ -48,9 +54,19 @@ const useDataTable = ({ columns, table }) => {
         setDataSource(tableData);
     };
 
+    const deleteElement = async (elementId) => {
+        const res = await service.deleteById(table, parseInt(elementId));
+        if (res.status === 200) {
+            message.success('Sucess: Selected ' + table + ' has been deleted');
+            //notification success
+        }
+        console.log('deleteElement');
+        console.log(res);
+    };
     const getSearchData = async (searchInput) => {
         const result = await service.search(table, searchInput);
-        setDataSource(result);
+        const tableData = result.filter((element) => element.isDeleted === false);
+        setDataSource(tableData);
     };
 
     const resetPagination = () => {

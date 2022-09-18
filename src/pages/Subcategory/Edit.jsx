@@ -35,10 +35,6 @@ const EditSubcategory = (props) => {
         console.log('Success:', value);
     };
 
-    const onReset = () => {
-        form.resetFields();
-    };
-
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
@@ -48,13 +44,20 @@ const EditSubcategory = (props) => {
     };
 
     useEffect(() => {
-        getResultById(dataId);
         getAllCategories();
+        getResultById(dataId);
     }, []);
 
     useEffect(() => {
-        const { name, category, notice } = formValues;
-        form.setFieldsValue({ name: name, category: category, notice: notice });
+        const { name, categoryId, notice } = formValues;
+        if (categoryDataSource.length != 0) {
+            let foundCategory = categoryDataSource.find((categoryName) => categoryName.id == categoryId);
+            form.setFieldsValue({
+                name: name,
+                category: foundCategory.name,
+                notice: notice,
+            });
+        }
     }, [form, formValues]);
 
     const handleSelectChange = (value) => {};
@@ -117,9 +120,6 @@ const EditSubcategory = (props) => {
                                     <Space>
                                         <Button type="primary" htmlType="submit">
                                             Submit
-                                        </Button>
-                                        <Button htmlType="button" onClick={onReset}>
-                                            Reset
                                         </Button>
                                     </Space>
                                 </Col>
