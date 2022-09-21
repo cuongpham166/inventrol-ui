@@ -29,7 +29,7 @@ export const search = async (table, query) => {
 export const deleteById = async (table, id) => {
     try {
         const foundResult = await httpRequest.get(table + '/' + id);
-        foundResult.isDeleted = true;
+        foundResult.is_deleted = true;
         const res = await httpRequest.softDelete(table + '/' + id, foundResult);
         return res;
     } catch (error) {

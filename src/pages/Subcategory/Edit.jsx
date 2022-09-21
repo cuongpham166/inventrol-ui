@@ -3,8 +3,11 @@ import { useParams } from 'react-router-dom';
 import { Button, Form, Input, Space, Row, Col, Select, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
+import useTopbar from 'utils/hooks/useTopbar';
+
 import * as layoutConfig from '../../utils/config/layout';
 import * as service from '../../api/services';
+import * as subcategoryService from '../../api/services/Subcategory';
 
 const { Option } = Select;
 
@@ -14,6 +17,10 @@ const EditSubcategory = (props) => {
     const navigate = useNavigate();
     const [categoryDataSource, setCategpryDataSource] = useState([]);
     const [formValues, setFormValues] = useState({});
+    const { Topbar } = useTopbar({
+        title: 'Edit Existing Subcatgory',
+        subtitle: 'Product Management',
+    });
 
     const formLayout = layoutConfig.form;
 
@@ -29,10 +36,19 @@ const EditSubcategory = (props) => {
         setCategpryDataSource(result);
     };
 
-    const onFinish = (value) => {
-        //form.resetFields();
-        message.success('Sucess: Existing Subcategory has been updated');
-        console.log('Success:', value);
+    const onFinish = async (updatedSubcategory) => {
+        try {
+            //form.resetFields();
+            let updatedData = {
+                id: dataId,
+                updatedSubcategory: updatedSubcategory,
+            };
+            await subcategoryService.update('subcategory', updatedData);
+            navigate('/subcategory');
+            message.success('Sucess: Existing subcategory has been updated');
+        } catch (error) {
+            message.error('Error: ' + error);
+        }
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -49,9 +65,9 @@ const EditSubcategory = (props) => {
     }, []);
 
     useEffect(() => {
-        const { name, categoryId, notice } = formValues;
+        const { name, category_id, notice } = formValues;
         if (categoryDataSource.length != 0) {
-            let foundCategory = categoryDataSource.find((categoryName) => categoryName.id == categoryId);
+            let foundCategory = categoryDataSource.find((categoryName) => categoryName.id == category_id);
             form.setFieldsValue({
                 name: name,
                 category: foundCategory.name,
@@ -63,8 +79,9 @@ const EditSubcategory = (props) => {
     const handleSelectChange = (value) => {};
 
     return (
-        <div style={{ padding: '50px' }}>
-            <Row style={{ padding: '35px', backgroundColor: 'whitesmoke' }} justify="center">
+        <div style={{}}>
+            <Topbar />
+            <Row style={{ padding: '35px' }} justify="center">
                 <Col span={15}>
                     <Form
                         {...formLayout.mainLayout}
@@ -116,10 +133,10 @@ const EditSubcategory = (props) => {
                                         Back
                                     </Button>
                                 </Col>
-                                <Col span={20}>
+                                <Col span={20} style={{ textAlign: 'right' }}>
                                     <Space>
                                         <Button type="primary" htmlType="submit">
-                                            Submit
+                                            Update Subcategory
                                         </Button>
                                     </Space>
                                 </Col>

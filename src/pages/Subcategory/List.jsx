@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Col, Row } from 'antd';
 
-import Topbar from '../../components/Topbar';
-import * as componentProps from '../Subcategory/props';
+import useTopbar from 'utils/hooks/useTopbar';
+
 import useDataTable from '../../utils/hooks/useDataTable';
 import * as service from '../../api/services';
 
@@ -14,7 +14,10 @@ const SubcategoryList = (props) => {
         table: 'subcategory',
     });
 
-    const topbarProps = componentProps.topbar.list;
+    const { Topbar } = useTopbar({
+        title: 'List Of Subcategories',
+        subtitle: 'Product Management',
+    });
 
     useEffect(() => {
         let ignore = false;
@@ -35,8 +38,8 @@ const SubcategoryList = (props) => {
                 },
                 {
                     title: 'Category',
-                    dataIndex: 'categoryId',
-                    key: 'categoryId',
+                    dataIndex: 'category_id',
+                    key: 'category_id',
                     render: (text, record) => (
                         <Link to={'/category/' + text}>
                             {result.find((categoryName) => categoryName.id == text).name}
@@ -44,14 +47,14 @@ const SubcategoryList = (props) => {
                     ),
                 },
                 {
-                    title: 'Updated Date',
-                    dataIndex: 'updatedDate',
-                    key: 'updatedDate',
+                    title: 'Created Date',
+                    dataIndex: 'created_date',
+                    key: 'created_date',
                 },
                 {
-                    title: 'Updated Time',
-                    dataIndex: 'updatedTime',
-                    key: 'updatedTime',
+                    title: 'Updated Date',
+                    dataIndex: 'updated_date',
+                    key: 'updated_date',
                 },
                 {
                     title: 'Notice',
@@ -74,7 +77,7 @@ const SubcategoryList = (props) => {
         <>
             <Row gutter={[16, 16]}>
                 <Col span={24}>
-                    <Topbar topbar={topbarProps} />
+                    <Topbar />
                 </Col>
             </Row>
             <Row gutter={[64, 64]} justify="space-between" style={{ marginBottom: '20px', marginTop: '10px' }}>

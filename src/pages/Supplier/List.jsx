@@ -2,11 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Col, Row } from 'antd';
-import Topbar from '../../components/Topbar';
-import * as componentProps from '../Category/props';
-import * as service from '../../api/services';
 
 import useDataTable from '../../utils/hooks/useDataTable';
+import useTopbar from 'utils/hooks/useTopbar';
 
 const columns = [
     {
@@ -19,7 +17,12 @@ const columns = [
         title: 'Name',
         dataIndex: 'name',
         key: 'name',
-        render: (text, record) => <Link to={'/category/' + record.id}>{text}</Link>,
+        render: (text, record) => <Link to={'/supplier/' + record.id}>{text}</Link>,
+    },
+    {
+        title: 'Contact Person',
+        dataIndex: 'contact_person',
+        key: 'contact_person',
     },
     {
         title: 'Created Date',
@@ -38,19 +41,22 @@ const columns = [
     },
 ];
 
-const CategoryList = (props) => {
-    const topbarProps = componentProps.topbar.list;
-
+const SupplierList = (props) => {
     const { DataTable, Toolbar, selectedRow, currentPage, pageSize, resetPagination } = useDataTable({
         columns: columns,
-        table: 'category',
+        table: 'supplier',
+    });
+
+    const { Topbar } = useTopbar({
+        title: 'List Of Suppliers',
+        subtitle: 'Supplier Managment',
     });
 
     return (
         <>
             <Row gutter={[16, 16]}>
                 <Col span={24}>
-                    <Topbar topbar={topbarProps} />
+                    <Topbar />
                 </Col>
             </Row>
             <Row gutter={[64, 64]} justify="space-between" style={{ marginBottom: '20px', marginTop: '10px' }}>
@@ -64,4 +70,4 @@ const CategoryList = (props) => {
     );
 };
 
-export default CategoryList;
+export default SupplierList;

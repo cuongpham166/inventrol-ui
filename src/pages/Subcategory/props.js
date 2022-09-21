@@ -1,6 +1,7 @@
 export const topbar = {
-    list: { title: 'List of Subcategories', subtitle: 'Product Managment' },
-    new: { title: 'Create new Subcategory', subtitle: 'Product Managment' },
+    list: { title: 'List Of Subcategories', subtitle: 'Product Management' },
+    new: { title: 'Create New Subcategory', subtitle: 'Product Management' },
+    edit: { title: 'Edit Existing Subcatgory', subtitle: 'Product Management' },
 };
 
 export const formComponents = [

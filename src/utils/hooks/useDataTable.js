@@ -50,7 +50,7 @@ const useDataTable = ({ columns, table }) => {
 
     const getAllData = async () => {
         const result = await service.getAll(table);
-        const tableData = result.filter((element) => element.isDeleted === false);
+        const tableData = result.filter((element) => element.is_deleted === false);
         setDataSource(tableData);
     };
 
@@ -65,7 +65,7 @@ const useDataTable = ({ columns, table }) => {
     };
     const getSearchData = async (searchInput) => {
         const result = await service.search(table, searchInput);
-        const tableData = result.filter((element) => element.isDeleted === false);
+        const tableData = result.filter((element) => element.is_deleted === false);
         setDataSource(tableData);
     };
 

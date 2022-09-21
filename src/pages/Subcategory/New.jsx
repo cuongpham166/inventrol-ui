@@ -24,20 +24,15 @@ const NewSubcategory = (props) => {
 
     message.config(layoutConfig.message);
 
-    const onFinish = async (values) => {
-        form.resetFields();
-
-        message.success('Sucess: New Subcategory has been created');
-        console.log('Success:', values);
-
-        //create new subcategory
-        const res = await subcategoryService.create('subcategory', values);
-        console.log('res');
-        console.log(res);
-    };
-
-    const onReset = () => {
-        form.resetFields();
+    const onFinish = async (newSubcategory) => {
+        try {
+            form.resetFields();
+            //create new subcategory
+            await subcategoryService.create('subcategory', newSubcategory);
+            message.success('Sucess: New subcategory has been created');
+        } catch (error) {
+            message.error('Error: ' + error);
+        }
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -58,9 +53,9 @@ const NewSubcategory = (props) => {
     };
 
     return (
-        <div style={{ padding: '50px' }}>
+        <div style={{}}>
             <Topbar topbar={topbarProps} />
-            <Row style={{ padding: '35px', backgroundColor: 'whitesmoke' }} justify="center">
+            <Row style={{ padding: '35px' }} justify="center">
                 <Col span={15}>
                     <Form
                         {...formLayout.mainLayout}
@@ -95,7 +90,7 @@ const NewSubcategory = (props) => {
                         >
                             <Select placeholder="Please select a category">
                                 {categoryDataSource.map((option) => (
-                                    <Option key={option.id} value={option.name}>
+                                    <Option key={option.id} value={'' + option.id}>
                                         {option.name}
                                     </Option>
                                 ))}
@@ -113,13 +108,10 @@ const NewSubcategory = (props) => {
                                         Back
                                     </Button>
                                 </Col>
-                                <Col span={20}>
+                                <Col span={20} style={{ textAlign: 'right' }}>
                                     <Space>
                                         <Button type="primary" htmlType="submit">
-                                            Submit
-                                        </Button>
-                                        <Button htmlType="button" onClick={onReset}>
-                                            Reset
+                                            Create Subcategory
                                         </Button>
                                     </Space>
                                 </Col>
