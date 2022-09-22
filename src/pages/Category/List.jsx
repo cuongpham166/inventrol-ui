@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Col, Row } from 'antd';
-import Topbar from '../../components/Topbar';
-import * as componentProps from '../Category/props';
+
 import * as service from '../../api/services';
 
+import useTopbar from 'utils/hooks/useTopbar';
 import useDataTable from '../../utils/hooks/useDataTable';
 
 const columns = [
@@ -39,10 +39,14 @@ const columns = [
 ];
 
 const CategoryList = (props) => {
-    const topbarProps = componentProps.topbar.list;
-
     const { DataTable, Toolbar, selectedRow, currentPage, pageSize, resetPagination } = useDataTable({
         columns: columns,
+        table: 'category',
+    });
+
+    const { Topbar } = useTopbar({
+        title: 'List Of Categories',
+        dataId: '',
         table: 'category',
     });
 
@@ -50,7 +54,7 @@ const CategoryList = (props) => {
         <>
             <Row gutter={[16, 16]}>
                 <Col span={24}>
-                    <Topbar topbar={topbarProps} />
+                    <Topbar />
                 </Col>
             </Row>
             <Row gutter={[64, 64]} justify="space-between" style={{ marginBottom: '20px', marginTop: '10px' }}>

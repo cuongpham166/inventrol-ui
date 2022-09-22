@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { Col, Row } from 'antd';
 
 import useTopbar from 'utils/hooks/useTopbar';
-
 import useDataTable from '../../utils/hooks/useDataTable';
+
 import * as service from '../../api/services';
 
 const SubcategoryList = (props) => {
@@ -16,12 +16,13 @@ const SubcategoryList = (props) => {
 
     const { Topbar } = useTopbar({
         title: 'List Of Subcategories',
-        subtitle: 'Product Management',
+        dataId: '',
+        table: 'subcategory',
     });
 
     useEffect(() => {
         let ignore = false;
-        async function getAllCategories() {
+        const getAllCategories = async () => {
             const result = await service.getAll('category');
             const columns = [
                 {
@@ -66,7 +67,7 @@ const SubcategoryList = (props) => {
             if (!ignore) {
                 setTableColumns(columns);
             }
-        }
+        };
         getAllCategories();
         return () => {
             ignore = true;

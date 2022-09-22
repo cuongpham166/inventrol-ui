@@ -1,21 +1,33 @@
 import React, { useState, useEffect } from 'react';
+import { Col, Row } from 'antd';
+
 import { useParams } from 'react-router-dom';
+
+import useTopbar from 'utils/hooks/useTopbar';
 
 import * as service from '../../api/services';
 
 const SubcategoryDetail = (props) => {
     const { id } = useParams();
-
     const dataId = parseInt(id);
-    const getResultById = async (dataId) => {
-        const result = await service.getById('subcategory', dataId);
-        console.log(result);
-    };
+    const { Topbar } = useTopbar({
+        title: '',
+        dataId: dataId,
+        table: 'subcategory',
+    });
 
-    useEffect(() => {
-        getResultById(dataId);
-    }, []);
-    return <div>SubcategoryDetail - ID:{id}</div>;
+    return (
+        <>
+            <Row gutter={[16, 16]}>
+                <Col span={24}>
+                    <Topbar />
+                </Col>
+            </Row>
+            <Row gutter={[64, 64]} justify="space-between" style={{ marginBottom: '20px', marginTop: '10px' }}></Row>
+
+            <Row gutter={[16, 16]}></Row>
+        </>
+    );
 };
 
 export default SubcategoryDetail;

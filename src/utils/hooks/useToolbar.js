@@ -11,7 +11,7 @@ const useToolbar = ({ table }) => {
     const [searchValue, setSearchValue] = useState('');
 
     const handleMenuClick = (e) => {
-        console.log('click', e);
+        //console.log('click', e);
     };
 
     const onSearch = (value) => {
@@ -38,8 +38,8 @@ const useToolbar = ({ table }) => {
                         </Button>
                     </Dropdown>
                     <Link to={'/' + table + '/add'}>
-                        <Button type="primary" icon={<PlusOutlined />}>
-                            Add New
+                        <Button type="primary" icon={<PlusOutlined />} style={{ textTransform: 'capitalize' }}>
+                            Create New {table}
                         </Button>
                     </Link>
                 </Space>

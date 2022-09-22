@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Button, Form, Input, Space, Row, Col, Select, message } from 'antd';
+import { SaveOutlined, ArrowLeftOutlined } from '@ant-design/icons';
+
 import { useNavigate } from 'react-router-dom';
 
 import useTopbar from 'utils/hooks/useTopbar';
@@ -14,21 +16,21 @@ const { Option } = Select;
 const EditSubcategory = (props) => {
     const [form] = Form.useForm();
     const { id } = useParams();
+    const dataId = parseInt(id);
     const navigate = useNavigate();
     const [categoryDataSource, setCategpryDataSource] = useState([]);
     const [formValues, setFormValues] = useState({});
     const { Topbar } = useTopbar({
-        title: 'Edit Existing Subcatgory',
-        subtitle: 'Product Management',
+        title: '',
+        dataId: dataId,
+        table: 'subcategory',
     });
 
     const formLayout = layoutConfig.form;
 
-    const dataId = parseInt(id);
-
-    const getResultById = async (dataId) => {
+    const getSubcategoryById = async (dataId) => {
         const result = await service.getById('subcategory', dataId);
-        await setFormValues(result);
+        setFormValues(result);
     };
 
     const getAllCategories = async () => {
@@ -61,7 +63,7 @@ const EditSubcategory = (props) => {
 
     useEffect(() => {
         getAllCategories();
-        getResultById(dataId);
+        getSubcategoryById(dataId);
     }, []);
 
     useEffect(() => {
@@ -129,13 +131,13 @@ const EditSubcategory = (props) => {
                         <Form.Item {...formLayout.tailLayout}>
                             <Row justify="space-between">
                                 <Col span={4}>
-                                    <Button htmlType="button" onClick={onBack}>
+                                    <Button htmlType="button" onClick={onBack} icon={<ArrowLeftOutlined />}>
                                         Back
                                     </Button>
                                 </Col>
                                 <Col span={20} style={{ textAlign: 'right' }}>
                                     <Space>
-                                        <Button type="primary" htmlType="submit">
+                                        <Button type="primary" htmlType="submit" icon={<SaveOutlined />}>
                                             Update Subcategory
                                         </Button>
                                     </Space>

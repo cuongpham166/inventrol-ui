@@ -49,7 +49,8 @@ const SupplierList = (props) => {
 
     const { Topbar } = useTopbar({
         title: 'List Of Suppliers',
-        subtitle: 'Supplier Managment',
+        dataId: '',
+        table: 'subcategory',
     });
 
     return (

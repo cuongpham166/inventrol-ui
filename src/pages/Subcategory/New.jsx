@@ -2,23 +2,28 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { Button, Form, Input, Space, Row, Col, Select, message } from 'antd';
+import { SaveOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 
-import Topbar from '../../components/Topbar';
+import useTopbar from 'utils/hooks/useTopbar';
+
 import * as componentProps from '../Subcategory/props';
 import * as layoutConfig from '../../utils/config/layout';
 import * as service from '../../api/services';
 import * as subcategoryService from '../../api/services/Subcategory';
-
 const { Option } = Select;
 
 const NewSubcategory = (props) => {
     const { id } = useParams();
-    //console.log(id);
     const [form] = Form.useForm();
     const [categoryDataSource, setCategpryDataSource] = useState([]);
     const navigate = useNavigate();
 
-    const topbarProps = componentProps.topbar.new;
+    const { Topbar } = useTopbar({
+        title: 'Create New Subcategory',
+        dataId: '',
+        table: 'subcategory',
+    });
+
     const formLayout = layoutConfig.form;
     const validateMessages = formLayout.validateMessages;
 
@@ -54,7 +59,7 @@ const NewSubcategory = (props) => {
 
     return (
         <div style={{}}>
-            <Topbar topbar={topbarProps} />
+            <Topbar />
             <Row style={{ padding: '35px' }} justify="center">
                 <Col span={15}>
                     <Form
@@ -104,14 +109,14 @@ const NewSubcategory = (props) => {
                         <Form.Item {...formLayout.tailLayout}>
                             <Row justify="space-between">
                                 <Col span={4}>
-                                    <Button htmlType="button" onClick={onBack}>
+                                    <Button htmlType="button" onClick={onBack} icon={<ArrowLeftOutlined />}>
                                         Back
                                     </Button>
                                 </Col>
                                 <Col span={20} style={{ textAlign: 'right' }}>
                                     <Space>
-                                        <Button type="primary" htmlType="submit">
-                                            Create Subcategory
+                                        <Button type="primary" htmlType="submit" icon={<SaveOutlined />}>
+                                            Save New Subcategory
                                         </Button>
                                     </Space>
                                 </Col>
