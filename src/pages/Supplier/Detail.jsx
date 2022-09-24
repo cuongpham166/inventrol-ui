@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Col, Row, Typography, Tooltip, Radio } from 'antd';
-import { CodeSandboxOutlined, TagOutlined } from '@ant-design/icons';
+import { Card, Col, Row, Typography, Tooltip, Radio, Timeline, Button } from 'antd';
+import { CodeSandboxOutlined, TagOutlined, UnorderedListOutlined, RetweetOutlined } from '@ant-design/icons';
 import { Column } from '@ant-design/plots';
 import { useParams } from 'react-router-dom';
 
@@ -9,68 +9,42 @@ import useDataList from 'utils/hooks/useDataList';
 import useStatisticCard from 'utils/hooks/useStatisticCard';
 
 import * as service from '@services';
+import * as supplierProps from '../Supplier/props';
 
-const { Title, Paragraph, Text } = Typography;
+import * as columnChartConfig from 'utils/config/charts/column';
+const { Title, Text } = Typography;
 
-const data = [
-    {
-        type: '家具家电',
-        sales: 38,
-    },
-    {
-        type: '粮油副食',
-        sales: 52,
-    },
-    {
-        type: '生鲜水果',
-        sales: 61,
-    },
-    {
-        type: '美容洗护',
-        sales: 145,
-    },
-    {
-        type: '母婴用品',
-        sales: 48,
-    },
-    {
-        type: '进口食品',
-        sales: 38,
-    },
-    {
-        type: '食品饮料',
-        sales: 38,
-    },
-];
-const config = {
-    data,
-    xField: 'type',
-    yField: 'sales',
-    label: {
-        // 可手动配置 label 数据标签位置
-        position: 'middle',
-        // 'top', 'bottom', 'middle',
-        // 配置样式
-        style: {
-            width: '100%',
-            fill: '#FFFFFF',
-            opacity: 0.6,
+const chartData = {
+    data: [
+        {
+            type: 'Montag',
+            sales: 38,
         },
-    },
-    xAxis: {
-        label: {
-            autoHide: true,
-            autoRotate: false,
+        {
+            type: 'Dienstag',
+            sales: 52,
         },
-    },
-    meta: {
-        type: {
-            alias: '类别',
+        {
+            type: 'Mittwoch',
+            sales: 61,
         },
-        sales: {
-            alias: 'sales',
+        {
+            type: 'Donnerstag',
+            sales: 145,
         },
-    },
+        {
+            type: 'Freitag',
+            sales: 48,
+        },
+        {
+            type: 'Samstag',
+            sales: 38,
+        },
+        {
+            type: 'Sonntag',
+            sales: 38,
+        },
+    ],
 };
 
 const statisticCardData = [
@@ -81,7 +55,7 @@ const statisticCardData = [
         percentage: '-2',
     },
     {
-        icon: <TagOutlined />,
+        icon: <CodeSandboxOutlined />,
         title: '10',
         text: 'New Products',
         percentage: '+3',
@@ -93,13 +67,46 @@ const statisticCardData = [
         percentage: '+9',
     },
     {
-        icon: <TagOutlined />,
+        icon: <CodeSandboxOutlined />,
         title: '9',
         text: 'Total Product',
         percentage: '+3',
     },
 ];
+
+const timelineList = [
+    {
+        title: '$2,400 - Redesign store',
+        time: '09 JUN 7:20 PM',
+        color: 'green',
+    },
+    {
+        title: 'New order #3654323',
+        time: '08 JUN 12:20 PM',
+        color: 'green',
+    },
+    {
+        title: 'Company server payments',
+        time: '04 JUN 3:10 PM',
+    },
+    {
+        title: 'New card added for order #4826321',
+        time: '02 JUN 2:45 PM',
+    },
+    {
+        title: 'Unlock folders for development',
+        time: '18 MAY 1:30 PM',
+    },
+    {
+        title: 'New order #46282344',
+        time: '14 MAY 3:30 PM',
+        color: 'gray',
+    },
+];
+
 const SupplierDetail = (props) => {
+    const basicColumnChartConfig = { ...chartData, ...columnChartConfig.basicColumn };
+    const [reverse, setReverse] = useState(false);
     const [listDataSource, setListDataSource] = useState([]);
     const { DataList } = useDataList({
         data: listDataSource,
@@ -118,51 +125,7 @@ const SupplierDetail = (props) => {
         let supplierInfoRes = await service.getById('supplier', dataId);
         let contactId = supplierInfoRes.contact_id;
         let supplierContactRes = await service.getById('contact', contactId);
-
-        let address_1 = supplierContactRes.street_name + ' ' + supplierContactRes.street_number;
-        let address_2 = supplierContactRes.additional_address_line;
-        let city = supplierContactRes.postcode + ' ' + supplierContactRes.city;
-        let country = supplierContactRes.country;
-        let listData = [
-            {
-                title: 'Name',
-                text: supplierInfoRes.name,
-            },
-            {
-                title: 'Contact Person',
-                text: supplierInfoRes.contact_person,
-            },
-            {
-                title: 'Phone Number',
-                text: supplierContactRes.phone_number,
-            },
-
-            {
-                title: 'Mobile Number',
-                text: supplierContactRes.mobile_number,
-            },
-            {
-                title: 'Email',
-                text: <a href={supplierContactRes.email}>Send Email</a>,
-            },
-            {
-                title: 'Website',
-                text: <a href={supplierContactRes.website}>Homepage</a>,
-            },
-
-            {
-                title: 'Address',
-                text: address_1 + ', ' + address_2 + ', ' + city + ', ' + country,
-            },
-            {
-                title: 'Notice',
-                text: (
-                    <Tooltip placement="left" title={supplierInfoRes.notice}>
-                        <span>Show Notice</span>
-                    </Tooltip>
-                ),
-            },
-        ];
+        let listData = supplierProps.supplierDataList({ info: supplierInfoRes, contact: supplierContactRes });
         setListDataSource(listData);
     };
 
@@ -176,10 +139,10 @@ const SupplierDetail = (props) => {
                 <StatisticCard />
             </Row>
             <Row gutter={[24, 24]} style={{ marginTop: '24px', marginBottom: '24px' }}>
-                <Col span={14}>
+                <Col span={16}>
                     <Card bordered={false}>
                         <div className="card_header">
-                            <Title level={5}>Orders</Title>
+                            <Title level={4}>Orders</Title>
                             <Radio.Group
                                 defaultValue="week"
                                 style={{
@@ -190,15 +153,15 @@ const SupplierDetail = (props) => {
                                 <Radio.Button value="month">Month</Radio.Button>
                             </Radio.Group>
                         </div>
-                        <div>
-                            <Column {...config} />
+                        <div className="card_content">
+                            <Column {...basicColumnChartConfig} />
                         </div>
                     </Card>
                 </Col>
-                <Col span={10}>
+                <Col span={8}>
                     <Card bordered={false}>
                         <div className="card_header">
-                            <Title level={5}>Overview</Title>
+                            <Title level={4}>Overview</Title>
                         </div>
                         <div className="card_content">
                             <DataList />
@@ -210,14 +173,32 @@ const SupplierDetail = (props) => {
                 <Col span={16}>
                     <Card bordered={false}>
                         <div className="card_header">
-                            <Title level={5}>Products</Title>
+                            <Title level={4}>Products</Title>
                         </div>
                     </Card>
                 </Col>
                 <Col span={8}>
                     <Card bordered={false}>
-                        <div>
-                            <Title level={5}>Orders History</Title>
+                        <div className="card_header">
+                            <Title level={4}>Orders History</Title>
+                            <Tooltip placement="top" title="Reverse" color="#7A3DB8">
+                                <Button type="primary" className="width-100" onClick={() => setReverse(!reverse)}>
+                                    {<RetweetOutlined />}
+                                </Button>
+                            </Tooltip>
+                        </div>
+                        <div className="card_content">
+                            <Timeline className="timelinelist" reverse={reverse}>
+                                {timelineList.map((t, index) => (
+                                    <Timeline.Item color={t.color} key={index}>
+                                        <Title level={5}>{t.title}</Title>
+                                        <Text>{t.time}</Text>
+                                    </Timeline.Item>
+                                ))}
+                            </Timeline>
+                            <Button type="primary" className="width-100">
+                                {<UnorderedListOutlined />} See All Orders
+                            </Button>
                         </div>
                     </Card>
                 </Col>

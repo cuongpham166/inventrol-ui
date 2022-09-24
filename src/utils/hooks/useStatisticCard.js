@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Col, Row, Typography } from 'antd';
 import { TagOutlined } from '@ant-design/icons';
-
+import '@styles/card.less';
 const { Title } = Typography;
 
 const useStatisticCard = ({ data }) => {
