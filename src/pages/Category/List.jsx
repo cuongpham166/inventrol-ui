@@ -23,13 +23,13 @@ const columns = [
     },
     {
         title: 'Created Date',
-        dataIndex: 'created_date',
-        key: 'created_date',
+        dataIndex: 'createdDate',
+        key: 'createdDate',
     },
     {
         title: 'Updated Date',
-        dataIndex: 'updated_date',
-        key: 'updated_date',
+        dataIndex: 'updatedDate',
+        key: 'updatedDate',
     },
     {
         title: 'Notice',
@@ -52,7 +52,9 @@ const CategoryList = (props) => {
 
     return (
         <>
-            <Topbar />
+            <Row gutter={[16, 16]}>
+                <Topbar />
+            </Row>
 
             <Row gutter={[64, 64]} justify="space-between" style={{ marginBottom: '20px', marginTop: '10px' }}>
                 <Toolbar />

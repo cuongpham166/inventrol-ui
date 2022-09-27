@@ -59,7 +59,9 @@ const NewSubcategory = (props) => {
 
     return (
         <div style={{}}>
-            <Topbar />
+            <Row gutter={[16, 16]}>
+                <Topbar />
+            </Row>
             <Row style={{ padding: '35px' }} justify="center">
                 <Col span={15}>
                     <Form

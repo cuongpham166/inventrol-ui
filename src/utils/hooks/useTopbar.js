@@ -29,28 +29,26 @@ const useTopbar = ({ title, dataId, table }) => {
 
     const Topbar = () => (
         <>
-            <Row gutter={[16, 16]}>
-                <Col span={24}>
-                    <Row justify="space-between">
-                        <Col>
-                            {topbarTitle && (
-                                <Title level={3} strong style={{ marginBottom: '0px' }}>
-                                    {topbarTitle}
-                                </Title>
-                            )}
-                            {topbarSubtitle && (
-                                <Title
-                                    level={5}
-                                    style={{ marginTop: '0px', fontWeight: '300', textTransform: 'capitalize' }}
-                                >
-                                    {topbarSubtitle}
-                                </Title>
-                            )}
-                        </Col>
-                    </Row>
-                    <Divider style={{ margin: '10px' }} />
-                </Col>
-            </Row>
+            <Col span={24}>
+                <Row justify="space-between">
+                    <Col>
+                        {topbarTitle && (
+                            <Title level={3} strong style={{ marginBottom: '0px' }}>
+                                {topbarTitle}
+                            </Title>
+                        )}
+                        {topbarSubtitle && (
+                            <Title
+                                level={5}
+                                style={{ marginTop: '0px', fontWeight: '300', textTransform: 'capitalize' }}
+                            >
+                                {topbarSubtitle}
+                            </Title>
+                        )}
+                    </Col>
+                </Row>
+                <Divider style={{ margin: '10px' }} />
+            </Col>
         </>
     );
 

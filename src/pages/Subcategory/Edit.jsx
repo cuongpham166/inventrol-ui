@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 import { Button, Form, Input, Space, Row, Col, Select, message } from 'antd';
 import { SaveOutlined, ArrowLeftOutlined } from '@ant-design/icons';
-
-import { useNavigate } from 'react-router-dom';
 
 import useTopbar from 'utils/hooks/useTopbar';
 
@@ -82,7 +82,9 @@ const EditSubcategory = (props) => {
 
     return (
         <div style={{}}>
-            <Topbar />
+            <Row gutter={[16, 16]}>
+                <Topbar />
+            </Row>
             <Row style={{ padding: '35px' }} justify="center">
                 <Col span={15}>
                     <Form

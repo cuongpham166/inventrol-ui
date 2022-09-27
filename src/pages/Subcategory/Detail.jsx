@@ -18,7 +18,9 @@ const SubcategoryDetail = (props) => {
 
     return (
         <>
-            <Topbar />
+            <Row gutter={[16, 16]}>
+                <Topbar />
+            </Row>
 
             <Row gutter={[64, 64]} justify="space-between" style={{ marginBottom: '20px', marginTop: '10px' }}></Row>
 

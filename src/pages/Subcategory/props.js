@@ -15,3 +15,7 @@ export const formComponents = [
         label: 'Notice',
     },
 ];
+
+export const initialFormValues = {
+    notice: '',
+};
