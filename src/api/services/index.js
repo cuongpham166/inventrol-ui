@@ -2,8 +2,9 @@ import * as httpRequest from '../../utils/httpRequest';
 import * as categoryService from '../services/Category';
 export const getAll = async (table) => {
     try {
-        const res = await httpRequest.get(table);
-        return res;
+        const results = await httpRequest.get(table);
+        const data = results.filter((result) => result.deleted === false);
+        return data;
     } catch (error) {
         console.log(error);
     }
@@ -62,9 +63,7 @@ export const search = async (table, query) => {
 
 export const deleteById = async (table, id) => {
     try {
-        const foundResult = await httpRequest.get(table + '/' + id);
-        foundResult.deleted = true;
-        const res = await httpRequest.softDelete(table + '/' + id, foundResult);
+        const res = await httpRequest.softDelete(table + '/' + id + '/delete');
         return res;
     } catch (error) {
         console.error(error);

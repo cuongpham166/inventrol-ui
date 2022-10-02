@@ -20,6 +20,7 @@ const EditSubcategory = (props) => {
     const navigate = useNavigate();
     const [categoryDataSource, setCategpryDataSource] = useState([]);
     const [formValues, setFormValues] = useState({});
+    const [categoryValue, setCategoryValue] = useState(null);
     const { Topbar } = useTopbar({
         title: '',
         dataId: dataId,
@@ -41,18 +42,31 @@ const EditSubcategory = (props) => {
     const onFinish = async (updatedSubcategory) => {
         try {
             //form.resetFields();
-            let updatedData = {
+            let data = {
                 id: dataId,
                 updatedSubcategory: updatedSubcategory,
             };
+
+            let updatedData = setSubcategoryData(data);
             await subcategoryService.update('subcategory', updatedData);
-            navigate('/subcategory');
-            message.success('Sucess: Existing subcategory has been updated');
+            //navigate('/subcategory');
+            //message.success('Sucess: Existing subcategory has been updated');*/
         } catch (error) {
             message.error('Error: ' + error);
         }
     };
 
+    const setSubcategoryData = (data) => {
+        let updatedData = {
+            id: data.id,
+            updatedSubcategory: {
+                name: data.updatedSubcategory.name,
+                notice: data.updatedSubcategory.notice,
+                category: { id: parseInt(categoryValue) },
+            },
+        };
+        return updatedData;
+    };
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
@@ -67,18 +81,21 @@ const EditSubcategory = (props) => {
     }, []);
 
     useEffect(() => {
-        const { name, category_id, notice } = formValues;
+        const { name, category, notice } = formValues;
         if (categoryDataSource.length != 0) {
-            let foundCategory = categoryDataSource.find((categoryName) => categoryName.id == category_id);
+            let foundCategory = categoryDataSource.find((catgegoryData) => catgegoryData.id == category.id);
             form.setFieldsValue({
                 name: name,
                 category: foundCategory.name,
                 notice: notice,
             });
+            setCategoryValue(foundCategory.id);
         }
     }, [form, formValues]);
 
-    const handleSelectChange = (value) => {};
+    const handleSelectChange = (value) => {
+        setCategoryValue(value);
+    };
 
     return (
         <div style={{}}>

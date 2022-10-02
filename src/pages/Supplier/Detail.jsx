@@ -123,9 +123,8 @@ const SupplierDetail = (props) => {
 
     const getContactbySupplierId = async (dataId) => {
         let supplierInfoRes = await service.getById('supplier', dataId);
-        let contactId = supplierInfoRes.contact_id;
-        let supplierContactRes = await service.getById('contact', contactId);
-        let listData = supplierProps.supplierDataList({ info: supplierInfoRes, contact: supplierContactRes });
+        let listData = supplierProps.supplierDataList(supplierInfoRes);
+        console.log(listData);
         setListDataSource(listData);
     };
 

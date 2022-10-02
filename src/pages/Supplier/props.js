@@ -1,4 +1,4 @@
-import { Tooltip } from 'antd';
+import { Tooltip, Popover, Button } from 'antd';
 import {
     PhoneOutlined,
     ShopOutlined,
@@ -10,10 +10,19 @@ import {
 } from '@ant-design/icons';
 
 export const supplierDataList = (data) => {
-    let address_1 = data.contact.street_name + ' ' + data.contact.street_number;
-    let address_2 = data.contact.additional_address_line;
-    let city = data.contact.postcode + ' ' + data.contact.city;
-    let country = data.contact.country;
+    let address;
+    if (data.contact.additionalAddressLine == '') {
+        address = data.contact.mainAddressLine;
+    } else {
+        address = data.contact.mainAddressLine + ', ' + data.contact.additionalAddressLine;
+    }
+
+    let popoverContent = (
+        <div>
+            <p>{data.notice}</p>
+        </div>
+    );
+
     let listData = [
         {
             title: (
@@ -21,7 +30,7 @@ export const supplierDataList = (data) => {
                     <ShopOutlined className="list_icon" />
                 </Tooltip>
             ),
-            text: data.info.name,
+            text: data.name,
         },
         {
             title: (
@@ -29,7 +38,7 @@ export const supplierDataList = (data) => {
                     <UserOutlined className="list_icon" />
                 </Tooltip>
             ),
-            text: data.info.contact_person,
+            text: data.contactPerson,
         },
         {
             title: (
@@ -37,7 +46,7 @@ export const supplierDataList = (data) => {
                     <PhoneOutlined className="list_icon" />
                 </Tooltip>
             ),
-            text: data.contact.phone_number,
+            text: data.contact.phoneNumber,
         },
 
         {
@@ -46,7 +55,7 @@ export const supplierDataList = (data) => {
                     <PhoneOutlined className="list_icon" />
                 </Tooltip>
             ),
-            text: data.contact.mobile_number,
+            text: data.contact.mobileNumber,
         },
 
         {
@@ -63,7 +72,7 @@ export const supplierDataList = (data) => {
                     <HomeOutlined className="list_icon" />
                 </Tooltip>
             ),
-            text: <a href={data.contact.website}>Homepage</a>,
+            text: <a href={data.contact.website}>Visit Homepage</a>,
         },
 
         {
@@ -72,7 +81,7 @@ export const supplierDataList = (data) => {
                     <EnvironmentOutlined className="list_icon" />
                 </Tooltip>
             ),
-            text: address_1 + ', ' + address_2 + ', ' + city + ', ' + country,
+            text: address + ', ' + data.contact.cityInfo + ', ' + data.contact.country,
         },
         {
             title: (
@@ -81,9 +90,9 @@ export const supplierDataList = (data) => {
                 </Tooltip>
             ),
             text: (
-                <Tooltip placement="left" title={data.info.notice}>
-                    <span>Show Notice</span>
-                </Tooltip>
+                <Popover content={popoverContent} title="Notice">
+                    <Button type="primary">Show Notice</Button>
+                </Popover>
             ),
         },
     ];

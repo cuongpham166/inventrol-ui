@@ -70,7 +70,7 @@ const NewSubcategory = (props) => {
                         name="control-hooks"
                         onFinish={onFinish}
                         validateMessages={validateMessages}
-                        initialValues={{}}
+                        initialValues={{ notice: '' }}
                     >
                         <Form.Item
                             label="Name"
@@ -105,7 +105,7 @@ const NewSubcategory = (props) => {
                         </Form.Item>
 
                         <Form.Item label="Notice" name="notice">
-                            <Input.TextArea allowClear showCount defaultValue="" />
+                            <Input.TextArea allowClear showCount />
                         </Form.Item>
 
                         <Form.Item {...formLayout.tailLayout}>

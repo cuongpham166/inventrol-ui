@@ -50,6 +50,7 @@ const useDataTable = ({ columns, table }) => {
 
     const getAllData = async () => {
         const result = await service.getAll(table);
+
         const tableData = result.filter((element) => element.deleted === false);
         setDataSource(tableData);
     };
@@ -60,9 +61,8 @@ const useDataTable = ({ columns, table }) => {
             message.success('Sucess: Selected ' + table + ' has been deleted');
             //notification success
         }
-        console.log('deleteElement');
-        console.log(res);
     };
+
     const getSearchData = async (searchInput) => {
         const result = await service.search(table, searchInput);
         const tableData = result.filter((element) => element.deleted === false);

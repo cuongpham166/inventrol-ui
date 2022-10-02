@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Button, Form, Input, Space, Row, Col, Select, message } from 'antd';
@@ -10,10 +10,19 @@ import * as service from '../../api/services/index';
 const useCustomForm = ({ table, initialFormValues, CustomFormMainItems, formType, dataId }) => {
     const [form] = Form.useForm();
     const navigate = useNavigate();
+    const [formButtonText, setFormButtonText] = useState('');
     const formLayout = layoutConfig.form;
     const validateMessages = formLayout.validateMessages;
 
     message.config(layoutConfig.message);
+
+    useEffect(() => {
+        if (formType === 'new') {
+            setFormButtonText('Save New ' + table);
+        } else {
+            setFormButtonText('Update ' + table);
+        }
+    }, []);
 
     const onFinish = async (data) => {
         try {
@@ -64,7 +73,7 @@ const useCustomForm = ({ table, initialFormValues, CustomFormMainItems, formType
                     <Col span={20} style={{ textAlign: 'right' }}>
                         <Space>
                             <Button type="primary" htmlType="submit" icon={<SaveOutlined />} className="form_button">
-                                Save New {table}
+                                {formButtonText}
                             </Button>
                         </Space>
                     </Col>

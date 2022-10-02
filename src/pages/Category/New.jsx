@@ -7,8 +7,7 @@ import useCustomForm from 'utils/hooks/useCustomForm';
 import * as categoryProps from '../Category/props';
 
 const NewCategory = (props) => {
-    const [initialFormValues, setInitialFormValues] = useState({});
-    setInitialFormValues(categoryProps.initialFormValues);
+    const [initialFormValues, setInitialFormValues] = useState(categoryProps.initialFormValues);
 
     const { Topbar } = useTopbar({
         title: 'Create New Category',

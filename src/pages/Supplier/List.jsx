@@ -21,18 +21,18 @@ const columns = [
     },
     {
         title: 'Contact Person',
-        dataIndex: 'contact_person',
-        key: 'contact_person',
+        dataIndex: 'contactPerson',
+        key: 'contactPerson',
     },
     {
         title: 'Created Date',
-        dataIndex: 'created_date',
-        key: 'created_date',
+        dataIndex: 'createdDate',
+        key: 'createdDate',
     },
     {
         title: 'Updated Date',
-        dataIndex: 'updated_date',
-        key: 'updated_date',
+        dataIndex: 'updatedDate',
+        key: 'updatedDate',
     },
     {
         title: 'Notice',
@@ -50,7 +50,7 @@ const SupplierList = (props) => {
     const { Topbar } = useTopbar({
         title: 'List Of Suppliers',
         dataId: '',
-        table: 'subcategory',
+        table: 'supplier',
     });
 
     return (

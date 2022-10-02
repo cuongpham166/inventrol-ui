@@ -27,15 +27,10 @@ export const create = async (table, data) => {
 
 export const update = async (table, data) => {
     try {
-        let foundSubcategory = await service.getById(table, data.id);
-        foundSubcategory.name = data.updatedSubcategory.name;
-        foundSubcategory.category_id = parseInt(data.updatedSubcategory.category);
-        data.updatedSubcategory.notice === undefined
-            ? (foundSubcategory.notice = '')
-            : (foundSubcategory.notice = data.updatedSubcategory.notice);
-        foundSubcategory.updated_date = '28-11-2021';
-        const res = await httpRequest.put(table + '/' + data.id, foundSubcategory);
-        return res;
+        let subcategoryId = data.id;
+        let subcategoryData = data.updatedSubcategory;
+        const res = await httpRequest.put(table + '/' + subcategoryId, subcategoryData);
+        return null;
     } catch (error) {
         console.error(error);
     }

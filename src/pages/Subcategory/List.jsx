@@ -23,7 +23,7 @@ const SubcategoryList = (props) => {
     useEffect(() => {
         let ignore = false;
         const getAllCategories = async () => {
-            const result = await service.getAll('category');
+            //const result = await service.getAll('category');
             const columns = [
                 {
                     title: '#',
@@ -39,23 +39,19 @@ const SubcategoryList = (props) => {
                 },
                 {
                     title: 'Category',
-                    dataIndex: 'category_id',
-                    key: 'category_id',
-                    render: (text, record) => (
-                        <Link to={'/category/' + text}>
-                            {result.find((categoryName) => categoryName.id == text).name}
-                        </Link>
-                    ),
+                    dataIndex: 'category',
+                    key: 'category',
+                    render: (text, record) => <Link to={'/category/' + text.id}>{text.name}</Link>,
                 },
                 {
                     title: 'Created Date',
-                    dataIndex: 'created_date',
-                    key: 'created_date',
+                    dataIndex: 'createdDate',
+                    key: 'createdDate',
                 },
                 {
                     title: 'Updated Date',
-                    dataIndex: 'updated_date',
-                    key: 'updated_date',
+                    dataIndex: 'updatedDate',
+                    key: 'updatedDate',
                 },
                 {
                     title: 'Notice',
