@@ -52,6 +52,7 @@ const useDataTable = ({ columns, table }) => {
         const result = await service.getAll(table);
 
         const tableData = result.filter((element) => element.deleted === false);
+        console.log(tableData);
         setDataSource(tableData);
     };
 

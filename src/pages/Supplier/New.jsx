@@ -65,7 +65,7 @@ const NewSupplier = (props) => {
                             </Form.Item>
                             <Form.Item
                                 label="Contact Person"
-                                name="contact_person"
+                                name="contactPerson"
                                 hasFeedback
                                 rules={[
                                     {

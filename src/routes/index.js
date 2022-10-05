@@ -4,6 +4,7 @@ import NoMatch from '../pages/Nomatch';
 import { SubcategoryDetail, SubcategoryList, CreateSubcategory, EditSubcategory } from '../pages/Subcategory';
 import { CategoryList, CreateCategory, EditCategory } from 'pages/Category';
 import { SupplierDetail, SupplierList, CreateSupplier } from 'pages/Supplier';
+import { ProductList, ProductDetail, CreateProduct, EditProduct } from 'pages/Product';
 const publicRoutes = [
     { path: '/', component: Home },
     { path: '/category', component: CategoryList },
@@ -16,6 +17,10 @@ const publicRoutes = [
     { path: '/supplier', component: SupplierList },
     { path: '/supplier/:id', component: SupplierDetail },
     { path: '/supplier/add', component: CreateSupplier },
+    { path: '/inventory', component: ProductList },
+    { path: '/product/:id', component: ProductDetail },
+    { path: '/product/add', component: CreateProduct },
+    { path: '/product/:id/edit', component: EditProduct },
     { path: '*', component: NoMatch },
 ];
 

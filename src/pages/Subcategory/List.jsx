@@ -27,8 +27,8 @@ const SubcategoryList = (props) => {
             const columns = [
                 {
                     title: '#',
-                    dataIndex: 'id',
-                    key: 'id',
+                    key: 'index',
+                    render: (text, record, index) => index + 1,
                     width: 60,
                 },
                 {
