@@ -2,11 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Col, Row, Tag, Popover, Button, Typography } from 'antd';
-import { EyeOutlined } from '@ant-design/icons';
-import * as service from '../../api/services';
+import { EyeOutlined, PlusOutlined } from '@ant-design/icons';
+
+import Breadcrumb from 'components/Breadcrumb';
 
 import useTopbar from 'utils/hooks/useTopbar';
 import useDataTable from '../../utils/hooks/useDataTable';
+import usePageHeader from 'utils/hooks/usePageHeader';
+
+import * as service from '../../api/services';
 
 const { Title, Text } = Typography;
 
@@ -41,23 +45,29 @@ const columns = [
         render: (subcategory) => (
             <div>
                 <Link to={'/category/' + subcategory.category.id}>
-                    <Tag color="#108ee9">{subcategory.category.name}</Tag>
+                    <Tag color={subcategory.category.tagColor}>{subcategory.category.name}</Tag>
                 </Link>
                 <br />
                 <Link to={'/subcategory/' + subcategory.id}>
-                    <Tag color="#f50">{subcategory.name}</Tag>
+                    <Tag color={subcategory.tagColor}>{subcategory.name}</Tag>
                 </Link>
             </div>
         ),
     },
     {
-        title: 'Tag',
+        title: 'Type',
         dataIndex: 'attributeValue',
         key: 'attributeValue',
         render: (attributeValue) => (
             <div>
                 {attributeValue.map((attr) => {
-                    return <Tag key={attr.id}>{attr.name}</Tag>;
+                    return (
+                        <Link to={'/attribute-value/' + attr.id}>
+                            <Tag key={attr.id} color={attr.attribute.tagColor}>
+                                {attr.name}
+                            </Tag>
+                        </Link>
+                    );
                 })}
             </div>
         ),
@@ -103,24 +113,49 @@ const columns = [
     },
 ];
 
+const pageHeaderExtra = (
+    <>
+        <Link to={'/inventory/add'}>
+            <Button key="1" type="primary" icon={<PlusOutlined />} style={{ textTransform: 'capitalize' }}>
+                Create New Product
+            </Button>
+        </Link>
+    </>
+);
+
 const ProductList = (props) => {
+    const [dataTableSource, setDataTableSource] = useState([]);
     const { DataTable, Toolbar, selectedRow, currentPage, pageSize, resetPagination } = useDataTable({
         columns: columns,
         table: 'product',
+        tableData: dataTableSource,
     });
 
-    const { Topbar } = useTopbar({
+    const getAllData = async () => {
+        const result = await service.getAll('product');
+        const tableData = result.filter((element) => element.deleted === false);
+        setDataTableSource(tableData);
+    };
+
+    useEffect(() => {
+        getAllData();
+    }, []);
+
+    const { PageHeader } = usePageHeader({
         title: 'List of Products',
         dataId: '',
         table: 'product',
+        pageHeaderExtra: pageHeaderExtra,
     });
 
     return (
         <>
-            <Row gutter={[16, 16]}>
-                <Topbar />
+            <Row>
+                <Breadcrumb />
             </Row>
-
+            <Row>
+                <PageHeader />
+            </Row>
             <Row gutter={[64, 64]} justify="space-between" style={{ marginBottom: '20px', marginTop: '10px' }}>
                 <Toolbar />
             </Row>

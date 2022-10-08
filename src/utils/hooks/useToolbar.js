@@ -37,11 +37,11 @@ const useToolbar = ({ table }) => {
                             </Space>
                         </Button>
                     </Dropdown>
-                    <Link to={'/' + table + '/add'}>
+                    {/*                    <Link to={'/' + table + '/add'}>
                         <Button type="primary" icon={<PlusOutlined />} style={{ textTransform: 'capitalize' }}>
                             Create New {table}
                         </Button>
-                    </Link>
+    </Link>*/}
                 </Space>
             </Col>
         </>

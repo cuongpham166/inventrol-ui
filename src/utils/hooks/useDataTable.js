@@ -9,8 +9,8 @@ import * as layoutConfig from '../../utils/config/layout';
 const DEFAULT_PAGE_SIZE = 10;
 const DEFAULT_PAGE_NUMBER = 0;
 
-const useDataTable = ({ columns, table }) => {
-    const [dataSource, setDataSource] = useState([]);
+const useDataTable = ({ columns, table, tableData }) => {
+    const [dataSource, setDataSource] = useState(tableData);
     const [selectedRow, setSelectedRow] = useState(null);
     const [currentPage, setCurrentPage] = useState(DEFAULT_PAGE_NUMBER);
     const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
@@ -30,10 +30,6 @@ const useDataTable = ({ columns, table }) => {
     ];
 
     useEffect(() => {
-        getAllData();
-    }, []);
-
-    useEffect(() => {
         if (selectedRow !== null) {
             const deletedElementId = selectedRow.id;
             const updatedSource = dataSource.filter((result) => result.id !== deletedElementId);
@@ -47,14 +43,6 @@ const useDataTable = ({ columns, table }) => {
     useEffect(() => {
         getSearchData(searchValue);
     }, [searchValue]);
-
-    const getAllData = async () => {
-        const result = await service.getAll(table);
-
-        const tableData = result.filter((element) => element.deleted === false);
-        console.log(tableData);
-        setDataSource(tableData);
-    };
 
     const deleteElement = async (elementId) => {
         const res = await service.deleteById(table, parseInt(elementId));

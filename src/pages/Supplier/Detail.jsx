@@ -3,11 +3,10 @@ import { Card, Col, Row, Typography, Tooltip, Radio, Timeline, Button } from 'an
 import { CodeSandboxOutlined, TagOutlined, UnorderedListOutlined, RetweetOutlined } from '@ant-design/icons';
 import { Column } from '@ant-design/plots';
 import { useParams } from 'react-router-dom';
-import { Line } from '@ant-design/plots';
-import useTopbar from 'utils/hooks/useTopbar';
-import useDataList from 'utils/hooks/useDataList';
-import useStatisticCard from 'utils/hooks/useStatisticCard';
+import Breadcrumb from 'components/Breadcrumb';
 
+import useStatisticCard from 'utils/hooks/useStatisticCard';
+import usePageHeader from 'utils/hooks/usePageHeader';
 import * as service from '@services';
 import * as supplierProps from '../Supplier/props';
 
@@ -107,24 +106,26 @@ const timelineList = [
 const SupplierDetail = (props) => {
     const basicColumnChartConfig = { ...chartData, ...columnChartConfig.basicColumn };
     const [reverse, setReverse] = useState(false);
-    const [listDataSource, setListDataSource] = useState([]);
-    const { DataList } = useDataList({
-        data: listDataSource,
-        layout: 'horizontal',
-    });
+
     const { StatisticCard } = useStatisticCard({ data: statisticCardData });
     const { id } = useParams();
     const dataId = parseInt(id);
-    const { Topbar } = useTopbar({
+
+    const [pageHeaderMainContent, setPageHeaderMainContent] = useState([]);
+    const [pageHeaderExtra, setPageHeaderExtra] = useState([]);
+    const { PageHeader } = usePageHeader({
         title: '',
         dataId: dataId,
         table: 'supplier',
+        mainContent: pageHeaderMainContent,
+        pageHeaderExtra: pageHeaderExtra,
     });
 
     const getContactbySupplierId = async (dataId) => {
         let supplierInfoRes = await service.getById('supplier', dataId);
-        let listData = supplierProps.supplierDataList(supplierInfoRes);
-        setListDataSource(listData);
+        let supplierPageHeaderObj = supplierProps.supplierPageHeader(supplierInfoRes);
+        setPageHeaderMainContent(supplierPageHeaderObj.mainContent);
+        setPageHeaderExtra(supplierPageHeaderObj.pageHeaderExtra);
     };
 
     useEffect(() => {
@@ -132,15 +133,18 @@ const SupplierDetail = (props) => {
     }, []);
     return (
         <>
-            <Row gutter={[16, 16]}>
-                <Topbar />
+            <Row>
+                <Breadcrumb />
+            </Row>
+            <Row>
+                <PageHeader />
             </Row>
             <Row gutter={[24, 24]}>
                 <StatisticCard />
             </Row>
             <Row gutter={[24, 24]} style={{ marginTop: '24px', marginBottom: '24px' }}>
                 <Col span={16}>
-                    <Card bordered={false}>
+                    <Card bordered={false} style={{ height: '100%' }}>
                         <div className="card_header">
                             <Title level={4}>Orders</Title>
                             <Radio.Group
@@ -161,26 +165,7 @@ const SupplierDetail = (props) => {
                 <Col span={8}>
                     <Card bordered={false}>
                         <div className="card_header">
-                            <Title level={4}>Overview</Title>
-                        </div>
-                        <div className="card_content">
-                            <DataList />
-                        </div>
-                    </Card>
-                </Col>
-            </Row>
-            <Row gutter={[24, 0]}>
-                <Col span={16}>
-                    <Card bordered={false}>
-                        <div className="card_header">
-                            <Title level={4}>Products</Title>
-                        </div>
-                    </Card>
-                </Col>
-                <Col span={8}>
-                    <Card bordered={false}>
-                        <div className="card_header">
-                            <Title level={4}>Orders History</Title>
+                            <Title level={4}>Transaction History</Title>
                             <Tooltip placement="top" title="Reverse" color="#7A3DB8">
                                 <Button type="primary" className="width-100" onClick={() => setReverse(!reverse)}>
                                     {<RetweetOutlined />}
@@ -199,6 +184,15 @@ const SupplierDetail = (props) => {
                             <Button type="primary" className="width-100">
                                 {<UnorderedListOutlined />} See All Orders
                             </Button>
+                        </div>
+                    </Card>
+                </Col>
+            </Row>
+            <Row gutter={[24, 0]}>
+                <Col span={24}>
+                    <Card bordered={false}>
+                        <div className="card_header">
+                            <Title level={4}>Products</Title>
                         </div>
                     </Card>
                 </Col>

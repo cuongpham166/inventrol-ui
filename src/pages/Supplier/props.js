@@ -1,4 +1,5 @@
-import { Tooltip, Popover, Button } from 'antd';
+import { Tooltip, Popover, Button, Descriptions } from 'antd';
+import { Link } from 'react-router-dom';
 import {
     PhoneOutlined,
     ShopOutlined,
@@ -8,6 +9,7 @@ import {
     EnvironmentOutlined,
     FormOutlined,
     EyeOutlined,
+    EditOutlined,
 } from '@ant-design/icons';
 
 export const supplierDataList = (data) => {
@@ -96,10 +98,74 @@ export const supplierDataList = (data) => {
                 </Popover>
             ),
         },
+        {
+            title: (
+                <Tooltip placement="top" title={'Update Supplier'} color="#7A3DB8">
+                    <EditOutlined className="list_icon" />
+                </Tooltip>
+            ),
+            text: (
+                <Link to={'/supplier/' + data.id + '/edit'}>
+                    <Button type="primary">Update Supplier</Button>
+                </Link>
+            ),
+        },
     ];
     return listData;
 };
 
+export const supplierPageHeader = (data) => {
+    let pageHeaderObj = {};
+    let popoverContent = (
+        <div>
+            <p>{data.notice}</p>
+        </div>
+    );
+    let supplierAddress;
+    if (data.contact.additionalAddressLine == '') {
+        supplierAddress = data.contact.mainAddressLine;
+    } else {
+        supplierAddress = data.contact.mainAddressLine + ', ' + data.contact.additionalAddressLine;
+    }
+    let mainContent = (
+        <Descriptions size="small" column={3}>
+            <Descriptions.Item label="Contact Person">{data.contactPerson}</Descriptions.Item>
+            <Descriptions.Item label="Phone Number">{data.contact.phoneNumber}</Descriptions.Item>
+            <Descriptions.Item label="Mobile Number">{data.contact.mobileNumber}</Descriptions.Item>
+            <Descriptions.Item label="Homepage">
+                <a href={data.contact.website}>Visit Homepage</a>
+            </Descriptions.Item>
+            <Descriptions.Item label="Email">
+                <a href={data.contact.email}>Send Email</a>
+            </Descriptions.Item>
+            <Descriptions.Item label="Address">
+                {supplierAddress + ', ' + data.contact.cityInfo + ', ' + data.contact.country}
+            </Descriptions.Item>
+            <Descriptions.Item label="Created on">{data.createdDate}</Descriptions.Item>
+            <Descriptions.Item label="Notice">
+                <Popover content={popoverContent} title="Notice">
+                    <EyeOutlined />
+                </Popover>
+            </Descriptions.Item>
+        </Descriptions>
+    );
+
+    let pageHeaderExtra = (
+        <>
+            <Link to={'/supplier/' + data.id + '/edit'}>
+                <Button key="1" type="primary" icon={<EditOutlined />}>
+                    Update Supplier
+                </Button>
+            </Link>
+        </>
+    );
+
+    pageHeaderObj = {
+        mainContent: mainContent,
+        pageHeaderExtra: pageHeaderExtra,
+    };
+    return pageHeaderObj;
+};
 export const initialFormValues = {
     website: '',
     phone_number: '',

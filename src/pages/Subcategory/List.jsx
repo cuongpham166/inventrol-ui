@@ -9,9 +9,11 @@ import * as service from '../../api/services';
 
 const SubcategoryList = (props) => {
     const [tableColumns, setTableColumns] = useState([]);
+    const [dataTableSource, setDataTableSource] = useState([]);
     const { DataTable, Toolbar, selectedRow, currentPage, pageSize, resetPagination } = useDataTable({
         columns: tableColumns,
         table: 'subcategory',
+        tableData: dataTableSource,
     });
 
     const { Topbar } = useTopbar({
@@ -19,6 +21,16 @@ const SubcategoryList = (props) => {
         dataId: '',
         table: 'subcategory',
     });
+
+    const getAllData = async () => {
+        const result = await service.getAll('subcategory');
+        const tableData = result.filter((element) => element.deleted === false);
+        setDataTableSource(tableData);
+    };
+
+    useEffect(() => {
+        getAllData();
+    }, []);
 
     useEffect(() => {
         let ignore = false;

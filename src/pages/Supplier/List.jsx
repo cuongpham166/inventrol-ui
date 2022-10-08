@@ -6,6 +6,8 @@ import { Col, Row } from 'antd';
 import useDataTable from '../../utils/hooks/useDataTable';
 import useTopbar from 'utils/hooks/useTopbar';
 
+import * as service from '../../api/services';
+
 const columns = [
     {
         title: '#',
@@ -42,9 +44,11 @@ const columns = [
 ];
 
 const SupplierList = (props) => {
+    const [dataTableSource, setDataTableSource] = useState([]);
     const { DataTable, Toolbar, selectedRow, currentPage, pageSize, resetPagination } = useDataTable({
         columns: columns,
         table: 'supplier',
+        tableData: dataTableSource,
     });
 
     const { Topbar } = useTopbar({
@@ -52,6 +56,16 @@ const SupplierList = (props) => {
         dataId: '',
         table: 'supplier',
     });
+
+    const getAllData = async () => {
+        const result = await service.getAll('supplier');
+        const tableData = result.filter((element) => element.deleted === false);
+        setDataTableSource(tableData);
+    };
+
+    useEffect(() => {
+        getAllData();
+    }, []);
 
     return (
         <>

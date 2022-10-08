@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Col, Row, Typography, Tooltip, Tabs, List } from 'antd';
+import { Card, Col, Row, Typography, Tabs, List } from 'antd';
 import { CodeSandboxOutlined, TagOutlined } from '@ant-design/icons';
-import { Column } from '@ant-design/plots';
 import { useParams } from 'react-router-dom';
 
 import { Line } from '@ant-design/plots';
 
-import useTopbar from 'utils/hooks/useTopbar';
-import useDataList from 'utils/hooks/useDataList';
+import Breadcrumb from 'components/Breadcrumb';
+
 import useStatisticCard from 'utils/hooks/useStatisticCard';
+import usePageHeader from 'utils/hooks/usePageHeader';
+
 import * as lineChartConfig from 'utils/config/charts/line';
 
 import * as service from '@services';
@@ -16,6 +17,10 @@ import * as productProps from '../Product/props';
 import * as supplierProps from '../Supplier/props';
 
 const { Title, Text } = Typography;
+
+const heightLineChart = {
+    height: 200,
+};
 
 const chartData = {
     data: [
@@ -157,29 +162,35 @@ const statisticCardData = [
 const ProductDetail = (props) => {
     const { id } = useParams();
     const dataId = parseInt(id);
-    const multiLineChartConfig = { ...chartData, ...lineChartConfig.multiLine };
-    const transactionChartConfig = { ...chartTransactionData, ...lineChartConfig.multiLine };
+    const multiLineChartConfig = { ...chartData, ...lineChartConfig.multiLine, ...heightLineChart };
+    const transactionChartConfig = { ...chartTransactionData, ...lineChartConfig.multiLine, ...heightLineChart };
     const { StatisticCard } = useStatisticCard({ data: statisticCardData });
-
-    const [productDataListSource, setProductDataListSource] = useState([]);
-    const { DataList: ProductDataList } = useDataList({
-        data: productDataListSource,
-        layout: 'horizontal',
-    });
 
     const [supplierTabSource, setSupplierTabSource] = useState([]);
 
-    const { Topbar } = useTopbar({
+    const [pageHeaderExtraContent, setPageHeaderExtraContent] = useState([]);
+    const [pageHeaderMainContent, setPageHeaderMainContent] = useState([]);
+    const [pageHeaderTag, setPageHeaderTag] = useState([]);
+    const [pageHeaderExtra, setPageHeaderExtra] = useState([]);
+
+    const { PageHeader } = usePageHeader({
         title: '',
         dataId: dataId,
         table: 'product',
+        mainContent: pageHeaderMainContent,
+        extraContent: pageHeaderExtraContent,
+        pageHeaderTag: pageHeaderTag,
+        pageHeaderExtra: pageHeaderExtra,
     });
-
     const getProductDetailInfo = async (dataId) => {
         let productInfoRes = await service.getById('product', dataId);
-        let productDataList = productProps.productDataList(productInfoRes);
-        setProductDataListSource(productDataList);
+        let productPageHeaderObj = productProps.productPageHeader(productInfoRes);
         renderSupplierTab(productInfoRes.supplier);
+        //console.log(productPageHeaderObj);
+        setPageHeaderMainContent(productPageHeaderObj.mainContent);
+        setPageHeaderExtraContent(productPageHeaderObj.extraContent);
+        setPageHeaderTag(productPageHeaderObj.pageHeaderTag);
+        setPageHeaderExtra(productPageHeaderObj.pageHeaderExtra);
     };
 
     const renderSupplierTab = (supplierData) => {
@@ -216,49 +227,34 @@ const ProductDetail = (props) => {
 
     return (
         <>
-            <Row gutter={[16, 16]}>
-                <Topbar />
+            <Row>
+                <Breadcrumb />
+            </Row>
+            <Row>
+                <PageHeader />
             </Row>
             <Row gutter={[24, 24]}>
                 <StatisticCard />
             </Row>
+
             <Row gutter={[24, 24]} style={{ marginTop: '24px' }}>
                 <Col span={17}>
-                    <Row gutter={[24, 24]}>
-                        <Col span={24}>
-                            <Card bordered={false}>
-                                <div className="card_header">
-                                    <Title level={4}>Price</Title>
-                                </div>
-                                <div className="card_content">
-                                    <Line {...multiLineChartConfig} />
-                                </div>
-                            </Card>
-                        </Col>
-                    </Row>
-                    <Row gutter={[24, 24]} style={{ marginTop: '24px', marginBottom: '24px' }}>
-                        <Col span={24}>
-                            <Card bordered={false}>
-                                <div className="card_header">
-                                    <Title level={4}>Transaction</Title>
-                                </div>
-                                <div className="card_content">
-                                    <Line {...transactionChartConfig} />
-                                </div>
-                            </Card>
-                        </Col>
-                    </Row>
+                    <Card bordered={false} style={{ height: 'calc(50% - 12px)' }}>
+                        <div className="card_header">
+                            <Title level={4}>Price</Title>
+                        </div>
+                        <div className="card_content">{<Line {...multiLineChartConfig} />}</div>
+                    </Card>
+
+                    <Card bordered={false} style={{ marginTop: '24px', height: 'calc(50% - 12px)' }}>
+                        <div className="card_header">
+                            <Title level={4}>Transaction</Title>
+                        </div>
+                        <div className="card_content">{<Line {...transactionChartConfig} />}</div>
+                    </Card>
                 </Col>
                 <Col span={7}>
                     <Card bordered={false}>
-                        <div className="card_header">
-                            <Title level={4}>Overview</Title>
-                        </div>
-                        <div className="card_content">
-                            <ProductDataList />
-                        </div>
-                    </Card>
-                    <Card bordered={false} style={{ marginTop: '24px' }}>
                         <div className="card_header">
                             <Title level={4}>Suppliers</Title>
                         </div>
