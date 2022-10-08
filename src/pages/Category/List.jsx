@@ -45,7 +45,7 @@ const CategoryList = (props) => {
     });
 
     const { Topbar } = useTopbar({
-        title: 'List Of Categories',
+        title: 'List of Categories',
         dataId: '',
         table: 'category',
     });

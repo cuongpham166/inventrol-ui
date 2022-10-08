@@ -19,7 +19,7 @@ const NewSubcategory = (props) => {
     const navigate = useNavigate();
 
     const { Topbar } = useTopbar({
-        title: 'Create New Subcategory',
+        title: 'New Subcategory',
         dataId: '',
         table: 'subcategory',
     });

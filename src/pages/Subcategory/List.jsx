@@ -15,7 +15,7 @@ const SubcategoryList = (props) => {
     });
 
     const { Topbar } = useTopbar({
-        title: 'List Of Subcategories',
+        title: 'List of Subcategories',
         dataId: '',
         table: 'subcategory',
     });

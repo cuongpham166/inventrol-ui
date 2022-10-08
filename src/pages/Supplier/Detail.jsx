@@ -3,7 +3,7 @@ import { Card, Col, Row, Typography, Tooltip, Radio, Timeline, Button } from 'an
 import { CodeSandboxOutlined, TagOutlined, UnorderedListOutlined, RetweetOutlined } from '@ant-design/icons';
 import { Column } from '@ant-design/plots';
 import { useParams } from 'react-router-dom';
-
+import { Line } from '@ant-design/plots';
 import useTopbar from 'utils/hooks/useTopbar';
 import useDataList from 'utils/hooks/useDataList';
 import useStatisticCard from 'utils/hooks/useStatisticCard';
@@ -124,7 +124,6 @@ const SupplierDetail = (props) => {
     const getContactbySupplierId = async (dataId) => {
         let supplierInfoRes = await service.getById('supplier', dataId);
         let listData = supplierProps.supplierDataList(supplierInfoRes);
-        console.log(listData);
         setListDataSource(listData);
     };
 
@@ -133,7 +132,9 @@ const SupplierDetail = (props) => {
     }, []);
     return (
         <>
-            <Topbar />
+            <Row gutter={[16, 16]}>
+                <Topbar />
+            </Row>
             <Row gutter={[24, 24]}>
                 <StatisticCard />
             </Row>

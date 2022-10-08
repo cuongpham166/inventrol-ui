@@ -26,7 +26,11 @@ const HeaderSearch = (props) => {
         value: title,
     });
 
-    const selectOptions = [renderOptionItem('Subcategory', 'subcategory'), renderOptionItem('Category', 'category')];
+    const selectOptions = [
+        renderOptionItem('Subcategory', 'subcategory'),
+        renderOptionItem('Category', 'category'),
+        renderOptionItem('Product', 'product'),
+    ];
 
     const handleChange = (value) => {
         setSelectValue(value);
@@ -60,14 +64,6 @@ const HeaderSearch = (props) => {
 
     return (
         <Space size={2}>
-            <Select
-                defaultValue={selectValue}
-                style={{
-                    width: 120,
-                }}
-                onChange={handleChange}
-                options={selectOptions}
-            ></Select>
             <AutoComplete
                 style={{
                     width: 200,
@@ -79,6 +75,14 @@ const HeaderSearch = (props) => {
                 placeholder={autocompletePlaceholder}
                 notFoundContent
             />
+            <Select
+                defaultValue={selectValue}
+                style={{
+                    width: 120,
+                }}
+                onChange={handleChange}
+                options={selectOptions}
+            ></Select>
         </Space>
     );
 };

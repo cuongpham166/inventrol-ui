@@ -18,9 +18,9 @@ const publicRoutes = [
     { path: '/supplier/:id', component: SupplierDetail },
     { path: '/supplier/add', component: CreateSupplier },
     { path: '/inventory', component: ProductList },
-    { path: '/product/:id', component: ProductDetail },
-    { path: '/product/add', component: CreateProduct },
-    { path: '/product/:id/edit', component: EditProduct },
+    { path: '/inventory/:id', component: ProductDetail },
+    { path: '/inventory/add', component: CreateProduct },
+    { path: '/inventory/:id/edit', component: EditProduct },
     { path: '*', component: NoMatch },
 ];
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Typography, Divider } from 'antd';
 import * as service from '../../api/services';
+import Breadcrumb from 'components/Breadcrumb';
 
 const { Title } = Typography;
 
@@ -32,17 +33,14 @@ const useTopbar = ({ title, dataId, table }) => {
             <Col span={24}>
                 <Row justify="space-between">
                     <Col>
+                        <Breadcrumb />
                         {topbarTitle && (
-                            <Title level={3} strong style={{ marginBottom: '0px' }}>
-                                {topbarTitle}
-                            </Title>
-                        )}
-                        {topbarSubtitle && (
                             <Title
-                                level={5}
-                                style={{ marginTop: '0px', fontWeight: '300', textTransform: 'capitalize' }}
+                                level={3}
+                                style={{ marginBottom: '0px', fontWeight: '700' }}
+                                className="topbar_title"
                             >
-                                {topbarSubtitle}
+                                {topbarTitle}
                             </Title>
                         )}
                     </Col>

@@ -10,7 +10,7 @@ const NewCategory = (props) => {
     const [initialFormValues, setInitialFormValues] = useState(categoryProps.initialFormValues);
 
     const { Topbar } = useTopbar({
-        title: 'Create New Category',
+        title: 'New Category',
         dataId: '',
         table: 'category',
     });

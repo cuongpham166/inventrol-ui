@@ -7,6 +7,7 @@ import {
     HomeOutlined,
     EnvironmentOutlined,
     FormOutlined,
+    EyeOutlined,
 } from '@ant-design/icons';
 
 export const supplierDataList = (data) => {
@@ -91,7 +92,7 @@ export const supplierDataList = (data) => {
             ),
             text: (
                 <Popover content={popoverContent} title="Notice">
-                    <Button type="primary">Show Notice</Button>
+                    <EyeOutlined />
                 </Popover>
             ),
         },

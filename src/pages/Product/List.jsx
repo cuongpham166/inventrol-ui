@@ -26,7 +26,7 @@ const columns = [
         title: 'Name',
         dataIndex: 'name',
         key: 'name',
-        render: (text, record) => <Link to={'/product/' + record.id}>{text}</Link>,
+        render: (text, record) => <Link to={'/inventory/' + record.id}>{text}</Link>,
     },
     {
         title: 'Brand',
@@ -75,12 +75,12 @@ const columns = [
         },
     },
     {
-        title: 'Retail Price',
+        title: 'Retail Price (€)',
         dataIndex: 'retailPrice',
         key: 'retailPrice',
     },
     {
-        title: 'Listing Price',
+        title: 'Listing Price (€)',
         dataIndex: 'listingPrice',
         key: 'listingPrice',
     },
@@ -110,7 +110,7 @@ const ProductList = (props) => {
     });
 
     const { Topbar } = useTopbar({
-        title: 'List Of Products',
+        title: 'List of Products',
         dataId: '',
         table: 'product',
     });

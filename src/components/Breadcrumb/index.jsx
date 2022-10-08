@@ -10,7 +10,11 @@ const Breadcrumb = () => {
     const capatilize = (s) => s.charAt(0).toUpperCase() + s.slice(1);
     return (
         <div>
-            <AntBreadcrumb>
+            <AntBreadcrumb
+                style={{
+                    marginBottom: 8,
+                }}
+            >
                 {pathnames.length > 0 ? (
                     <AntBreadcrumb.Item>
                         <Link to="/">

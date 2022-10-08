@@ -15,7 +15,7 @@ const NewSupplier = (props) => {
     const navigate = useNavigate();
     const [form] = Form.useForm();
     const { Topbar } = useTopbar({
-        title: 'Create New Supplier',
+        title: 'New Supplier',
         dataId: '',
         table: 'supplier',
     });

@@ -10,7 +10,6 @@ const HeaderControl = (props) => {
     return (
         <Space size={'middle'} style={{ float: 'right' }}>
             <Space size={'middle'}>
-                <HeaderSearch />
                 <HeaderSupport />
                 <HeaderSetting />
                 <HeaderNotification />
