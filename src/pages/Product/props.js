@@ -254,3 +254,104 @@ export const productPageHeader = (data) => {
     };
     return pageHeaderObj;
 };
+
+export const productTableColumns = [
+    {
+        title: '#',
+        key: 'index',
+        render: (text, record, index) => index + 1,
+        width: 60,
+    },
+    {
+        title: 'SKU',
+        dataIndex: 'sku',
+        key: 'sku',
+    },
+    {
+        title: 'Name',
+        dataIndex: 'name',
+        key: 'name',
+        render: (text, record) => <Link to={'/inventory/' + record.id}>{text}</Link>,
+    },
+    {
+        title: 'Brand',
+        dataIndex: 'brand',
+        key: 'brand',
+        render: (brand) => <Link to={'/brand/' + brand.id}>{brand.name}</Link>,
+    },
+    {
+        title: 'Category',
+        dataIndex: 'subcategory',
+        key: 'subcategory',
+        width: '170px',
+        render: (subcategory) => (
+            <div className="taglist_container">
+                <Link to={'/category/' + subcategory.category.id}>
+                    <Tag color={subcategory.category.tagColor}>{subcategory.category.name}</Tag>
+                </Link>
+                <Link to={'/subcategory/' + subcategory.id}>
+                    <Tag color={subcategory.tagColor}>{subcategory.name}</Tag>
+                </Link>
+            </div>
+        ),
+    },
+    {
+        title: 'Type',
+        dataIndex: 'attributeValue',
+        key: 'attributeValue',
+        render: (attributeValue) => (
+            <div>
+                {attributeValue.map((attr) => {
+                    return (
+                        <Link to={'/attribute-value/' + attr.id} key={attr.name}>
+                            <Tag key={attr.id} color={attr.attribute.tagColor}>
+                                {attr.name}
+                            </Tag>
+                        </Link>
+                    );
+                })}
+            </div>
+        ),
+    },
+    {
+        title: 'Status',
+        dataIndex: 'stockStatus',
+        key: 'stockStatus',
+        render: (stockStatus) => {
+            let tagColor = stockStatus === 'Out of Stock' ? 'red' : 'yellow';
+            if (stockStatus === 'In Stock') {
+                tagColor = 'green';
+            }
+            return <Tag color={tagColor}>{stockStatus.toUpperCase()}</Tag>;
+        },
+    },
+    {
+        title: 'Retail Price (€)',
+        dataIndex: 'retailPrice',
+        key: 'retailPrice',
+    },
+    {
+        title: 'Listing Price (€)',
+        dataIndex: 'listingPrice',
+        key: 'listingPrice',
+    },
+    {
+        title: 'Notice',
+        dataIndex: 'notice',
+        width: '50px',
+        align: 'center',
+        key: 'notice',
+        render: (notice) => {
+            let popoverContent = (
+                <div>
+                    <p>{notice}</p>
+                </div>
+            );
+            return (
+                <Popover content={popoverContent} title="Notice" placement="bottom">
+                    <EyeOutlined />
+                </Popover>
+            );
+        },
+    },
+];

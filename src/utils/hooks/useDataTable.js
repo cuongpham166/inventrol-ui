@@ -25,6 +25,8 @@ const useDataTable = ({ columns, table, tableData }) => {
         {
             title: 'Action',
             key: 'action',
+            width: '50px',
+            align: 'center',
             render: () => actionMenuView,
         },
     ];
@@ -71,6 +73,7 @@ const useDataTable = ({ columns, table, tableData }) => {
             columns={updatedColumns}
             dataSource={dataSource}
             rowKey="id"
+            bordered
             onChange={handleTableChange}
             pagination={{
                 pageSize: DEFAULT_PAGE_SIZE,

@@ -17,11 +17,11 @@ export const CustomFormMainItems = () => {
                     },
                 ]}
             >
-                <Input />
+                <Input placeholder="Name" />
             </Form.Item>
 
             <Form.Item label="Notice" name="notice">
-                <Input.TextArea allowClear showCount />
+                <Input.TextArea allowClear showCount placeholder="Notice" />
             </Form.Item>
         </>
     );

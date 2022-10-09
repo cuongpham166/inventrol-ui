@@ -10,7 +10,7 @@ const useStatisticCard = ({ data }) => {
         <>
             {data.map((element, index) => (
                 <Col span={colNumber} key={index}>
-                    <Card bordered={false} className="statistic_card">
+                    <Card bordered={false} className="statistic_card" key={index}>
                         <Row align="middle" gutter={[24, 0]}>
                             <Col xs={6}>
                                 <div className="statistic_icon">{element.icon}</div>

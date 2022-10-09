@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import * as service from '../../api/services/index';
 import { Col, Row, PageHeader as AntPageHeader } from 'antd';
 
+import { useNavigate } from 'react-router-dom';
+
 const usePageHeader = ({
     title,
     dataId,
@@ -12,6 +14,7 @@ const usePageHeader = ({
     pageHeaderTag = [],
     pageHeaderExtra,
 }) => {
+    const navigate = useNavigate();
     const [pageHeaderTitle, setPageHeaderTitle] = useState('');
 
     useEffect(() => {
@@ -48,6 +51,7 @@ const usePageHeader = ({
     const PageHeader = () => (
         <AntPageHeader
             className="site-page-header-responsive"
+            onBack={() => navigate(-1)}
             title={pageHeaderTitle}
             tags={pageHeaderTag}
             extra={pageHeaderExtra}

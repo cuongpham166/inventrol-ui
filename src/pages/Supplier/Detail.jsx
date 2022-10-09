@@ -1,14 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Col, Row, Typography, Tooltip, Radio, Timeline, Button } from 'antd';
-import { CodeSandboxOutlined, TagOutlined, UnorderedListOutlined, RetweetOutlined } from '@ant-design/icons';
+import { Card, Col, Row, Typography, Tooltip, Radio, Timeline, Button, Tag, Popover } from 'antd';
+import {
+    CodeSandboxOutlined,
+    TagOutlined,
+    UnorderedListOutlined,
+    RetweetOutlined,
+    EyeOutlined,
+} from '@ant-design/icons';
 import { Column } from '@ant-design/plots';
 import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
 import Breadcrumb from 'components/Breadcrumb';
 
 import useStatisticCard from 'utils/hooks/useStatisticCard';
 import usePageHeader from 'utils/hooks/usePageHeader';
+import useDataTable from 'utils/hooks/useDataTable';
+
 import * as service from '@services';
 import * as supplierProps from '../Supplier/props';
+import * as productProps from '../Product/props';
 
 import * as columnChartConfig from 'utils/config/charts/column';
 const { Title, Text } = Typography;
@@ -50,24 +61,28 @@ const statisticCardData = [
     {
         icon: <TagOutlined />,
         title: '5',
+        key: '1',
         text: "Today's Orders",
         percentage: '-2',
     },
     {
         icon: <CodeSandboxOutlined />,
         title: '10',
+        key: '2',
         text: 'New Products',
         percentage: '+3',
     },
     {
         icon: <TagOutlined />,
         title: '6',
+        key: '3',
         text: 'Total Order',
         percentage: '+9',
     },
     {
         icon: <CodeSandboxOutlined />,
         title: '9',
+        key: '4',
         text: 'Total Product',
         percentage: '+3',
     },
@@ -121,15 +136,23 @@ const SupplierDetail = (props) => {
         pageHeaderExtra: pageHeaderExtra,
     });
 
-    const getContactbySupplierId = async (dataId) => {
+    const [dataTableSource, setDataTableSource] = useState([]);
+    const { DataTable, Toolbar, selectedRow, currentPage, pageSize, resetPagination } = useDataTable({
+        columns: productProps.productTableColumns,
+        table: 'product',
+        tableData: dataTableSource,
+    });
+
+    const getSupplierDataById = async (dataId) => {
         let supplierInfoRes = await service.getById('supplier', dataId);
         let supplierPageHeaderObj = supplierProps.supplierPageHeader(supplierInfoRes);
         setPageHeaderMainContent(supplierPageHeaderObj.mainContent);
         setPageHeaderExtra(supplierPageHeaderObj.pageHeaderExtra);
+        setDataTableSource(supplierInfoRes.product);
     };
 
     useEffect(() => {
-        getContactbySupplierId(dataId);
+        getSupplierDataById(dataId);
     }, []);
     return (
         <>
@@ -193,6 +216,12 @@ const SupplierDetail = (props) => {
                     <Card bordered={false}>
                         <div className="card_header">
                             <Title level={4}>Products</Title>
+                        </div>
+                        <div className="card_content">
+                            <Row gutter={[64, 64]} justify="space-between" style={{ marginBottom: '20px' }}>
+                                <Toolbar />
+                            </Row>
+                            <DataTable />
                         </div>
                     </Card>
                 </Col>

@@ -1,11 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Col, Row } from 'antd';
-
-import useTopbar from 'utils/hooks/useTopbar';
+import { Col, Row, Button, Card, Popover, Tag } from 'antd';
+import { PlusOutlined, EyeOutlined } from '@ant-design/icons';
+import Breadcrumb from 'components/Breadcrumb';
 import useDataTable from '../../utils/hooks/useDataTable';
+import usePageHeader from 'utils/hooks/usePageHeader';
 
 import * as service from '../../api/services';
+
+const pageHeaderExtra = (
+    <>
+        <Link to={'/subcategory/add'}>
+            <Button key="1" type="primary" icon={<PlusOutlined />} style={{ textTransform: 'capitalize' }}>
+                Create New Subcategory
+            </Button>
+        </Link>
+    </>
+);
 
 const SubcategoryList = (props) => {
     const [tableColumns, setTableColumns] = useState([]);
@@ -16,10 +27,11 @@ const SubcategoryList = (props) => {
         tableData: dataTableSource,
     });
 
-    const { Topbar } = useTopbar({
+    const { PageHeader } = usePageHeader({
         title: 'List of Subcategories',
         dataId: '',
         table: 'subcategory',
+        pageHeaderExtra: pageHeaderExtra,
     });
 
     const getAllData = async () => {
@@ -53,7 +65,11 @@ const SubcategoryList = (props) => {
                     title: 'Category',
                     dataIndex: 'category',
                     key: 'category',
-                    render: (text, record) => <Link to={'/category/' + text.id}>{text.name}</Link>,
+                    render: (category) => (
+                        <Link to={'/category/' + category.id}>
+                            <Tag color={category.tagColor}>{category.name}</Tag>
+                        </Link>
+                    ),
                 },
                 {
                     title: 'Created Date',
@@ -69,6 +85,13 @@ const SubcategoryList = (props) => {
                     title: 'Notice',
                     dataIndex: 'notice',
                     key: 'notice',
+                    width: '50px',
+                    align: 'center',
+                    render: (notice) => (
+                        <Popover content={notice} title="Notice" placement="bottom">
+                            <EyeOutlined />
+                        </Popover>
+                    ),
                 },
             ];
 
@@ -84,16 +107,24 @@ const SubcategoryList = (props) => {
 
     return (
         <>
-            <Row gutter={[16, 16]}>
-                <Topbar />
+            <Row>
+                <Breadcrumb />
+            </Row>
+            <Row>
+                <PageHeader />
             </Row>
 
-            <Row gutter={[64, 64]} justify="space-between" style={{ marginBottom: '20px', marginTop: '10px' }}>
-                <Toolbar />
-            </Row>
-
             <Row gutter={[16, 16]}>
-                <DataTable />
+                <Col span={24}>
+                    <Card bordered={false}>
+                        <div className="card_content">
+                            <Row gutter={[64, 64]} justify="space-between" style={{ marginBottom: '20px' }}>
+                                <Toolbar />
+                            </Row>
+                            <DataTable />
+                        </div>
+                    </Card>
+                </Col>
             </Row>
         </>
     );

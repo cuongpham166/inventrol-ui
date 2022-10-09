@@ -1,5 +1,7 @@
 import * as httpRequest from '../../utils/httpRequest';
 import * as categoryService from '../services/Category';
+import * as subcategoryService from '../services/Subcategory';
+
 export const getAll = async (table) => {
     try {
         const results = await httpRequest.get(table);
@@ -17,6 +19,8 @@ export const create = async (table, data) => {
             case 'category':
                 res = await categoryService.create(table, data);
                 break;
+            case 'subcategory':
+                res = await subcategoryService.create(table, data);
             default:
                 console.log('Error');
                 break;

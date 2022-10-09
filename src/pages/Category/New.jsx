@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col } from 'antd';
 
-import useTopbar from 'utils/hooks/useTopbar';
+import Breadcrumb from 'components/Breadcrumb';
+
 import useCustomForm from 'utils/hooks/useCustomForm';
+import usePageHeader from 'utils/hooks/usePageHeader';
 
 import * as categoryProps from '../Category/props';
 
 const NewCategory = (props) => {
     const [initialFormValues, setInitialFormValues] = useState(categoryProps.initialFormValues);
 
-    const { Topbar } = useTopbar({
+    const { PageHeader } = usePageHeader({
         title: 'New Category',
         dataId: '',
         table: 'category',
@@ -25,8 +27,11 @@ const NewCategory = (props) => {
 
     return (
         <div style={{}}>
-            <Row gutter={[16, 16]}>
-                <Topbar />
+            <Row>
+                <Breadcrumb />
+            </Row>
+            <Row>
+                <PageHeader />
             </Row>
             <Row style={{ padding: '35px' }} justify="center">
                 <Col span={15}>

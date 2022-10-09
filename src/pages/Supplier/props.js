@@ -33,7 +33,7 @@ export const supplierDataList = (data) => {
                     <ShopOutlined className="list_icon" />
                 </Tooltip>
             ),
-            text: data.name,
+            text: <Link to={'/supplier/' + data.id}>{data.name}</Link>,
         },
         {
             title: (

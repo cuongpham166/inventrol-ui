@@ -12,12 +12,14 @@ export const search = async (query) => {
 
 export const create = async (table, data) => {
     try {
-        const newElement = {};
-        newElement.name = data.name;
-        newElement.category_id = parseInt(data.category);
-        data.notice === undefined ? (newElement.notice = '') : (newElement.notice = data.notice);
-        newElement.is_deleted = false;
-        newElement.created_date = '27-11-2021';
+        const newElement = {
+            name: data.name,
+            notice: data.notice,
+            tagColor: data.tagColor.hex,
+            category: {
+                id: parseInt(data.category),
+            },
+        };
         const res = await httpRequest.post(table, newElement);
         return res;
     } catch (error) {

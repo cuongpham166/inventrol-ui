@@ -1,12 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Col, Row } from 'antd';
+import { Col, Row, Button, Card, Popover } from 'antd';
+import { PlusOutlined, EyeOutlined } from '@ant-design/icons';
+
+import Breadcrumb from 'components/Breadcrumb';
 
 import useDataTable from '../../utils/hooks/useDataTable';
-import useTopbar from 'utils/hooks/useTopbar';
+import usePageHeader from 'utils/hooks/usePageHeader';
 
 import * as service from '../../api/services';
+
+const pageHeaderExtra = (
+    <>
+        <Link to={'/supplier/add'}>
+            <Button key="1" type="primary" icon={<PlusOutlined />} style={{ textTransform: 'capitalize' }}>
+                Create New Supplier
+            </Button>
+        </Link>
+    </>
+);
 
 const columns = [
     {
@@ -40,6 +53,13 @@ const columns = [
         title: 'Notice',
         dataIndex: 'notice',
         key: 'notice',
+        width: '50px',
+        align: 'center',
+        render: (notice) => (
+            <Popover content={notice} title="Notice" placement="bottom">
+                <EyeOutlined />
+            </Popover>
+        ),
     },
 ];
 
@@ -51,10 +71,11 @@ const SupplierList = (props) => {
         tableData: dataTableSource,
     });
 
-    const { Topbar } = useTopbar({
+    const { PageHeader } = usePageHeader({
         title: 'List of Suppliers',
         dataId: '',
         table: 'supplier',
+        pageHeaderExtra: pageHeaderExtra,
     });
 
     const getAllData = async () => {
@@ -69,13 +90,24 @@ const SupplierList = (props) => {
 
     return (
         <>
-            <Topbar />
-            <Row gutter={[64, 64]} justify="space-between" style={{ marginBottom: '20px', marginTop: '10px' }}>
-                <Toolbar />
+            <Row>
+                <Breadcrumb />
+            </Row>
+            <Row>
+                <PageHeader />
             </Row>
 
             <Row gutter={[16, 16]}>
-                <DataTable />
+                <Col span={24}>
+                    <Card bordered={false}>
+                        <div className="card_content">
+                            <Row gutter={[64, 64]} justify="space-between" style={{ marginBottom: '20px' }}>
+                                <Toolbar />
+                            </Row>
+                            <DataTable />
+                        </div>
+                    </Card>
+                </Col>
             </Row>
         </>
     );

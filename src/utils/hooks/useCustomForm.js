@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Button, Form, Input, Space, Row, Col, Select, message } from 'antd';
+import { Button, Form, Input, Space, Row, Col, Select, message, Card } from 'antd';
 import { SaveOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 
 import * as layoutConfig from '../../utils/config/layout';
@@ -49,10 +49,6 @@ const useCustomForm = ({ table, initialFormValues, CustomFormMainItems, formType
         }
     };
 
-    const onBack = () => {
-        navigate(-1);
-    };
-
     const CustomForm = () => (
         <Form
             {...formLayout.mainLayout}
@@ -62,23 +58,16 @@ const useCustomForm = ({ table, initialFormValues, CustomFormMainItems, formType
             validateMessages={validateMessages}
             initialValues={initialFormValues}
         >
-            <CustomFormMainItems />
-            <Form.Item {...formLayout.tailLayout}>
-                <Row justify="space-between">
-                    <Col span={4}>
-                        <Button htmlType="button" onClick={onBack} icon={<ArrowLeftOutlined />}>
-                            Back
+            <Card bordered={false}>
+                <div className="card_content">
+                    <CustomFormMainItems />
+                    <Form.Item {...formLayout.tailLayout}>
+                        <Button type="primary" htmlType="submit" icon={<SaveOutlined />} className="form_button">
+                            {formButtonText}
                         </Button>
-                    </Col>
-                    <Col span={20} style={{ textAlign: 'right' }}>
-                        <Space>
-                            <Button type="primary" htmlType="submit" icon={<SaveOutlined />} className="form_button">
-                                {formButtonText}
-                            </Button>
-                        </Space>
-                    </Col>
-                </Row>
-            </Form.Item>
+                    </Form.Item>
+                </div>
+            </Card>
         </Form>
     );
     return { CustomForm };

@@ -4,18 +4,22 @@ import { useParams } from 'react-router-dom';
 
 import { Row, Col } from 'antd';
 
-import useTopbar from 'utils/hooks/useTopbar';
+import Breadcrumb from 'components/Breadcrumb';
+
 import useCustomForm from 'utils/hooks/useCustomForm';
+import usePageHeader from 'utils/hooks/usePageHeader';
 
 import * as categoryProps from '../Category/props';
 import * as service from '../../api/services/index';
+
 const EditCategory = (props) => {
     const [initialFormValues, setInitialFormValues] = useState({});
     const { id } = useParams();
     const dataId = parseInt(id);
-    const { Topbar } = useTopbar({
-        title: '',
-        dataId: dataId,
+
+    const { PageHeader } = usePageHeader({
+        title: 'Update Category',
+        dataId: '',
         table: 'category',
     });
 
@@ -38,8 +42,11 @@ const EditCategory = (props) => {
 
     return (
         <div>
-            <Row gutter={[16, 16]}>
-                <Topbar />
+            <Row>
+                <Breadcrumb />
+            </Row>
+            <Row>
+                <PageHeader />
             </Row>
             <Row style={{ padding: '35px' }} justify="center">
                 <Col span={15}>
