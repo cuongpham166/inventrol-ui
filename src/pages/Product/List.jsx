@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Col, Row, Tag, Popover, Button, Typography, Card } from 'antd';
-import { EyeOutlined, PlusOutlined } from '@ant-design/icons';
+import { Col, Row, Button, Typography, Card } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 
 import Breadcrumb from 'components/Breadcrumb';
 
-import useTopbar from 'utils/hooks/useTopbar';
 import useDataTable from '../../utils/hooks/useDataTable';
 import usePageHeader from 'utils/hooks/usePageHeader';
 

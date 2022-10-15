@@ -38,6 +38,9 @@ export const update = async (table, data) => {
             case 'category':
                 res = await categoryService.update(table, data);
                 break;
+            case 'subcategory':
+                res = await subcategoryService.update(table, data);
+                break;
             default:
                 console.log('Error');
                 break;

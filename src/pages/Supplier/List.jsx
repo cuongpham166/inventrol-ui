@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Col, Row, Button, Card, Popover } from 'antd';
-import { PlusOutlined, EyeOutlined } from '@ant-design/icons';
+import { Col, Row, Button, Card } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 
 import Breadcrumb from 'components/Breadcrumb';
 
@@ -10,6 +10,7 @@ import useDataTable from '../../utils/hooks/useDataTable';
 import usePageHeader from 'utils/hooks/usePageHeader';
 
 import * as service from '../../api/services';
+import * as supplierProps from '../Supplier/props';
 
 const pageHeaderExtra = (
     <>
@@ -21,52 +22,10 @@ const pageHeaderExtra = (
     </>
 );
 
-const columns = [
-    {
-        title: '#',
-        key: 'index',
-        render: (text, record, index) => index + 1,
-        width: 60,
-    },
-    {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-        render: (text, record) => <Link to={'/supplier/' + record.id}>{text}</Link>,
-    },
-    {
-        title: 'Contact Person',
-        dataIndex: 'contactPerson',
-        key: 'contactPerson',
-    },
-    {
-        title: 'Created Date',
-        dataIndex: 'createdDate',
-        key: 'createdDate',
-    },
-    {
-        title: 'Updated Date',
-        dataIndex: 'updatedDate',
-        key: 'updatedDate',
-    },
-    {
-        title: 'Notice',
-        dataIndex: 'notice',
-        key: 'notice',
-        width: '50px',
-        align: 'center',
-        render: (notice) => (
-            <Popover content={notice} title="Notice" placement="bottom">
-                <EyeOutlined />
-            </Popover>
-        ),
-    },
-];
-
 const SupplierList = (props) => {
     const [dataTableSource, setDataTableSource] = useState([]);
     const { DataTable, Toolbar, selectedRow, currentPage, pageSize, resetPagination } = useDataTable({
-        columns: columns,
+        columns: supplierProps.supplierTableColumns,
         table: 'supplier',
         tableData: dataTableSource,
     });

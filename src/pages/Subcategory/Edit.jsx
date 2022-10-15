@@ -1,169 +1,60 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
 
-import { Button, Form, Input, Space, Row, Col, Select, message } from 'antd';
-import { SaveOutlined, ArrowLeftOutlined } from '@ant-design/icons';
+import { Row, Col } from 'antd';
+import Breadcrumb from 'components/Breadcrumb';
 
-import useTopbar from 'utils/hooks/useTopbar';
+import usePageHeader from 'utils/hooks/usePageHeader';
+import useCustomForm from 'utils/hooks/useCustomForm';
 
-import * as layoutConfig from '../../utils/config/layout';
 import * as service from '../../api/services';
-import * as subcategoryService from '../../api/services/Subcategory';
-
-const { Option } = Select;
+import * as subcategoryProps from '../Subcategory/props';
 
 const EditSubcategory = (props) => {
-    const [form] = Form.useForm();
     const { id } = useParams();
     const dataId = parseInt(id);
-    const navigate = useNavigate();
-    const [categoryDataSource, setCategpryDataSource] = useState([]);
-    const [formValues, setFormValues] = useState({});
-    const [categoryValue, setCategoryValue] = useState(null);
-    const { Topbar } = useTopbar({
-        title: '',
-        dataId: dataId,
+
+    const [initialFormValues, setInitialFormValues] = useState({});
+
+    const { PageHeader } = usePageHeader({
+        title: 'Update Subcategory',
+        dataId: '',
         table: 'subcategory',
     });
 
-    const formLayout = layoutConfig.form;
+    const { CustomForm } = useCustomForm({
+        table: 'subcategory',
+        initialFormValues: initialFormValues,
+        CustomFormMainItems: subcategoryProps.CustomFormMainItems,
+        formType: 'edit',
+        dataId: dataId,
+    });
 
     const getSubcategoryById = async (dataId) => {
-        const result = await service.getById('subcategory', dataId);
-        setFormValues(result);
-    };
-
-    const getAllCategories = async () => {
-        const result = await service.getAll('category');
-        setCategpryDataSource(result);
-    };
-
-    const onFinish = async (updatedSubcategory) => {
-        try {
-            //form.resetFields();
-            let data = {
-                id: dataId,
-                updatedSubcategory: updatedSubcategory,
-            };
-
-            let updatedData = setSubcategoryData(data);
-            await subcategoryService.update('subcategory', updatedData);
-            //navigate('/subcategory');
-            //message.success('Sucess: Existing subcategory has been updated');*/
-        } catch (error) {
-            message.error('Error: ' + error);
-        }
-    };
-
-    const setSubcategoryData = (data) => {
-        let updatedData = {
-            id: data.id,
-            updatedSubcategory: {
-                name: data.updatedSubcategory.name,
-                notice: data.updatedSubcategory.notice,
-                category: { id: parseInt(categoryValue) },
-            },
-        };
-        return updatedData;
-    };
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-    };
-
-    const onBack = () => {
-        navigate(-1);
+        let result = await service.getById('subcategory', dataId);
+        setInitialFormValues({
+            name: result.name,
+            category: result.category.name,
+            tagColor: result.tagColor,
+            notice: result.notice,
+        });
     };
 
     useEffect(() => {
-        getAllCategories();
         getSubcategoryById(dataId);
     }, []);
 
-    useEffect(() => {
-        const { name, category, notice } = formValues;
-        if (categoryDataSource.length != 0) {
-            let foundCategory = categoryDataSource.find((catgegoryData) => catgegoryData.id == category.id);
-            form.setFieldsValue({
-                name: name,
-                category: foundCategory.name,
-                notice: notice,
-            });
-            setCategoryValue(foundCategory.id);
-        }
-    }, [form, formValues]);
-
-    const handleSelectChange = (value) => {
-        setCategoryValue(value);
-    };
-
     return (
         <div style={{}}>
-            <Row gutter={[16, 16]}>
-                <Topbar />
+            <Row>
+                <Breadcrumb />
+            </Row>
+            <Row>
+                <PageHeader />
             </Row>
             <Row style={{ padding: '35px' }} justify="center">
                 <Col span={15}>
-                    <Form
-                        {...formLayout.mainLayout}
-                        form={form}
-                        name="control-hooks"
-                        initialValues={{ formValues }}
-                        onFinish={onFinish}
-                    >
-                        <Form.Item
-                            label="Name"
-                            name="name"
-                            hasFeedback
-                            rules={[
-                                {
-                                    required: true,
-                                },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item>
-
-                        <Form.Item
-                            name="category"
-                            label="Category"
-                            hasFeedback
-                            rules={[
-                                {
-                                    required: true,
-                                },
-                            ]}
-                        >
-                            <Select placeholder="Please select a category" onChange={handleSelectChange}>
-                                {categoryDataSource.map((option) => (
-                                    <Option key={option.id} value={'' + option.id}>
-                                        {option.name}
-                                    </Option>
-                                ))}
-                            </Select>
-                        </Form.Item>
-
-                        <Form.Item label="Notice" name="notice">
-                            <Input.TextArea allowClear showCount />
-                        </Form.Item>
-
-                        <Form.Item {...formLayout.tailLayout}>
-                            <Row justify="space-between">
-                                <Col span={4}>
-                                    <Button htmlType="button" onClick={onBack} icon={<ArrowLeftOutlined />}>
-                                        Back
-                                    </Button>
-                                </Col>
-                                <Col span={20} style={{ textAlign: 'right' }}>
-                                    <Space>
-                                        <Button type="primary" htmlType="submit" icon={<SaveOutlined />}>
-                                            Update Subcategory
-                                        </Button>
-                                    </Space>
-                                </Col>
-                            </Row>
-                        </Form.Item>
-                    </Form>
+                    <CustomForm />
                 </Col>
             </Row>
         </div>

@@ -6,39 +6,39 @@ import { PlusOutlined } from '@ant-design/icons';
 
 import Breadcrumb from 'components/Breadcrumb';
 
-import * as service from '../../api/services';
-import * as categoryProps from '../Category/props';
-
 import useDataTable from '../../utils/hooks/useDataTable';
 import usePageHeader from 'utils/hooks/usePageHeader';
 
+import * as service from '../../api/services';
+import * as brandProps from '../Brand/props';
+
 const pageHeaderExtra = (
     <>
-        <Link to={'/category/add'}>
+        <Link to={'/brand/add'}>
             <Button key="1" type="primary" icon={<PlusOutlined />} style={{ textTransform: 'capitalize' }}>
-                Create New Category
+                Create New Brand
             </Button>
         </Link>
     </>
 );
 
-const CategoryList = (props) => {
+const BrandList = (props) => {
     const [dataTableSource, setDataTableSource] = useState([]);
     const { DataTable, Toolbar, selectedRow, currentPage, pageSize, resetPagination } = useDataTable({
-        columns: categoryProps.categoryTableColumns,
-        table: 'category',
+        columns: brandProps.brandTableColumns,
+        table: 'brand',
         tableData: dataTableSource,
     });
 
     const { PageHeader } = usePageHeader({
-        title: 'List of Categories',
+        title: 'List of Brands',
         dataId: '',
-        table: 'category',
+        table: 'brand',
         pageHeaderExtra: pageHeaderExtra,
     });
 
     const getAllData = async () => {
-        const result = await service.getAll('category');
+        const result = await service.getAll('brand');
         const tableData = result.filter((element) => element.deleted === false);
         setDataTableSource(tableData);
     };
@@ -72,4 +72,4 @@ const CategoryList = (props) => {
     );
 };
 
-export default CategoryList;
+export default BrandList;

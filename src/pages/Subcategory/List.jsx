@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Col, Row, Button, Card, Popover, Tag } from 'antd';
-import { PlusOutlined, EyeOutlined } from '@ant-design/icons';
+
+import { Col, Row, Button, Card } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+
 import Breadcrumb from 'components/Breadcrumb';
+
 import useDataTable from '../../utils/hooks/useDataTable';
 import usePageHeader from 'utils/hooks/usePageHeader';
 
 import * as service from '../../api/services';
+import * as subcategoryProps from '../Subcategory/props';
 
 const pageHeaderExtra = (
     <>
@@ -19,10 +23,9 @@ const pageHeaderExtra = (
 );
 
 const SubcategoryList = (props) => {
-    const [tableColumns, setTableColumns] = useState([]);
     const [dataTableSource, setDataTableSource] = useState([]);
     const { DataTable, Toolbar, selectedRow, currentPage, pageSize, resetPagination } = useDataTable({
-        columns: tableColumns,
+        columns: subcategoryProps.subcategoryTableColumns,
         table: 'subcategory',
         tableData: dataTableSource,
     });
@@ -42,67 +45,6 @@ const SubcategoryList = (props) => {
 
     useEffect(() => {
         getAllData();
-    }, []);
-
-    useEffect(() => {
-        let ignore = false;
-        const getAllCategories = async () => {
-            //const result = await service.getAll('category');
-            const columns = [
-                {
-                    title: '#',
-                    key: 'index',
-                    render: (text, record, index) => index + 1,
-                    width: 60,
-                },
-                {
-                    title: 'Name',
-                    dataIndex: 'name',
-                    key: 'name',
-                    render: (text, record) => <Link to={'/subcategory/' + record.id}>{text}</Link>,
-                },
-                {
-                    title: 'Category',
-                    dataIndex: 'category',
-                    key: 'category',
-                    render: (category) => (
-                        <Link to={'/category/' + category.id}>
-                            <Tag color={category.tagColor}>{category.name}</Tag>
-                        </Link>
-                    ),
-                },
-                {
-                    title: 'Created Date',
-                    dataIndex: 'createdDate',
-                    key: 'createdDate',
-                },
-                {
-                    title: 'Updated Date',
-                    dataIndex: 'updatedDate',
-                    key: 'updatedDate',
-                },
-                {
-                    title: 'Notice',
-                    dataIndex: 'notice',
-                    key: 'notice',
-                    width: '50px',
-                    align: 'center',
-                    render: (notice) => (
-                        <Popover content={notice} title="Notice" placement="bottom">
-                            <EyeOutlined />
-                        </Popover>
-                    ),
-                },
-            ];
-
-            if (!ignore) {
-                setTableColumns(columns);
-            }
-        };
-        getAllCategories();
-        return () => {
-            ignore = true;
-        };
     }, []);
 
     return (

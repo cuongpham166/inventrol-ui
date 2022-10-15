@@ -6,39 +6,38 @@ import { PlusOutlined } from '@ant-design/icons';
 
 import Breadcrumb from 'components/Breadcrumb';
 
-import * as service from '../../api/services';
-import * as categoryProps from '../Category/props';
-
 import useDataTable from '../../utils/hooks/useDataTable';
 import usePageHeader from 'utils/hooks/usePageHeader';
 
+import * as service from '../../api/services';
+import * as attributeProps from '../Attribute/props';
+
 const pageHeaderExtra = (
     <>
-        <Link to={'/category/add'}>
+        <Link to={'/attribute/add'}>
             <Button key="1" type="primary" icon={<PlusOutlined />} style={{ textTransform: 'capitalize' }}>
-                Create New Category
+                Create New Attribute
             </Button>
         </Link>
     </>
 );
-
-const CategoryList = (props) => {
+const AttributeList = (props) => {
     const [dataTableSource, setDataTableSource] = useState([]);
     const { DataTable, Toolbar, selectedRow, currentPage, pageSize, resetPagination } = useDataTable({
-        columns: categoryProps.categoryTableColumns,
-        table: 'category',
+        columns: attributeProps.attributeTableColumns,
+        table: 'attribute',
         tableData: dataTableSource,
     });
 
     const { PageHeader } = usePageHeader({
-        title: 'List of Categories',
+        title: 'List of Attributes',
         dataId: '',
-        table: 'category',
+        table: 'attribute',
         pageHeaderExtra: pageHeaderExtra,
     });
 
     const getAllData = async () => {
-        const result = await service.getAll('category');
+        const result = await service.getAll('attribute');
         const tableData = result.filter((element) => element.deleted === false);
         setDataTableSource(tableData);
     };
@@ -72,4 +71,4 @@ const CategoryList = (props) => {
     );
 };
 
-export default CategoryList;
+export default AttributeList;
