@@ -1,8 +1,8 @@
-import { Popover, Descriptions, Button } from 'antd';
+import { Popover, Tag, Descriptions, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import { EyeOutlined, EditOutlined } from '@ant-design/icons';
 
-export const brandTableColumns = [
+export const attributeValueTableColumns = [
     {
         title: '#',
         key: 'index',
@@ -13,7 +13,13 @@ export const brandTableColumns = [
         title: 'Name',
         dataIndex: 'name',
         key: 'name',
-        render: (text, record) => <Link to={'/brand/' + record.id}>{text}</Link>,
+        render: (text, record) => <Link to={'/attribute-value/' + record.id}>{text}</Link>,
+    },
+    {
+        title: 'Attribute',
+        dataIndex: 'attribute',
+        key: 'attribute',
+        render: (attribute) => <Tag color={attribute.tagColor}>{attribute.name}</Tag>,
     },
     {
         title: 'Created Date',
@@ -41,7 +47,7 @@ export const brandTableColumns = [
     },
 ];
 
-export const brandPageHeader = (data) => {
+export const attributeValuePageHeader = (data) => {
     let pageHeaderObj = {};
     let popoverContent = (
         <div>
@@ -51,21 +57,24 @@ export const brandPageHeader = (data) => {
 
     let mainContent = (
         <Descriptions size="small" column={3}>
+            <Descriptions.Item label="Attribute">
+                <Tag color={data.attribute.tagColor}>{data.attribute.name}</Tag>
+            </Descriptions.Item>
+            <Descriptions.Item label="Created on">{data.createdDate}</Descriptions.Item>
+            <Descriptions.Item label="Updated on">{data.updatedDate}</Descriptions.Item>
             <Descriptions.Item label="Notice">
                 <Popover content={popoverContent} title="Notice">
                     <EyeOutlined />
                 </Popover>
             </Descriptions.Item>
-            <Descriptions.Item label="Created on">{data.createdDate}</Descriptions.Item>
-            <Descriptions.Item label="Updated on">{data.updatedDate}</Descriptions.Item>
         </Descriptions>
     );
 
     let pageHeaderExtra = (
         <>
-            <Link to={'/brand/' + data.id + '/edit'}>
+            <Link to={'/attribute-value/' + data.id + '/edit'}>
                 <Button key="1" type="primary" icon={<EditOutlined />}>
-                    Update Brand
+                    Update Attribute Value
                 </Button>
             </Link>
         </>

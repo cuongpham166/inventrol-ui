@@ -13,7 +13,6 @@ export const attributeTableColumns = [
         title: 'Name',
         dataIndex: 'name',
         key: 'name',
-        render: (text, record) => <Link to={'/attribute/' + record.id}>{text}</Link>,
     },
     {
         title: 'Attribute Values',

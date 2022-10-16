@@ -23,11 +23,10 @@ const pageHeaderExtra = (
 );
 
 const CategoryList = (props) => {
-    const [dataTableSource, setDataTableSource] = useState([]);
     const { DataTable, Toolbar, selectedRow, currentPage, pageSize, resetPagination } = useDataTable({
         columns: categoryProps.categoryTableColumns,
         table: 'category',
-        tableData: dataTableSource,
+        dataUrl: 'category',
     });
 
     const { PageHeader } = usePageHeader({
@@ -36,16 +35,6 @@ const CategoryList = (props) => {
         table: 'category',
         pageHeaderExtra: pageHeaderExtra,
     });
-
-    const getAllData = async () => {
-        const result = await service.getAll('category');
-        const tableData = result.filter((element) => element.deleted === false);
-        setDataTableSource(tableData);
-    };
-
-    useEffect(() => {
-        getAllData();
-    }, []);
 
     return (
         <>

@@ -9,8 +9,10 @@ import * as layoutConfig from '../../utils/config/layout';
 const DEFAULT_PAGE_SIZE = 10;
 const DEFAULT_PAGE_NUMBER = 0;
 
-const useDataTable = ({ columns, table, tableData }) => {
-    const [dataSource, setDataSource] = useState(tableData);
+const useDataTable = ({ columns, table, dataUrl }) => {
+    const [dataSource, setDataSource] = useState(null);
+    const [totalElements, setTotalElements] = useState(0);
+
     const [selectedRow, setSelectedRow] = useState(null);
     const [currentPage, setCurrentPage] = useState(DEFAULT_PAGE_NUMBER);
     const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
@@ -43,8 +45,18 @@ const useDataTable = ({ columns, table, tableData }) => {
     }, [deleteClick]);
 
     useEffect(() => {
-        getSearchData(searchValue);
+        //getSearchData(searchValue);
     }, [searchValue]);
+
+    const getAllData = async () => {
+        const result = await service.getAll(dataUrl);
+        setDataSource(result);
+        setTotalElements(result.length);
+    };
+
+    useEffect(() => {
+        getAllData();
+    }, []);
 
     const deleteElement = async (elementId) => {
         const res = await service.deleteById(table, parseInt(elementId));
@@ -78,7 +90,7 @@ const useDataTable = ({ columns, table, tableData }) => {
             pagination={{
                 pageSize: DEFAULT_PAGE_SIZE,
                 current: currentPage + 1,
-                total: dataSource.totalElements,
+                total: totalElements,
                 showTotal: (total, range) => {
                     return `${range[0]}-${range[1]} of ${total} items`;
                 },

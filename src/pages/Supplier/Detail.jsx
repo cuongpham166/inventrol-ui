@@ -136,11 +136,10 @@ const SupplierDetail = (props) => {
         pageHeaderExtra: pageHeaderExtra,
     });
 
-    const [dataTableSource, setDataTableSource] = useState([]);
     const { DataTable, Toolbar, selectedRow, currentPage, pageSize, resetPagination } = useDataTable({
         columns: productProps.productTableColumns,
         table: 'product',
-        tableData: dataTableSource,
+        dataUrl: 'supplier/' + dataId + '/products',
     });
 
     const getSupplierDataById = async (dataId) => {
@@ -148,7 +147,6 @@ const SupplierDetail = (props) => {
         let supplierPageHeaderObj = supplierProps.supplierPageHeader(supplierInfoRes);
         setPageHeaderMainContent(supplierPageHeaderObj.mainContent);
         setPageHeaderExtra(supplierPageHeaderObj.pageHeaderExtra);
-        setDataTableSource(supplierInfoRes.product);
     };
 
     useEffect(() => {

@@ -25,22 +25,11 @@ const pageHeaderExtra = (
 );
 
 const ProductList = (props) => {
-    const [dataTableSource, setDataTableSource] = useState([]);
     const { DataTable, Toolbar, selectedRow, currentPage, pageSize, resetPagination } = useDataTable({
         columns: productProps.productTableColumns,
         table: 'product',
-        tableData: dataTableSource,
+        dataUrl: 'product',
     });
-
-    const getAllData = async () => {
-        const result = await service.getAll('product');
-        const tableData = result.filter((element) => element.deleted === false);
-        setDataTableSource(tableData);
-    };
-
-    useEffect(() => {
-        getAllData();
-    }, []);
 
     const { PageHeader } = usePageHeader({
         title: 'List of Products',

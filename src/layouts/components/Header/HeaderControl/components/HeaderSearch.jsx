@@ -5,6 +5,7 @@ import { Select, AutoComplete, Space } from 'antd';
 import debounce from 'lodash/debounce';
 
 import * as service from '@services';
+import * as headerProps from '../components/props';
 
 const { Option } = Select;
 
@@ -15,22 +16,11 @@ const HeaderSearch = (props) => {
     const [autocompleteOptions, setAutocompleteOptions] = useState([]);
     const [autocompleteValue, setAutocompleteValue] = useState('');
 
-    const renderOptionItem = (title, value) => ({
-        label: title,
-        value: value,
-    });
-
     const renderAutocompleteOptionItem = (key, title) => ({
         key: key,
         label: title,
         value: title,
     });
-
-    const selectOptions = [
-        renderOptionItem('Subcategory', 'subcategory'),
-        renderOptionItem('Category', 'category'),
-        renderOptionItem('Product', 'product'),
-    ];
 
     const handleChange = (value) => {
         setSelectValue(value);
@@ -63,27 +53,31 @@ const HeaderSearch = (props) => {
     };
 
     return (
-        <Space size={2}>
-            <AutoComplete
-                style={{
-                    width: 200,
-                }}
-                allowClear={true}
-                onSearch={debounce(handleSearch, 400)}
-                onSelect={handleSelect}
-                options={autocompleteOptions}
-                placeholder={autocompletePlaceholder}
-                notFoundContent
-            />
-            <Select
-                defaultValue={selectValue}
-                style={{
-                    width: 120,
-                }}
-                onChange={handleChange}
-                options={selectOptions}
-            ></Select>
-        </Space>
+        <div className="header_searchbar_container">
+            <span className="header_searchbar_select" style={{ marginRight: '5px' }}>
+                <Select
+                    defaultValue={selectValue}
+                    style={{
+                        width: 120,
+                    }}
+                    onChange={handleChange}
+                    options={headerProps.selectSearchOptions}
+                ></Select>
+            </span>
+            <span className="header_searchbar_input">
+                <AutoComplete
+                    style={{
+                        width: 200,
+                    }}
+                    allowClear={true}
+                    onSearch={debounce(handleSearch, 400)}
+                    onSelect={handleSelect}
+                    options={autocompleteOptions}
+                    placeholder={autocompletePlaceholder}
+                    notFoundContent
+                />
+            </span>
+        </div>
     );
 };
 

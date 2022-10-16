@@ -26,7 +26,7 @@ const AttributeList = (props) => {
     const { DataTable, Toolbar, selectedRow, currentPage, pageSize, resetPagination } = useDataTable({
         columns: attributeProps.attributeTableColumns,
         table: 'attribute',
-        tableData: dataTableSource,
+        dataUrl: 'attribute',
     });
 
     const { PageHeader } = usePageHeader({

@@ -23,11 +23,10 @@ const pageHeaderExtra = (
 );
 
 const SupplierList = (props) => {
-    const [dataTableSource, setDataTableSource] = useState([]);
     const { DataTable, Toolbar, selectedRow, currentPage, pageSize, resetPagination } = useDataTable({
         columns: supplierProps.supplierTableColumns,
         table: 'supplier',
-        tableData: dataTableSource,
+        dataUrl: 'supplier',
     });
 
     const { PageHeader } = usePageHeader({
@@ -36,16 +35,6 @@ const SupplierList = (props) => {
         table: 'supplier',
         pageHeaderExtra: pageHeaderExtra,
     });
-
-    const getAllData = async () => {
-        const result = await service.getAll('supplier');
-        const tableData = result.filter((element) => element.deleted === false);
-        setDataTableSource(tableData);
-    };
-
-    useEffect(() => {
-        getAllData();
-    }, []);
 
     return (
         <>

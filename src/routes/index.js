@@ -2,7 +2,7 @@ import Home from '../pages/Home';
 import NoMatch from '../pages/Nomatch';
 
 import { SubcategoryDetail, SubcategoryList, CreateSubcategory, EditSubcategory } from '../pages/Subcategory';
-import { CategoryList, CreateCategory, EditCategory } from 'pages/Category';
+import { CategoryList, CategoryDetail, CreateCategory, EditCategory } from 'pages/Category';
 import { SupplierDetail, SupplierList, CreateSupplier } from 'pages/Supplier';
 import { ProductList, ProductDetail, CreateProduct, EditProduct } from 'pages/Product';
 import { BrandList, BrandDetail, CreateBrand, EditBrand } from 'pages/Brand';
@@ -18,6 +18,7 @@ const publicRoutes = [
     { path: '/', component: Home },
 
     { path: '/category', component: CategoryList },
+    { path: '/category/:id', component: CategoryDetail },
     { path: '/category/add', component: CreateCategory },
     { path: '/category/:id/edit', component: EditCategory },
 
@@ -41,7 +42,7 @@ const publicRoutes = [
     { path: '/brand/:id/edit', component: EditBrand },
 
     { path: '/attribute', component: AttributeList },
-    { path: '/attribute/:id', component: AttributeDetail },
+    /*{ path: '/attribute/:id', component: AttributeDetail },*/
     { path: '/attribute/add', component: CreateAttribute },
     { path: '/attribute/:id/edit', component: EditAttribute },
 

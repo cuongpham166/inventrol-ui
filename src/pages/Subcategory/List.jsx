@@ -23,11 +23,10 @@ const pageHeaderExtra = (
 );
 
 const SubcategoryList = (props) => {
-    const [dataTableSource, setDataTableSource] = useState([]);
     const { DataTable, Toolbar, selectedRow, currentPage, pageSize, resetPagination } = useDataTable({
         columns: subcategoryProps.subcategoryTableColumns,
         table: 'subcategory',
-        tableData: dataTableSource,
+        dataUrl: 'subcategory',
     });
 
     const { PageHeader } = usePageHeader({
@@ -36,16 +35,6 @@ const SubcategoryList = (props) => {
         table: 'subcategory',
         pageHeaderExtra: pageHeaderExtra,
     });
-
-    const getAllData = async () => {
-        const result = await service.getAll('subcategory');
-        const tableData = result.filter((element) => element.deleted === false);
-        setDataTableSource(tableData);
-    };
-
-    useEffect(() => {
-        getAllData();
-    }, []);
 
     return (
         <>

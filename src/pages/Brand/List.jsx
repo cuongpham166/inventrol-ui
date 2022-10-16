@@ -27,7 +27,7 @@ const BrandList = (props) => {
     const { DataTable, Toolbar, selectedRow, currentPage, pageSize, resetPagination } = useDataTable({
         columns: brandProps.brandTableColumns,
         table: 'brand',
-        tableData: dataTableSource,
+        dataUrl: 'brand',
     });
 
     const { PageHeader } = usePageHeader({
