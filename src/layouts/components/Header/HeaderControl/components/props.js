@@ -6,6 +6,7 @@ const renderOptionItem = (title, value) => ({
 export const selectSearchOptions = [
     renderOptionItem('Attribute', 'attribute'),
     renderOptionItem('Attribute Value', 'attribute-value'),
+    renderOptionItem('Brand', 'brand'),
     renderOptionItem('Category', 'category'),
     renderOptionItem('Product', 'product'),
     renderOptionItem('Subcategory', 'subcategory'),

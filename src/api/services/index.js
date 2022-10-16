@@ -61,8 +61,9 @@ export const getById = async (table, id) => {
 
 export const search = async (table, query) => {
     try {
-        const res = await httpRequest.get(table, { params: { q: query } });
-        return res;
+        const results = await httpRequest.get(table, { params: { name: query } });
+        const data = results.filter((result) => result.deleted === false);
+        return data;
     } catch (error) {
         console.log(error);
     }

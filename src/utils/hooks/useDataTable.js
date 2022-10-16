@@ -33,6 +33,14 @@ const useDataTable = ({ columns, table, dataUrl }) => {
         },
     ];
 
+    const resetPagination = () => {
+        setCurrentPage(DEFAULT_PAGE_NUMBER);
+    };
+
+    const handleTableChange = (pagination) => {
+        setCurrentPage(pagination.current - 1);
+    };
+
     useEffect(() => {
         if (selectedRow !== null) {
             const deletedElementId = selectedRow.id;
@@ -43,10 +51,6 @@ const useDataTable = ({ columns, table, dataUrl }) => {
             //softDelete
         }
     }, [deleteClick]);
-
-    useEffect(() => {
-        //getSearchData(searchValue);
-    }, [searchValue]);
 
     const getAllData = async () => {
         const result = await service.getAll(dataUrl);
@@ -68,17 +72,14 @@ const useDataTable = ({ columns, table, dataUrl }) => {
 
     const getSearchData = async (searchInput) => {
         const result = await service.search(table, searchInput);
-        const tableData = result.filter((element) => element.deleted === false);
-        setDataSource(tableData);
+        setDataSource(result);
     };
 
-    const resetPagination = () => {
-        setCurrentPage(DEFAULT_PAGE_NUMBER);
-    };
-
-    const handleTableChange = (pagination) => {
-        setCurrentPage(pagination.current - 1);
-    };
+    useEffect(() => {
+        if (searchValue != null) {
+            getSearchData(searchValue);
+        }
+    }, [searchValue]);
 
     const DataTable = () => (
         <Table

@@ -8,7 +8,7 @@ import { exportItems } from 'utils/config/layout';
 const { Search } = Input;
 
 const useToolbar = ({ table }) => {
-    const [searchValue, setSearchValue] = useState('');
+    const [searchValue, setSearchValue] = useState(null);
 
     const handleMenuClick = (e) => {
         //console.log('click', e);
