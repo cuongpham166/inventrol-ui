@@ -116,22 +116,3 @@ export const categoryTableColumns = [
         ),
     },
 ];
-
-const getItem = (index, name, subcategories, createdDate, updatedDate, notice) => {
-    return [index, name, subcategories, createdDate, updatedDate, notice];
-};
-
-export const dataExport = (data) => {
-    let exportData = [];
-    data.map((value, index) => {
-        let item;
-        let subcategories = '';
-        value.subcategory.map((subcat, index) => {
-            subcategories = subcategories + ', ' + subcat.name;
-        });
-        item = getItem(index + 1, value.name, subcategories, value.createdDate, value.updatedDate, value.notice);
-        exportData.push(item);
-    });
-
-    return exportData;
-};

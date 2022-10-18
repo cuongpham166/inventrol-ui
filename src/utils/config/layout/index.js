@@ -1,3 +1,6 @@
+import React, { useRef } from 'react';
+import { Select, Form, Input } from 'antd';
+
 import {
     AppstoreOutlined,
     ShopOutlined,
@@ -11,6 +14,8 @@ import {
     FileWordOutlined,
     FileExcelOutlined,
 } from '@ant-design/icons';
+
+const { Option } = Select;
 
 export const form = {
     mainLayout: {
@@ -73,21 +78,6 @@ const getItem = (label, key, icon, children, type) => {
     };
 };
 
-/*export const sidebarItems = [
-    getItem('Dashboard', 'dashboard', <AppstoreOutlined />),
-    getItem('Inventory', 'inventory', <ShopOutlined />),
-    getItem('Products', 'product', <CodeSandboxOutlined />, [
-        getItem('Category', 'category', <TagOutlined />),
-        getItem('Subcategory', 'subcategory', <TagsOutlined />),
-        getItem('Brand', 'brand', <TagOutlined />),
-        getItem('Tag', 'tag', <TagOutlined />),
-        getItem('Attribute', 'attribute', <TagOutlined />),
-        getItem('AttributeValue', 'attributeValue', <TagOutlined />),
-    ]),
-    getItem('Suppliers', 'supplier', <SolutionOutlined />),
-    getItem('Customers', 'customer', <UserOutlined />),
-];*/
-
 export const sidebarItems = [
     getItem('Dashboard', 'dashboard', <AppstoreOutlined />),
     getItem('Inventory', 'inventory', <ShopOutlined />),
@@ -117,14 +107,14 @@ export const exportItems = [
         icon: <FilePdfOutlined />,
     },
     {
-        label: 'Export as Word',
-        key: 'word',
-        icon: <FileWordOutlined />,
-    },
-    {
         label: 'Export as CSV',
         key: 'csv',
         icon: <FileTextOutlined />,
+    },
+    {
+        label: 'Export as Word',
+        key: 'word',
+        icon: <FileWordOutlined />,
     },
     {
         label: 'Export as Excel',
