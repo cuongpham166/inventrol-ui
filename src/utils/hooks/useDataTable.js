@@ -18,7 +18,7 @@ const useDataTable = ({ columns, table, dataUrl }) => {
     const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
 
     const { deleteClick, actionMenuView } = useActionMenu({ selectedRow, table });
-    const { searchValue, Toolbar } = useToolbar({ table });
+    const { searchValue, Toolbar } = useToolbar({ table, dataSource });
 
     message.config(layoutConfig.message);
 
