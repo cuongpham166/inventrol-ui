@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import { CSVLink, CSVDownload } from 'react-csv';
 
 import { Space, Button, Dropdown, Menu, Modal, Form } from 'antd';
 import { CaretDownOutlined } from '@ant-design/icons';
@@ -11,7 +10,7 @@ import { exportItems } from 'utils/config/layout';
 import * as layoutConfig from 'utils/config/layout';
 import * as dataExporter from 'utils/functions/dataExporter';
 
-const useExportData = ({ dataSource }) => {
+const useExportData = ({ dataSource, table }) => {
     const [form] = Form.useForm();
     const formLayout = layoutConfig.form;
 
@@ -38,7 +37,7 @@ const useExportData = ({ dataSource }) => {
         pageSettingsRef.current = settings;
         setPageSettings(settings);
 
-        let data = dataExporter.exportDataFormatter(dataSource, 'category', dataType);
+        let data = dataExporter.exportDataFormatter(dataSource, table, dataType);
 
         switch (dataType) {
             case 'pdf':
@@ -51,6 +50,10 @@ const useExportData = ({ dataSource }) => {
             case 'csv':
                 exportedDataRef.current = [...data.dataHeader, ...data.dataList];
                 setExportedData(...data.dataHeader, ...data.dataList);
+                break;
+            case 'json':
+                exportedDataRef.current = [dataSource];
+                setExportedData([dataSource]);
                 break;
             default:
                 break;
@@ -77,13 +80,12 @@ const useExportData = ({ dataSource }) => {
             case 'csv':
                 exportCSV(exportedDataRef.current);
                 break;
+            case 'json':
+                exportJSON(exportedDataRef.current);
+                break;
             default:
                 break;
         }
-        setIsModalOpen(false);
-    };
-
-    const handleCancel = () => {
         setIsModalOpen(false);
     };
 
@@ -109,12 +111,19 @@ const useExportData = ({ dataSource }) => {
 
     const exportCSV = (exportedData) => {
         let csvContent = 'data:text/csv;charset=utf-8,' + exportedData.map((e) => e.join(',')).join('\n');
-        console.log(exportedData);
         let encodedUri = encodeURI(csvContent);
         let link = document.createElement('a');
         link.setAttribute('href', encodedUri);
         link.setAttribute('download', pageSettingsRef.current.fileName + '.csv');
         document.body.appendChild(link);
+        link.click();
+    };
+
+    const exportJSON = (exportedData) => {
+        let jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(JSON.stringify(exportedData[0]))}`;
+        let link = document.createElement('a');
+        link.setAttribute('href', jsonString);
+        link.setAttribute('download', pageSettingsRef.current.fileName + '.json');
         link.click();
     };
 
@@ -149,7 +158,9 @@ const useExportData = ({ dataSource }) => {
                             console.log('Validate Failed:', info);
                         });
                 }}
-                onCancel={handleCancel}
+                onCancel={() => {
+                    setIsModalOpen(false);
+                }}
                 okText="Export"
             >
                 <Form

@@ -7,7 +7,7 @@ const { Search } = Input;
 
 const useToolbar = ({ table, dataSource }) => {
     const [searchValue, setSearchValue] = useState(null);
-    const { DataExporter } = useExportData({ dataSource });
+    const { DataExporter } = useExportData({ dataSource, table });
 
     const onSearch = (value) => {
         setSearchValue(value);

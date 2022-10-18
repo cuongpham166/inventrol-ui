@@ -11,7 +11,7 @@ import {
     UserOutlined,
     FileTextOutlined,
     FilePdfOutlined,
-    FileWordOutlined,
+    FileOutlined,
     FileExcelOutlined,
 } from '@ant-design/icons';
 
@@ -112,13 +112,8 @@ export const exportItems = [
         icon: <FileTextOutlined />,
     },
     {
-        label: 'Export as Word',
-        key: 'word',
-        icon: <FileWordOutlined />,
-    },
-    {
-        label: 'Export as Excel',
-        key: 'excel',
-        icon: <FileExcelOutlined />,
+        label: 'Export as JSON',
+        key: 'json',
+        icon: <FileOutlined />,
     },
 ];

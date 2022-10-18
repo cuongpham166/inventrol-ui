@@ -19,6 +19,11 @@ export const getExportFileSettings = (dataTypeRef) => {
                 fileName: 'report',
             };
             break;
+        case 'json':
+            settings = {
+                fileName: 'report',
+            };
+            break;
         default:
             break;
     }
@@ -76,7 +81,15 @@ export const getExportFormItems = (dataTypeRef) => {
                 </>
             );
             break;
-
+        case 'json':
+            items = (
+                <>
+                    <Form.Item name="fileName" label="Filename">
+                        <Input />
+                    </Form.Item>
+                </>
+            );
+            break;
         default:
             items = <></>;
             break;
@@ -84,65 +97,64 @@ export const getExportFormItems = (dataTypeRef) => {
     return items;
 };
 
-const pdfDataFormatter = (data, tableName) => {
-    let fileData = {
-        dataList: [],
-        dataHeader: [],
-    };
-    switch (tableName) {
-        case 'category':
-            fileData.dataHeader = ['Index', 'Name', 'Subcategories', 'Created on', 'Updated on', 'Notice'];
-            data.map((value, index) => {
-                let item;
-                let subcategories = '';
-                value.subcategory.map((subcat, idx) => {
-                    subcategories = subcategories + ', ' + subcat.name;
-                });
-                item = [index + 1, value.name, subcategories, value.createdDate, value.updatedDate, value.notice];
-                fileData.dataList.push(item);
-            });
+const headerFormatter = (type, tableName) => {
+    let header = [];
+    switch (type) {
+        case 'pdf':
+            switch (tableName) {
+                case 'category':
+                    header = ['Index', 'Name', 'Subcategories', 'Created on', 'Updated on', 'Notice'];
+                    break;
+                default:
+                    break;
+            }
+            break;
+        case 'csv':
+            switch (tableName) {
+                case 'category':
+                    header = [['Index', 'Name', 'Subcategories', 'Created on', 'Updated on', 'Notice']];
+                    break;
+                default:
+                    break;
+            }
             break;
         default:
             break;
     }
-    return fileData;
+    return header;
 };
 
-const csvDataFormatter = (data, tableName) => {
-    let fileData = {
-        dataList: [],
-        dataHeader: [],
-    };
+const dataFormatter = (data, dataType, tableName) => {
+    let dataList = [];
     switch (tableName) {
         case 'category':
-            fileData.dataHeader = [['Index', 'Name', 'Subcategories', 'Created on', 'Updated on', 'Notice']];
             data.map((value, index) => {
                 let item;
                 let subcategories = '';
                 value.subcategory.map((subcat, idx) => {
-                    subcategories = subcategories + ' / ' + subcat.name;
+                    if (dataType == 'csv') {
+                        subcategories = subcategories + ' / ' + subcat.name;
+                    } else {
+                        subcategories = subcategories + ', ' + subcat.name;
+                    }
                 });
                 item = [index + 1, value.name, subcategories, value.createdDate, value.updatedDate, value.notice];
-                fileData.dataList.push(item);
+
+                dataList.push(item);
             });
             break;
         default:
             break;
     }
-    return fileData;
+    return dataList;
 };
 
 export const exportDataFormatter = (data, tableName, dataType) => {
-    let exportData = {};
-    switch (dataType) {
-        case 'pdf':
-            exportData = pdfDataFormatter(data, tableName);
-            break;
-        case 'csv':
-            exportData = csvDataFormatter(data, tableName);
-            break;
-        default:
-            break;
-    }
+    let exportData = {
+        dataList: [],
+        dataHeader: [],
+    };
+    exportData.dataHeader = headerFormatter(dataType, tableName);
+    exportData.dataList = dataFormatter(data, dataType, tableName);
     return exportData;
 };
