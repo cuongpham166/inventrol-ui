@@ -14,7 +14,7 @@ const useDropdownCheckbox = ({ columnList }) => {
 
     const checboxGroupRender = () => {
         return (
-            <div style={{ width: '150px', padding: '10px' }}>
+            <div style={{ width: '150px', padding: '5px' }}>
                 <Row gutter={[24, 24]}>
                     <Checkbox.Group defaultValue={columnList} onChange={onChange}>
                         <Row>

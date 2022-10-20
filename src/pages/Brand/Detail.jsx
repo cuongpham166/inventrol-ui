@@ -29,7 +29,7 @@ const BrandDetail = (props) => {
         pageHeaderExtra: pageHeaderExtra,
     });
 
-    const { DataTable, Toolbar, selectedRow, currentPage, pageSize, resetPagination } = useDataTable({
+    const { DataTable, currentPage, pageSize, resetPagination } = useDataTable({
         columns: productProps.productTableColumns,
         table: 'product',
         dataUrl: 'brand/' + dataId + '/products',
@@ -61,9 +61,6 @@ const BrandDetail = (props) => {
                             <Title level={4}>Products</Title>
                         </div>
                         <div className="card_content">
-                            <Row gutter={[64, 64]} justify="space-between" style={{ marginBottom: '20px' }}>
-                                <Toolbar />
-                            </Row>
                             <DataTable />
                         </div>
                     </Card>

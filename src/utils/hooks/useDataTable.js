@@ -118,21 +118,25 @@ const useDataTable = ({ columns, table, dataUrl }) => {
                     </Space>
                 </Col>
             </Row>
-            <Table
-                columns={tableColumns}
-                dataSource={dataSource}
-                rowKey="id"
-                bordered
-                onChange={handleTableChange}
-                pagination={{
-                    pageSize: DEFAULT_PAGE_SIZE,
-                    current: currentPage + 1,
-                    total: totalElements,
-                    showTotal: (total, range) => {
-                        return `${range[0]}-${range[1]} of ${total} items`;
-                    },
-                }}
-            />
+            <Row>
+                <Col span={24}>
+                    <Table
+                        columns={tableColumns}
+                        dataSource={dataSource}
+                        rowKey="id"
+                        bordered
+                        onChange={handleTableChange}
+                        pagination={{
+                            pageSize: DEFAULT_PAGE_SIZE,
+                            current: currentPage + 1,
+                            total: totalElements,
+                            showTotal: (total, range) => {
+                                return `${range[0]}-${range[1]} of ${total} items`;
+                            },
+                        }}
+                    />
+                </Col>
+            </Row>
         </>
     );
 

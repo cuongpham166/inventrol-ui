@@ -30,7 +30,7 @@ const AttributeValueDetail = (props) => {
     });
 
     const [dataTableSource, setDataTableSource] = useState([]);
-    const { DataTable, Toolbar, selectedRow, currentPage, pageSize, resetPagination } = useDataTable({
+    const { DataTable, currentPage, pageSize, resetPagination } = useDataTable({
         columns: productProps.productTableColumns,
         table: 'product',
         dataUrl: 'attribute-value/' + dataId + '/products',
@@ -63,9 +63,6 @@ const AttributeValueDetail = (props) => {
                             <Title level={4}>Products</Title>
                         </div>
                         <div className="card_content">
-                            <Row gutter={[64, 64]} justify="space-between" style={{ marginBottom: '20px' }}>
-                                <Toolbar />
-                            </Row>
                             <DataTable />
                         </div>
                     </Card>
