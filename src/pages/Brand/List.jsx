@@ -24,7 +24,7 @@ const pageHeaderExtra = (
 
 const BrandList = (props) => {
     const [dataTableSource, setDataTableSource] = useState([]);
-    const { DataTable, Toolbar, selectedRow, currentPage, pageSize, resetPagination } = useDataTable({
+    const { DataTable, currentPage, pageSize, resetPagination } = useDataTable({
         columns: brandProps.brandTableColumns,
         table: 'brand',
         dataUrl: 'brand',
@@ -60,9 +60,6 @@ const BrandList = (props) => {
                 <Col span={24}>
                     <Card bordered={false}>
                         <div className="card_content">
-                            <Row gutter={[64, 64]} justify="space-between" style={{ marginBottom: '20px' }}>
-                                <Toolbar />
-                            </Row>
                             <DataTable />
                         </div>
                     </Card>

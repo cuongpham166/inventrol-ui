@@ -24,7 +24,7 @@ const pageHeaderExtra = (
 
 const AttributeValueList = (props) => {
     const [dataTableSource, setDataTableSource] = useState([]);
-    const { DataTable, Toolbar, selectedRow, currentPage, pageSize, resetPagination } = useDataTable({
+    const { DataTable, currentPage, pageSize, resetPagination } = useDataTable({
         columns: attributeValueProps.attributeValueTableColumns,
         table: 'attribute-value',
         dataUrl: 'attribute-value',
@@ -60,9 +60,6 @@ const AttributeValueList = (props) => {
                 <Col span={24}>
                     <Card bordered={false}>
                         <div className="card_content">
-                            <Row gutter={[64, 64]} justify="space-between" style={{ marginBottom: '20px' }}>
-                                <Toolbar />
-                            </Row>
                             <DataTable />
                         </div>
                     </Card>

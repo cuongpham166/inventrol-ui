@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Form, Input, Select, Tag, Popover } from 'antd';
+import { Form, Input, Select, Tag, Popover, Space, Button } from 'antd';
 import { Colorpicker, ColorPickerValue } from 'antd-colorpicker';
-import { EyeOutlined } from '@ant-design/icons';
+import { EyeOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
 import * as service from '../../api/services';
 const { Option } = Select;
