@@ -13,6 +13,7 @@ import {
     FilePdfOutlined,
     FileOutlined,
     FileExcelOutlined,
+    TableOutlined,
 } from '@ant-design/icons';
 
 const { Option } = Select;
@@ -82,16 +83,16 @@ export const sidebarItems = [
     getItem('Dashboard', 'dashboard', <AppstoreOutlined />),
     getItem('Inventory', 'inventory', <ShopOutlined />),
     getItem(
-        'Management',
+        'Management ',
         'management',
         null,
         [
-            getItem('Products', 'product', <CodeSandboxOutlined />, [
-                getItem('Category', 'category', <TagOutlined />),
-                getItem('Subcategory', 'subcategory', <TagsOutlined />),
-                getItem('Brand', 'brand', <TagOutlined />),
+            getItem('Table', 'table', <TableOutlined />, [
                 getItem('Attribute', 'attribute', <TagOutlined />),
                 getItem('Attribute Value', 'attribute-value', <TagOutlined />),
+                getItem('Brand', 'brand', <TagOutlined />),
+                getItem('Category', 'category', <TagOutlined />),
+                getItem('Subcategory', 'subcategory', <TagsOutlined />),
             ]),
             getItem('Suppliers', 'supplier', <SolutionOutlined />),
             getItem('Customers', 'customer', <UserOutlined />),

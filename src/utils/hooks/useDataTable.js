@@ -61,33 +61,7 @@ const useDataTable = ({ columns, table, dataUrl }) => {
         },
     ];
 
-    const [tableColumns, setTableColumns] = useState([
-        ...columns,
-        {
-            title: 'Action',
-            dataIndex: 'name',
-            key: 'action',
-            width: '50px',
-            align: 'center',
-            render: (text, record) => (
-                <Space>
-                    <Link to={'/' + table + '/' + record.id + '/edit'}>
-                        <Button icon={<EditOutlined />}></Button>
-                    </Link>
-                    <Popconfirm
-                        title="Are you sure to delete this element?"
-                        onConfirm={() => {
-                            onDeleteElement(record.id);
-                        }}
-                        okText="Yes"
-                        cancelText="No"
-                    >
-                        <Button type="primary" danger icon={<DeleteOutlined />}></Button>
-                    </Popconfirm>
-                </Space>
-            ),
-        },
-    ]);
+    const [tableColumns, setTableColumns] = useState(defaultColumns);
     const tableColumnsRef = useRef(tableColumns);
 
     const [columnOptionList, setColumnOptionList] = useState([]);

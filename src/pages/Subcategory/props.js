@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Form, Input, Select, Tag, Popover, Space, Button } from 'antd';
+import { Form, Input, Select, Tag, Popover, Space, Button, Card } from 'antd';
 import { Colorpicker, ColorPickerValue } from 'antd-colorpicker';
 import { EyeOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
@@ -114,13 +114,21 @@ export const subcategoryTableColumns = [
         ),
     },
     {
-        title: 'Created Date',
+        title: 'Color',
+        dataIndex: 'tagColor',
+        key: 'tagColor',
+        align: 'center',
+        width: '60px',
+        render: (tagColor) => <Tag color={tagColor}>{tagColor}</Tag>,
+    },
+    {
+        title: 'Created on',
         dataIndex: 'createdDate',
         key: 'createdDate',
         width: '120px',
     },
     {
-        title: 'Updated Date',
+        title: 'Updated on',
         dataIndex: 'updatedDate',
         key: 'updatedDate',
         width: '130px',

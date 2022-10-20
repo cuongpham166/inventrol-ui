@@ -1,4 +1,4 @@
-import { Tooltip, Popover, Button, Descriptions } from 'antd';
+import { Tooltip, Popover, Button, Descriptions, Form, Input, Select, Card, Typography } from 'antd';
 import { Link } from 'react-router-dom';
 import {
     PhoneOutlined,
@@ -11,6 +11,9 @@ import {
     EyeOutlined,
     EditOutlined,
 } from '@ant-design/icons';
+
+const { Option } = Select;
+const { Title } = Typography;
 
 export const supplierDataList = (data) => {
     let address;
@@ -166,6 +169,7 @@ export const supplierPageHeader = (data) => {
     };
     return pageHeaderObj;
 };
+
 export const initialFormValues = {
     website: '',
     phone_number: '',
@@ -193,13 +197,13 @@ export const supplierTableColumns = [
         key: 'contactPerson',
     },
     {
-        title: 'Created Date',
+        title: 'Created on',
         dataIndex: 'createdDate',
         key: 'createdDate',
         width: '120px',
     },
     {
-        title: 'Updated Date',
+        title: 'Updated on',
         dataIndex: 'updatedDate',
         key: 'updatedDate',
         width: '130px',
@@ -217,3 +221,105 @@ export const supplierTableColumns = [
         ),
     },
 ];
+
+export const CustomFormMainItems = () => {
+    return (
+        <>
+            <Card bordered={false} style={{ marginBottom: '24px' }}>
+                <div className="card_header">
+                    <Title level={4}>Personal Information</Title>
+                </div>
+                <div className="card_content">
+                    <Form.Item
+                        label="Name"
+                        name="name"
+                        hasFeedback
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Name is required',
+                            },
+                        ]}
+                    >
+                        <Input placeholder={'Name'} />
+                    </Form.Item>
+                    <Form.Item
+                        label="Contact Person"
+                        name="contactPerson"
+                        hasFeedback
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Contact Person is required',
+                            },
+                        ]}
+                    >
+                        <Input placeholder={'Contact Person'} />
+                    </Form.Item>
+                    <Form.Item label="Website" name="website" hasFeedback>
+                        <Input placeholder={'Website'} />
+                    </Form.Item>
+
+                    <Form.Item label="Notice" name="notice">
+                        <Input.TextArea allowClear showCount placeholder={'Notice'} />
+                    </Form.Item>
+                </div>
+            </Card>
+            <Card bordered={false}>
+                <div className="card_header">
+                    <Title level={4}>Contact Information</Title>
+                </div>
+                <div className="card_content">
+                    <Form.Item label="Phone Number" name="phoneNumber" hasFeedback>
+                        <Input placeholder={'Phone Number'} />
+                    </Form.Item>
+                    <Form.Item label="Mobile Number" name="mobileNumber" hasFeedback>
+                        <Input placeholder={'Mobile Number'} />
+                    </Form.Item>
+                    <Form.Item label="Adress">
+                        <Input.Group compact>
+                            <Form.Item
+                                name="streetName"
+                                noStyle
+                                rules={[{ required: true, message: ' Street Name is required' }]}
+                            >
+                                <Input style={{ width: 'calc(70% - 8px)' }} placeholder="Street Name" />
+                            </Form.Item>
+                            <Form.Item
+                                name="streetNumber"
+                                noStyle
+                                rules={[{ required: true, message: 'Street Number is required' }]}
+                            >
+                                <Input style={{ width: '30%', marginLeft: '8px' }} placeholder="Street Number" />
+                            </Form.Item>
+                        </Input.Group>
+
+                        <Form.Item name="additionalAddressLine" noStyle>
+                            <Input style={{ width: '100%', marginTop: '8px' }} placeholder="Additional Address Line" />
+                        </Form.Item>
+
+                        <Input.Group compact style={{ marginTop: '8px' }}>
+                            <Form.Item
+                                name="postcode"
+                                noStyle
+                                rules={[{ required: true, message: 'Postcode is required' }]}
+                            >
+                                <Input style={{ width: 'calc(20% - 8px)' }} placeholder="Postcode" />
+                            </Form.Item>
+                            <Form.Item name="city" noStyle rules={[{ required: true, message: 'City is required' }]}>
+                                <Input style={{ width: 'calc(40% - 8px)', margin: '0 8px' }} placeholder="City" />
+                            </Form.Item>
+                            <Form.Item
+                                name="country"
+                                noStyle
+                                rules={[{ required: true, message: 'Country is required' }]}
+                            >
+                                <Input style={{ width: '40%' }} placeholder="Country" />
+                            </Form.Item>
+                        </Input.Group>
+                    </Form.Item>
+                </div>
+            </Card>
+        </>
+    );
+};

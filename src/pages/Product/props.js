@@ -1,4 +1,5 @@
-import { Tooltip, Popover, Button, Tag, Space, Descriptions, Statistic } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Form, Input, Tooltip, Popover, Button, Tag, Space, Descriptions, Statistic, InputNumber, Select } from 'antd';
 import { Link } from 'react-router-dom';
 import {
     ShopOutlined,
@@ -13,7 +14,8 @@ import {
     EditOutlined,
     QuestionCircleOutlined,
 } from '@ant-design/icons';
-
+import * as service from '../../api/services';
+const { Option } = Select;
 export const productDataList = (data) => {
     let statusColor;
     let productType = '';
@@ -326,12 +328,17 @@ export const productTableColumns = [
         },
     },
     {
-        title: 'Retail Price (€)',
+        title: 'VAT',
+        dataIndex: 'vat',
+        key: 'vat',
+    },
+    {
+        title: 'Retail Price',
         dataIndex: 'retailPrice',
         key: 'retailPrice',
     },
     {
-        title: 'Listing Price (€)',
+        title: 'Listing Price',
         dataIndex: 'listingPrice',
         key: 'listingPrice',
     },
@@ -355,3 +362,204 @@ export const productTableColumns = [
         },
     },
 ];
+
+export const initialFormValues = {
+    notice: '',
+};
+
+export const CustomFormMainItems = () => {
+    const [attributeValueList, setAttributeValueList] = useState([]);
+    const [subcategoryDataSource, setSubategoryDataSource] = useState([]);
+    const [brandDataSource, setBrandDataSource] = useState([]);
+    const [supplierList, setSupplierList] = useState([]);
+
+    useEffect(() => {
+        getAllAttributevalues();
+        getAllSubcategories();
+        getAllBrands();
+        getAllSuppliers();
+    }, []);
+
+    const getAllAttributevalues = async () => {
+        let listResult = [];
+        const result = await service.getAll('attribute-value');
+        result.map((val, idx) => {
+            listResult.push(
+                <Option key={val.id} value={val.name}>
+                    {val.name}
+                </Option>,
+            );
+        });
+        setAttributeValueList(listResult);
+    };
+
+    const getAllSuppliers = async () => {
+        let supList = [];
+        let suppliers = await service.getAll('supplier');
+        suppliers.map((val, idx) => {
+            supList.push(
+                <Option key={val.id} value={val.name}>
+                    {val.name}
+                </Option>,
+            );
+        });
+        setSupplierList(supList);
+    };
+    const getAllSubcategories = async () => {
+        const subcategories = await service.getAll('subcategory');
+        setSubategoryDataSource(subcategories);
+    };
+
+    const getAllBrands = async () => {
+        const brands = await service.getAll('brand');
+        setBrandDataSource(brands);
+    };
+    return (
+        <>
+            <Form.Item
+                label="Name"
+                name="name"
+                hasFeedback
+                rules={[
+                    {
+                        required: true,
+                    },
+                ]}
+            >
+                <Input placeholder="Name" />
+            </Form.Item>
+            <Form.Item
+                name="brand"
+                label="Brand"
+                hasFeedback
+                rules={[
+                    {
+                        required: true,
+                    },
+                ]}
+            >
+                <Select placeholder="Please select a brand">
+                    {brandDataSource.map((option) => (
+                        <Option key={option.id} value={option.name}>
+                            {option.name}
+                        </Option>
+                    ))}
+                </Select>
+            </Form.Item>
+            <Form.Item
+                label="SKU"
+                name="sku"
+                hasFeedback
+                rules={[
+                    {
+                        required: true,
+                    },
+                ]}
+            >
+                <Input placeholder="SKU" />
+            </Form.Item>
+            <Form.Item label="Price">
+                <Input.Group compact>
+                    <Form.Item name="VAT" noStyle rules={[{ required: true, message: ' VAT is required' }]}>
+                        <InputNumber
+                            style={{ width: 'calc(20% - 8px)' }}
+                            placeholder="VAT"
+                            min="0"
+                            max="1"
+                            step="0.01"
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        name="listingPrice"
+                        noStyle
+                        rules={[{ required: true, message: 'Listing Price is required' }]}
+                    >
+                        <InputNumber
+                            style={{ width: 'calc(40% - 8px)', marginLeft: '8px', marginRight: '8px' }}
+                            placeholder="Listing Price"
+                            min="0"
+                            max="1000000"
+                            step="1"
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        name="retailPrice"
+                        noStyle
+                        rules={[{ required: true, message: 'Retail Price is required' }]}
+                    >
+                        <InputNumber
+                            style={{ width: 'calc(40% - 8px)' }}
+                            placeholder="Retail Price"
+                            min="0"
+                            max="1000000"
+                            step="1"
+                        />
+                    </Form.Item>
+                </Input.Group>
+            </Form.Item>
+            <Form.Item
+                name="attributevalue"
+                label="Type"
+                hasFeedback
+                rules={[
+                    {
+                        required: true,
+                    },
+                ]}
+            >
+                <Select
+                    mode="multiple"
+                    allowClear
+                    style={{
+                        width: '100%',
+                    }}
+                    placeholder="Please select types"
+                >
+                    {attributeValueList}
+                </Select>
+            </Form.Item>
+            <Form.Item
+                name="subcategory"
+                label="Subcategory"
+                hasFeedback
+                rules={[
+                    {
+                        required: true,
+                    },
+                ]}
+            >
+                <Select placeholder="Please select a subcategory">
+                    {subcategoryDataSource.map((option) => (
+                        <Option key={option.id} value={option.name}>
+                            {option.name}
+                        </Option>
+                    ))}
+                </Select>
+            </Form.Item>
+            <Form.Item
+                name="supplier"
+                label="Supplier"
+                hasFeedback
+                rules={[
+                    {
+                        required: true,
+                    },
+                ]}
+            >
+                <Select
+                    mode="multiple"
+                    allowClear
+                    style={{
+                        width: '100%',
+                    }}
+                    placeholder="Please select supplier(s)"
+                >
+                    {supplierList}
+                </Select>
+            </Form.Item>
+            <Form.Item label="Notice" name="notice">
+                <Input.TextArea allowClear showCount placeholder="Notice" />
+            </Form.Item>
+        </>
+    );
+};

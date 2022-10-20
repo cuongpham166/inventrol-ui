@@ -33,7 +33,19 @@ const EditCategory = (props) => {
 
     const getCategoryById = async (dataId) => {
         const result = await service.getById('category', dataId);
-        setInitialFormValues(result);
+        let subcategoryList = [];
+        if (result.subcategory.length > 0) {
+            result.subcategory.map((val, idx) => {
+                subcategoryList.push(val.name);
+            });
+        }
+
+        setInitialFormValues({
+            name: result.name,
+            tagColor: result.tagColor,
+            subategory: subcategoryList,
+            notice: result.notice,
+        });
     };
 
     useEffect(() => {

@@ -1,22 +1,43 @@
 import React, { useState, useEffect } from 'react';
 
-import { Form, Input, Popover, Tag } from 'antd';
+import { Form, Input, Popover, Tag, Select } from 'antd';
 import { Link } from 'react-router-dom';
 import { Colorpicker, ColorPickerValue } from 'antd-colorpicker';
 
 import { EyeOutlined } from '@ant-design/icons';
-
+import * as service from '../../api/services';
+const { Option } = Select;
 export const initialFormValues = {
     notice: '',
     tagColor: '#7a3db8',
+    subategory: [],
 };
 
 export const CustomFormMainItems = () => {
     const [blockPickerColor, setBlockPickerColor] = useState('#7a3db8');
+    const [subcategoryList, setSubcategoryList] = useState([]);
 
     const onChangeColor = (color) => {
         setBlockPickerColor(color.hex);
     };
+
+    useEffect(() => {
+        getAllSubcategories();
+    }, []);
+
+    const getAllSubcategories = async () => {
+        let listResult = [];
+        const result = await service.getAll('subcategory');
+        result.map((val, idx) => {
+            listResult.push(
+                <Option key={val.id} value={val.name}>
+                    {val.name}
+                </Option>,
+            );
+        });
+        setSubcategoryList(listResult);
+    };
+
     return (
         <>
             <Form.Item
@@ -53,6 +74,27 @@ export const CustomFormMainItems = () => {
                     value={blockPickerColor}
                 />
             </Form.Item>
+            <Form.Item
+                name="subategory"
+                label="Subcategory"
+                hasFeedback
+                rules={[
+                    {
+                        required: true,
+                    },
+                ]}
+            >
+                <Select
+                    mode="multiple"
+                    allowClear
+                    style={{
+                        width: '100%',
+                    }}
+                    placeholder="Please select"
+                >
+                    {subcategoryList}
+                </Select>
+            </Form.Item>
             <Form.Item label="Notice" name="notice">
                 <Input.TextArea allowClear showCount placeholder="Notice" />
             </Form.Item>
@@ -65,8 +107,9 @@ export const categoryTableColumns = [
         title: '#',
         key: 'index',
         render: (text, record, index) => index + 1,
-        width: 60,
+        width: 50,
     },
+
     {
         title: 'Name',
         dataIndex: 'name',
@@ -92,13 +135,21 @@ export const categoryTableColumns = [
         ),
     },
     {
-        title: 'Created Date',
+        title: 'Color',
+        dataIndex: 'tagColor',
+        key: 'tagColor',
+        align: 'center',
+        width: '60px',
+        render: (tagColor) => <Tag color={tagColor}>{tagColor}</Tag>,
+    },
+    {
+        title: 'Created on',
         dataIndex: 'createdDate',
         key: 'createdDate',
         width: '120px',
     },
     {
-        title: 'Updated Date',
+        title: 'Updated on',
         dataIndex: 'updatedDate',
         key: 'updatedDate',
         width: '130px',

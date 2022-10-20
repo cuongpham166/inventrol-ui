@@ -3,7 +3,7 @@ import NoMatch from '../pages/Nomatch';
 
 import { SubcategoryDetail, SubcategoryList, CreateSubcategory, EditSubcategory } from '../pages/Subcategory';
 import { CategoryList, CategoryDetail, CreateCategory, EditCategory } from 'pages/Category';
-import { SupplierDetail, SupplierList, CreateSupplier } from 'pages/Supplier';
+import { SupplierDetail, SupplierList, CreateSupplier, EditSupplier } from 'pages/Supplier';
 import { ProductList, ProductDetail, CreateProduct, EditProduct } from 'pages/Product';
 import { BrandList, BrandDetail, CreateBrand, EditBrand } from 'pages/Brand';
 import { AttributeList, AttributeDetail, CreateAttribute, EditAttribute } from 'pages/Attribute';
@@ -30,6 +30,7 @@ const publicRoutes = [
     { path: '/supplier', component: SupplierList },
     { path: '/supplier/:id', component: SupplierDetail },
     { path: '/supplier/add', component: CreateSupplier },
+    { path: '/supplier/:id/edit', component: EditSupplier },
 
     { path: '/inventory', component: ProductList },
     { path: '/inventory/:id', component: ProductDetail },

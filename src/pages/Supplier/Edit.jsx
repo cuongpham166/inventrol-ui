@@ -8,39 +8,48 @@ import usePageHeader from 'utils/hooks/usePageHeader';
 import useCustomForm from 'utils/hooks/useCustomForm';
 
 import * as service from '../../api/services';
-import * as attributeValueProps from '../AttributeValue/props';
+import * as supplierProps from '../Supplier/props';
 
-const EditAttributeValue = (props) => {
+const EditSupplier = (props) => {
     const { id } = useParams();
     const dataId = parseInt(id);
 
     const [initialFormValues, setInitialFormValues] = useState({});
 
     const { PageHeader } = usePageHeader({
-        title: 'Update Attribute Value',
+        title: 'Update Supplier',
         dataId: '',
-        table: 'attribute-value',
+        table: 'supplier',
     });
 
     const { CustomForm } = useCustomForm({
-        table: 'attribute-value',
+        table: 'supplier',
         initialFormValues: initialFormValues,
-        CustomFormMainItems: attributeValueProps.CustomFormMainItems,
+        CustomFormMainItems: supplierProps.CustomFormMainItems,
         formType: 'edit',
         dataId: dataId,
     });
 
-    const getAttributeValueById = async (dataId) => {
-        let result = await service.getById('attribute-value', dataId);
+    const getSupplierById = async (dataId) => {
+        let result = await service.getById('supplier', dataId);
         setInitialFormValues({
             name: result.name,
-            attribute: result.attribute.name,
+            contactPerson: result.contactPerson,
             notice: result.notice,
+            website: result.contact.website,
+            phoneNumber: result.contact.phoneNumber,
+            mobileNumber: result.contact.mobileNumber,
+            streetName: result.contact.streetName,
+            streetNumber: result.contact.streetNumber,
+            additionalAddressLine: result.contact.additionalAddressLine,
+            postcode: result.contact.postcode,
+            city: result.contact.city,
+            country: result.contact.country,
         });
     };
 
     useEffect(() => {
-        getAttributeValueById(dataId);
+        getSupplierById(dataId);
     }, []);
 
     return (
@@ -60,4 +69,4 @@ const EditAttributeValue = (props) => {
     );
 };
 
-export default EditAttributeValue;
+export default EditSupplier;

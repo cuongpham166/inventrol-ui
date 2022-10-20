@@ -1,6 +1,66 @@
-import { Popover, Tag, Descriptions, Button } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Popover, Tag, Descriptions, Button, Form, Input, Select } from 'antd';
 import { Link } from 'react-router-dom';
 import { EyeOutlined, EditOutlined } from '@ant-design/icons';
+
+import * as service from '../../api/services';
+const { Option } = Select;
+
+export const initialFormValues = {
+    notice: '',
+};
+
+export const CustomFormMainItems = () => {
+    const [attributeDataSource, setAttributeDataSource] = useState([]);
+
+    useEffect(() => {
+        getAllAttributes();
+    }, []);
+
+    const getAllAttributes = async () => {
+        const result = await service.getAll('attribute');
+        setAttributeDataSource(result);
+    };
+    return (
+        <>
+            <Form.Item
+                label="Name"
+                name="name"
+                hasFeedback
+                rules={[
+                    {
+                        required: true,
+                    },
+                ]}
+            >
+                <Input placeholder="Name" />
+            </Form.Item>
+
+            <Form.Item
+                name="attribute"
+                label="Attribute"
+                hasFeedback
+                rules={[
+                    {
+                        required: true,
+                    },
+                ]}
+            >
+                <Select placeholder="Please select an attribute">
+                    {attributeDataSource.map((option) => (
+                        <Option key={option.id} value={option.name}>
+                            {option.name}
+                        </Option>
+                    ))}
+                </Select>
+            </Form.Item>
+
+            <Form.Item label="Notice" name="notice">
+                <Input.TextArea allowClear showCount placeholder="Notice" />
+            </Form.Item>
+        </>
+    );
+};
 
 export const attributeValueTableColumns = [
     {
@@ -22,13 +82,13 @@ export const attributeValueTableColumns = [
         render: (attribute) => <Tag color={attribute.tagColor}>{attribute.name}</Tag>,
     },
     {
-        title: 'Created Date',
+        title: 'Created on',
         dataIndex: 'createdDate',
         key: 'createdDate',
         width: '120px',
     },
     {
-        title: 'Updated Date',
+        title: 'Updated on',
         dataIndex: 'updatedDate',
         key: 'updatedDate',
         width: '130px',

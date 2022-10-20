@@ -64,25 +64,26 @@ const useCustomForm = ({ table, initialFormValues, CustomFormMainItems, formType
     };
 
     const CustomForm = () => (
-        <Form
-            {...formLayout.mainLayout}
-            form={form}
-            name="control-hooks"
-            onFinish={onFinish}
-            validateMessages={validateMessages}
-            initialValues={initialFormValues}
-        >
-            <Card bordered={false}>
-                <div className="card_content">
+        <Card bordered={false}>
+            <div className="card_content">
+                <Form
+                    {...formLayout.mainLayout}
+                    form={form}
+                    name="control-hooks"
+                    onFinish={onFinish}
+                    validateMessages={validateMessages}
+                    initialValues={initialFormValues}
+                >
                     <CustomFormMainItems />
+
                     <Form.Item {...formLayout.tailLayout}>
                         <Button type="primary" htmlType="submit" icon={<SaveOutlined />} className="form_button">
                             {formButtonText}
                         </Button>
                     </Form.Item>
-                </div>
-            </Card>
-        </Form>
+                </Form>
+            </div>
+        </Card>
     );
     return { CustomForm };
 };
