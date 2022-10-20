@@ -33,7 +33,6 @@ const useExportData = ({ dataSource, table }) => {
 
         let settings = {};
         settings = dataExporter.getExportFileSettings(dataTypeRef);
-        console.log(settings);
         pageSettingsRef.current = settings;
         setPageSettings(settings);
 
