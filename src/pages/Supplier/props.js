@@ -10,7 +10,9 @@ import {
     FormOutlined,
     EyeOutlined,
     EditOutlined,
+    SaveOutlined,
 } from '@ant-design/icons';
+import * as layoutConfig from 'utils/config/layout';
 
 const { Option } = Select;
 const { Title } = Typography;
@@ -223,6 +225,7 @@ export const supplierTableColumns = [
 ];
 
 export const CustomFormMainItems = () => {
+    const formLayout = layoutConfig.form;
     return (
         <>
             <Card bordered={false} style={{ marginBottom: '24px' }}>
@@ -317,6 +320,11 @@ export const CustomFormMainItems = () => {
                                 <Input style={{ width: '40%' }} placeholder="Country" />
                             </Form.Item>
                         </Input.Group>
+                    </Form.Item>
+                    <Form.Item {...formLayout.tailLayout} style={{ textAlign: 'right' }}>
+                        <Button type="primary" htmlType="submit" icon={<SaveOutlined />} className="form_button">
+                            Save
+                        </Button>
                     </Form.Item>
                 </div>
             </Card>

@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Popover, Tag, Descriptions, Button, Form, Input, Select } from 'antd';
+import { Popover, Tag, Descriptions, Button, Form, Input, Select, Typography, Card } from 'antd';
 import { Link } from 'react-router-dom';
-import { EyeOutlined, EditOutlined } from '@ant-design/icons';
+import { EyeOutlined, EditOutlined, SaveOutlined } from '@ant-design/icons';
 
 import * as service from '../../api/services';
-const { Option } = Select;
+import * as layoutConfig from 'utils/config/layout';
 
+const { Option } = Select;
+const { Title } = Typography;
 export const initialFormValues = {
     notice: '',
 };
 
 export const CustomFormMainItems = () => {
     const [attributeDataSource, setAttributeDataSource] = useState([]);
-
+    const formLayout = layoutConfig.form;
     useEffect(() => {
         getAllAttributes();
     }, []);
@@ -23,41 +25,53 @@ export const CustomFormMainItems = () => {
     };
     return (
         <>
-            <Form.Item
-                label="Name"
-                name="name"
-                hasFeedback
-                rules={[
-                    {
-                        required: true,
-                    },
-                ]}
-            >
-                <Input placeholder="Name" />
-            </Form.Item>
+            <Card bordered={false} style={{ padding: '0px' }}>
+                <div className="card_header">
+                    <Title level={4}>Attribute Value Information</Title>
+                </div>
+                <div className="card_content">
+                    <Form.Item
+                        label="Name"
+                        name="name"
+                        hasFeedback
+                        rules={[
+                            {
+                                required: true,
+                            },
+                        ]}
+                    >
+                        <Input placeholder="Name" />
+                    </Form.Item>
 
-            <Form.Item
-                name="attribute"
-                label="Attribute"
-                hasFeedback
-                rules={[
-                    {
-                        required: true,
-                    },
-                ]}
-            >
-                <Select placeholder="Please select an attribute">
-                    {attributeDataSource.map((option) => (
-                        <Option key={option.id} value={option.name}>
-                            {option.name}
-                        </Option>
-                    ))}
-                </Select>
-            </Form.Item>
+                    <Form.Item
+                        name="attribute"
+                        label="Attribute"
+                        hasFeedback
+                        rules={[
+                            {
+                                required: true,
+                            },
+                        ]}
+                    >
+                        <Select placeholder="Please select an attribute">
+                            {attributeDataSource.map((option) => (
+                                <Option key={option.id} value={option.name}>
+                                    {option.name}
+                                </Option>
+                            ))}
+                        </Select>
+                    </Form.Item>
 
-            <Form.Item label="Notice" name="notice">
-                <Input.TextArea allowClear showCount placeholder="Notice" />
-            </Form.Item>
+                    <Form.Item label="Notice" name="notice">
+                        <Input.TextArea allowClear showCount placeholder="Notice" />
+                    </Form.Item>
+                    <Form.Item {...formLayout.tailLayout} style={{ textAlign: 'right' }}>
+                        <Button type="primary" htmlType="submit" icon={<SaveOutlined />} className="form_button">
+                            Submit
+                        </Button>
+                    </Form.Item>
+                </div>
+            </Card>
         </>
     );
 };

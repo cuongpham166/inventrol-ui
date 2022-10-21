@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Popover, Tag, Form, Input, Select } from 'antd';
+import { Popover, Tag, Form, Input, Select, Card, Typography, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import { Colorpicker, ColorPickerValue } from 'antd-colorpicker';
-import { EyeOutlined } from '@ant-design/icons';
+import { EyeOutlined, SaveOutlined } from '@ant-design/icons';
 import * as service from '../../api/services';
-const { Option } = Select;
+import * as layoutConfig from 'utils/config/layout';
 
+const { Option } = Select;
+const { Title } = Typography;
 export const initialFormValues = {
     notice: '',
     tagColor: '#7a3db8',
@@ -79,6 +81,7 @@ export const attributeTableColumns = [
 export const CustomFormMainItems = () => {
     const [blockPickerColor, setBlockPickerColor] = useState('#7a3db8');
     const [attributeValueList, setAttributeValueList] = useState([]);
+    const formLayout = layoutConfig.form;
 
     const onChangeColor = (color) => {
         setBlockPickerColor(color.hex);
@@ -103,64 +106,76 @@ export const CustomFormMainItems = () => {
 
     return (
         <>
-            <Form.Item
-                label="Name"
-                name="name"
-                hasFeedback
-                rules={[
-                    {
-                        required: true,
-                    },
-                ]}
-            >
-                <Input placeholder="Name" />
-            </Form.Item>
-            <Form.Item
-                label="Tag Color"
-                name="tagColor"
-                hasFeedback
-                rules={[
-                    {
-                        required: true,
-                    },
-                ]}
-            >
-                <Colorpicker
-                    popup
-                    blockStyles={{
-                        width: '30px',
-                        height: '30px',
-                        borderRadius: '50%',
-                    }}
-                    picker={'SketchPicker'}
-                    onChange={onChangeColor}
-                    value={blockPickerColor}
-                />
-            </Form.Item>
-            <Form.Item
-                name="attributevalue"
-                label="Attribute Value"
-                hasFeedback
-                rules={[
-                    {
-                        required: true,
-                    },
-                ]}
-            >
-                <Select
-                    mode="multiple"
-                    allowClear
-                    style={{
-                        width: '100%',
-                    }}
-                    placeholder="Please select"
-                >
-                    {attributeValueList}
-                </Select>
-            </Form.Item>
-            <Form.Item label="Notice" name="notice">
-                <Input.TextArea allowClear showCount placeholder="Notice" />
-            </Form.Item>
+            <Card bordered={false} style={{ padding: '0px' }}>
+                <div className="card_header">
+                    <Title level={4}>Attribute Information</Title>
+                </div>
+                <div className="card_content">
+                    <Form.Item
+                        label="Name"
+                        name="name"
+                        hasFeedback
+                        rules={[
+                            {
+                                required: true,
+                            },
+                        ]}
+                    >
+                        <Input placeholder="Name" />
+                    </Form.Item>
+                    <Form.Item
+                        label="Tag Color"
+                        name="tagColor"
+                        hasFeedback
+                        rules={[
+                            {
+                                required: true,
+                            },
+                        ]}
+                    >
+                        <Colorpicker
+                            popup
+                            blockStyles={{
+                                width: '30px',
+                                height: '30px',
+                                borderRadius: '50%',
+                            }}
+                            picker={'SketchPicker'}
+                            onChange={onChangeColor}
+                            value={blockPickerColor}
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        name="attributevalue"
+                        label="Attribute Value"
+                        hasFeedback
+                        rules={[
+                            {
+                                required: true,
+                            },
+                        ]}
+                    >
+                        <Select
+                            mode="multiple"
+                            allowClear
+                            style={{
+                                width: '100%',
+                            }}
+                            placeholder="Please select"
+                        >
+                            {attributeValueList}
+                        </Select>
+                    </Form.Item>
+                    <Form.Item label="Notice" name="notice">
+                        <Input.TextArea allowClear showCount placeholder="Notice" />
+                    </Form.Item>
+                    <Form.Item {...formLayout.tailLayout} style={{ textAlign: 'right' }}>
+                        <Button type="primary" htmlType="submit" icon={<SaveOutlined />} className="form_button">
+                            Submit
+                        </Button>
+                    </Form.Item>
+                </div>
+            </Card>
         </>
     );
 };

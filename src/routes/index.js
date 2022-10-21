@@ -32,10 +32,10 @@ const publicRoutes = [
     { path: '/supplier/add', component: CreateSupplier },
     { path: '/supplier/:id/edit', component: EditSupplier },
 
-    { path: '/inventory', component: ProductList },
-    { path: '/inventory/:id', component: ProductDetail },
-    { path: '/inventory/add', component: CreateProduct },
-    { path: '/inventory/:id/edit', component: EditProduct },
+    { path: '/product', component: ProductList },
+    { path: '/product/:id', component: ProductDetail },
+    { path: '/product/add', component: CreateProduct },
+    { path: '/product/:id/edit', component: EditProduct },
 
     { path: '/brand', component: BrandList },
     { path: '/brand/:id', component: BrandDetail },

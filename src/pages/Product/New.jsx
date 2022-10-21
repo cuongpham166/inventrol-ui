@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col } from 'antd';
+import { Row, Col, Card, Typography, Space } from 'antd';
 
 import Breadcrumb from 'components/Breadcrumb';
+import SkuGenerator from 'components/SkuGenerator';
+import BarcodeGenerator from 'components/BarcodeGenerator';
 
 import useCustomForm from 'utils/hooks/useCustomForm';
 import usePageHeader from 'utils/hooks/usePageHeader';
 
 import * as productProps from '../Product/props';
+const { Title } = Typography;
 
 const CreateProduct = (props) => {
     const [initialFormValues, setInitialFormValues] = useState(productProps.initialFormValues);
@@ -17,13 +20,17 @@ const CreateProduct = (props) => {
         table: 'product',
     });
 
-    const { CustomForm } = useCustomForm({
+    const { CustomForm, form } = useCustomForm({
         table: 'product',
         initialFormValues: initialFormValues,
         CustomFormMainItems: productProps.CustomFormMainItems,
         formType: 'new',
         dataId: '',
     });
+
+    const onChangeSKU = (value) => {
+        form.setFieldsValue({ sku: value });
+    };
 
     return (
         <div style={{}}>
@@ -35,6 +42,17 @@ const CreateProduct = (props) => {
             </Row>
             <Row style={{ padding: '35px' }} justify="center">
                 <Col span={15}>
+                    <Card bordered={false} style={{ marginBottom: '24px' }}>
+                        <div className="card_header">
+                            <Title level={4}>Generator</Title>
+                        </div>
+                        <div className="card_content">
+                            <Space>
+                                <SkuGenerator onClick={onChangeSKU} />
+                                <BarcodeGenerator />
+                            </Space>
+                        </div>
+                    </Card>
                     <CustomForm />
                 </Col>
             </Row>

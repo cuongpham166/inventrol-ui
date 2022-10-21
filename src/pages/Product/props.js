@@ -1,5 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { Form, Input, Tooltip, Popover, Button, Tag, Space, Descriptions, Statistic, InputNumber, Select } from 'antd';
+import React, { useState, useEffect, useRef } from 'react';
+import {
+    Form,
+    Input,
+    Tooltip,
+    Popover,
+    Button,
+    Tag,
+    Space,
+    Descriptions,
+    Statistic,
+    InputNumber,
+    Select,
+    Modal,
+    Card,
+    Typography,
+} from 'antd';
 import { Link } from 'react-router-dom';
 import {
     ShopOutlined,
@@ -13,9 +28,16 @@ import {
     MoneyCollectOutlined,
     EditOutlined,
     QuestionCircleOutlined,
+    SaveOutlined,
 } from '@ant-design/icons';
 import * as service from '../../api/services';
+import * as layoutConfig from 'utils/config/layout';
+
+import skuGenerator from 'utils/functions/skuGenerator';
+
 const { Option } = Select;
+const { Title } = Typography;
+
 export const productDataList = (data) => {
     let statusColor;
     let productType = '';
@@ -372,6 +394,7 @@ export const CustomFormMainItems = () => {
     const [subcategoryDataSource, setSubategoryDataSource] = useState([]);
     const [brandDataSource, setBrandDataSource] = useState([]);
     const [supplierList, setSupplierList] = useState([]);
+    const formLayout = layoutConfig.form;
 
     useEffect(() => {
         getAllAttributevalues();
@@ -405,6 +428,7 @@ export const CustomFormMainItems = () => {
         });
         setSupplierList(supList);
     };
+
     const getAllSubcategories = async () => {
         const subcategories = await service.getAll('subcategory');
         setSubategoryDataSource(subcategories);
@@ -414,152 +438,177 @@ export const CustomFormMainItems = () => {
         const brands = await service.getAll('brand');
         setBrandDataSource(brands);
     };
+
     return (
         <>
-            <Form.Item
-                label="Name"
-                name="name"
-                hasFeedback
-                rules={[
-                    {
-                        required: true,
-                    },
-                ]}
-            >
-                <Input placeholder="Name" />
-            </Form.Item>
-            <Form.Item
-                name="brand"
-                label="Brand"
-                hasFeedback
-                rules={[
-                    {
-                        required: true,
-                    },
-                ]}
-            >
-                <Select placeholder="Please select a brand">
-                    {brandDataSource.map((option) => (
-                        <Option key={option.id} value={option.name}>
-                            {option.name}
-                        </Option>
-                    ))}
-                </Select>
-            </Form.Item>
-            <Form.Item
-                label="SKU"
-                name="sku"
-                hasFeedback
-                rules={[
-                    {
-                        required: true,
-                    },
-                ]}
-            >
-                <Input placeholder="SKU" />
-            </Form.Item>
-            <Form.Item label="Price">
-                <Input.Group compact>
-                    <Form.Item name="VAT" noStyle rules={[{ required: true, message: ' VAT is required' }]}>
-                        <InputNumber
-                            style={{ width: 'calc(20% - 8px)' }}
-                            placeholder="VAT"
-                            min="0"
-                            max="1"
-                            step="0.01"
-                        />
+            <Card bordered={false} style={{ padding: '0px' }}>
+                <div className="card_header">
+                    <Title level={4}>Product Information</Title>
+                </div>
+                <div className="card_content">
+                    <Form.Item
+                        label="Name"
+                        name="name"
+                        hasFeedback
+                        rules={[
+                            {
+                                required: true,
+                            },
+                        ]}
+                    >
+                        <Input placeholder="Name" />
                     </Form.Item>
                     <Form.Item
-                        name="listingPrice"
-                        noStyle
-                        rules={[{ required: true, message: 'Listing Price is required' }]}
+                        name="brand"
+                        label="Brand"
+                        hasFeedback
+                        rules={[
+                            {
+                                required: true,
+                            },
+                        ]}
                     >
-                        <InputNumber
-                            style={{ width: 'calc(40% - 8px)', marginLeft: '8px', marginRight: '8px' }}
-                            placeholder="Listing Price"
-                            min="0"
-                            max="1000000"
-                            step="1"
-                        />
+                        <Select placeholder="Please select a brand">
+                            {brandDataSource.map((option) => (
+                                <Option key={option.id} value={option.name}>
+                                    {option.name}
+                                </Option>
+                            ))}
+                        </Select>
                     </Form.Item>
                     <Form.Item
-                        name="retailPrice"
-                        noStyle
-                        rules={[{ required: true, message: 'Retail Price is required' }]}
+                        label="SKU"
+                        name="sku"
+                        hasFeedback
+                        rules={[
+                            {
+                                required: true,
+                            },
+                        ]}
                     >
-                        <InputNumber
-                            style={{ width: 'calc(40% - 8px)' }}
-                            placeholder="Retail Price"
-                            min="0"
-                            max="1000000"
-                            step="1"
-                        />
+                        <Input placeholder="SKU" disabled />
                     </Form.Item>
-                </Input.Group>
-            </Form.Item>
-            <Form.Item
-                name="attributevalue"
-                label="Type"
-                hasFeedback
-                rules={[
-                    {
-                        required: true,
-                    },
-                ]}
-            >
-                <Select
-                    mode="multiple"
-                    allowClear
-                    style={{
-                        width: '100%',
-                    }}
-                    placeholder="Please select types"
-                >
-                    {attributeValueList}
-                </Select>
-            </Form.Item>
-            <Form.Item
-                name="subcategory"
-                label="Subcategory"
-                hasFeedback
-                rules={[
-                    {
-                        required: true,
-                    },
-                ]}
-            >
-                <Select placeholder="Please select a subcategory">
-                    {subcategoryDataSource.map((option) => (
-                        <Option key={option.id} value={option.name}>
-                            {option.name}
-                        </Option>
-                    ))}
-                </Select>
-            </Form.Item>
-            <Form.Item
-                name="supplier"
-                label="Supplier"
-                hasFeedback
-                rules={[
-                    {
-                        required: true,
-                    },
-                ]}
-            >
-                <Select
-                    mode="multiple"
-                    allowClear
-                    style={{
-                        width: '100%',
-                    }}
-                    placeholder="Please select supplier(s)"
-                >
-                    {supplierList}
-                </Select>
-            </Form.Item>
-            <Form.Item label="Notice" name="notice">
-                <Input.TextArea allowClear showCount placeholder="Notice" />
-            </Form.Item>
+                    <Form.Item
+                        label="Barcode"
+                        name="barcode"
+                        hasFeedback
+                        rules={[
+                            {
+                                required: true,
+                            },
+                        ]}
+                    >
+                        <Input placeholder="barcode" disabled />
+                    </Form.Item>
+                    <Form.Item label="Price">
+                        <Input.Group compact>
+                            <Form.Item name="vat" noStyle rules={[{ required: true, message: ' VAT is required' }]}>
+                                <InputNumber
+                                    style={{ width: 'calc(20% - 8px)' }}
+                                    placeholder="VAT"
+                                    min="0"
+                                    max="1"
+                                    step="0.01"
+                                />
+                            </Form.Item>
+                            <Form.Item
+                                name="listingPrice"
+                                noStyle
+                                rules={[{ required: true, message: 'Listing Price is required' }]}
+                            >
+                                <InputNumber
+                                    style={{ width: 'calc(40% - 8px)', marginLeft: '8px', marginRight: '8px' }}
+                                    placeholder="Listing Price"
+                                    min="0"
+                                    max="1000000"
+                                    step="1"
+                                />
+                            </Form.Item>
+                            <Form.Item
+                                name="retailPrice"
+                                noStyle
+                                rules={[{ required: true, message: 'Retail Price is required' }]}
+                            >
+                                <InputNumber
+                                    style={{ width: 'calc(40% - 8px)' }}
+                                    placeholder="Retail Price"
+                                    min="0"
+                                    max="1000000"
+                                    step="1"
+                                />
+                            </Form.Item>
+                        </Input.Group>
+                    </Form.Item>
+                    <Form.Item
+                        name="attributeValue"
+                        label="Type"
+                        hasFeedback
+                        rules={[
+                            {
+                                required: true,
+                            },
+                        ]}
+                    >
+                        <Select
+                            mode="multiple"
+                            allowClear
+                            style={{
+                                width: '100%',
+                            }}
+                            placeholder="Please select types"
+                        >
+                            {attributeValueList}
+                        </Select>
+                    </Form.Item>
+                    <Form.Item
+                        name="subcategory"
+                        label="Subcategory"
+                        hasFeedback
+                        rules={[
+                            {
+                                required: true,
+                            },
+                        ]}
+                    >
+                        <Select placeholder="Please select a subcategory">
+                            {subcategoryDataSource.map((option) => (
+                                <Option key={option.id} value={option.name}>
+                                    {option.name}
+                                </Option>
+                            ))}
+                        </Select>
+                    </Form.Item>
+                    <Form.Item
+                        name="supplier"
+                        label="Supplier"
+                        hasFeedback
+                        rules={[
+                            {
+                                required: true,
+                            },
+                        ]}
+                    >
+                        <Select
+                            mode="multiple"
+                            allowClear
+                            style={{
+                                width: '100%',
+                            }}
+                            placeholder="Please select supplier(s)"
+                        >
+                            {supplierList}
+                        </Select>
+                    </Form.Item>
+                    <Form.Item label="Notice" name="notice">
+                        <Input.TextArea allowClear showCount placeholder="Notice" />
+                    </Form.Item>
+                    <Form.Item {...formLayout.tailLayout} style={{ textAlign: 'right' }}>
+                        <Button type="primary" htmlType="submit" icon={<SaveOutlined />} className="form_button">
+                            Submit
+                        </Button>
+                    </Form.Item>
+                </div>
+            </Card>
         </>
     );
 };

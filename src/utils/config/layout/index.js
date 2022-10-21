@@ -81,7 +81,7 @@ const getItem = (label, key, icon, children, type) => {
 
 export const sidebarItems = [
     getItem('Dashboard', 'dashboard', <AppstoreOutlined />),
-    getItem('Inventory', 'inventory', <ShopOutlined />),
+    getItem('Inventory', 'product', <ShopOutlined />),
     getItem(
         'Management ',
         'management',

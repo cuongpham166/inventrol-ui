@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Form, Input, Select, Tag, Popover, Space, Button, Card } from 'antd';
+import { Form, Input, Select, Tag, Popover, Space, Button, Card, Typography } from 'antd';
 import { Colorpicker, ColorPickerValue } from 'antd-colorpicker';
-import { EyeOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { EyeOutlined, EditOutlined, DeleteOutlined, SaveOutlined } from '@ant-design/icons';
 
 import * as service from '../../api/services';
+import * as layoutConfig from 'utils/config/layout';
 const { Option } = Select;
+const { Title } = Typography;
 
 export const initialFormValues = {
     notice: '',
@@ -16,6 +18,7 @@ export const initialFormValues = {
 export const CustomFormMainItems = () => {
     const [categoryDataSource, setCategpryDataSource] = useState([]);
     const [blockPickerColor, setBlockPickerColor] = useState('#7a3db8');
+    const formLayout = layoutConfig.form;
 
     const onChangeColor = (color) => {
         setBlockPickerColor(color.hex);
@@ -30,62 +33,74 @@ export const CustomFormMainItems = () => {
     };
     return (
         <>
-            <Form.Item
-                label="Name"
-                name="name"
-                hasFeedback
-                rules={[
-                    {
-                        required: true,
-                    },
-                ]}
-            >
-                <Input placeholder="Name" />
-            </Form.Item>
+            <Card bordered={false} style={{ padding: '0px' }}>
+                <div className="card_header">
+                    <Title level={4}>Subcategory Information</Title>
+                </div>
+                <div className="card_content">
+                    <Form.Item
+                        label="Name"
+                        name="name"
+                        hasFeedback
+                        rules={[
+                            {
+                                required: true,
+                            },
+                        ]}
+                    >
+                        <Input placeholder="Name" />
+                    </Form.Item>
 
-            <Form.Item
-                name="category"
-                label="Category"
-                hasFeedback
-                rules={[
-                    {
-                        required: true,
-                    },
-                ]}
-            >
-                <Select placeholder="Please select a category">
-                    {categoryDataSource.map((option) => (
-                        <Option key={option.id} value={option.name}>
-                            {option.name}
-                        </Option>
-                    ))}
-                </Select>
-            </Form.Item>
-            <Form.Item
-                label="Tag Color"
-                name="tagColor"
-                hasFeedback
-                rules={[
-                    {
-                        required: true,
-                    },
-                ]}
-            >
-                <Colorpicker
-                    popup
-                    blockStyles={{
-                        width: '30px',
-                        height: '30px',
-                        borderRadius: '50%',
-                    }}
-                    picker={'SketchPicker'}
-                    onChange={onChangeColor}
-                    value={blockPickerColor}
-                />
-            </Form.Item>
-            <Form.Item label="Notice" name="notice">
-                <Input.TextArea allowClear showCount placeholder="Notice" />
-            </Form.Item>
+                    <Form.Item
+                        name="category"
+                        label="Category"
+                        hasFeedback
+                        rules={[
+                            {
+                                required: true,
+                            },
+                        ]}
+                    >
+                        <Select placeholder="Please select a category">
+                            {categoryDataSource.map((option) => (
+                                <Option key={option.id} value={option.name}>
+                                    {option.name}
+                                </Option>
+                            ))}
+                        </Select>
+                    </Form.Item>
+                    <Form.Item
+                        label="Tag Color"
+                        name="tagColor"
+                        hasFeedback
+                        rules={[
+                            {
+                                required: true,
+                            },
+                        ]}
+                    >
+                        <Colorpicker
+                            popup
+                            blockStyles={{
+                                width: '30px',
+                                height: '30px',
+                                borderRadius: '50%',
+                            }}
+                            picker={'SketchPicker'}
+                            onChange={onChangeColor}
+                            value={blockPickerColor}
+                        />
+                    </Form.Item>
+                    <Form.Item label="Notice" name="notice">
+                        <Input.TextArea allowClear showCount placeholder="Notice" />
+                    </Form.Item>
+                    <Form.Item {...formLayout.tailLayout} style={{ textAlign: 'right' }}>
+                        <Button type="primary" htmlType="submit" icon={<SaveOutlined />} className="form_button">
+                            Submit
+                        </Button>
+                    </Form.Item>
+                </div>
+            </Card>
         </>
     );
 };

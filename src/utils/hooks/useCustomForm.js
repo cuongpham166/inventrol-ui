@@ -9,6 +9,7 @@ import * as service from '../../api/services/index';
 
 const useCustomForm = ({ table, initialFormValues, CustomFormMainItems, formType, dataId }) => {
     const [form] = Form.useForm();
+
     const navigate = useNavigate();
     const [formButtonText, setFormButtonText] = useState('');
     const formLayout = layoutConfig.form;
@@ -64,28 +65,18 @@ const useCustomForm = ({ table, initialFormValues, CustomFormMainItems, formType
     };
 
     const CustomForm = () => (
-        <Card bordered={false}>
-            <div className="card_content">
-                <Form
-                    {...formLayout.mainLayout}
-                    form={form}
-                    name="control-hooks"
-                    onFinish={onFinish}
-                    validateMessages={validateMessages}
-                    initialValues={initialFormValues}
-                >
-                    <CustomFormMainItems />
-
-                    <Form.Item {...formLayout.tailLayout}>
-                        <Button type="primary" htmlType="submit" icon={<SaveOutlined />} className="form_button">
-                            {formButtonText}
-                        </Button>
-                    </Form.Item>
-                </Form>
-            </div>
-        </Card>
+        <Form
+            {...formLayout.mainLayout}
+            form={form}
+            name="control-hooks"
+            onFinish={onFinish}
+            validateMessages={validateMessages}
+            initialValues={initialFormValues}
+        >
+            <CustomFormMainItems />
+        </Form>
     );
-    return { CustomForm };
+    return { CustomForm, form };
 };
 
 export default useCustomForm;

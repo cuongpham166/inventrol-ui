@@ -16,7 +16,7 @@ const { Title, Text } = Typography;
 
 const pageHeaderExtra = (
     <>
-        <Link to={'/inventory/add'}>
+        <Link to={'/product/add'}>
             <Button key="1" type="primary" icon={<PlusOutlined />} style={{ textTransform: 'capitalize' }}>
                 Create New Product
             </Button>
