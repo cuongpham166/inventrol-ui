@@ -5,7 +5,9 @@ import { Space, Col, Input, Row, Checkbox, Popover, Button, Form, Select, Modal 
 const BarcodeGenerator = (props) => {
     return (
         <>
-            <Button icon={<BarcodeOutlined />}>Generate Barcode</Button>
+            <Button icon={<BarcodeOutlined />} type={'primary'}>
+                Generate Barcode
+            </Button>
         </>
     );
 };

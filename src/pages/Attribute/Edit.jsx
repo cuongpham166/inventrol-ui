@@ -33,17 +33,10 @@ const EditAttribute = (props) => {
 
     const getAttributeById = async (dataId) => {
         const result = await service.getById('attribute', dataId);
-        let attributeValueList = [];
-        if (result.attributevalue.length > 0) {
-            result.attributevalue.map((value, index) => {
-                attributeValueList.push(value.name);
-            });
-        }
 
         setInitialFormValues({
             name: result.name,
             tagColor: result.tagColor,
-            attributevalue: attributeValueList,
             notice: result.notice,
         });
     };

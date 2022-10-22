@@ -18,28 +18,10 @@ export const initialFormValues = {
 
 export const CustomFormMainItems = () => {
     const [blockPickerColor, setBlockPickerColor] = useState('#7a3db8');
-    const [subcategoryList, setSubcategoryList] = useState([]);
     const formLayout = layoutConfig.form;
 
     const onChangeColor = (color) => {
         setBlockPickerColor(color.hex);
-    };
-
-    useEffect(() => {
-        getAllSubcategories();
-    }, []);
-
-    const getAllSubcategories = async () => {
-        let listResult = [];
-        const result = await service.getAll('subcategory');
-        result.map((val, idx) => {
-            listResult.push(
-                <Option key={val.id} value={val.name}>
-                    {val.name}
-                </Option>,
-            );
-        });
-        setSubcategoryList(listResult);
     };
 
     return (
@@ -82,27 +64,6 @@ export const CustomFormMainItems = () => {
                             onChange={onChangeColor}
                             value={blockPickerColor}
                         />
-                    </Form.Item>
-                    <Form.Item
-                        name="subategory"
-                        label="Subcategory"
-                        hasFeedback
-                        rules={[
-                            {
-                                required: true,
-                            },
-                        ]}
-                    >
-                        <Select
-                            mode="multiple"
-                            allowClear
-                            style={{
-                                width: '100%',
-                            }}
-                            placeholder="Please select"
-                        >
-                            {subcategoryList}
-                        </Select>
                     </Form.Item>
                     <Form.Item label="Notice" name="notice">
                         <Input.TextArea allowClear showCount placeholder="Notice" />

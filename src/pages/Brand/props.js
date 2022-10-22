@@ -1,6 +1,9 @@
-import { Popover, Descriptions, Button } from 'antd';
+import { Form, Input, Popover, Descriptions, Button, Card, Typography } from 'antd';
 import { Link } from 'react-router-dom';
-import { EyeOutlined, EditOutlined } from '@ant-design/icons';
+import { EyeOutlined, EditOutlined, SaveOutlined } from '@ant-design/icons';
+
+import * as layoutConfig from 'utils/config/layout';
+const { Title } = Typography;
 
 export const brandTableColumns = [
     {
@@ -41,6 +44,10 @@ export const brandTableColumns = [
     },
 ];
 
+export const initialFormValues = {
+    notice: '',
+};
+
 export const brandPageHeader = (data) => {
     let pageHeaderObj = {};
     let popoverContent = (
@@ -76,4 +83,41 @@ export const brandPageHeader = (data) => {
         pageHeaderExtra: pageHeaderExtra,
     };
     return pageHeaderObj;
+};
+
+export const CustomFormMainItems = () => {
+    const formLayout = layoutConfig.form;
+
+    return (
+        <>
+            <Card bordered={false} style={{ padding: '0px' }}>
+                <div className="card_header">
+                    <Title level={4}>Brand Information</Title>
+                </div>
+                <div className="card_content">
+                    <Form.Item
+                        label="Name"
+                        name="name"
+                        hasFeedback
+                        rules={[
+                            {
+                                required: true,
+                            },
+                        ]}
+                    >
+                        <Input placeholder="Name" />
+                    </Form.Item>
+
+                    <Form.Item label="Notice" name="notice">
+                        <Input.TextArea allowClear showCount placeholder="Notice" />
+                    </Form.Item>
+                    <Form.Item {...formLayout.tailLayout} style={{ textAlign: 'right' }}>
+                        <Button type="primary" htmlType="submit" icon={<SaveOutlined />} className="form_button">
+                            Submit
+                        </Button>
+                    </Form.Item>
+                </div>
+            </Card>
+        </>
+    );
 };

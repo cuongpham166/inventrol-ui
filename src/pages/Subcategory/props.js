@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { Form, Input, Select, Tag, Popover, Space, Button, Card, Typography } from 'antd';
 import { Colorpicker, ColorPickerValue } from 'antd-colorpicker';
-import { EyeOutlined, EditOutlined, DeleteOutlined, SaveOutlined } from '@ant-design/icons';
+import { EyeOutlined, EditOutlined, DeleteOutlined, SaveOutlined, PlusOutlined } from '@ant-design/icons';
 
 import * as service from '../../api/services';
 import * as layoutConfig from 'utils/config/layout';
@@ -18,6 +18,7 @@ export const initialFormValues = {
 export const CustomFormMainItems = () => {
     const [categoryDataSource, setCategpryDataSource] = useState([]);
     const [blockPickerColor, setBlockPickerColor] = useState('#7a3db8');
+    const navigate = useNavigate();
     const formLayout = layoutConfig.form;
 
     const onChangeColor = (color) => {
@@ -51,24 +52,45 @@ export const CustomFormMainItems = () => {
                         <Input placeholder="Name" />
                     </Form.Item>
 
-                    <Form.Item
-                        name="category"
-                        label="Category"
-                        hasFeedback
-                        rules={[
-                            {
-                                required: true,
-                            },
-                        ]}
-                    >
-                        <Select placeholder="Please select a category">
-                            {categoryDataSource.map((option) => (
-                                <Option key={option.id} value={option.name}>
-                                    {option.name}
-                                </Option>
-                            ))}
-                        </Select>
+                    <Form.Item label="Category">
+                        <Input.Group compact>
+                            <Form.Item
+                                name="category"
+                                label="Category"
+                                hasFeedback
+                                noStyle
+                                rules={[
+                                    {
+                                        required: true,
+                                    },
+                                ]}
+                            >
+                                <Select
+                                    placeholder="Please select a category"
+                                    style={{ width: '65%', marginRight: '8px' }}
+                                >
+                                    {categoryDataSource.map((option) => (
+                                        <Option key={option.id} value={option.name}>
+                                            {option.name}
+                                        </Option>
+                                    ))}
+                                </Select>
+                            </Form.Item>
+                            <Form.Item noStyle>
+                                <Button
+                                    style={{ width: 'calc(35% - 8px)' }}
+                                    icon={<PlusOutlined />}
+                                    type={'primary'}
+                                    onClick={() => {
+                                        navigate('/category/add');
+                                    }}
+                                >
+                                    New Category
+                                </Button>
+                            </Form.Item>
+                        </Input.Group>
                     </Form.Item>
+
                     <Form.Item
                         label="Tag Color"
                         name="tagColor"

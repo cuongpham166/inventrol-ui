@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Popover, Tag, Descriptions, Button, Form, Input, Select, Typography, Card } from 'antd';
-import { Link } from 'react-router-dom';
-import { EyeOutlined, EditOutlined, SaveOutlined } from '@ant-design/icons';
+import { Link, useNavigate } from 'react-router-dom';
+import { EyeOutlined, EditOutlined, SaveOutlined, PlusOutlined } from '@ant-design/icons';
 
 import * as service from '../../api/services';
 import * as layoutConfig from 'utils/config/layout';
@@ -14,6 +14,7 @@ export const initialFormValues = {
 
 export const CustomFormMainItems = () => {
     const [attributeDataSource, setAttributeDataSource] = useState([]);
+    const navigate = useNavigate();
     const formLayout = layoutConfig.form;
     useEffect(() => {
         getAllAttributes();
@@ -43,23 +44,43 @@ export const CustomFormMainItems = () => {
                         <Input placeholder="Name" />
                     </Form.Item>
 
-                    <Form.Item
-                        name="attribute"
-                        label="Attribute"
-                        hasFeedback
-                        rules={[
-                            {
-                                required: true,
-                            },
-                        ]}
-                    >
-                        <Select placeholder="Please select an attribute">
-                            {attributeDataSource.map((option) => (
-                                <Option key={option.id} value={option.name}>
-                                    {option.name}
-                                </Option>
-                            ))}
-                        </Select>
+                    <Form.Item label="Attribute">
+                        <Input.Group compact>
+                            <Form.Item
+                                name="attribute"
+                                label="Attribute"
+                                noStyle
+                                hasFeedback
+                                rules={[
+                                    {
+                                        required: true,
+                                    },
+                                ]}
+                            >
+                                <Select
+                                    placeholder="Please select an attribute"
+                                    style={{ width: '65%', marginRight: '8px' }}
+                                >
+                                    {attributeDataSource.map((option) => (
+                                        <Option key={option.id} value={option.name}>
+                                            {option.name}
+                                        </Option>
+                                    ))}
+                                </Select>
+                            </Form.Item>
+                            <Form.Item noStyle>
+                                <Button
+                                    style={{ width: 'calc(35% - 8px)' }}
+                                    icon={<PlusOutlined />}
+                                    type={'primary'}
+                                    onClick={() => {
+                                        navigate('/attribute/add');
+                                    }}
+                                >
+                                    New Attribute
+                                </Button>
+                            </Form.Item>
+                        </Input.Group>
                     </Form.Item>
 
                     <Form.Item label="Notice" name="notice">

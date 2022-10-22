@@ -15,7 +15,7 @@ import {
     Card,
     Typography,
 } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
     ShopOutlined,
     FormOutlined,
@@ -29,6 +29,7 @@ import {
     EditOutlined,
     QuestionCircleOutlined,
     SaveOutlined,
+    PlusOutlined,
 } from '@ant-design/icons';
 import * as service from '../../api/services';
 import * as layoutConfig from 'utils/config/layout';
@@ -394,6 +395,7 @@ export const CustomFormMainItems = () => {
     const [subcategoryDataSource, setSubategoryDataSource] = useState([]);
     const [brandDataSource, setBrandDataSource] = useState([]);
     const [supplierList, setSupplierList] = useState([]);
+    const navigate = useNavigate();
     const formLayout = layoutConfig.form;
 
     useEffect(() => {
@@ -458,24 +460,46 @@ export const CustomFormMainItems = () => {
                     >
                         <Input placeholder="Name" />
                     </Form.Item>
-                    <Form.Item
-                        name="brand"
-                        label="Brand"
-                        hasFeedback
-                        rules={[
-                            {
-                                required: true,
-                            },
-                        ]}
-                    >
-                        <Select placeholder="Please select a brand">
-                            {brandDataSource.map((option) => (
-                                <Option key={option.id} value={option.name}>
-                                    {option.name}
-                                </Option>
-                            ))}
-                        </Select>
+
+                    <Form.Item label="Brand">
+                        <Input.Group compact>
+                            <Form.Item
+                                name="brand"
+                                label="Brand"
+                                hasFeedback
+                                noStyle
+                                rules={[
+                                    {
+                                        required: true,
+                                    },
+                                ]}
+                            >
+                                <Select
+                                    placeholder="Please select a brand"
+                                    style={{ width: '70%', marginRight: '8px' }}
+                                >
+                                    {brandDataSource.map((option) => (
+                                        <Option key={option.id} value={option.name}>
+                                            {option.name}
+                                        </Option>
+                                    ))}
+                                </Select>
+                            </Form.Item>
+                            <Form.Item noStyle>
+                                <Button
+                                    style={{ width: 'calc(30% - 8px)' }}
+                                    icon={<PlusOutlined />}
+                                    type={'primary'}
+                                    onClick={() => {
+                                        navigate('/brand/add');
+                                    }}
+                                >
+                                    New Brand
+                                </Button>
+                            </Form.Item>
+                        </Input.Group>
                     </Form.Item>
+
                     <Form.Item
                         label="SKU"
                         name="sku"
@@ -500,6 +524,7 @@ export const CustomFormMainItems = () => {
                     >
                         <Input placeholder="barcode" disabled />
                     </Form.Item>
+
                     <Form.Item label="Price">
                         <Input.Group compact>
                             <Form.Item name="vat" noStyle rules={[{ required: true, message: ' VAT is required' }]}>
@@ -539,66 +564,120 @@ export const CustomFormMainItems = () => {
                             </Form.Item>
                         </Input.Group>
                     </Form.Item>
-                    <Form.Item
-                        name="attributeValue"
-                        label="Type"
-                        hasFeedback
-                        rules={[
-                            {
-                                required: true,
-                            },
-                        ]}
-                    >
-                        <Select
-                            mode="multiple"
-                            allowClear
-                            style={{
-                                width: '100%',
-                            }}
-                            placeholder="Please select types"
-                        >
-                            {attributeValueList}
-                        </Select>
+
+                    <Form.Item label="Type">
+                        <Input.Group compact>
+                            <Form.Item
+                                name="attributeValue"
+                                label="Type"
+                                hasFeedback
+                                noStyle
+                                rules={[
+                                    {
+                                        required: true,
+                                    },
+                                ]}
+                            >
+                                <Select
+                                    mode="multiple"
+                                    allowClear
+                                    style={{ width: '70%', marginRight: '8px' }}
+                                    placeholder="Please select types"
+                                >
+                                    {attributeValueList}
+                                </Select>
+                            </Form.Item>
+                            <Form.Item noStyle>
+                                <Button
+                                    style={{ width: 'calc(30% - 8px)' }}
+                                    icon={<PlusOutlined />}
+                                    type={'primary'}
+                                    onClick={() => {
+                                        navigate('/attribute-value/add');
+                                    }}
+                                >
+                                    New Type
+                                </Button>
+                            </Form.Item>
+                        </Input.Group>
                     </Form.Item>
-                    <Form.Item
-                        name="subcategory"
-                        label="Subcategory"
-                        hasFeedback
-                        rules={[
-                            {
-                                required: true,
-                            },
-                        ]}
-                    >
-                        <Select placeholder="Please select a subcategory">
-                            {subcategoryDataSource.map((option) => (
-                                <Option key={option.id} value={option.name}>
-                                    {option.name}
-                                </Option>
-                            ))}
-                        </Select>
+
+                    <Form.Item label="Subcategory">
+                        <Input.Group compact>
+                            <Form.Item
+                                name="subcategory"
+                                label="Subcategory"
+                                hasFeedback
+                                noStyle
+                                rules={[
+                                    {
+                                        required: true,
+                                    },
+                                ]}
+                            >
+                                <Select
+                                    placeholder="Please select a subcategory"
+                                    style={{ width: '65%', marginRight: '8px' }}
+                                >
+                                    {subcategoryDataSource.map((option) => (
+                                        <Option key={option.id} value={option.name}>
+                                            {option.name}
+                                        </Option>
+                                    ))}
+                                </Select>
+                            </Form.Item>
+                            <Form.Item noStyle>
+                                <Button
+                                    style={{ width: 'calc(35% - 8px)' }}
+                                    icon={<PlusOutlined />}
+                                    type={'primary'}
+                                    onClick={() => {
+                                        navigate('/subcategory/add');
+                                    }}
+                                >
+                                    New Subcategory
+                                </Button>
+                            </Form.Item>
+                        </Input.Group>
                     </Form.Item>
-                    <Form.Item
-                        name="supplier"
-                        label="Supplier"
-                        hasFeedback
-                        rules={[
-                            {
-                                required: true,
-                            },
-                        ]}
-                    >
-                        <Select
-                            mode="multiple"
-                            allowClear
-                            style={{
-                                width: '100%',
-                            }}
-                            placeholder="Please select supplier(s)"
-                        >
-                            {supplierList}
-                        </Select>
+
+                    <Form.Item label="Supplier">
+                        <Input.Group compact>
+                            <Form.Item
+                                name="supplier"
+                                label="Supplier"
+                                hasFeedback
+                                noStyle
+                                rules={[
+                                    {
+                                        required: true,
+                                    },
+                                ]}
+                            >
+                                <Select
+                                    mode="multiple"
+                                    allowClear
+                                    style={{ width: '70%', marginRight: '8px' }}
+                                    placeholder="Please select supplier(s)"
+                                >
+                                    {supplierList}
+                                </Select>
+                            </Form.Item>
+                            <Form.Item noStyle>
+                                <Button
+                                    style={{ width: 'calc(30% - 8px)' }}
+                                    icon={<PlusOutlined />}
+                                    type={'primary'}
+                                    onClick={() => {
+                                        navigate('/supplier/add');
+                                    }}
+                                >
+                                    New Supplier
+                                </Button>
+                            </Form.Item>
+                        </Input.Group>
                     </Form.Item>
+
                     <Form.Item label="Notice" name="notice">
                         <Input.TextArea allowClear showCount placeholder="Notice" />
                     </Form.Item>

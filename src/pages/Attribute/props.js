@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Popover, Tag, Form, Input, Select, Card, Typography, Button } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Colorpicker, ColorPickerValue } from 'antd-colorpicker';
-import { EyeOutlined, SaveOutlined } from '@ant-design/icons';
+import { EyeOutlined, SaveOutlined, PlusOutlined } from '@ant-design/icons';
 import * as service from '../../api/services';
 import * as layoutConfig from 'utils/config/layout';
 
@@ -80,28 +80,10 @@ export const attributeTableColumns = [
 
 export const CustomFormMainItems = () => {
     const [blockPickerColor, setBlockPickerColor] = useState('#7a3db8');
-    const [attributeValueList, setAttributeValueList] = useState([]);
     const formLayout = layoutConfig.form;
 
     const onChangeColor = (color) => {
         setBlockPickerColor(color.hex);
-    };
-
-    useEffect(() => {
-        getAllAttributevalues();
-    }, []);
-
-    const getAllAttributevalues = async () => {
-        let listResult = [];
-        const result = await service.getAll('attribute-value');
-        result.map((val, idx) => {
-            listResult.push(
-                <Option key={val.id} value={val.name}>
-                    {val.name}
-                </Option>,
-            );
-        });
-        setAttributeValueList(listResult);
     };
 
     return (
@@ -145,27 +127,7 @@ export const CustomFormMainItems = () => {
                             value={blockPickerColor}
                         />
                     </Form.Item>
-                    <Form.Item
-                        name="attributevalue"
-                        label="Attribute Value"
-                        hasFeedback
-                        rules={[
-                            {
-                                required: true,
-                            },
-                        ]}
-                    >
-                        <Select
-                            mode="multiple"
-                            allowClear
-                            style={{
-                                width: '100%',
-                            }}
-                            placeholder="Please select"
-                        >
-                            {attributeValueList}
-                        </Select>
-                    </Form.Item>
+
                     <Form.Item label="Notice" name="notice">
                         <Input.TextArea allowClear showCount placeholder="Notice" />
                     </Form.Item>

@@ -130,7 +130,7 @@ const SkuGenerator = (props) => {
     return (
         <>
             <ModalSKU />
-            <Button icon={<BarcodeOutlined />} onClick={onChangeSKU}>
+            <Button icon={<BarcodeOutlined />} onClick={onChangeSKU} type={'primary'}>
                 Generate SKU
             </Button>
         </>
