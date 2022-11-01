@@ -106,27 +106,23 @@ export const categoryTableColumns = [
         title: 'Created on',
         dataIndex: 'createdOn',
         key: 'createdOn',
-        width: '140px',
         render: (createdOn) => <DateTimeFormatter data={createdOn} />,
     },
     {
         title: 'Created by',
         dataIndex: 'createdBy',
         key: 'createdBy',
-        width: '120px',
     },
     {
         title: 'Updated on',
         dataIndex: 'updatedOn',
         key: 'updatedOn',
-        width: '140px',
         render: (updatedOn) => <DateTimeFormatter data={updatedOn} />,
     },
     {
         title: 'Updated by',
         dataIndex: 'updatedBy',
         key: 'updatedBy',
-        width: '130px',
     },
     {
         title: () => <Tooltip title="Subcategory">Subcat.</Tooltip>,

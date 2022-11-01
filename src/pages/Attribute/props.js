@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Popover, Tag, Form, Input, Select, Card, Typography, Button } from 'antd';
+import { Popover, Tag, Form, Input, Select, Card, Typography, Button, Tooltip } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { Colorpicker, ColorPickerValue } from 'antd-colorpicker';
 import { EyeOutlined, SaveOutlined, PlusOutlined } from '@ant-design/icons';
@@ -8,6 +8,7 @@ import * as layoutConfig from 'utils/config/layout';
 
 import NoticeModal from 'components/ModalTable/NoticeModal';
 import DateTimeFormatter from 'components/DateTimeFormatter';
+import AttributeValueModal from 'components/ModalTable/AttributeValueModal';
 
 const { Option } = Select;
 const { Title } = Typography;
@@ -30,24 +31,6 @@ export const attributeTableColumns = [
         key: 'name',
     },
     {
-        title: 'Attribute Values',
-        dataIndex: 'attributevalue',
-        key: 'attributevalue',
-        render: (attributevalue) => (
-            <div>
-                {attributevalue.map((val) => {
-                    return (
-                        <Link to={'/attribute-value/' + val.id} key={val.name}>
-                            <Tag key={val.id} color="default">
-                                {val.name}
-                            </Tag>
-                        </Link>
-                    );
-                })}
-            </div>
-        ),
-    },
-    {
         title: 'Color',
         dataIndex: 'tagColor',
         key: 'tagColor',
@@ -59,27 +42,31 @@ export const attributeTableColumns = [
         title: 'Created on',
         dataIndex: 'createdOn',
         key: 'createdOn',
-        width: '140px',
         render: (createdOn) => <DateTimeFormatter data={createdOn} />,
     },
     {
         title: 'Created by',
         dataIndex: 'createdBy',
         key: 'createdBy',
-        width: '120px',
     },
     {
         title: 'Updated on',
         dataIndex: 'updatedOn',
         key: 'updatedOn',
-        width: '140px',
         render: (updatedOn) => <DateTimeFormatter data={updatedOn} />,
     },
     {
         title: 'Updated by',
         dataIndex: 'updatedBy',
         key: 'updatedBy',
-        width: '130px',
+    },
+    {
+        title: () => <Tooltip title="Attribute Value">AttrVal.</Tooltip>,
+        dataIndex: 'attributevalue',
+        key: 'attributevalue',
+        align: 'center',
+        width: '50px',
+        render: (attributevalue) => <AttributeValueModal data={attributevalue} />,
     },
     {
         title: 'Notice',

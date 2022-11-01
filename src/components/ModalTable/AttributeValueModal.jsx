@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { EyeOutlined, ExpandAltOutlined } from '@ant-design/icons';
 import DateTimeFormatter from 'components/DateTimeFormatter';
 import NoticeModal from 'components/ModalTable/NoticeModal';
-const subcategoryTableColumns = [
+const attributeValueTableColumns = [
     {
         title: '#',
         key: 'index',
@@ -15,15 +15,7 @@ const subcategoryTableColumns = [
         title: 'Name',
         dataIndex: 'name',
         key: 'name',
-        render: (text, record) => <Link to={'/subcategory/' + record.id}>{text}</Link>,
-    },
-    {
-        title: 'Color',
-        dataIndex: 'tagColor',
-        key: 'tagColor',
-        align: 'center',
-        width: '60px',
-        render: (tagColor) => <Tag color={tagColor}>{tagColor}</Tag>,
+        render: (text, record) => <Link to={'/attribute-value/' + record.id}>{text}</Link>,
     },
     {
         title: 'Created on',
@@ -40,6 +32,7 @@ const subcategoryTableColumns = [
         title: 'Updated on',
         dataIndex: 'updatedOn',
         key: 'updatedOn',
+
         render: (updatedOn) => <DateTimeFormatter data={updatedOn} />,
     },
     {
@@ -57,7 +50,8 @@ const subcategoryTableColumns = [
     },
 ];
 
-const SubcategoryModal = ({ data }) => {
+const AttributeValueModal = ({ data }) => {
+    console.log(data);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [tableData, setTableData] = useState();
     const showModal = () => {
@@ -72,7 +66,7 @@ const SubcategoryModal = ({ data }) => {
         <>
             <Button onClick={showModal} icon={<ExpandAltOutlined />}></Button>
             <Modal
-                title="Subcategory List"
+                title="Attribute Value List"
                 open={isModalOpen}
                 onOk={handleOk}
                 okText={'Close'}
@@ -80,10 +74,10 @@ const SubcategoryModal = ({ data }) => {
                 closable={false}
                 cancelButtonProps={{ style: { display: 'none' } }}
             >
-                <Table dataSource={tableData} columns={subcategoryTableColumns} rowKey="id" />
+                <Table dataSource={tableData} columns={attributeValueTableColumns} rowKey="id" />
             </Modal>
         </>
     );
 };
 
-export default SubcategoryModal;
+export default AttributeValueModal;
