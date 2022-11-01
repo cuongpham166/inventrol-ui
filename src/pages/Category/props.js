@@ -93,7 +93,7 @@ export const categoryTableColumns = [
         key: 'name',
         render: (text, record) => <Link to={'/category/' + record.id}>{text}</Link>,
     },
-    {
+    /*{
         title: 'Subcategories',
         dataIndex: 'subcategory',
         key: 'subcategory',
@@ -110,7 +110,7 @@ export const categoryTableColumns = [
                 })}
             </div>
         ),
-    },
+    },*/
     {
         title: 'Color',
         dataIndex: 'tagColor',
@@ -121,14 +121,26 @@ export const categoryTableColumns = [
     },
     {
         title: 'Created on',
-        dataIndex: 'createdDate',
-        key: 'createdDate',
+        dataIndex: 'createdOn',
+        key: 'createdOn',
+        width: '120px',
+    },
+    {
+        title: 'Created by',
+        dataIndex: 'createdBy',
+        key: 'createdBy',
         width: '120px',
     },
     {
         title: 'Updated on',
-        dataIndex: 'updatedDate',
-        key: 'updatedDate',
+        dataIndex: 'updatedOn',
+        key: 'updatedOn',
+        width: '130px',
+    },
+    {
+        title: 'Updated by',
+        dataIndex: 'updatedBy',
+        key: 'updatedBy',
         width: '130px',
     },
     {
