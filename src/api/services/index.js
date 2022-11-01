@@ -1,7 +1,7 @@
 import * as httpRequest from '../../utils/httpRequest';
 import * as categoryService from '../services/Category';
 import * as subcategoryService from '../services/Subcategory';
-
+import * as attributeService from '../services/Attribute';
 export const getAll = async (table) => {
     try {
         const results = await httpRequest.get(table);
@@ -21,6 +21,10 @@ export const create = async (table, data) => {
                 break;
             case 'subcategory':
                 res = await subcategoryService.create(table, data);
+                break;
+            case 'attribute':
+                res = await attributeService.create(table, data);
+                break;
             default:
                 console.log('Error');
                 break;
@@ -40,6 +44,9 @@ export const update = async (table, data) => {
                 break;
             case 'subcategory':
                 res = await subcategoryService.update(table, data);
+                break;
+            case 'attribute':
+                res = await attributeService.update(table, data);
                 break;
             default:
                 console.log('Error');
