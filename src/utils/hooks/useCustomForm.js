@@ -91,15 +91,16 @@ const useCustomForm = ({ table, initialFormValues, CustomFormMainItems, formType
                     updatedData: data,
                 };
                 res = await service.update(table, updateData);
-                if (res.status != '') {
-                    if (res.status === 200) {
+                switch (res.status) {
+                    case 400:
+                        message.error(res.message);
+                        break;
+                    case 200:
+                        message.success(res.message);
+                        form.resetFields();
                         navigate('/' + table);
-                        message.success('Sucess: Existing ' + table + ' has been updated');
-                    } else {
-                        message.error('Error: ' + res.statusText);
-                    }
-                } else {
-                    message.error('Error: ' + res.statusText);
+                    default:
+                        break;
                 }
                 break;
             default:

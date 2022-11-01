@@ -43,30 +43,29 @@ export const create = async (table, data) => {
 };
 
 export const update = async (table, data) => {
+    let notification;
     try {
-        console.log('update subcategpry');
-        console.log(data);
         let subcategoryId = data.id;
-
         let categoryName = data.updatedData.category;
-        let categoryId = await getCategoryIdByName(categoryName);
-
-        let res;
-        if (categoryId != '') {
-            let updatedElement = {
-                name: data.updatedData.name,
-                notice: data.updatedData.notice,
-                tagColor: data.updatedData.tagColor,
-                category: {
-                    id: categoryId,
-                },
-            };
-            res = await httpRequest.put(table + '/' + subcategoryId, updatedElement);
-        } else {
-            res = { status: '', statusText: 'Error' };
-        }
-        return res;
+        let updatedElement = {
+            name: data.updatedData.name,
+            notice: data.updatedData.notice,
+            tagColor: data.updatedData.tagColor.toLowerCase(),
+            category: {
+                name: categoryName,
+            },
+        };
+        let res = await httpRequest.put(table + '/' + subcategoryId, updatedElement);
+        notification = {
+            status: res.status,
+            message: res.data.message,
+        };
+        return notification;
     } catch (error) {
-        console.error(error);
+        notification = {
+            status: error.response.status,
+            message: error.response.data.message,
+        };
+        return notification;
     }
 };

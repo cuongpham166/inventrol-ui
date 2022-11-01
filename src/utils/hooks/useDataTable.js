@@ -44,7 +44,7 @@ const useDataTable = ({ columns, table, dataUrl }) => {
             render: (text, record) => (
                 <Space>
                     <Link to={'/' + table + '/' + record.id + '/edit'}>
-                        <Button icon={<EditOutlined />}></Button>
+                        <Button type="primary" icon={<EditOutlined />}></Button>
                     </Link>
                     <Popconfirm
                         title="Are you sure to delete this element?"

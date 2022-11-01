@@ -6,6 +6,9 @@ import { EyeOutlined, EditOutlined, SaveOutlined, PlusOutlined } from '@ant-desi
 import * as service from '../../api/services';
 import * as layoutConfig from 'utils/config/layout';
 
+import NoticeModal from 'components/ModalTable/NoticeModal';
+import DateTimeFormatter from 'components/DateTimeFormatter';
+
 const { Option } = Select;
 const { Title } = Typography;
 export const initialFormValues = {
@@ -118,14 +121,28 @@ export const attributeValueTableColumns = [
     },
     {
         title: 'Created on',
-        dataIndex: 'createdDate',
-        key: 'createdDate',
+        dataIndex: 'createdOn',
+        key: 'createdOn',
+        width: '140px',
+        render: (createdOn) => <DateTimeFormatter data={createdOn} />,
+    },
+    {
+        title: 'Created by',
+        dataIndex: 'createdBy',
+        key: 'createdBy',
         width: '120px',
     },
     {
         title: 'Updated on',
-        dataIndex: 'updatedDate',
-        key: 'updatedDate',
+        dataIndex: 'updatedOn',
+        key: 'updatedOn',
+        width: '140px',
+        render: (updatedOn) => <DateTimeFormatter data={updatedOn} />,
+    },
+    {
+        title: 'Updated by',
+        dataIndex: 'updatedBy',
+        key: 'updatedBy',
         width: '130px',
     },
     {
@@ -134,11 +151,7 @@ export const attributeValueTableColumns = [
         key: 'notice',
         width: '50px',
         align: 'center',
-        render: (notice) => (
-            <Popover content={notice} title="Notice" placement="bottom">
-                <EyeOutlined />
-            </Popover>
-        ),
+        render: (notice) => <NoticeModal data={notice} />,
     },
 ];
 

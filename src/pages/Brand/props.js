@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 import { EyeOutlined, EditOutlined, SaveOutlined } from '@ant-design/icons';
 
 import * as layoutConfig from 'utils/config/layout';
+
+import NoticeModal from 'components/ModalTable/NoticeModal';
+import DateTimeFormatter from 'components/DateTimeFormatter';
+
 const { Title } = Typography;
 
 export const brandTableColumns = [
@@ -19,15 +23,29 @@ export const brandTableColumns = [
         render: (text, record) => <Link to={'/brand/' + record.id}>{text}</Link>,
     },
     {
-        title: 'Created Date',
-        dataIndex: 'createdDate',
-        key: 'createdDate',
+        title: 'Created on',
+        dataIndex: 'createdOn',
+        key: 'createdOn',
+        width: '140px',
+        render: (createdOn) => <DateTimeFormatter data={createdOn} />,
+    },
+    {
+        title: 'Created by',
+        dataIndex: 'createdBy',
+        key: 'createdBy',
         width: '120px',
     },
     {
-        title: 'Updated Date',
-        dataIndex: 'updatedDate',
-        key: 'updatedDate',
+        title: 'Updated on',
+        dataIndex: 'updatedOn',
+        key: 'updatedOn',
+        width: '140px',
+        render: (updatedOn) => <DateTimeFormatter data={updatedOn} />,
+    },
+    {
+        title: 'Updated by',
+        dataIndex: 'updatedBy',
+        key: 'updatedBy',
         width: '130px',
     },
     {
@@ -36,11 +54,7 @@ export const brandTableColumns = [
         key: 'notice',
         width: '50px',
         align: 'center',
-        render: (notice) => (
-            <Popover content={notice} title="Notice" placement="bottom">
-                <EyeOutlined />
-            </Popover>
-        ),
+        render: (notice) => <NoticeModal data={notice} />,
     },
 ];
 
