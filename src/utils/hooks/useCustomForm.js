@@ -25,50 +25,6 @@ const useCustomForm = ({ table, initialFormValues, CustomFormMainItems, formType
         }
     }, []);
 
-    /*const onFinish = async (data) => {
-        try {
-            switch (formType) {
-                case 'new':
-                    let res = await service.create(table, data);
-                    console.log('res');
-                    console.log(res);
-                    if (res.response.status === 400) {
-                        message.error(res.response.data.message);
-                    }
-                    if (res.status === 201) {
-                        message.success('Sucess: New ' + table + ' has been created');
-                        form.resetFields();
-                    } else {
-                        message.error('Error: ' + res.statusText);
-                    }
-
-                    break;
-                case 'edit':
-                    let updateData = {
-                        id: dataId,
-                        updatedData: data,
-                    };
-                    res = await service.update(table, updateData);
-                    if (res.status != '') {
-                        if (res.status === 200) {
-                            navigate('/' + table);
-                            message.success('Sucess: Existing ' + table + ' has been updated');
-                        } else {
-                            message.error('Error: ' + res.statusText);
-                        }
-                    } else {
-                        message.error('Error: ' + res.statusText);
-                    }
-                    break;
-                default:
-                    console.log('Error');
-            }
-        } catch (error) {
-            console.log(error);
-            message.error(error.response.data.message);
-        }
-    };*/
-
     const onFinish = async (data) => {
         let res;
         switch (formType) {

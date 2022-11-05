@@ -91,9 +91,15 @@ const useDataTable = ({ columns, table, dataUrl }) => {
 
     const getAllData = async () => {
         const result = await service.getAll(dataUrl);
-        dataSourceRef.current = result;
-        setDataSource(result);
-        setTotalElements(result.length);
+        if (result != undefined) {
+            dataSourceRef.current = result;
+            setDataSource(result);
+            setTotalElements(result.length);
+        } else {
+            dataSourceRef.current = [];
+            setDataSource([]);
+            setTotalElements(0);
+        }
     };
 
     useEffect(() => {
@@ -127,16 +133,19 @@ const useDataTable = ({ columns, table, dataUrl }) => {
         setColumnValueList(selectedColums);
     };
 
+    let searchbarComponent;
+    let exportComponent;
+    table === 'discount' ? (searchbarComponent = <></>) : (searchbarComponent = <Searchbar />);
+    table === 'discount' ? (exportComponent = <></>) : (exportComponent = <DataExporter />);
+
     const DataTable = () => (
         <>
             <Row gutter={[64, 64]} justify="space-between" style={{ marginBottom: '20px' }}>
-                <Col span={6}>
-                    <Searchbar />
-                </Col>
+                <Col span={6}>{searchbarComponent}</Col>
                 <Col span={12}>
                     <Space style={{ float: 'right' }}>
                         <CheckBoxMenu options={columnOptionList} value={columnValueList} onChange={onCheckboxChange} />
-                        <DataExporter />
+                        {exportComponent}
                     </Space>
                 </Col>
             </Row>

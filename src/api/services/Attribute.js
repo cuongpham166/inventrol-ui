@@ -3,12 +3,12 @@ import * as httpRequest from '../../utils/httpRequest';
 export const create = async (table, data) => {
     let notification;
     try {
-        let newCategory = {
+        let newElement = {
             name: data.name,
             notice: data.notice,
             tagColor: data.tagColor.hex.toLowerCase(),
         };
-        let res = await httpRequest.post(table, newCategory);
+        let res = await httpRequest.post(table, newElement);
         notification = {
             status: res.status,
             message: res.data.message,

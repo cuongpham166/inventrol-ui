@@ -92,6 +92,7 @@ export const sidebarItems = [
                 getItem('Attribute Value', 'attribute-value', <TagOutlined />),
                 getItem('Brand', 'brand', <TagOutlined />),
                 getItem('Category', 'category', <TagOutlined />),
+                getItem('Discount', 'discount', <TagOutlined />),
                 getItem('Subcategory', 'subcategory', <TagsOutlined />),
             ]),
             getItem('Suppliers', 'supplier', <SolutionOutlined />),

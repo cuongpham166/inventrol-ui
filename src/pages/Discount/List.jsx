@@ -9,43 +9,31 @@ import Breadcrumb from 'components/Breadcrumb';
 import useDataTable from '../../utils/hooks/useDataTable';
 import usePageHeader from 'utils/hooks/usePageHeader';
 
-import * as service from '../../api/services';
-import * as brandProps from '../Brand/props';
+import * as discountProps from '../Discount/props';
 
 const pageHeaderExtra = (
     <>
-        <Link to={'/brand/add'}>
+        <Link to={'/discount/add'}>
             <Button key="1" type="primary" icon={<PlusOutlined />} style={{ textTransform: 'capitalize' }}>
-                Create New Brand
+                Create New Discount
             </Button>
         </Link>
     </>
 );
 
-const BrandList = (props) => {
-    const [dataTableSource, setDataTableSource] = useState([]);
+const DiscountList = (props) => {
     const { DataTable, currentPage, pageSize, resetPagination } = useDataTable({
-        columns: brandProps.brandTableColumns,
-        table: 'brand',
-        dataUrl: 'brand',
+        columns: discountProps.discountTableColumns,
+        table: 'discount',
+        dataUrl: 'discount',
     });
 
     const { PageHeader } = usePageHeader({
-        title: 'List of Brands',
+        title: 'List of Discount Values',
         dataId: '',
-        table: 'brand',
+        table: 'discount',
         pageHeaderExtra: pageHeaderExtra,
     });
-
-    /*const getAllData = async () => {
-        const result = await service.getAll('brand');
-        const tableData = result.filter((element) => element.deleted === false);
-        setDataTableSource(tableData);
-    };
-
-    useEffect(() => {
-        getAllData();
-    }, []);*/
 
     return (
         <>
@@ -69,4 +57,4 @@ const BrandList = (props) => {
     );
 };
 
-export default BrandList;
+export default DiscountList;

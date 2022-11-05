@@ -51,7 +51,6 @@ const attributeValueTableColumns = [
 ];
 
 const AttributeValueModal = ({ data }) => {
-    console.log(data);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [tableData, setTableData] = useState();
     const showModal = () => {

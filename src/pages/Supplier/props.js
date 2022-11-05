@@ -14,6 +14,9 @@ import {
 } from '@ant-design/icons';
 import * as layoutConfig from 'utils/config/layout';
 
+import NoticeModal from 'components/ModalTable/NoticeModal';
+import DateTimeFormatter from 'components/DateTimeFormatter';
+import SupplierModal from 'components/ModalTable/SupplierModal';
 const { Option } = Select;
 const { Title } = Typography;
 
@@ -173,10 +176,11 @@ export const supplierPageHeader = (data) => {
 };
 
 export const initialFormValues = {
+    email: '',
     website: '',
-    phone_number: '',
-    mobile_number: '',
-    additional_address_line: '',
+    phoneNumber: '',
+    mobileNumber: '',
+    additionalAddressLine: '',
     notice: '',
 };
 
@@ -194,21 +198,33 @@ export const supplierTableColumns = [
         render: (text, record) => <Link to={'/supplier/' + record.id}>{text}</Link>,
     },
     {
-        title: 'Contact Person',
-        dataIndex: 'contactPerson',
-        key: 'contactPerson',
+        title: 'Created on',
+        dataIndex: 'createdOn',
+        key: 'createdOn',
+        render: (createdOn) => <DateTimeFormatter data={createdOn} />,
     },
     {
-        title: 'Created on',
-        dataIndex: 'createdDate',
-        key: 'createdDate',
-        width: '120px',
+        title: 'Created by',
+        dataIndex: 'createdBy',
+        key: 'createdBy',
     },
     {
         title: 'Updated on',
-        dataIndex: 'updatedDate',
-        key: 'updatedDate',
-        width: '130px',
+        dataIndex: 'updatedOn',
+        key: 'updatedOn',
+        render: (updatedOn) => <DateTimeFormatter data={updatedOn} />,
+    },
+    {
+        title: 'Updated by',
+        dataIndex: 'updatedBy',
+        key: 'updatedBy',
+    },
+    {
+        title: () => <Tooltip title="Detailed Information">Info.</Tooltip>,
+        dataIndex: 'name',
+        key: 'name',
+        width: '50px',
+        render: (text, record) => <SupplierModal data={record} />,
     },
     {
         title: 'Notice',
@@ -216,11 +232,7 @@ export const supplierTableColumns = [
         key: 'notice',
         width: '50px',
         align: 'center',
-        render: (notice) => (
-            <Popover content={notice} title="Notice" placement="bottom">
-                <EyeOutlined />
-            </Popover>
-        ),
+        render: (notice) => <NoticeModal data={notice} />,
     },
 ];
 
@@ -230,7 +242,7 @@ export const CustomFormMainItems = () => {
         <>
             <Card bordered={false} style={{ marginBottom: '24px' }}>
                 <div className="card_header">
-                    <Title level={4}>Personal Information</Title>
+                    <Title level={4}>General Information</Title>
                 </div>
                 <div className="card_content">
                     <Form.Item
@@ -273,6 +285,9 @@ export const CustomFormMainItems = () => {
                     <Title level={4}>Contact Information</Title>
                 </div>
                 <div className="card_content">
+                    <Form.Item label="Email" name="email" hasFeedback>
+                        <Input placeholder={'Email'} />
+                    </Form.Item>
                     <Form.Item label="Phone Number" name="phoneNumber" hasFeedback>
                         <Input placeholder={'Phone Number'} />
                     </Form.Item>

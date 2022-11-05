@@ -5,7 +5,7 @@ import { Row, Col, Card, Typography, Space } from 'antd';
 
 import Breadcrumb from 'components/Breadcrumb';
 import SkuGenerator from 'components/SkuGenerator';
-import BarcodeGenerator from 'components/BarcodeGenerator';
+import BarcodeGenerator from 'components/BarcodeScanner';
 
 import usePageHeader from 'utils/hooks/usePageHeader';
 import useCustomForm from 'utils/hooks/useCustomForm';

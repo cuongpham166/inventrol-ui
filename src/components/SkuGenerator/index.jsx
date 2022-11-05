@@ -87,7 +87,6 @@ const SkuGenerator = (props) => {
             skuValueRef.current = skuString;
             setSkuValue(skuString);
             setIsModalOpen(false);
-            console.log(skuValue);
             return props.onClick(skuValueRef.current);
         };
         const handleCancel = () => {

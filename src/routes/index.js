@@ -14,6 +14,8 @@ import {
     EditAttributeValue,
 } from 'pages/AttributeValue';
 
+import { DiscountList, DiscountDetail, EditDiscount, CreateDiscount } from 'pages/Discount';
+
 const publicRoutes = [
     { path: '/', component: Home },
 
@@ -51,6 +53,11 @@ const publicRoutes = [
     { path: '/attribute-value/:id', component: AttributeValueDetail },
     { path: '/attribute-value/add', component: CreateAttributeValue },
     { path: '/attribute-value/:id/edit', component: EditAttributeValue },
+
+    { path: '/discount', component: DiscountList },
+    { path: '/discount/:id', component: DiscountDetail },
+    { path: '/discount/add', component: CreateDiscount },
+    { path: '/discount/:id/edit', component: EditDiscount },
 
     { path: '*', component: NoMatch },
 ];

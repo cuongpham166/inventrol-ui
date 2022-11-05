@@ -77,6 +77,7 @@ const SubcategoryModal = ({ data }) => {
                 onOk={handleOk}
                 okText={'Close'}
                 width={1000}
+                centered={true}
                 closable={false}
                 cancelButtonProps={{ style: { display: 'none' } }}
             >

@@ -3,7 +3,7 @@ import { Row, Col, Card, Typography, Space } from 'antd';
 
 import Breadcrumb from 'components/Breadcrumb';
 import SkuGenerator from 'components/SkuGenerator';
-import BarcodeGenerator from 'components/BarcodeGenerator';
+import BarcodeGenerator from 'components/BarcodeScanner';
 
 import useCustomForm from 'utils/hooks/useCustomForm';
 import usePageHeader from 'utils/hooks/usePageHeader';
@@ -32,6 +32,10 @@ const CreateProduct = (props) => {
         form.setFieldsValue({ sku: value });
     };
 
+    const onChangeBarcode = (value) => {
+        form.setFieldsValue({ barcode: value.barcode });
+    };
+
     return (
         <div style={{}}>
             <Row>
@@ -49,7 +53,7 @@ const CreateProduct = (props) => {
                         <div className="card_content">
                             <Space>
                                 <SkuGenerator onClick={onChangeSKU} />
-                                <BarcodeGenerator />
+                                <BarcodeGenerator onClick={onChangeBarcode} />
                             </Space>
                         </div>
                     </Card>

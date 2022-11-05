@@ -36,7 +36,7 @@ import * as layoutConfig from 'utils/config/layout';
 
 import skuGenerator from 'utils/functions/skuGenerator';
 
-const { Option } = Select;
+const { Option, OptGroup } = Select;
 const { Title } = Typography;
 
 export const productDataList = (data) => {
@@ -288,11 +288,6 @@ export const productTableColumns = [
         width: 60,
     },
     {
-        title: 'SKU',
-        dataIndex: 'sku',
-        key: 'sku',
-    },
-    {
         title: 'Name',
         dataIndex: 'name',
         key: 'name',
@@ -308,12 +303,11 @@ export const productTableColumns = [
         title: 'Category',
         dataIndex: 'subcategory',
         key: 'subcategory',
-        width: '170px',
         render: (subcategory) => (
             <div className="taglist_container">
-                <Link to={'/category/' + subcategory.category.id}>
+                {/*<Link to={'/category/' + subcategory.category.id}>
                     <Tag color={subcategory.category.tagColor}>{subcategory.category.name}</Tag>
-                </Link>
+                </Link> */}
                 <Link to={'/subcategory/' + subcategory.id}>
                     <Tag color={subcategory.tagColor}>{subcategory.name}</Tag>
                 </Link>
@@ -349,11 +343,6 @@ export const productTableColumns = [
             }
             return <Tag color={tagColor}>{stockStatus.toUpperCase()}</Tag>;
         },
-    },
-    {
-        title: 'VAT',
-        dataIndex: 'vat',
-        key: 'vat',
     },
     {
         title: 'Retail Price',
@@ -392,9 +381,10 @@ export const initialFormValues = {
 
 export const CustomFormMainItems = () => {
     const [attributeValueList, setAttributeValueList] = useState([]);
-    const [subcategoryDataSource, setSubategoryDataSource] = useState([]);
-    const [brandDataSource, setBrandDataSource] = useState([]);
+    const [subcategoryList, setsubcategoryList] = useState([]);
+    const [brandList, setBrandList] = useState([]);
     const [supplierList, setSupplierList] = useState([]);
+    const [discountList, setDiscountList] = useState([]);
     const navigate = useNavigate();
     const formLayout = layoutConfig.form;
 
@@ -403,42 +393,83 @@ export const CustomFormMainItems = () => {
         getAllSubcategories();
         getAllBrands();
         getAllSuppliers();
+        getAllDiscountValues();
     }, []);
 
     const getAllAttributevalues = async () => {
         let listResult = [];
-        const result = await service.getAll('attribute-value');
-        result.map((val, idx) => {
-            listResult.push(
-                <Option key={val.id} value={val.name}>
-                    {val.name}
-                </Option>,
-            );
-        });
-        setAttributeValueList(listResult);
+        const result = await service.getAll('attribute/attribute-values');
+
+        if (result.length > 0) {
+            result.sort((a, b) => {
+                return a.id - b.id;
+            });
+            result.map((value) => {
+                let optionElement = {
+                    label: value.name,
+                    options: [],
+                };
+                if (value.attributevalue.length > 0) {
+                    value.attributevalue.map((val) => {
+                        let opt = { label: val.name, value: val.name, id: val.id };
+                        optionElement.options.push(opt);
+                    });
+                }
+                optionElement.options.sort((a, b) => {
+                    return a.id - b.id;
+                });
+                listResult.push(optionElement);
+                setAttributeValueList(listResult);
+            });
+        }
     };
 
     const getAllSuppliers = async () => {
-        let supList = [];
         let suppliers = await service.getAll('supplier');
-        suppliers.map((val, idx) => {
-            supList.push(
-                <Option key={val.id} value={val.name}>
-                    {val.name}
-                </Option>,
-            );
-        });
-        setSupplierList(supList);
+        if (suppliers.length > 0) {
+            let supList = [];
+            suppliers.map((value) => {
+                let opt = { label: value.name, value: value.name, id: value.id };
+                supList.push(opt);
+            });
+            setSupplierList(supList);
+        }
     };
 
     const getAllSubcategories = async () => {
         const subcategories = await service.getAll('subcategory');
-        setSubategoryDataSource(subcategories);
+        if (subcategories.length > 0) {
+            let subcategoryList = [];
+            subcategories.map((value) => {
+                let opt = { label: value.name, value: value.name, id: value.id };
+                subcategoryList.push(opt);
+            });
+            setsubcategoryList(subcategoryList);
+        }
     };
 
     const getAllBrands = async () => {
         const brands = await service.getAll('brand');
-        setBrandDataSource(brands);
+        if (brands.length > 0) {
+            let brandList = [];
+            brands.map((value) => {
+                let opt = { label: value.name, value: value.name, id: value.id };
+                brandList.push(opt);
+            });
+            setBrandList(brandList);
+        }
+    };
+
+    const getAllDiscountValues = async () => {
+        const discountValues = await service.getAll('discount');
+        if (discountValues.length > 0) {
+            let discountList = [];
+            discountValues.map((value) => {
+                let opt = { label: value.discountPercent, value: value.discountPercent, id: value.id };
+                discountList.push(opt);
+            });
+            setDiscountList(discountList);
+        }
     };
 
     return (
@@ -477,13 +508,8 @@ export const CustomFormMainItems = () => {
                                 <Select
                                     placeholder="Please select a brand"
                                     style={{ width: '70%', marginRight: '8px' }}
-                                >
-                                    {brandDataSource.map((option) => (
-                                        <Option key={option.id} value={option.name}>
-                                            {option.name}
-                                        </Option>
-                                    ))}
-                                </Select>
+                                    options={brandList}
+                                />
                             </Form.Item>
                             <Form.Item noStyle>
                                 <Button
@@ -527,22 +553,13 @@ export const CustomFormMainItems = () => {
 
                     <Form.Item label="Price">
                         <Input.Group compact>
-                            <Form.Item name="vat" noStyle rules={[{ required: true, message: ' VAT is required' }]}>
-                                <InputNumber
-                                    style={{ width: 'calc(20% - 8px)' }}
-                                    placeholder="VAT"
-                                    min="0"
-                                    max="1"
-                                    step="0.01"
-                                />
-                            </Form.Item>
                             <Form.Item
                                 name="listingPrice"
                                 noStyle
                                 rules={[{ required: true, message: 'Listing Price is required' }]}
                             >
                                 <InputNumber
-                                    style={{ width: 'calc(40% - 8px)', marginLeft: '8px', marginRight: '8px' }}
+                                    style={{ width: '50%', marginRight: '8px' }}
                                     placeholder="Listing Price"
                                     min="0"
                                     max="1000000"
@@ -555,11 +572,36 @@ export const CustomFormMainItems = () => {
                                 rules={[{ required: true, message: 'Retail Price is required' }]}
                             >
                                 <InputNumber
-                                    style={{ width: 'calc(40% - 8px)' }}
+                                    style={{ width: 'calc(50% - 8px)' }}
                                     placeholder="Retail Price"
                                     min="0"
                                     max="1000000"
                                     step="1"
+                                />
+                            </Form.Item>
+                        </Input.Group>
+                    </Form.Item>
+
+                    <Form.Item label="VAT & Discount">
+                        <Input.Group compact>
+                            <Form.Item name="vat" noStyle rules={[{ required: true, message: ' VAT is required' }]}>
+                                <InputNumber
+                                    style={{ width: '35%', marginRight: '8px' }}
+                                    placeholder="VAT"
+                                    min="0"
+                                    max="1"
+                                    step="0.01"
+                                />
+                            </Form.Item>
+                            <Form.Item
+                                name="discount"
+                                noStyle
+                                rules={[{ required: true, message: 'Discount Value is required' }]}
+                            >
+                                <Select
+                                    placeholder="Please select a discount value"
+                                    style={{ width: 'calc(65% - 8px)' }}
+                                    options={discountList}
                                 />
                             </Form.Item>
                         </Input.Group>
@@ -583,9 +625,8 @@ export const CustomFormMainItems = () => {
                                     allowClear
                                     style={{ width: '70%', marginRight: '8px' }}
                                     placeholder="Please select types"
-                                >
-                                    {attributeValueList}
-                                </Select>
+                                    options={attributeValueList}
+                                />
                             </Form.Item>
                             <Form.Item noStyle>
                                 <Button
@@ -618,13 +659,8 @@ export const CustomFormMainItems = () => {
                                 <Select
                                     placeholder="Please select a subcategory"
                                     style={{ width: '65%', marginRight: '8px' }}
-                                >
-                                    {subcategoryDataSource.map((option) => (
-                                        <Option key={option.id} value={option.name}>
-                                            {option.name}
-                                        </Option>
-                                    ))}
-                                </Select>
+                                    options={subcategoryList}
+                                />
                             </Form.Item>
                             <Form.Item noStyle>
                                 <Button
@@ -659,9 +695,8 @@ export const CustomFormMainItems = () => {
                                     allowClear
                                     style={{ width: '70%', marginRight: '8px' }}
                                     placeholder="Please select supplier(s)"
-                                >
-                                    {supplierList}
-                                </Select>
+                                    options={supplierList}
+                                />
                             </Form.Item>
                             <Form.Item noStyle>
                                 <Button
