@@ -175,6 +175,15 @@ export const supplierPageHeader = (data) => {
     return pageHeaderObj;
 };
 
+/*export const extraActionColums = () => {
+    let table, record;
+    return (
+        <Link to={'/' + table + '/'}>
+            <Button type="primary" icon={<EditOutlined />}></Button>
+        </Link>
+    );
+};*/
+
 export const initialFormValues = {
     email: '',
     website: '',

@@ -4,6 +4,7 @@ import { Table, message, Row, Col, Space, Button, Popconfirm } from 'antd';
 import { EyeOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
 import CheckBoxMenu from 'components/CheckboxMenu';
+import ExtraActionButton from 'components/ExtraActionButton';
 
 import useSearchbar from './useSearchbar';
 import useExportData from './useExportData';
@@ -43,6 +44,7 @@ const useDataTable = ({ columns, table, dataUrl }) => {
             align: 'center',
             render: (text, record) => (
                 <Space>
+                    <ExtraActionButton table={table} id={record.id} />
                     <Link to={'/' + table + '/' + record.id + '/edit'}>
                         <Button type="primary" icon={<EditOutlined />}></Button>
                     </Link>
