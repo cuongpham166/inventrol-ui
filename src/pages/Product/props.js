@@ -35,6 +35,9 @@ import * as service from '../../api/services';
 import * as layoutConfig from 'utils/config/layout';
 
 import skuGenerator from 'utils/functions/skuGenerator';
+import NoticeModal from 'components/ModalTable/NoticeModal';
+import ProductAttributeColum from 'components/ProductTableColumns/ProductAttributeColum';
+import ProductModal from 'components/ModalTable/ProductModal';
 
 const { Option, OptGroup } = Select;
 const { Title } = Typography;
@@ -173,7 +176,7 @@ export const productDataList = (data) => {
                 </Tooltip>
             ),
             text: (
-                <Link to={'/inventory/' + data.id + '/edit'}>
+                <Link to={'/product/' + data.id + '/edit'}>
                     <Button type="primary">Update Product</Button>
                 </Link>
             ),
@@ -291,7 +294,7 @@ export const productTableColumns = [
         title: 'Name',
         dataIndex: 'name',
         key: 'name',
-        render: (text, record) => <Link to={'/inventory/' + record.id}>{text}</Link>,
+        render: (text, record) => <Link to={'/product/' + record.id}>{text}</Link>,
     },
     {
         title: 'Brand',
@@ -318,19 +321,7 @@ export const productTableColumns = [
         title: 'Type',
         dataIndex: 'attributeValue',
         key: 'attributeValue',
-        render: (attributeValue) => (
-            <div>
-                {attributeValue.map((attr) => {
-                    return (
-                        <Link to={'/attribute-value/' + attr.id} key={attr.name}>
-                            <Tag key={attr.id} color={attr.attribute.tagColor}>
-                                {attr.name}
-                            </Tag>
-                        </Link>
-                    );
-                })}
-            </div>
-        ),
+        render: (attributeValue) => <ProductAttributeColum data={attributeValue} />,
     },
     {
         title: 'Status',
@@ -341,10 +332,17 @@ export const productTableColumns = [
             if (stockStatus === 'In Stock') {
                 tagColor = 'green';
             }
-            return <Tag color={tagColor}>{stockStatus.toUpperCase()}</Tag>;
+            return <Tag color={tagColor}>{stockStatus}</Tag>;
         },
     },
     {
+        title: () => <Tooltip title="Detailed Information">Info.</Tooltip>,
+        dataIndex: 'name',
+        key: 'name',
+        width: '50px',
+        render: (text, record) => <ProductModal data={record} />,
+    },
+    /*{
         title: 'Retail Price',
         dataIndex: 'retailPrice',
         key: 'retailPrice',
@@ -353,25 +351,14 @@ export const productTableColumns = [
         title: 'Listing Price',
         dataIndex: 'listingPrice',
         key: 'listingPrice',
-    },
+    },*/
     {
         title: 'Notice',
         dataIndex: 'notice',
+        key: 'notice',
         width: '50px',
         align: 'center',
-        key: 'notice',
-        render: (notice) => {
-            let popoverContent = (
-                <div>
-                    <p>{notice}</p>
-                </div>
-            );
-            return (
-                <Popover content={popoverContent} title="Notice" placement="bottom">
-                    <EyeOutlined />
-                </Popover>
-            );
-        },
+        render: (notice) => <NoticeModal data={notice} />,
     },
 ];
 
@@ -405,21 +392,23 @@ export const CustomFormMainItems = () => {
                 return a.id - b.id;
             });
             result.map((value) => {
-                let optionElement = {
-                    label: value.name,
-                    options: [],
-                };
                 if (value.attributevalue.length > 0) {
+                    let optionElement = {
+                        label: value.name,
+                        options: [],
+                    };
+
                     value.attributevalue.map((val) => {
                         let opt = { label: val.name, value: val.name, id: val.id };
                         optionElement.options.push(opt);
                     });
+
+                    optionElement.options.sort((a, b) => {
+                        return a.id - b.id;
+                    });
+                    listResult.push(optionElement);
+                    setAttributeValueList(listResult);
                 }
-                optionElement.options.sort((a, b) => {
-                    return a.id - b.id;
-                });
-                listResult.push(optionElement);
-                setAttributeValueList(listResult);
             });
         }
     };
@@ -437,14 +426,31 @@ export const CustomFormMainItems = () => {
     };
 
     const getAllSubcategories = async () => {
-        const subcategories = await service.getAll('subcategory');
-        if (subcategories.length > 0) {
-            let subcategoryList = [];
-            subcategories.map((value) => {
-                let opt = { label: value.name, value: value.name, id: value.id };
-                subcategoryList.push(opt);
+        let listResult = [];
+        const result = await service.getAll('category/subcategories');
+        if (result.length > 0) {
+            result.sort((a, b) => {
+                return a.id - b.id;
             });
-            setsubcategoryList(subcategoryList);
+            result.map((value) => {
+                if (value.subcategory.length > 0) {
+                    let optionElement = {
+                        label: value.name,
+                        options: [],
+                    };
+
+                    value.subcategory.map((val) => {
+                        let opt = { label: val.name, value: val.name, id: val.id };
+                        optionElement.options.push(opt);
+                    });
+
+                    optionElement.options.sort((a, b) => {
+                        return a.id - b.id;
+                    });
+                    listResult.push(optionElement);
+                    setsubcategoryList(listResult);
+                }
+            });
         }
     };
 
@@ -607,11 +613,11 @@ export const CustomFormMainItems = () => {
                         </Input.Group>
                     </Form.Item>
 
-                    <Form.Item label="Type">
+                    <Form.Item label="Attribute">
                         <Input.Group compact>
                             <Form.Item
                                 name="attributeValue"
-                                label="Type"
+                                label="Attribute"
                                 hasFeedback
                                 noStyle
                                 rules={[

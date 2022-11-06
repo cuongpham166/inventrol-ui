@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { BlockPicker } from 'react-color';
 import { Colorpicker, ColorPickerValue } from 'antd-colorpicker';
-
+import Scanner from 'components/BarcodeScanner/Scanner';
 const DashboardPage = (props) => {
     const [blockPickerColor, setBlockPickerColor] = useState('#37d67a');
-
     const onChangeColor = (color) => {
         console.log(color.hex);
         setBlockPickerColor(color.hex);
     };
+
     return (
         <>
             <div>Dashboard</div>
+
             <div>
+                <Scanner />
                 <Colorpicker
                     popup
                     blockStyles={{

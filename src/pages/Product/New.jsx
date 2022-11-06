@@ -4,6 +4,7 @@ import { Row, Col, Card, Typography, Space } from 'antd';
 import Breadcrumb from 'components/Breadcrumb';
 import SkuGenerator from 'components/SkuGenerator';
 import BarcodeGenerator from 'components/BarcodeScanner';
+import Scanner from 'components/BarcodeScanner/Scanner';
 
 import useCustomForm from 'utils/hooks/useCustomForm';
 import usePageHeader from 'utils/hooks/usePageHeader';
@@ -33,7 +34,7 @@ const CreateProduct = (props) => {
     };
 
     const onChangeBarcode = (value) => {
-        form.setFieldsValue({ barcode: value.barcode });
+        form.setFieldsValue({ barcode: value });
     };
 
     return (
@@ -53,7 +54,7 @@ const CreateProduct = (props) => {
                         <div className="card_content">
                             <Space>
                                 <SkuGenerator onClick={onChangeSKU} />
-                                <BarcodeGenerator onClick={onChangeBarcode} />
+                                <Scanner onClick={onChangeBarcode} />
                             </Space>
                         </div>
                     </Card>

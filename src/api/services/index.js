@@ -5,6 +5,7 @@ import * as supplierService from '../services/Supplier';
 import * as attributeService from '../services/Attribute';
 import * as attributeValueService from '../services/AttributeValue';
 import * as brandService from '../services/Brand';
+import * as productService from '../services/Product';
 
 export const getAll = async (table) => {
     try {
@@ -40,6 +41,10 @@ export const create = async (table, data) => {
                 break;
             case 'supplier':
                 res = await supplierService.create(table, data);
+                break;
+            case 'product':
+                res = await productService.create(table, data);
+                break;
             default:
                 console.log('Error');
                 break;

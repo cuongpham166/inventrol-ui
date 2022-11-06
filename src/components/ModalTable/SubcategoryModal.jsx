@@ -72,7 +72,7 @@ const SubcategoryModal = ({ data }) => {
         <>
             <Button onClick={showModal} icon={<ExpandAltOutlined />}></Button>
             <Modal
-                title="Subcategory List"
+                title={'Subcategory List'}
                 open={isModalOpen}
                 onOk={handleOk}
                 okText={'Close'}
