@@ -14,6 +14,7 @@ import {
     FileOutlined,
     FileExcelOutlined,
     TableOutlined,
+    ShoppingCartOutlined,
 } from '@ant-design/icons';
 
 const { Option } = Select;
@@ -82,6 +83,7 @@ const getItem = (label, key, icon, children, type) => {
 export const sidebarItems = [
     getItem('Dashboard', 'dashboard', <AppstoreOutlined />),
     getItem('Inventory', 'product', <ShopOutlined />),
+    getItem('Purchase', 'purchase', <ShoppingCartOutlined />),
     getItem(
         'Management ',
         'management',

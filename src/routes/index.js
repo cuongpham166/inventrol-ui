@@ -13,6 +13,7 @@ import {
     CreateAttributeValue,
     EditAttributeValue,
 } from 'pages/AttributeValue';
+import { PurchaseDetail, PurchaseList, CreatePurchase, EditPurchase } from 'pages/Purchase';
 
 import { DiscountList, DiscountDetail, EditDiscount, CreateDiscount } from 'pages/Discount';
 
@@ -58,6 +59,11 @@ const publicRoutes = [
     { path: '/discount/:id', component: DiscountDetail },
     { path: '/discount/add', component: CreateDiscount },
     { path: '/discount/:id/edit', component: EditDiscount },
+
+    { path: '/purchase', component: PurchaseList },
+    { path: '/purchase/:id', component: PurchaseDetail },
+    { path: '/purchase/add', component: CreatePurchase },
+    { path: '/purchase/:id/edit', component: EditPurchase },
 
     { path: '*', component: NoMatch },
 ];
