@@ -37,7 +37,7 @@ const useDataTable = ({ columns, table, dataUrl }) => {
     const defaultColumns = [
         ...columns,
         {
-            title: 'Action',
+            title: 'Actions',
             dataIndex: 'name',
             key: 'action',
             width: '50px',

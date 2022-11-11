@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Card, Tag, Tabs, Typography, Space, Button, InputNumber } from 'antd';
-import { ShoppingCartOutlined } from '@ant-design/icons';
+import { Table, Card, Tag, Tabs, Typography, Space, Button, Select } from 'antd';
+import { ShoppingCartOutlined, PlusOutlined } from '@ant-design/icons';
 import * as service from '../../api/services';
+import { $ } from 'moneysafe';
 const { Text, Title } = Typography;
 
 const ProductNameColumn = ({ data }) => {
@@ -11,6 +12,7 @@ const ProductNameColumn = ({ data }) => {
     });
     return (
         <Space direction="vertical" size={0}>
+            <Tag color={data.subcategory.tagColor}>{data.subcategory.name}</Tag>
             <Text>{data.brand.name}</Text>
             <Text strong>{data.name}</Text>
             <Text>{data.barcode}</Text>
@@ -48,15 +50,11 @@ const PurchaseProductList = (props) => {
             render: (text, record) => <ProductNameColumn data={record} />,
         },
         {
-            title: 'Subcategory',
-            dataIndex: 'subcategory',
-            key: 'subcategory',
-            render: (subcategory) => <Tag color={subcategory.tagColor}>{subcategory.name}</Tag>,
-        },
-        {
             title: 'Price',
             dataIndex: 'listingPrice',
             key: 'listingPrice',
+            align: 'center',
+            render: (listingPrice) => <Text>{$(listingPrice).toFixed()} </Text>,
         },
         {
             title: 'Action',
@@ -67,20 +65,18 @@ const PurchaseProductList = (props) => {
             render: (text, record) => (
                 <Button
                     type="primary"
+                    icon={<PlusOutlined />}
                     onClick={(e) => {
                         //e.stopPropagation();
                         handleAddProduct(e, record.id);
                     }}
-                >
-                    Add
-                </Button>
+                ></Button>
             ),
         },
     ];
 
     const handleAddProduct = (e, productId) => {
         let foundProduct = defaultDatasource.find((element) => element.id == productId);
-        foundProduct['quantity'] = 1;
         return props.setCartData((prevState) => [...(prevState || []), foundProduct]);
     };
 
