@@ -325,14 +325,14 @@ export const productTableColumns = [
     },
     {
         title: 'Status',
-        dataIndex: 'stockStatus',
-        key: 'stockStatus',
-        render: (stockStatus) => {
-            let tagColor = stockStatus === 'Out of Stock' ? 'red' : 'yellow';
-            if (stockStatus === 'In Stock') {
+        dataIndex: 'productstock',
+        key: 'productstock',
+        render: (productstock) => {
+            let tagColor = productstock.stockStatus === 'Out of Stock' ? 'red' : 'yellow';
+            if (productstock.stockStatus === 'In Stock') {
                 tagColor = 'green';
             }
-            return <Tag color={tagColor}>{stockStatus}</Tag>;
+            return <Tag color={tagColor}>{productstock.stockStatus}</Tag>;
         },
     },
     {

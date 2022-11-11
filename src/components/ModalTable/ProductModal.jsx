@@ -34,8 +34,8 @@ const AttributeList = ({ data }) => {
 
 const ProductModal = ({ data }) => {
     let discountValue;
-    let tagColor = data.stockStatus === 'Out of Stock' ? 'red' : 'yellow';
-    if (data.stockStatus === 'In Stock') {
+    let tagColor = data.productstock.stockStatus === 'Out of Stock' ? 'red' : 'yellow';
+    if (data.productstock.stockStatus === 'In Stock') {
         tagColor = 'green';
     }
 
@@ -112,7 +112,7 @@ const ProductModal = ({ data }) => {
                 title={
                     <Space>
                         <Link to={'/product/' + data.id}>{data.name}</Link>
-                        <Tag color={tagColor}>{data.stockStatus}</Tag>
+                        <Tag color={tagColor}>{data.productstock.stockStatus}</Tag>
                     </Space>
                 }
                 open={isModalOpen}

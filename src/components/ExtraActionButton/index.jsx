@@ -5,7 +5,7 @@ const ExtraActionButton = ({ table, id }) => {
     let actionButtons;
     if (table == 'supplier') {
         actionButtons = (
-            <Link to={'/' + table + '/' + id + '/purchase'}>
+            <Link to={'/' + table + '/' + id + '/purchase/add'}>
                 <Button type="primary" icon={<ShoppingCartOutlined />}></Button>
             </Link>
         );

@@ -3,7 +3,7 @@ import NoMatch from '../pages/Nomatch';
 
 import { SubcategoryDetail, SubcategoryList, CreateSubcategory, EditSubcategory } from '../pages/Subcategory';
 import { CategoryList, CategoryDetail, CreateCategory, EditCategory } from 'pages/Category';
-import { SupplierDetail, SupplierList, CreateSupplier, EditSupplier } from 'pages/Supplier';
+import { SupplierDetail, SupplierList, CreateSupplier, EditSupplier, CreatePurchase } from 'pages/Supplier';
 import { ProductList, ProductDetail, CreateProduct, EditProduct } from 'pages/Product';
 import { BrandList, BrandDetail, CreateBrand, EditBrand } from 'pages/Brand';
 import { AttributeList, AttributeDetail, CreateAttribute, EditAttribute } from 'pages/Attribute';
@@ -13,7 +13,7 @@ import {
     CreateAttributeValue,
     EditAttributeValue,
 } from 'pages/AttributeValue';
-import { PurchaseDetail, PurchaseList, CreatePurchase, EditPurchase } from 'pages/Purchase';
+import { PurchaseDetail, PurchaseList } from 'pages/Purchase';
 
 import { DiscountList, DiscountDetail, EditDiscount, CreateDiscount } from 'pages/Discount';
 
@@ -34,6 +34,7 @@ const publicRoutes = [
     { path: '/supplier/:id', component: SupplierDetail },
     { path: '/supplier/add', component: CreateSupplier },
     { path: '/supplier/:id/edit', component: EditSupplier },
+    { path: '/supplier/:id/purchase/add', component: CreatePurchase },
 
     { path: '/product', component: ProductList },
     { path: '/product/:id', component: ProductDetail },
@@ -62,8 +63,8 @@ const publicRoutes = [
 
     { path: '/purchase', component: PurchaseList },
     { path: '/purchase/:id', component: PurchaseDetail },
-    { path: '/purchase/add', component: CreatePurchase },
-    { path: '/purchase/:id/edit', component: EditPurchase },
+    //{ path: '/purchase/add', component: CreatePurchase },
+    //{ path: '/purchase/:id/edit', component: EditPurchase },
 
     { path: '*', component: NoMatch },
 ];

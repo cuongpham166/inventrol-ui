@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 const usePageHeader = ({
     title,
     dataId,
-    table,
+    table = '',
     extraContent = [],
     mainContent = [],
     pageHeaderTag = [],
