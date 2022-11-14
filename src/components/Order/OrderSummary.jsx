@@ -133,7 +133,7 @@ const OrderSummary = ({ data }) => {
                 <Space direction="vertical">
                     <InputNumber
                         min={1}
-                        max={100}
+                        max={record.productstock.quantity}
                         style={{ width: '100%' }}
                         defaultValue={1}
                         value={record.quantity}
