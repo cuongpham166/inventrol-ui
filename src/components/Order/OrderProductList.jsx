@@ -2,46 +2,28 @@ import React, { useState, useEffect } from 'react';
 import { Table, Card, Tag, Tabs, Typography, Space, Button, Select } from 'antd';
 import { ShoppingCartOutlined, PlusOutlined } from '@ant-design/icons';
 import * as service from '../../api/services';
+import ProductNameColumn from 'components/Product/ProductNameColumn';
 import { $ } from 'moneysafe';
-import ProductNameColumn from '../Product/ProductNameColumn';
 const { Text, Title } = Typography;
 
-/*const ProductNameColumn = ({ data }) => {
-    let text = '';
-    data.attributeValue.map((value) => {
-        text += value.name;
-    });
-    return (
-        <Space direction="vertical" size={0}>
-            <Tag color={data.subcategory.tagColor}>{data.subcategory.name}</Tag>
-            <Text>{data.brand.name}</Text>
-            <Text strong>{data.name}</Text>
-            <Text>{data.barcode}</Text>
-            <Text>{text}</Text>
-        </Space>
-    );
-};*/
-
-const PurchaseProductList = (props) => {
+const OrderProductList = (props) => {
     const [defaultDatasource, setDefaultDatasource] = useState([]);
     const [datasource, setDatasource] = useState([]);
-
     const [tabItems, setTabItems] = useState([]);
-    const supplierId = props.supplierId;
-    const getProductBySupplierId = async (supplierId) => {
-        let result = await service.getAll('supplier/' + supplierId + '/purchase/add');
-        result.sort((a, b) => {
+    const getAllProducts = async () => {
+        let result = await service.getAll('product');
+        let products = result.filter((element) => element.productstock.quantity > 0);
+        products.sort((a, b) => {
             return a.id - b.id;
         });
-
         let tabItemSet = new Set();
         tabItemSet.add('All');
-        result.map((value, index) => {
+        products.map((value, index) => {
             tabItemSet.add(value.subcategory.category.name);
         });
         setTabItems([...tabItemSet]);
-        setDatasource(result);
-        setDefaultDatasource(result);
+        setDatasource(products);
+        setDefaultDatasource(products);
     };
 
     const productListTableColumns = [
@@ -51,11 +33,25 @@ const PurchaseProductList = (props) => {
             render: (text, record) => <ProductNameColumn data={record} />,
         },
         {
-            title: 'Price',
-            dataIndex: 'listingPrice',
-            key: 'listingPrice',
+            title: 'Qty',
+            dataIndex: 'productstock',
+            key: 'productstock',
             align: 'center',
-            render: (listingPrice) => <Text>{$(listingPrice).toFixed()} </Text>,
+            render: (productstock) => <Text>{productstock.quantity} </Text>,
+        },
+        {
+            title: 'VAT',
+            dataIndex: 'vat',
+            key: 'vat',
+            align: 'center',
+            render: (vat) => <Text>{$(vat * 100).toFixed() + '%'} </Text>,
+        },
+        {
+            title: 'Price',
+            dataIndex: 'retailPrice',
+            key: 'retailPrice',
+            align: 'center',
+            render: (retailPrice) => <Text>{$(retailPrice).toFixed()} </Text>,
         },
         {
             title: 'Action',
@@ -92,7 +88,7 @@ const PurchaseProductList = (props) => {
     };
 
     useEffect(() => {
-        getProductBySupplierId(supplierId);
+        getAllProducts();
     }, []);
 
     return (
@@ -114,4 +110,4 @@ const PurchaseProductList = (props) => {
     );
 };
 
-export default PurchaseProductList;
+export default OrderProductList;

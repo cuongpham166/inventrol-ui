@@ -4,8 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Row, Col, Card, Typography, Space } from 'antd';
 
 import Breadcrumb from 'components/Breadcrumb';
-import SkuGenerator from 'components/SkuGenerator';
-import BarcodeGenerator from 'components/BarcodeScanner';
+import Scanner from 'components/BarcodeScanner/Scanner';
 
 import usePageHeader from 'utils/hooks/usePageHeader';
 import useCustomForm from 'utils/hooks/useCustomForm';
@@ -38,6 +37,7 @@ const EditProduct = (props) => {
         let typeList = [];
         let supplierList = [];
 
+        console.log(result);
         if (result.attributeValue.length > 0) {
             result.attributeValue.map((attrVal) => {
                 typeList.push(attrVal.name);
@@ -52,12 +52,11 @@ const EditProduct = (props) => {
         setInitialFormValues({
             name: result.name,
             notice: result.notice,
-            sku: result.sku,
             barcode: result.barcode,
             vat: result.vat,
             listingPrice: result.listingPrice,
             retailPrice: result.retailPrice,
-
+            discount: result.discount.discountPercent,
             supplier: supplierList,
             attributeValue: typeList,
 
@@ -66,8 +65,8 @@ const EditProduct = (props) => {
         });
     };
 
-    const onChangeSKU = (value) => {
-        form.setFieldsValue({ sku: value });
+    const onChangeBarcode = (value) => {
+        form.setFieldsValue({ barcode: value });
     };
 
     useEffect(() => {
@@ -85,15 +84,7 @@ const EditProduct = (props) => {
             <Row style={{ padding: '35px' }} justify="center">
                 <Col span={15}>
                     <Card bordered={false} style={{ marginBottom: '24px' }}>
-                        <div className="card_header">
-                            <Title level={4}>Generator</Title>
-                        </div>
-                        <div className="card_content">
-                            <Space>
-                                <SkuGenerator onClick={onChangeSKU} />
-                                <BarcodeGenerator />
-                            </Space>
-                        </div>
+                        <Scanner onClick={onChangeBarcode} />
                     </Card>
                     <CustomForm />
                 </Col>

@@ -11,11 +11,7 @@ import * as purchaseService from '../services/Purchase';
 export const getAll = async (table) => {
     try {
         const results = await httpRequest.get(table);
-        let data;
-        if (results != '') {
-            data = results.filter((result) => result.deleted === false);
-        }
-        return data;
+        return results;
     } catch (error) {
         console.log(error);
     }

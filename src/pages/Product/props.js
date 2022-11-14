@@ -33,7 +33,7 @@ import {
 } from '@ant-design/icons';
 import * as service from '../../api/services';
 import * as layoutConfig from 'utils/config/layout';
-
+import { $ } from 'moneysafe';
 import skuGenerator from 'utils/functions/skuGenerator';
 import NoticeModal from 'components/ModalTable/NoticeModal';
 import ProductAttributeColum from 'components/ProductTableColumns/ProductAttributeColum';
@@ -372,6 +372,7 @@ export const CustomFormMainItems = () => {
     const [brandList, setBrandList] = useState([]);
     const [supplierList, setSupplierList] = useState([]);
     const [discountList, setDiscountList] = useState([]);
+    const [vatList, setVatList] = useState([]);
     const navigate = useNavigate();
     const formLayout = layoutConfig.form;
 
@@ -381,6 +382,7 @@ export const CustomFormMainItems = () => {
         getAllBrands();
         getAllSuppliers();
         getAllDiscountValues();
+        getAllVATValues();
     }, []);
 
     const getAllAttributevalues = async () => {
@@ -404,8 +406,9 @@ export const CustomFormMainItems = () => {
                     });
 
                     optionElement.options.sort((a, b) => {
-                        return a.id - b.id;
+                        return a.value - b.value;
                     });
+
                     listResult.push(optionElement);
                     setAttributeValueList(listResult);
                 }
@@ -472,12 +475,27 @@ export const CustomFormMainItems = () => {
             let discountList = [];
             discountValues.map((value) => {
                 let opt = { label: value.discountPercent, value: value.discountPercent, id: value.id };
+                if (value.discountPercent == '1') {
+                    opt.label = 'No Discount';
+                } else {
+                    opt.label = value.discountPercent * 100 + '%';
+                }
                 discountList.push(opt);
             });
             setDiscountList(discountList);
         }
     };
 
+    const getAllVATValues = () => {
+        let valueList = [0.07, 0.19];
+        let vatList = [];
+        valueList.map((element, index) => {
+            let opt = { label: element, value: element, id: index };
+            opt.label = $(element * 100).toFixed() + '%';
+            vatList.push(opt);
+        });
+        setVatList(vatList);
+    };
     return (
         <>
             <Card bordered={false} style={{ padding: '0px' }}>
@@ -531,19 +549,6 @@ export const CustomFormMainItems = () => {
                             </Form.Item>
                         </Input.Group>
                     </Form.Item>
-
-                    <Form.Item
-                        label="SKU"
-                        name="sku"
-                        hasFeedback
-                        rules={[
-                            {
-                                required: true,
-                            },
-                        ]}
-                    >
-                        <Input placeholder="SKU" disabled />
-                    </Form.Item>
                     <Form.Item
                         label="Barcode"
                         name="barcode"
@@ -591,12 +596,10 @@ export const CustomFormMainItems = () => {
                     <Form.Item label="VAT & Discount">
                         <Input.Group compact>
                             <Form.Item name="vat" noStyle rules={[{ required: true, message: ' VAT is required' }]}>
-                                <InputNumber
-                                    style={{ width: '35%', marginRight: '8px' }}
-                                    placeholder="VAT"
-                                    min="0"
-                                    max="1"
-                                    step="0.01"
+                                <Select
+                                    style={{ width: '40%', marginRight: '8px' }}
+                                    placeholder="Please select VAT value"
+                                    options={vatList}
                                 />
                             </Form.Item>
                             <Form.Item
@@ -606,7 +609,7 @@ export const CustomFormMainItems = () => {
                             >
                                 <Select
                                     placeholder="Please select a discount value"
-                                    style={{ width: 'calc(65% - 8px)' }}
+                                    style={{ width: 'calc(60% - 8px)' }}
                                     options={discountList}
                                 />
                             </Form.Item>

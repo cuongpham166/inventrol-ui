@@ -16,6 +16,8 @@ import {
 import { PurchaseDetail, PurchaseList } from 'pages/Purchase';
 
 import { DiscountList, DiscountDetail, EditDiscount, CreateDiscount } from 'pages/Discount';
+import { CustomerList, CustomerDetail, EditCustomer, CreateCustomer, AddressBook, NewOrder } from 'pages/Customer';
+import { OrderList, OrderDetail } from 'pages/Order';
 
 const publicRoutes = [
     { path: '/', component: Home },
@@ -65,6 +67,16 @@ const publicRoutes = [
     { path: '/purchase/:id', component: PurchaseDetail },
     //{ path: '/purchase/add', component: CreatePurchase },
     //{ path: '/purchase/:id/edit', component: EditPurchase },
+
+    { path: '/customer', component: CustomerList },
+    { path: '/customer/:id', component: CustomerDetail },
+    { path: '/customer/:id/address', component: AddressBook },
+    { path: '/customer/add', component: CreateCustomer },
+    { path: '/customer/:id/edit', component: EditCustomer },
+    { path: '/customer/:id/order/add', component: NewOrder },
+
+    { path: '/order', component: OrderList },
+    { path: '/order/:id', component: OrderDetail },
 
     { path: '*', component: NoMatch },
 ];

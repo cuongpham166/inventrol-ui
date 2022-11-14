@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Row, Col, Card, Typography, Space } from 'antd';
 
 import Breadcrumb from 'components/Breadcrumb';
-import SkuGenerator from 'components/SkuGenerator';
-import BarcodeGenerator from 'components/BarcodeScanner';
+
 import Scanner from 'components/BarcodeScanner/Scanner';
 
 import useCustomForm from 'utils/hooks/useCustomForm';
@@ -29,10 +28,6 @@ const CreateProduct = (props) => {
         dataId: '',
     });
 
-    const onChangeSKU = (value) => {
-        form.setFieldsValue({ sku: value });
-    };
-
     const onChangeBarcode = (value) => {
         form.setFieldsValue({ barcode: value });
     };
@@ -48,15 +43,7 @@ const CreateProduct = (props) => {
             <Row style={{ padding: '35px' }} justify="center">
                 <Col span={15}>
                     <Card bordered={false} style={{ marginBottom: '24px' }}>
-                        <div className="card_header">
-                            <Title level={4}>Generator</Title>
-                        </div>
-                        <div className="card_content">
-                            <Space>
-                                <SkuGenerator onClick={onChangeSKU} />
-                                <Scanner onClick={onChangeBarcode} />
-                            </Space>
-                        </div>
+                        <Scanner onClick={onChangeBarcode} />
                     </Card>
                     <CustomForm />
                 </Col>
