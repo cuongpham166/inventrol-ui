@@ -12,6 +12,7 @@ import {
     Space,
     Popconfirm,
     Input,
+    Tag,
 } from 'antd';
 import { ShoppingCartOutlined, DeleteOutlined } from '@ant-design/icons';
 import { $ } from 'moneysafe';
@@ -21,74 +22,79 @@ const _ = require('lodash');
 const { Text, Title } = Typography;
 const { TextArea } = Input;
 
-const OrderSummary = ({ data }) => {
-    const [total, setTotal] = useState(0);
-    const totalRef = useRef(total);
+const OrderSummary = (props) => {
+    console.log(props.data);
+    const subtotalCost = props.data.reduce(
+        (total, item) =>
+            total +
+            item.quantity *
+                $$(
+                    $(item.retailPrice),
+                    // subtract discount
+                    subtractPercent(item.discount.discountPercent),
+                ).toNumber(),
+        0,
+    );
+    const fixedSubtotalCost = $(subtotalCost).toFixed();
 
-    const [dataSource, setDataSource] = useState([]);
-    const dataSourceRef = useRef(dataSource);
+    const totalCostWithDiscount = props.data.reduce(
+        (total, item) =>
+            total +
+            item.quantity *
+                $$(
+                    $(item.retailPrice),
+                    // subtract discount
+                    subtractPercent(item.discount.discountPercent),
+                    // add tax
+                    addPercent(item.vat),
+                ).toNumber(),
+        0,
+    );
 
-    const [disabledButton, setDisabledButton] = useState(true);
-    const disabledButtonRef = useRef(disabledButton);
+    const totalCostWithoutDiscount = props.data.reduce(
+        (total, item) =>
+            total +
+            item.quantity *
+                $$(
+                    $(item.retailPrice),
+                    // add tax
+                    addPercent(item.vat),
+                ).toNumber(),
+        0,
+    );
 
-    const handleAllChanges = (data) => {
-        dataSourceRef.current = data;
-        setDataSource(data);
-        let newTotalCost = data.reduce((total, item) => total + item.quantity * item.retailPrice, 0);
-        let newFixedTotalCost = $(newTotalCost).toFixed();
-        totalRef.current = newFixedTotalCost;
-        setTotal(newFixedTotalCost);
-        if (data.length == 0) {
-            disabledButtonRef.current = true;
-            setDisabledButton(true);
-        }
-    };
+    const fixedTotalCostWithDiscount = $(totalCostWithDiscount).toFixed();
+    const fixedTotalCostWithoutDiscount = $(totalCostWithoutDiscount).toFixed();
 
-    const handleRemoveProduct = (productId) => {
-        let updatedCart = dataSourceRef.current.filter((element) => element.id != productId);
-        handleAllChanges(updatedCart);
-    };
+    const shippingCost = fixedTotalCostWithDiscount >= 10 ? 0 : 5;
+    const totalVAT = $(fixedTotalCostWithDiscount).minus(fixedSubtotalCost).valueOf();
+    const totalDiscount = $(fixedTotalCostWithDiscount).minus(fixedTotalCostWithoutDiscount).valueOf();
 
-    const handleChangeQuantity = (value, productId) => {
-        let cartDataCopy = [...dataSourceRef.current];
-        let updatedProductIndex = dataSourceRef.current.findIndex((ele) => ele.id == productId);
-        let updatedProduct = dataSourceRef.current[updatedProductIndex];
-        updatedProduct.quantity = value;
+    const handleSetMaxQty = (e, productId) => {
+        let cartDataCopy = [...props.data];
+        let updatedProductIndex = props.data.findIndex((ele) => ele.id == productId);
+        let updatedProduct = props.data[updatedProductIndex];
+        updatedProduct.quantity = updatedProduct.productstock.quantity;
         cartDataCopy[updatedProductIndex] = updatedProduct;
-        handleAllChanges(cartDataCopy);
-    };
-
-    const handleSetMaxQty = (e, productId) => {};
-
-    const updatePurchaseCart = (data) => {
-        if (data.length > 0) {
-            const countDict = data.reduce((acc, curr) => {
-                const { name } = curr;
-                if (acc[name]) ++acc[name];
-                else acc[name] = 1;
-                return acc;
-            }, {});
-
-            let result = data.map((obj) => {
-                obj['quantity'] = countDict[obj.name];
-                return obj;
-            });
-
-            result = result.filter((value, index, self) => index === self.findIndex((t) => t.name === value.name));
-            dataSourceRef.current = result;
-            setDataSource(result);
-        }
-    };
-
-    const updatePurchaseCost = (data) => {
-        const totalCost = data.reduce((total, item) => total + item.retailPrice, 0);
-        const fixedTotalCost = $(totalCost).toFixed();
-        totalRef.current = fixedTotalCost;
-        setTotal(fixedTotalCost);
+        return props.setCartData(cartDataCopy);
     };
 
     const handleChangeNotice = (e) => {
         console.log('Change:', e.target.value);
+    };
+
+    const handleRemoveProduct = (productId) => {
+        let updatedCart = props.data.filter((element) => element.id != productId);
+        return props.setCartData(updatedCart);
+    };
+
+    const handleChangeQuantity = (value, productId) => {
+        let cartDataCopy = [...props.data];
+        let updatedProductIndex = props.data.findIndex((ele) => ele.id == productId);
+        let updatedProduct = props.data[updatedProductIndex];
+        updatedProduct.quantity = value;
+        cartDataCopy[updatedProductIndex] = updatedProduct;
+        return props.setCartData(cartDataCopy);
     };
 
     const productSummaryTableColumns = [
@@ -114,14 +120,35 @@ const OrderSummary = ({ data }) => {
             dataIndex: 'retailPrice',
             key: 'retailPrice',
             align: 'center',
-            render: (retailPrice) => <Text>{$(retailPrice).toFixed()} </Text>,
+            render: (text, record, index) => (
+                <Text>
+                    {$$(
+                        $(record.retailPrice),
+                        // subtract discount
+                        subtractPercent(record.discount.discountPercent),
+                    ).toNumber()}
+                </Text>
+            ),
         },
         {
             title: 'Total',
             dataIndex: 'index',
             key: 'index',
             align: 'center',
-            render: (text, record, index) => <Text>{$(record.retailPrice * record.quantity).toFixed()} </Text>,
+            render: (text, record, index) => (
+                <Text>
+                    {$(
+                        record.quantity *
+                            $$(
+                                $(record.retailPrice),
+                                // subtract discount
+                                subtractPercent(record.discount.discountPercent),
+                                // add tax
+                                addPercent(record.vat),
+                            ).toNumber(),
+                    ).toFixed()}
+                </Text>
+            ),
         },
         {
             title: 'Actions',
@@ -167,27 +194,25 @@ const OrderSummary = ({ data }) => {
         },
     ];
 
-    useEffect(() => {
-        dataSourceRef.current = data;
-        setDataSource(dataSourceRef.current);
-        updatePurchaseCart(data);
-        updatePurchaseCost(data);
-        if (data.length > 0) {
-            disabledButtonRef.current = false;
-            setDisabledButton(false);
-        }
-    }, [data]);
     return (
         <>
             <Card title="Purchase Summary" bordered={false} style={{}}>
-                <Table columns={productSummaryTableColumns} dataSource={_.cloneDeep(dataSource)} rowKey="id" />
+                <Table columns={productSummaryTableColumns} dataSource={_.cloneDeep(props.data)} rowKey="id" />
 
                 <Row justify="space-between" align="middle" style={{ marginTop: '30px' }}>
                     <Title level={5} style={{ marginTop: '0' }}>
                         Subtotal
                     </Title>
                     <Title level={5} style={{ marginTop: '0' }}>
-                        {totalRef.current}€
+                        {fixedSubtotalCost}€
+                    </Title>
+                </Row>
+                <Row justify="space-between" align="middle" style={{ marginTop: '30px' }}>
+                    <Title level={5} style={{ marginTop: '0' }}>
+                        VAT
+                    </Title>
+                    <Title level={5} style={{ marginTop: '0' }}>
+                        {totalVAT}€
                     </Title>
                 </Row>
                 <Row justify="space-between" align="middle" style={{ marginTop: '30px' }}>
@@ -195,23 +220,7 @@ const OrderSummary = ({ data }) => {
                         Shipping Cost
                     </Title>
                     <Title level={5} style={{ marginTop: '0' }}>
-                        {totalRef.current >= 50 ? 'Free Shipping' : 5 + '€'}
-                    </Title>
-                </Row>
-                <Row justify="space-between" align="middle" style={{ marginTop: '30px' }}>
-                    <Title level={5} style={{ marginTop: '0' }}>
-                        VAT (7%)
-                    </Title>
-                    <Title level={5} style={{ marginTop: '0' }}>
-                        {}
-                    </Title>
-                </Row>
-                <Row justify="space-between" align="middle" style={{ marginTop: '30px' }}>
-                    <Title level={5} style={{ marginTop: '0' }}>
-                        VAT (19%)
-                    </Title>
-                    <Title level={5} style={{ marginTop: '0' }}>
-                        {}
+                        {shippingCost == 0 ? 'Free Shipping' : shippingCost + '€'}
                     </Title>
                 </Row>
                 <Row justify="space-between" align="middle" style={{ marginTop: '30px' }}>
@@ -219,7 +228,7 @@ const OrderSummary = ({ data }) => {
                         Discount
                     </Title>
                     <Title level={5} style={{ marginTop: '0' }}>
-                        {}
+                        {totalDiscount}€
                     </Title>
                 </Row>
                 <Row justify="space-between" align="middle" style={{ marginTop: '30px' }}>
@@ -227,32 +236,26 @@ const OrderSummary = ({ data }) => {
                         Total
                     </Title>
                     <Title level={5} style={{ marginTop: '0' }}>
-                        {}
+                        {$(fixedTotalCostWithDiscount).plus(shippingCost).valueOf()}€
                     </Title>
                 </Row>
                 <Divider />
-                <Row justify="space-between" align="middle" style={{ marginBottom: '30px' }}>
-                    <Title level={5} style={{ marginTop: '0' }}>
-                        Order Notice
-                    </Title>
-                    <TextArea
-                        rows={4}
-                        placeholder="Purchase Notice"
-                        showCount
-                        defaultValue={''}
-                        onChange={handleChangeNotice}
-                    />
+                <Row justify="space-between" align="middle">
+                    <Col span={10}>
+                        <Title level={5} style={{ marginTop: '0' }}>
+                            Order Notice
+                        </Title>
+                    </Col>
+                    <Col span={14}>
+                        <TextArea
+                            rows={4}
+                            placeholder="Order Notice"
+                            showCount
+                            defaultValue={''}
+                            onChange={handleChangeNotice}
+                        />
+                    </Col>
                 </Row>
-                <Button
-                    type="primary"
-                    disabled={disabledButtonRef.current}
-                    icon={<ShoppingCartOutlined />}
-                    onClick={(e) => {
-                        //e.stopPropagation();
-                    }}
-                >
-                    Place Order
-                </Button>
             </Card>
         </>
     );

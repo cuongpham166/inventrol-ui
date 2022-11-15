@@ -171,16 +171,20 @@ const PurchaseSummary = (props) => {
                     />
                 </Row>
                 <Row justify="space-between" align="middle" style={{ marginBottom: '30px' }}>
-                    <Title level={5} style={{ marginTop: '0' }}>
-                        Purchase Notice
-                    </Title>
-                    <TextArea
-                        rows={4}
-                        placeholder="Purchase Notice"
-                        showCount
-                        defaultValue={''}
-                        onChange={handleChangeNotice}
-                    />
+                    <Col span={10}>
+                        <Title level={5} style={{ marginTop: '0' }}>
+                            Purchase Notice
+                        </Title>
+                    </Col>
+                    <Col span={14}>
+                        <TextArea
+                            rows={4}
+                            placeholder="Purchase Notice"
+                            showCount
+                            defaultValue={''}
+                            onChange={handleChangeNotice}
+                        />
+                    </Col>
                 </Row>
                 <Button
                     type="primary"

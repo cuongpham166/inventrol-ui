@@ -4,6 +4,7 @@ import { ShoppingCartOutlined, PlusOutlined } from '@ant-design/icons';
 import * as service from '../../api/services';
 import ProductNameColumn from 'components/Product/ProductNameColumn';
 import { $ } from 'moneysafe';
+import { $$, subtractPercent, addPercent } from 'moneysafe/ledger';
 const { Text, Title } = Typography;
 
 const OrderProductList = (props) => {
@@ -13,9 +14,11 @@ const OrderProductList = (props) => {
     const getAllProducts = async () => {
         let result = await service.getAll('product');
         let products = result.filter((element) => element.productstock.quantity > 0);
-        console.log(products);
         products.sort((a, b) => {
             return a.id - b.id;
+        });
+        products.map((ele, index) => {
+            ele.quantity = 0;
         });
         let tabItemSet = new Set();
         tabItemSet.add('All');
@@ -45,14 +48,32 @@ const OrderProductList = (props) => {
             dataIndex: 'vat',
             key: 'vat',
             align: 'center',
-            render: (vat) => <Text>{$(vat * 100).toFixed() + '%'} </Text>,
+            render: (vat) => <Text>{vat}%</Text>,
         },
         {
             title: 'Price',
             dataIndex: 'retailPrice',
             key: 'retailPrice',
             align: 'center',
-            render: (retailPrice) => <Text>{$(retailPrice).toFixed()} </Text>,
+            render: (text, record, index) => (
+                <>
+                    {record.discount.discountPercent > 0 ? (
+                        <Space direction="vertical">
+                            <Tag color="#7A3DB8">-{record.discount.discountPercent}%</Tag>
+                            <Text delete>{$(record.retailPrice).toFixed()} </Text>
+                            <Text type="danger" strong>
+                                {$$(
+                                    $(record.retailPrice),
+                                    // subtract discount
+                                    subtractPercent(record.discount.discountPercent),
+                                ).toNumber()}
+                            </Text>
+                        </Space>
+                    ) : (
+                        <Text>{$(record.retailPrice).toFixed()} </Text>
+                    )}
+                </>
+            ),
         },
         {
             title: 'Action',
@@ -75,7 +96,31 @@ const OrderProductList = (props) => {
 
     const handleAddProduct = (e, productId) => {
         let foundProduct = defaultDatasource.find((element) => element.id == productId);
-        return props.setCartData((prevState) => [...(prevState || []), foundProduct]);
+        if (props.data.length == 0) {
+            foundProduct.quantity += 1;
+            return props.setCartData((prevState) => [...(prevState || []), foundProduct]);
+        } else {
+            let foundProductInCart = props.data.find((ele) => ele.id == productId);
+            if (foundProductInCart) {
+                //exist
+                //increase quantity
+                //setCartData
+                if (foundProduct.quantity < foundProduct.productstock.quantity) {
+                    let cartDataCopy = [...props.data];
+                    let updatedProductIndex = props.data.findIndex((ele) => ele.id == productId);
+                    let updatedProduct = props.data[updatedProductIndex];
+                    updatedProduct.quantity += 1;
+                    cartDataCopy[updatedProductIndex] = updatedProduct;
+                    return props.setCartData(cartDataCopy);
+                }
+            } else {
+                //not exist
+                //set quantity = 1
+                //setCartData
+                foundProduct.quantity = 1;
+                return props.setCartData((prevState) => [...(prevState || []), foundProduct]);
+            }
+        }
     };
 
     const onChange = (key) => {
