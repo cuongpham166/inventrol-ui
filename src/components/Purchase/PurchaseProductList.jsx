@@ -6,26 +6,9 @@ import { $ } from 'moneysafe';
 import ProductNameColumn from '../Product/ProductNameColumn';
 const { Text, Title } = Typography;
 
-/*const ProductNameColumn = ({ data }) => {
-    let text = '';
-    data.attributeValue.map((value) => {
-        text += value.name;
-    });
-    return (
-        <Space direction="vertical" size={0}>
-            <Tag color={data.subcategory.tagColor}>{data.subcategory.name}</Tag>
-            <Text>{data.brand.name}</Text>
-            <Text strong>{data.name}</Text>
-            <Text>{data.barcode}</Text>
-            <Text>{text}</Text>
-        </Space>
-    );
-};*/
-
 const PurchaseProductList = (props) => {
     const [defaultDatasource, setDefaultDatasource] = useState([]);
     const [datasource, setDatasource] = useState([]);
-
     const [tabItems, setTabItems] = useState([]);
     const supplierId = props.supplierId;
     const getProductBySupplierId = async (supplierId) => {
@@ -33,7 +16,9 @@ const PurchaseProductList = (props) => {
         result.sort((a, b) => {
             return a.id - b.id;
         });
-
+        result.map((ele, index) => {
+            ele.quantity = 0;
+        });
         let tabItemSet = new Set();
         tabItemSet.add('All');
         result.map((value, index) => {
@@ -78,7 +63,29 @@ const PurchaseProductList = (props) => {
 
     const handleAddProduct = (e, productId) => {
         let foundProduct = defaultDatasource.find((element) => element.id == productId);
-        return props.setCartData((prevState) => [...(prevState || []), foundProduct]);
+        if (props.data.length == 0) {
+            foundProduct.quantity += 1;
+            return props.setCartData((prevState) => [...(prevState || []), foundProduct]);
+        } else {
+            let foundProductInCart = props.data.find((ele) => ele.id == productId);
+            if (foundProductInCart) {
+                //exist
+                //increase quantity
+                //setCartData
+                let cartDataCopy = [...props.data];
+                let updatedProductIndex = props.data.findIndex((ele) => ele.id == productId);
+                let updatedProduct = props.data[updatedProductIndex];
+                updatedProduct.quantity += 1;
+                cartDataCopy[updatedProductIndex] = updatedProduct;
+                return props.setCartData(cartDataCopy);
+            } else {
+                //not exist
+                //set quantity = 1
+                //setCartData
+                foundProduct.quantity = 1;
+                return props.setCartData((prevState) => [...(prevState || []), foundProduct]);
+            }
+        }
     };
 
     const onChange = (key) => {

@@ -13,6 +13,7 @@ const OrderProductList = (props) => {
     const getAllProducts = async () => {
         let result = await service.getAll('product');
         let products = result.filter((element) => element.productstock.quantity > 0);
+        console.log(products);
         products.sort((a, b) => {
             return a.id - b.id;
         });

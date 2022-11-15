@@ -6,9 +6,9 @@ import usePageHeader from 'utils/hooks/usePageHeader';
 
 import PurchaseProductList from 'components/Purchase/PurchaseProductList';
 import PurchaseSummary from 'components/Purchase/PurchaseSummary';
-
 const CreatePurchase = (props) => {
     const [cartData, setCartData] = useState([]);
+
     const { id } = useParams();
     const dataId = parseInt(id);
 
@@ -24,10 +24,10 @@ const CreatePurchase = (props) => {
             </Row>
             <Row style={{}} justify="center" gutter={[24, 24]}>
                 <Col span={11} style={{}}>
-                    <PurchaseProductList supplierId={dataId} setCartData={setCartData} cartData={cartData} />
+                    <PurchaseProductList supplierId={dataId} setCartData={setCartData} data={cartData} />
                 </Col>
                 <Col span={13}>
-                    <PurchaseSummary data={cartData} />
+                    <PurchaseSummary setCartData={setCartData} data={cartData} />
                 </Col>
             </Row>
         </div>

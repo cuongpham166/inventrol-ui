@@ -48,44 +48,37 @@ const paymentOptions = [
     },
 ];
 
-const PurchaseSummary = ({ data }) => {
-    const [total, setTotal] = useState(0);
-    const totalRef = useRef(total);
-
-    const [dataSource, setDataSource] = useState([]);
-    const dataSourceRef = useRef(dataSource);
-
+const PurchaseSummary = (props) => {
     const [paymentType, setPaymentType] = useState();
     const paymentTypeRef = useRef(paymentType);
 
-    const [disabledButton, setDisabledButton] = useState(true);
-    const disabledButtonRef = useRef(disabledButton);
+    const totalCost = props.data.reduce((total, item) => total + item.quantity * item.listingPrice, 0);
+    const fixedTotalCost = $(totalCost).toFixed();
 
-    const handleAllChanges = (data) => {
-        dataSourceRef.current = data;
-        setDataSource(data);
-        let newTotalCost = data.reduce((total, item) => total + item.quantity * item.listingPrice, 0);
-        let newFixedTotalCost = $(newTotalCost).toFixed();
-        totalRef.current = newFixedTotalCost;
-        setTotal(newFixedTotalCost);
-        if (data.length == 0) {
-            disabledButtonRef.current = true;
-            setDisabledButton(true);
-        }
+    const handleChangeQuantity = (value, productId) => {
+        let cartDataCopy = [...props.data];
+        let updatedProductIndex = props.data.findIndex((ele) => ele.id == productId);
+        let updatedProduct = props.data[updatedProductIndex];
+        updatedProduct.quantity = value;
+        cartDataCopy[updatedProductIndex] = updatedProduct;
+        //handleAllChanges(cartDataCopy);
+        return props.setCartData(cartDataCopy);
     };
 
     const handleRemoveProduct = (productId) => {
-        let updatedCart = dataSourceRef.current.filter((element) => element.id != productId);
-        handleAllChanges(updatedCart);
+        let updatedCart = props.data.filter((element) => element.id != productId);
+        console.log(updatedCart);
+        //handleAllChanges(updatedCart);
+        return props.setCartData(updatedCart);
     };
 
-    const handleChangeQuantity = (value, productId) => {
-        let cartDataCopy = [...dataSourceRef.current];
-        let updatedProductIndex = dataSourceRef.current.findIndex((ele) => ele.id == productId);
-        let updatedProduct = dataSourceRef.current[updatedProductIndex];
-        updatedProduct.quantity = value;
-        cartDataCopy[updatedProductIndex] = updatedProduct;
-        handleAllChanges(cartDataCopy);
+    const handleChangePayment = (value) => {
+        paymentTypeRef.current = value;
+        setPaymentType(value);
+    };
+
+    const handleChangeNotice = (e) => {
+        console.log('Change:', e.target.value);
     };
 
     const productSummaryTableColumns = [
@@ -151,65 +144,16 @@ const PurchaseSummary = ({ data }) => {
             ),
         },
     ];
-
-    const updatePurchaseCart = (data) => {
-        if (data.length > 0) {
-            const countDict = data.reduce((acc, curr) => {
-                const { name } = curr;
-                if (acc[name]) ++acc[name];
-                else acc[name] = 1;
-                return acc;
-            }, {});
-
-            let result = data.map((obj) => {
-                obj['quantity'] = countDict[obj.name];
-                return obj;
-            });
-
-            result = result.filter((value, index, self) => index === self.findIndex((t) => t.name === value.name));
-            dataSourceRef.current = result;
-            setDataSource(result);
-        }
-    };
-
-    const updatePurchaseCost = (data) => {
-        const totalCost = data.reduce((total, item) => total + item.listingPrice, 0);
-        const fixedTotalCost = $(totalCost).toFixed();
-        totalRef.current = fixedTotalCost;
-        setTotal(fixedTotalCost);
-    };
-
-    const handleChangePayment = (value) => {
-        paymentTypeRef.current = value;
-        setPaymentType(value);
-    };
-
-    const handleChangeNotice = (e) => {
-        console.log('Change:', e.target.value);
-    };
-
-    useEffect(() => {
-        dataSourceRef.current = data;
-        setDataSource(dataSourceRef.current);
-        updatePurchaseCart(data);
-        updatePurchaseCost(data);
-        if (data.length > 0) {
-            disabledButtonRef.current = false;
-            setDisabledButton(false);
-        }
-    }, [data]);
-
     return (
         <>
             <Card title="Purchase Summary" bordered={false} style={{}}>
-                <Table columns={productSummaryTableColumns} dataSource={_.cloneDeep(dataSource)} rowKey="id" />
-
+                <Table columns={productSummaryTableColumns} dataSource={_.cloneDeep(props.data)} rowKey="id" />
                 <Row justify="space-between" align="middle" style={{ marginTop: '30px' }}>
                     <Title level={4} style={{ marginTop: '0' }}>
                         Total Purchase Cost
                     </Title>
                     <Title level={4} style={{ marginTop: '0' }}>
-                        {totalRef.current}€
+                        {fixedTotalCost}€
                     </Title>
                 </Row>
                 <Divider />
@@ -240,7 +184,7 @@ const PurchaseSummary = ({ data }) => {
                 </Row>
                 <Button
                     type="primary"
-                    disabled={disabledButtonRef.current}
+                    disabled={props.data.length > 0 ? false : true}
                     icon={<ShoppingCartOutlined />}
                     onClick={(e) => {
                         //e.stopPropagation();
