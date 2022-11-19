@@ -303,7 +303,7 @@ export const CustomFormMainItems = () => {
                     <Form.Item label="Mobile Number" name="mobileNumber" hasFeedback>
                         <Input placeholder={'Mobile Number'} />
                     </Form.Item>
-                    <Form.Item label="Adress">
+                    <Form.Item label="Address">
                         <Input.Group compact>
                             <Form.Item
                                 name="streetName"

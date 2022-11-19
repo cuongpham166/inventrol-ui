@@ -63,8 +63,9 @@ const PurchaseProductList = (props) => {
 
     const handleAddProduct = (e, productId) => {
         let foundProduct = defaultDatasource.find((element) => element.id == productId);
+        console.log(foundProduct);
         if (props.data.length == 0) {
-            foundProduct.quantity += 1;
+            foundProduct.quantity = 1;
             return props.setCartData((prevState) => [...(prevState || []), foundProduct]);
         } else {
             let foundProductInCart = props.data.find((ele) => ele.id == productId);

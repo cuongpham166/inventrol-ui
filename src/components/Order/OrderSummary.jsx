@@ -23,7 +23,6 @@ const { Text, Title } = Typography;
 const { TextArea } = Input;
 
 const OrderSummary = (props) => {
-    console.log(props.data);
     const subtotalCost = props.data.reduce(
         (total, item) =>
             total +
@@ -79,10 +78,6 @@ const OrderSummary = (props) => {
         return props.setCartData(cartDataCopy);
     };
 
-    const handleChangeNotice = (e) => {
-        console.log('Change:', e.target.value);
-    };
-
     const handleRemoveProduct = (productId) => {
         let updatedCart = props.data.filter((element) => element.id != productId);
         return props.setCartData(updatedCart);
@@ -116,7 +111,7 @@ const OrderSummary = (props) => {
             align: 'center',
         },
         {
-            title: 'Unit Price',
+            title: 'U/P',
             dataIndex: 'retailPrice',
             key: 'retailPrice',
             align: 'center',
@@ -196,7 +191,7 @@ const OrderSummary = (props) => {
 
     return (
         <>
-            <Card title="Purchase Summary" bordered={false} style={{}}>
+            <Card title={'Purchase Summary'} bordered={false} style={{}}>
                 <Table columns={productSummaryTableColumns} dataSource={_.cloneDeep(props.data)} rowKey="id" />
 
                 <Row justify="space-between" align="middle" style={{ marginTop: '30px' }}>
@@ -240,21 +235,17 @@ const OrderSummary = (props) => {
                     </Title>
                 </Row>
                 <Divider />
-                <Row justify="space-between" align="middle">
-                    <Col span={10}>
-                        <Title level={5} style={{ marginTop: '0' }}>
-                            Order Notice
-                        </Title>
-                    </Col>
-                    <Col span={14}>
-                        <TextArea
-                            rows={4}
-                            placeholder="Order Notice"
-                            showCount
-                            defaultValue={''}
-                            onChange={handleChangeNotice}
-                        />
-                    </Col>
+                <Row>
+                    <Button
+                        type="primary"
+                        disabled={props.data.length > 0 ? false : true}
+                        icon={<ShoppingCartOutlined />}
+                        onClick={(e) => {
+                            //e.stopPropagation();
+                        }}
+                    >
+                        Place Order
+                    </Button>
                 </Row>
             </Card>
         </>

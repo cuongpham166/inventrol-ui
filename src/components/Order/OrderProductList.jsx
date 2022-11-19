@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Card, Tag, Tabs, Typography, Space, Button, Select } from 'antd';
+import { Table, Card, Tag, Tabs, Typography, Space, Button, Select, Row, Col, Form, Input } from 'antd';
 import { ShoppingCartOutlined, PlusOutlined } from '@ant-design/icons';
 import * as service from '../../api/services';
-import ProductNameColumn from 'components/Product/ProductNameColumn';
+
 import { $ } from 'moneysafe';
 import { $$, subtractPercent, addPercent } from 'moneysafe/ledger';
+import ProductNameColumn from 'components/Product/ProductNameColumn';
+import OrderAddressList from './OrderAddressList';
 const { Text, Title } = Typography;
 
 const OrderProductList = (props) => {
+    const [showProductList, setShowProductList] = useState(false);
+
     const [defaultDatasource, setDefaultDatasource] = useState([]);
     const [datasource, setDatasource] = useState([]);
     const [tabItems, setTabItems] = useState([]);
@@ -97,7 +101,7 @@ const OrderProductList = (props) => {
     const handleAddProduct = (e, productId) => {
         let foundProduct = defaultDatasource.find((element) => element.id == productId);
         if (props.data.length == 0) {
-            foundProduct.quantity += 1;
+            foundProduct.quantity = 1;
             return props.setCartData((prevState) => [...(prevState || []), foundProduct]);
         } else {
             let foundProductInCart = props.data.find((ele) => ele.id == productId);
@@ -139,19 +143,61 @@ const OrderProductList = (props) => {
 
     return (
         <>
-            <Card title="Product List" bordered={false} style={{ marginBottom: '24px' }}>
-                <Tabs
-                    onChange={onChange}
-                    type="card"
-                    items={tabItems.map((value, index) => {
-                        return {
-                            label: value,
-                            key: value,
-                            children: <Table columns={productListTableColumns} dataSource={datasource} rowKey="id" />,
-                        };
-                    })}
-                />
-            </Card>
+            {showProductList == true ? (
+                <Card
+                    title={
+                        <Row justify="space-between">
+                            <Text>Product List</Text>
+                            <Button
+                                type="primary"
+                                onClick={(e) => {
+                                    //e.stopPropagation();
+                                    setShowProductList(false);
+                                }}
+                            >
+                                Add Shipping Address
+                            </Button>
+                        </Row>
+                    }
+                    bordered={false}
+                    style={{ marginBottom: '24px' }}
+                >
+                    <Tabs
+                        onChange={onChange}
+                        type="card"
+                        items={tabItems.map((value, index) => {
+                            return {
+                                label: value,
+                                key: value,
+                                children: (
+                                    <Table columns={productListTableColumns} dataSource={datasource} rowKey="id" />
+                                ),
+                            };
+                        })}
+                    />
+                </Card>
+            ) : (
+                <Card
+                    title={
+                        <Row justify="space-between">
+                            <Text>Billing & Shipping Address</Text>
+                            <Button
+                                type="primary"
+                                onClick={(e) => {
+                                    //e.stopPropagation();
+                                    setShowProductList(true);
+                                }}
+                            >
+                                Show Product List
+                            </Button>
+                        </Row>
+                    }
+                    bordered={false}
+                    style={{ marginBottom: '24px' }}
+                >
+                    <OrderAddressList />
+                </Card>
+            )}
         </>
     );
 };

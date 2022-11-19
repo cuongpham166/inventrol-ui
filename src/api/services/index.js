@@ -7,6 +7,7 @@ import * as attributeValueService from '../services/AttributeValue';
 import * as brandService from '../services/Brand';
 import * as productService from '../services/Product';
 import * as purchaseService from '../services/Purchase';
+import * as customerService from '../services/Customer';
 
 export const getAll = async (table) => {
     try {
@@ -42,6 +43,9 @@ export const create = async (table, data) => {
             case 'product':
                 res = await productService.create(table, data);
                 break;
+            case 'customer-address':
+                res = await customerService.createAddress('customer', data);
+                break;
             default:
                 console.log('Error');
                 break;
@@ -67,6 +71,9 @@ export const update = async (table, data) => {
                 break;
             case 'purchase':
                 res = await purchaseService.update(table, data);
+                break;
+            case 'customer-address':
+                res = await customerService.updateAddress('customer', data);
                 break;
             default:
                 console.log('Error');
