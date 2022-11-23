@@ -68,10 +68,11 @@ export const purchaseTableColumns = [
         render: (text, record, index) => <Link to={'/purchase/' + record.id}>#{record.id}</Link>,
     },
     {
-        title: 'Supplier',
-        dataIndex: 'supplier',
-        key: 'supplier',
-        render: (supplier) => <Link to={'/supplier/' + supplier.id}>{supplier.name}</Link>,
+        title: () => <Tooltip title="Purchased Items">Items</Tooltip>,
+        dataIndex: 'index',
+        key: 'index',
+        width: '50px',
+        render: (text, record, index) => <PurchasedItemModal data={record} />,
     },
     {
         title: 'Total Cost (€)',
@@ -85,11 +86,14 @@ export const purchaseTableColumns = [
     },
     {
         title: 'Status',
-        dataIndex: 'status',
-        key: 'status',
-        render: (status) => {
-            let tagColor = status === 'Processing' ? 'yellow' : 'green';
-            return <Tag color={tagColor}>{status}</Tag>;
+        dataIndex: 'purchaseshipping',
+        key: 'purchaseshipping',
+        render: (purchaseshipping) => {
+            let tagColor = purchaseshipping.status === 'Completed' ? 'green' : 'yellow';
+            if (purchaseshipping.status == 'Cancelled' || purchaseshipping.status == 'Returned') {
+                tagColor = 'red';
+            }
+            return <Tag color={tagColor}>{purchaseshipping.status}</Tag>;
         },
     },
     {
@@ -98,17 +102,16 @@ export const purchaseTableColumns = [
         key: 'paymentType',
     },
     {
+        title: 'Supplier',
+        dataIndex: 'supplier',
+        key: 'supplier',
+        render: (supplier) => <Link to={'/supplier/' + supplier.id}>{supplier.name}</Link>,
+    },
+    {
         title: 'Purchased on',
         dataIndex: 'createdOn',
         key: 'createdOn',
         render: (createdOn) => <DateFormatter data={createdOn} />,
-    },
-    {
-        title: () => <Tooltip title="Purchased Items">Items</Tooltip>,
-        dataIndex: 'index',
-        key: 'index',
-        width: '50px',
-        render: (text, record, index) => <PurchasedItemModal data={record} />,
     },
     {
         title: () => <Tooltip title="Shipping Information">Shipping</Tooltip>,

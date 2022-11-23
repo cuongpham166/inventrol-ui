@@ -45,8 +45,11 @@ const PurchasedItemModal = ({ data }) => {
     let totalCost = data.total;
     let purchaseNotice = data.notice;
 
-    let tagColor = data.status === 'Processing' ? 'yellow' : 'green';
-
+    let status = data.purchaseshipping.status;
+    let tagColor = status === 'Completed' ? 'green' : 'yellow';
+    if (status == 'Cancelled' || status == 'Returned') {
+        tagColor = 'red';
+    }
     const showModal = () => {
         setTableData(purchasedItems);
         setIsModalOpen(true);
@@ -61,7 +64,7 @@ const PurchasedItemModal = ({ data }) => {
                 title={
                     <Space>
                         <Link to={'/purchase/' + data.id}>Purchase #{data.id}</Link>
-                        <Tag color={tagColor}>{data.status}</Tag>
+                        <Tag color={tagColor}>{status}</Tag>
                     </Space>
                 }
                 open={isModalOpen}

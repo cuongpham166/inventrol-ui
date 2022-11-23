@@ -1,7 +1,50 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { Card, Col, Row, Typography, Tabs, List } from 'antd';
+import { useParams, Link } from 'react-router-dom';
+import * as service from '@services';
 
+import PurchaseHistory from 'components/Purchase/PurchaseDetail/PurchaseHistory';
+import PurchaseItemList from 'components/Purchase/PurchaseDetail/PurchaseItemList';
+import PurchaseSupplier from 'components/Purchase/PurchaseDetail/PurchaseSupplier';
+import PurchaseShipping from 'components/Purchase/PurchaseDetail/PurchaseShipping';
+import Breadcrumb from 'components/Breadcrumb';
+import usePageHeader from 'utils/hooks/usePageHeader';
 const PurchaseDetail = (props) => {
-    return <div>PurchaseDetail</div>;
+    const [datasource, setDataSource] = useState({});
+    const { id } = useParams();
+    const dataId = parseInt(id);
+
+    const getPurchaseDataById = async (dataId) => {
+        let purchaseDataRes = await service.getById('purchase', dataId);
+        setDataSource(purchaseDataRes);
+    };
+
+    useEffect(() => {
+        getPurchaseDataById(dataId);
+    }, []);
+
+    return (
+        <>
+            <Row>
+                <Breadcrumb />
+            </Row>
+            <Row></Row>
+            <Row gutter={[24, 24]} style={{ marginTop: '24px', marginBottom: '24px' }}>
+                <Col span={18}>
+                    <PurchaseItemList data={datasource} />
+                </Col>
+                <Col span={6}>
+                    <PurchaseHistory data={datasource.purchasehistory} />
+                    <PurchaseShipping data={datasource.purchaseshipping} />
+                </Col>
+            </Row>
+            <Row gutter={[24, 24]}>
+                <Col span={24}>
+                    <PurchaseSupplier />
+                </Col>
+            </Row>
+        </>
+    );
 };
 
 export default PurchaseDetail;

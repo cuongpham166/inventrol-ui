@@ -4,8 +4,8 @@ import { useParams } from 'react-router-dom';
 import { Row, Col, Table } from 'antd';
 import usePageHeader from 'utils/hooks/usePageHeader';
 
-import PurchaseProductList from 'components/Purchase/PurchaseProductList';
-import PurchaseSummary from 'components/Purchase/PurchaseSummary';
+import PurchaseProductList from 'components/Purchase/PurchaseCart/PurchaseProductList';
+import PurchaseSummary from 'components/Purchase/PurchaseCart/PurchaseSummary';
 const CreatePurchase = (props) => {
     const [cartData, setCartData] = useState([]);
 

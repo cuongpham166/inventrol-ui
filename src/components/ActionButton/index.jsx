@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import { Button } from 'antd';
-import { ShoppingCartOutlined } from '@ant-design/icons';
-const ExtraActionButton = ({ table, id }) => {
+import { Button, Popconfirm } from 'antd';
+import { ShoppingCartOutlined, EditOutlined } from '@ant-design/icons';
+const ActionButton = ({ table, id }) => {
     let actionButtons;
     switch (table) {
         case 'supplier':
@@ -18,11 +18,18 @@ const ExtraActionButton = ({ table, id }) => {
                 </Link>
             );
             break;
-        default:
+        case 'purchase':
             actionButtons = <></>;
+            break;
+        default:
+            actionButtons = (
+                <Link to={'/' + table + '/' + id + '/edit'}>
+                    <Button type="primary" icon={<EditOutlined />}></Button>
+                </Link>
+            );
             break;
     }
     return <>{actionButtons}</>;
 };
 
-export default ExtraActionButton;
+export default ActionButton;

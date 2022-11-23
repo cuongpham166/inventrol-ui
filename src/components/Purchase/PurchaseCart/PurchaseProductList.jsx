@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Card, Tag, Tabs, Typography, Space, Button, Select } from 'antd';
 import { ShoppingCartOutlined, PlusOutlined } from '@ant-design/icons';
-import * as service from '../../api/services';
+import * as service from '../../../api/services';
 import { $ } from 'moneysafe';
-import ProductNameColumn from '../Product/ProductNameColumn';
+import ProductNameColumn from '../../Product/ProductNameColumn';
 const { Text, Title } = Typography;
 
 const PurchaseProductList = (props) => {
