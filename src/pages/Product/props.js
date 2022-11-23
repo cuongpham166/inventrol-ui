@@ -475,10 +475,10 @@ export const CustomFormMainItems = () => {
             let discountList = [];
             discountValues.map((value) => {
                 let opt = { label: value.discountPercent, value: value.discountPercent, id: value.id };
-                if (value.discountPercent == '1') {
+                if (value.discountPercent == 0) {
                     opt.label = 'No Discount';
                 } else {
-                    opt.label = value.discountPercent * 100 + '%';
+                    opt.label = value.discountPercent + '%';
                 }
                 discountList.push(opt);
             });

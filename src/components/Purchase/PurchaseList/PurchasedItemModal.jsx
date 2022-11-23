@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, Modal, List, Typography, Tag, Space, Table, Divider, Col, Row } from 'antd';
 import { CodeSandboxOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
+import { $ } from 'moneysafe';
 const { Text, Title } = Typography;
 const itemTableColumns = [
     {
@@ -27,14 +28,14 @@ const itemTableColumns = [
         dataIndex: 'product',
         key: 'product',
         align: 'center',
-        render: (product) => <Text>{product.listingPrice}</Text>,
+        render: (product) => <Text>{$(product.listingPrice).toFixed()}</Text>,
     },
     {
         title: 'Item Cost',
         dataIndex: 'index',
         key: 'index',
         align: 'center',
-        render: (text, record, index) => <Text>{record.product.listingPrice * record.quantity}</Text>,
+        render: (text, record, index) => <Text>{$(record.product.listingPrice * record.quantity).toFixed()}</Text>,
     },
 ];
 

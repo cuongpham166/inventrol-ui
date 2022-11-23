@@ -30,17 +30,17 @@ const PurchaseDetail = (props) => {
             </Row>
             <Row></Row>
             <Row gutter={[24, 24]} style={{ marginTop: '24px', marginBottom: '24px' }}>
-                <Col span={18}>
+                <Col span={19}>
                     <PurchaseItemList data={datasource} />
                 </Col>
-                <Col span={6}>
+                <Col span={5}>
                     <PurchaseHistory data={datasource.purchasehistory} />
                     <PurchaseShipping data={datasource.purchaseshipping} />
                 </Col>
             </Row>
             <Row gutter={[24, 24]}>
                 <Col span={24}>
-                    <PurchaseSupplier />
+                    <PurchaseSupplier data={datasource.supplier} />
                 </Col>
             </Row>
         </>

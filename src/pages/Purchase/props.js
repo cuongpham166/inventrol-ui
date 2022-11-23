@@ -4,8 +4,8 @@ import { SaveOutlined } from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router-dom';
 import NoticeModal from 'components/ModalTable/NoticeModal';
 import DateFormatter from 'components/DateFormatter';
-import PurchasedItemModal from 'components/ModalTable/Purchase/PurchasedItemModal';
-import PurchaseShippingModal from 'components/ModalTable/Purchase/PurchaseShippingModal';
+import PurchasedItemModal from 'components/Purchase/PurchaseList/PurchasedItemModal';
+import PurchaseShippingModal from 'components/Purchase/PurchaseList/PurchaseShippingModal';
 import * as layoutConfig from 'utils/config/layout';
 
 const { Option } = Select;

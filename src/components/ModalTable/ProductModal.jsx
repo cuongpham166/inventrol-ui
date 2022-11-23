@@ -48,10 +48,10 @@ const ProductModal = ({ data }) => {
         setIsModalOpen(false);
     };
 
-    if (data.discount.discountPercent === 1.0) {
+    if (data.discount.discountPercent === 0) {
         discountValue = 'No Discount';
     } else {
-        discountValue = data.discount.discountPercent * 100 + '%';
+        discountValue = data.discount.discountPercent + '%';
     }
 
     let listData = [
@@ -89,7 +89,7 @@ const ProductModal = ({ data }) => {
         },
         {
             title: 'VAT',
-            text: data.vat * 100 + '%',
+            text: data.vat + '%',
         },
         {
             title: 'Current Discount',
