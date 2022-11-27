@@ -4,6 +4,7 @@ import { ArrowsAltOutlined } from '@ant-design/icons';
 import * as services from '../../../api/services';
 import PurchaseShippingCard from './PurchaseShippingCard';
 import PurchaseShippingModal from './PurchaseShippingModal';
+import PurchaseShippingStatusCard from './PurchaseShippingStatusCard';
 const PurchaseShippingList = (props) => {
     const [datasoure, setDatasource] = useState([]);
     const [shippingStatus, setShipingStatus] = useState([
@@ -28,7 +29,7 @@ const PurchaseShippingList = (props) => {
                 return (
                     <Col span={4} key={index}>
                         <Card
-                            title={status}
+                            title={<PurchaseShippingStatusCard status={status} />}
                             bordered={false}
                             style={{ height: '100%' }}
                             extra={<PurchaseShippingModal data={datasoure} status={status} />}
@@ -41,7 +42,7 @@ const PurchaseShippingList = (props) => {
 
             <Col span={4}>
                 <Card
-                    title="Returned"
+                    title={<PurchaseShippingStatusCard status={'Returned'} />}
                     bordered={false}
                     style={{ height: 'calc(50% - 12px)' }}
                     extra={<PurchaseShippingModal data={datasoure} status={'Returned'} />}
@@ -49,7 +50,7 @@ const PurchaseShippingList = (props) => {
                     <PurchaseShippingCard data={datasoure} status={'Returned'} />
                 </Card>
                 <Card
-                    title="Cancelled"
+                    title={<PurchaseShippingStatusCard status={'Cancelled'} />}
                     bordered={false}
                     style={{ marginTop: '24px', height: 'calc(50% - 12px)' }}
                     extra={<PurchaseShippingModal data={datasoure} status={'Cancelled'} />}

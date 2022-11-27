@@ -1,5 +1,6 @@
 import React from 'react';
 import { Tag } from 'antd';
+
 const PurchaseShippingStatusCard = (props) => {
     let tagColor;
     switch (props.status) {
@@ -22,7 +23,7 @@ const PurchaseShippingStatusCard = (props) => {
             tagColor = 'magenta';
             break;
         case 'Cancelled':
-            tagColor = 'warning';
+            tagColor = 'error';
             break;
         default:
             tagColor = 'default';
