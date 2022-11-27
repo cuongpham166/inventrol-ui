@@ -91,6 +91,9 @@ const useDataTable = ({ columns, table, dataUrl }) => {
     const getAllData = async () => {
         const result = await service.getAll(dataUrl);
         if (result != undefined) {
+            result.sort((a, b) => {
+                return a.id - b.id;
+            });
             dataSourceRef.current = result;
             setDataSource(result);
             setTotalElements(result.length);

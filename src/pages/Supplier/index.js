@@ -3,3 +3,4 @@ export { default as SupplierList } from './List';
 export { default as CreateSupplier } from './New';
 export { default as EditSupplier } from './Edit';
 export { default as CreatePurchase } from './NewPurchase';
+export { default as SupplierPurchaseList } from './SupplierPurchaseList';

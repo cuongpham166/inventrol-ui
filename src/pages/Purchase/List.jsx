@@ -11,6 +11,7 @@ import usePageHeader from 'utils/hooks/usePageHeader';
 
 import * as service from '../../api/services';
 import * as purchaseProps from '../Purchase/props';
+
 const PurchaseList = (props) => {
     const { DataTable, currentPage, pageSize, resetPagination } = useDataTable({
         columns: purchaseProps.purchaseTableColumns,

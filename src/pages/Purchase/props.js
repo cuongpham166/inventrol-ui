@@ -6,6 +6,8 @@ import NoticeModal from 'components/ModalTable/NoticeModal';
 import DateFormatter from 'components/common/DateFormatter';
 import PurchasedItemModal from 'components/Purchase/PurchaseList/PurchasedItemModal';
 import PurchaseShippingInfoModal from 'components/Purchase/PurchaseList/PurchaseShippingInfoModal';
+import PurchaseShippingStatusCard from 'components/Purchase/PurchaseShipping/PurchaseShippingStatusCard';
+
 import * as layoutConfig from 'utils/config/layout';
 
 const { Option } = Select;
@@ -88,13 +90,7 @@ export const purchaseTableColumns = [
         title: 'Status',
         dataIndex: 'purchaseshipping',
         key: 'purchaseshipping',
-        render: (purchaseshipping) => {
-            let tagColor = purchaseshipping.status === 'Completed' ? 'green' : 'yellow';
-            if (purchaseshipping.status == 'Cancelled' || purchaseshipping.status == 'Returned') {
-                tagColor = 'red';
-            }
-            return <Tag color={tagColor}>{purchaseshipping.status}</Tag>;
-        },
+        render: (purchaseshipping) => <PurchaseShippingStatusCard status={purchaseshipping.status} />,
     },
     {
         title: 'Payment',

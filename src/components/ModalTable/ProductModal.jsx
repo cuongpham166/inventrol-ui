@@ -3,6 +3,7 @@ import { Button, Modal, List, Typography, Tag, Space } from 'antd';
 import { Link } from 'react-router-dom';
 import { ExpandAltOutlined } from '@ant-design/icons';
 import DateTimeFormatter from 'components/common/DateTimeFormatter';
+import ProductStockStatusCard from 'components/Product/ProductStockStatusCard';
 import { $ } from 'moneysafe';
 const { Text } = Typography;
 
@@ -34,12 +35,7 @@ const AttributeList = ({ data }) => {
 };
 
 const ProductModal = ({ data }) => {
-    console.log(data);
     let discountValue;
-    let tagColor = data.productstock.stockStatus === 'Out of Stock' ? 'red' : 'yellow';
-    if (data.productstock.stockStatus === 'In Stock') {
-        tagColor = 'green';
-    }
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -119,7 +115,7 @@ const ProductModal = ({ data }) => {
                 title={
                     <Space>
                         <Link to={'/product/' + data.id}>{data.name}</Link>
-                        <Tag color={tagColor}>{data.productstock.stockStatus}</Tag>
+                        <ProductStockStatusCard status={data.productstock.stockStatus} />
                     </Space>
                 }
                 open={isModalOpen}

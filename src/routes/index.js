@@ -3,10 +3,17 @@ import NoMatch from '../pages/Nomatch';
 
 import { SubcategoryDetail, SubcategoryList, CreateSubcategory, EditSubcategory } from '../pages/Subcategory';
 import { CategoryList, CategoryDetail, CreateCategory, EditCategory } from 'pages/Category';
-import { SupplierDetail, SupplierList, CreateSupplier, EditSupplier, CreatePurchase } from 'pages/Supplier';
+import {
+    SupplierDetail,
+    SupplierList,
+    CreateSupplier,
+    EditSupplier,
+    CreatePurchase,
+    SupplierPurchaseList,
+} from 'pages/Supplier';
 import { ProductList, ProductDetail, CreateProduct, EditProduct } from 'pages/Product';
 import { BrandList, BrandDetail, CreateBrand, EditBrand } from 'pages/Brand';
-import { AttributeList, AttributeDetail, CreateAttribute, EditAttribute } from 'pages/Attribute';
+import { AttributeList, CreateAttribute, EditAttribute } from 'pages/Attribute';
 import {
     AttributeValueList,
     AttributeValueDetail,
@@ -34,6 +41,7 @@ const publicRoutes = [
 
     { path: '/supplier', component: SupplierList },
     { path: '/supplier/:id', component: SupplierDetail },
+    { path: '/supplier/:id/purchase', component: SupplierPurchaseList },
     { path: '/supplier/add', component: CreateSupplier },
     { path: '/supplier/:id/edit', component: EditSupplier },
     { path: '/supplier/:id/purchase/add', component: CreatePurchase },
@@ -49,7 +57,6 @@ const publicRoutes = [
     { path: '/brand/:id/edit', component: EditBrand },
 
     { path: '/attribute', component: AttributeList },
-    /*{ path: '/attribute/:id', component: AttributeDetail },*/
     { path: '/attribute/add', component: CreateAttribute },
     { path: '/attribute/:id/edit', component: EditAttribute },
 

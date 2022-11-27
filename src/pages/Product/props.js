@@ -34,10 +34,11 @@ import {
 import * as service from '../../api/services';
 import * as layoutConfig from 'utils/config/layout';
 import { $ } from 'moneysafe';
-import skuGenerator from 'utils/functions/skuGenerator';
+
 import NoticeModal from 'components/ModalTable/NoticeModal';
 import ProductAttributeColum from 'components/ProductTableColumns/ProductAttributeColum';
 import ProductModal from 'components/ModalTable/ProductModal';
+import ProductStockStatusCard from 'components/Product/ProductStockStatusCard';
 
 const { Option, OptGroup } = Select;
 const { Title } = Typography;
@@ -327,13 +328,7 @@ export const productTableColumns = [
         title: 'Status',
         dataIndex: 'productstock',
         key: 'productstock',
-        render: (productstock) => {
-            let tagColor = productstock.stockStatus === 'Out of Stock' ? 'red' : 'yellow';
-            if (productstock.stockStatus === 'In Stock') {
-                tagColor = 'green';
-            }
-            return <Tag color={tagColor}>{productstock.stockStatus}</Tag>;
-        },
+        render: (productstock) => <ProductStockStatusCard status={productstock.stockStatus} />,
     },
     {
         title: () => <Tooltip title="Detailed Information">Info.</Tooltip>,

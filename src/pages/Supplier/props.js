@@ -17,6 +17,11 @@ import * as layoutConfig from 'utils/config/layout';
 import NoticeModal from 'components/ModalTable/NoticeModal';
 import DateTimeFormatter from 'components/common/DateTimeFormatter';
 import SupplierModal from 'components/ModalTable/SupplierModal';
+import PurchasedItemModal from 'components/Purchase/PurchaseList/PurchasedItemModal';
+import PurchaseShippingStatusCard from 'components/Purchase/PurchaseShipping/PurchaseShippingStatusCard';
+import DateFormatter from 'components/common/DateFormatter';
+import PurchaseShippingInfoModal from 'components/Purchase/PurchaseList/PurchaseShippingInfoModal';
+
 const { Option } = Select;
 const { Title } = Typography;
 
@@ -124,17 +129,6 @@ export const supplierDataList = (data) => {
 
 export const supplierPageHeader = (data) => {
     let pageHeaderObj = {};
-    let popoverContent = (
-        <div>
-            <p>{data.notice}</p>
-        </div>
-    );
-    let supplierAddress;
-    if (data.contact.additionalAddressLine == '') {
-        supplierAddress = data.contact.mainAddressLine;
-    } else {
-        supplierAddress = data.contact.mainAddressLine + ', ' + data.contact.additionalAddressLine;
-    }
     let mainContent = (
         <Descriptions size="small" column={3}>
             <Descriptions.Item label="Contact Person">{data.contactPerson}</Descriptions.Item>
@@ -147,14 +141,13 @@ export const supplierPageHeader = (data) => {
                 <a href={data.contact.email}>Send Email</a>
             </Descriptions.Item>
             <Descriptions.Item label="Address">
-                {supplierAddress + ', ' + data.contact.cityInfo + ', ' + data.contact.country}
+                {data.contact.mainAddressLine + ', ' + data.contact.cityInfo + ', ' + data.contact.country}
+            </Descriptions.Item>
+            <Descriptions.Item label="Notice">
+                <NoticeModal data={data.notice} />
             </Descriptions.Item>
             <Descriptions.Item label="Created on">{data.createdDate}</Descriptions.Item>
-            <Descriptions.Item label="Notice">
-                <Popover content={popoverContent} title="Notice">
-                    <EyeOutlined />
-                </Popover>
-            </Descriptions.Item>
+            <Descriptions.Item label="Address Line 2">{data.contact.additionalAddressLine}</Descriptions.Item>
         </Descriptions>
     );
 
@@ -234,6 +227,64 @@ export const supplierTableColumns = [
         key: 'name',
         width: '50px',
         render: (text, record) => <SupplierModal data={record} />,
+    },
+    {
+        title: 'Notice',
+        dataIndex: 'notice',
+        key: 'notice',
+        width: '50px',
+        align: 'center',
+        render: (notice) => <NoticeModal data={notice} />,
+    },
+];
+
+export const supplierPurchaseTableColumns = [
+    {
+        title: 'ID',
+        key: 'index',
+        render: (text, record, index) => <Link to={'/purchase/' + record.id}>#{record.id}</Link>,
+    },
+    {
+        title: () => <Tooltip title="Purchased Items">Items</Tooltip>,
+        dataIndex: 'index',
+        key: 'index',
+        width: '50px',
+        render: (text, record, index) => <PurchasedItemModal data={record} />,
+    },
+    {
+        title: 'Total Cost (€)',
+        dataIndex: 'total',
+        key: 'total',
+    },
+    {
+        title: 'No. of items',
+        dataIndex: 'numberOfItems',
+        key: 'numberOfItems',
+    },
+    {
+        title: 'Status',
+        dataIndex: 'purchaseshipping',
+        key: 'purchaseshipping',
+        render: (purchaseshipping) => <PurchaseShippingStatusCard status={purchaseshipping.status} />,
+    },
+    {
+        title: 'Payment',
+        dataIndex: 'paymentType',
+        key: 'paymentType',
+    },
+    {
+        title: 'Purchased on',
+        dataIndex: 'createdOn',
+        key: 'createdOn',
+        render: (createdOn) => <DateFormatter data={createdOn} />,
+    },
+    {
+        title: () => <Tooltip title="Shipping Information">Shipping</Tooltip>,
+        dataIndex: 'index',
+        key: 'index',
+        width: '50px',
+        align: 'center',
+        render: (text, record, index) => <PurchaseShippingInfoModal data={record} />,
     },
     {
         title: 'Notice',

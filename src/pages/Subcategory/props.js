@@ -260,7 +260,9 @@ export const subcategoryPageHeader = (data) => {
     let mainContent = (
         <Descriptions size="small" column={4}>
             <Descriptions.Item label="Category">
-                <Tag color={data.category.tagColor}>{data.category.name}</Tag>
+                <Link to={'/category/' + data.category.id}>
+                    <Tag color={data.category.tagColor}>{data.category.name}</Tag>
+                </Link>
             </Descriptions.Item>
             <Descriptions.Item label="Created on">
                 <DateFormatter data={data.createdOn} />
