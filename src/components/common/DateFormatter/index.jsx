@@ -1,20 +1,20 @@
 import { Space, Tooltip } from 'antd';
-import { ClockCircleOutlined } from '@ant-design/icons';
+import { ClockCircleFilled } from '@ant-design/icons';
 import * as dayjs from 'dayjs';
 const relativeTime = require('dayjs/plugin/relativeTime');
 const localizedFormat = require('dayjs/plugin/localizedFormat');
 dayjs.extend(relativeTime);
 dayjs.extend(localizedFormat);
 
-const DateTimeFormatter = ({ data }) => {
+const DateFormatter = ({ data }) => {
     let dateElement;
     if (data != null) {
         dateElement = (
             <Space>
-                <span>{dayjs().to(dayjs(data))}</span>
+                <span>{dayjs(data).format('DD/MM/YYYY')}</span>
                 <Tooltip title={dayjs(data).format('LLLL')}>
                     <span>
-                        <ClockCircleOutlined />
+                        <ClockCircleFilled />
                     </span>
                 </Tooltip>
             </Space>
@@ -25,4 +25,4 @@ const DateTimeFormatter = ({ data }) => {
     return <>{dateElement}</>;
 };
 
-export default DateTimeFormatter;
+export default DateFormatter;

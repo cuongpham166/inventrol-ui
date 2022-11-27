@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 
 import { Line } from '@ant-design/plots';
 
-import Breadcrumb from 'components/Breadcrumb';
+import Breadcrumb from 'components/common/Breadcrumb';
 
 import useStatisticCard from 'utils/hooks/useStatisticCard';
 import usePageHeader from 'utils/hooks/usePageHeader';

@@ -6,7 +6,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 const { Title } = Typography;
 
-const Scanner = (props) => {
+const BarcodeScanner = (props) => {
     const barcodeScannerContainer = useRef(undefined);
     const barcodeScanner = useRef(undefined);
     const [result, setResult] = useState(undefined);
@@ -85,4 +85,4 @@ const Scanner = (props) => {
     );
 };
 
-export default Scanner;
+export default BarcodeScanner;

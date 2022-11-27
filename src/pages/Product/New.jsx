@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Card, Typography, Space } from 'antd';
 
-import Breadcrumb from 'components/Breadcrumb';
+import Breadcrumb from 'components/common/Breadcrumb';
 
-import Scanner from 'components/BarcodeScanner/Scanner';
+import BarcodeScanner from 'components/common/BarcodeScanner';
 
 import useCustomForm from 'utils/hooks/useCustomForm';
 import usePageHeader from 'utils/hooks/usePageHeader';
@@ -43,7 +43,7 @@ const CreateProduct = (props) => {
             <Row style={{ padding: '35px' }} justify="center">
                 <Col span={15}>
                     <Card bordered={false} style={{ marginBottom: '24px' }}>
-                        <Scanner onClick={onChangeBarcode} />
+                        <BarcodeScanner onClick={onChangeBarcode} />
                     </Card>
                     <CustomForm />
                 </Col>

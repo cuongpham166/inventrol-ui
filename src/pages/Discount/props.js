@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-
+import { Typography } from 'antd';
 import NoticeModal from 'components/ModalTable/NoticeModal';
-import DateTimeFormatter from 'components/DateTimeFormatter';
-
+import DateTimeFormatter from 'components/common/DateTimeFormatter';
+const { Text } = Typography;
 export const discountTableColumns = [
     {
         title: '#',
@@ -14,7 +14,7 @@ export const discountTableColumns = [
         title: 'Discount Percent',
         dataIndex: 'discountPercent',
         key: 'discountPercent',
-        render: (text, record) => <Link to={'/discount/' + record.id}>{text}</Link>,
+        render: (text, record) => <Text>{text}%</Text>,
     },
     {
         title: 'Created on',

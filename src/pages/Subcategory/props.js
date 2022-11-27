@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { Form, Input, Select, Tag, Popover, Space, Button, Card, Typography } from 'antd';
+import { Form, Input, Select, Tag, Popover, Space, Button, Card, Typography, Tooltip, Descriptions } from 'antd';
 import { Colorpicker, ColorPickerValue } from 'antd-colorpicker';
 import { EyeOutlined, EditOutlined, DeleteOutlined, SaveOutlined, PlusOutlined } from '@ant-design/icons';
 
@@ -9,10 +9,13 @@ import * as service from '../../api/services';
 import * as layoutConfig from 'utils/config/layout';
 
 import NoticeModal from 'components/ModalTable/NoticeModal';
-import DateTimeFormatter from 'components/DateTimeFormatter';
-
+import DateTimeFormatter from 'components/common/DateTimeFormatter';
+import ProductAttributeColum from 'components/ProductTableColumns/ProductAttributeColum';
+import ProductModal from 'components/ModalTable/ProductModal';
+import DateFormatter from 'components/common/DateFormatter';
+import { $ } from 'moneysafe';
 const { Option } = Select;
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 export const initialFormValues = {
     notice: '',
@@ -192,3 +195,98 @@ export const subcategoryTableColumns = [
         render: (notice) => <NoticeModal data={notice} />,
     },
 ];
+
+export const subcategoryProductTableColumns = [
+    {
+        title: '#',
+        key: 'index',
+        render: (text, record, index) => index + 1,
+        width: 60,
+    },
+    {
+        title: 'Name',
+        dataIndex: 'name',
+        key: 'name',
+        render: (text, record) => <Link to={'/product/' + record.id}>{text}</Link>,
+    },
+    {
+        title: 'Brand',
+        dataIndex: 'brand',
+        key: 'brand',
+        render: (brand) => <Link to={'/brand/' + brand.id}>{brand.name}</Link>,
+    },
+    {
+        title: 'Retail Price',
+        dataIndex: 'retailPrice',
+        key: 'retailPrice',
+        render: (retailPrice) => <Text>{$(retailPrice).toFixed()} </Text>,
+    },
+    {
+        title: 'Listing Price',
+        dataIndex: 'listingPrice',
+        key: 'listingPrice',
+        render: (listingPrice) => <Text>{$(listingPrice).toFixed()} </Text>,
+    },
+    {
+        title: 'Type',
+        dataIndex: 'attributeValue',
+        key: 'attributeValue',
+        render: (attributeValue) => <ProductAttributeColum data={attributeValue} />,
+    },
+    {
+        title: 'Status',
+        dataIndex: 'productstock',
+        key: 'productstock',
+        render: (productstock) => {
+            let tagColor = productstock.stockStatus === 'Out of Stock' ? 'red' : 'yellow';
+            if (productstock.stockStatus === 'In Stock') {
+                tagColor = 'green';
+            }
+            return <Tag color={tagColor}>{productstock.stockStatus}</Tag>;
+        },
+    },
+    {
+        title: 'Notice',
+        dataIndex: 'notice',
+        key: 'notice',
+        width: '50px',
+        align: 'center',
+        render: (notice) => <NoticeModal data={notice} />,
+    },
+];
+
+export const subcategoryPageHeader = (data) => {
+    let pageHeaderObj = {};
+    let mainContent = (
+        <Descriptions size="small" column={4}>
+            <Descriptions.Item label="Category">
+                <Tag color={data.category.tagColor}>{data.category.name}</Tag>
+            </Descriptions.Item>
+            <Descriptions.Item label="Created on">
+                <DateFormatter data={data.createdOn} />
+            </Descriptions.Item>
+            <Descriptions.Item label="Updated on">
+                <DateFormatter data={data.updatedOn} />
+            </Descriptions.Item>
+            <Descriptions.Item label="Notice">
+                <NoticeModal data={data.notice} />
+            </Descriptions.Item>
+        </Descriptions>
+    );
+
+    let pageHeaderExtra = (
+        <>
+            <Link to={'/subcategory/' + data.id + '/edit'}>
+                <Button key="1" type="primary" icon={<EditOutlined />}>
+                    Update Subcategory
+                </Button>
+            </Link>
+        </>
+    );
+
+    pageHeaderObj = {
+        mainContent: mainContent,
+        pageHeaderExtra: pageHeaderExtra,
+    };
+    return pageHeaderObj;
+};

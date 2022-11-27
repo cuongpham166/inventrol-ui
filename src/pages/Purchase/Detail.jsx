@@ -7,8 +7,10 @@ import PurchaseHistory from 'components/Purchase/PurchaseDetail/PurchaseHistory'
 import PurchaseItemList from 'components/Purchase/PurchaseDetail/PurchaseItemList';
 import PurchaseSupplier from 'components/Purchase/PurchaseDetail/PurchaseSupplier';
 import PurchaseShipping from 'components/Purchase/PurchaseDetail/PurchaseShipping';
-import Breadcrumb from 'components/Breadcrumb';
+import Breadcrumb from 'components/common/Breadcrumb';
+
 import usePageHeader from 'utils/hooks/usePageHeader';
+
 const PurchaseDetail = (props) => {
     const [datasource, setDataSource] = useState({});
     const { id } = useParams();
@@ -19,6 +21,13 @@ const PurchaseDetail = (props) => {
         setDataSource(purchaseDataRes);
     };
 
+    const { PageHeader } = usePageHeader({
+        title: '',
+        dataId: dataId,
+        table: 'purchase',
+        pageHeaderExtra: <></>,
+    });
+
     useEffect(() => {
         getPurchaseDataById(dataId);
     }, []);
@@ -28,8 +37,10 @@ const PurchaseDetail = (props) => {
             <Row>
                 <Breadcrumb />
             </Row>
-            <Row></Row>
-            <Row gutter={[24, 24]} style={{ marginTop: '24px', marginBottom: '24px' }}>
+            <Row>
+                <PageHeader />
+            </Row>
+            <Row gutter={[24, 24]} style={{ marginBottom: '24px' }}>
                 <Col span={19}>
                     <PurchaseItemList data={datasource} />
                 </Col>

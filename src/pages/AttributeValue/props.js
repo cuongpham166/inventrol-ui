@@ -7,7 +7,7 @@ import * as service from '../../api/services';
 import * as layoutConfig from 'utils/config/layout';
 
 import NoticeModal from 'components/ModalTable/NoticeModal';
-import DateTimeFormatter from 'components/DateTimeFormatter';
+import DateTimeFormatter from 'components/common/DateTimeFormatter';
 
 const { Option } = Select;
 const { Title } = Typography;

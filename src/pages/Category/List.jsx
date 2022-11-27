@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Col, Row, Button, Card } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
-import Breadcrumb from 'components/Breadcrumb';
+import Breadcrumb from 'components/common/Breadcrumb';
 
 import * as service from '../../api/services';
 import * as categoryProps from '../Category/props';

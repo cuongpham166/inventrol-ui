@@ -3,9 +3,9 @@ import { Form, Input, Select, Tag, Tooltip, Button, Card, Typography } from 'ant
 import { SaveOutlined } from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router-dom';
 import NoticeModal from 'components/ModalTable/NoticeModal';
-import DateFormatter from 'components/DateFormatter';
+import DateFormatter from 'components/common/DateFormatter';
 import PurchasedItemModal from 'components/Purchase/PurchaseList/PurchasedItemModal';
-import PurchaseShippingModal from 'components/Purchase/PurchaseList/PurchaseShippingModal';
+import PurchaseShippingInfoModal from 'components/Purchase/PurchaseList/PurchaseShippingInfoModal';
 import * as layoutConfig from 'utils/config/layout';
 
 const { Option } = Select;
@@ -119,7 +119,7 @@ export const purchaseTableColumns = [
         key: 'index',
         width: '50px',
         align: 'center',
-        render: (text, record, index) => <PurchaseShippingModal data={record} />,
+        render: (text, record, index) => <PurchaseShippingInfoModal data={record} />,
     },
     {
         title: 'Notice',

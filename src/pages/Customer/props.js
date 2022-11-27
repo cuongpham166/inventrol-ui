@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import DateTimeFormatter from 'components/DateTimeFormatter';
+import DateTimeFormatter from 'components/common/DateTimeFormatter';
 import NoticeModal from 'components/ModalTable/NoticeModal';
 
 export const customerTableColumns = [

@@ -4,8 +4,8 @@ import { useParams } from 'react-router-dom';
 import { Row, Col, Table } from 'antd';
 import usePageHeader from 'utils/hooks/usePageHeader';
 
-import OrderProductList from 'components/Order/OrderProductList';
-import OrderSummary from 'components/Order/OrderSummary';
+import OrderProductList from 'components/Order/OrderCart/OrderProductList';
+import OrderSummary from 'components/Order/OrderCart/OrderSummary';
 
 const NewOrder = (props) => {
     const [cartData, setCartData] = useState([]);

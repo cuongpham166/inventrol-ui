@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Col, Row, Button, Typography, Card } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
-import Breadcrumb from 'components/Breadcrumb';
+import Breadcrumb from 'components/common/Breadcrumb';
 
 import useDataTable from '../../utils/hooks/useDataTable';
 import usePageHeader from 'utils/hooks/usePageHeader';

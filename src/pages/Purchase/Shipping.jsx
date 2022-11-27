@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { Col, Row, Card } from 'antd';
+import React from 'react';
 import Breadcrumb from 'components/common/Breadcrumb';
-import AddressList from 'components/Customer/AddressList';
+import PurchaseShippingList from 'components/Purchase/PurchaseShipping/PurchaseShippingList';
 import usePageHeader from 'utils/hooks/usePageHeader';
 
-const AddressBook = (props) => {
+import { Col, Row } from 'antd';
+
+const PurchaseShipping = (props) => {
     const { PageHeader } = usePageHeader({
-        title: 'Address Book',
+        title: 'List of Purchases Shipping',
         dataId: '',
-        table: '',
+        table: 'purchase',
         pageHeaderExtra: <></>,
     });
 
@@ -20,12 +21,11 @@ const AddressBook = (props) => {
             <Row>
                 <PageHeader />
             </Row>
-
-            <Row gutter={[16, 16]}>
-                <AddressList />
-            </Row>
+            <>
+                <PurchaseShippingList />
+            </>
         </>
     );
 };
 
-export default AddressBook;
+export default PurchaseShipping;

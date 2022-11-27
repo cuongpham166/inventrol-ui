@@ -307,14 +307,14 @@ export const productTableColumns = [
         dataIndex: 'subcategory',
         key: 'subcategory',
         render: (subcategory) => (
-            <div className="taglist_container">
-                {/*<Link to={'/category/' + subcategory.category.id}>
+            <Space size={0}>
+                <Link to={'/category/' + subcategory.category.id}>
                     <Tag color={subcategory.category.tagColor}>{subcategory.category.name}</Tag>
-                </Link> */}
+                </Link>
                 <Link to={'/subcategory/' + subcategory.id}>
                     <Tag color={subcategory.tagColor}>{subcategory.name}</Tag>
                 </Link>
-            </div>
+            </Space>
         ),
     },
     {

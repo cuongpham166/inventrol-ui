@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { Table, message, Row, Col, Space, Button, Popconfirm } from 'antd';
 import { EyeOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
-import CheckBoxMenu from 'components/CheckboxMenu';
-import ActionButton from 'components/ActionButton';
+import CheckBoxMenu from 'components/common/CheckboxMenu';
+import ActionButton from 'components/common/ActionButton';
 
 import useSearchbar from './useSearchbar';
 import useExportData from './useExportData';

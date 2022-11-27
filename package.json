@@ -22,6 +22,7 @@
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.5.25",
     "moneysafe": "^2.2.1",
+    "qrcode.react": "^3.1.0",
     "react": "^18.2.0",
     "react-barcode": "^1.4.5",
     "react-color": "^2.19.3",

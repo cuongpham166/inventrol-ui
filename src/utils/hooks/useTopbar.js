@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Typography, Divider } from 'antd';
 import * as service from '../../api/services';
-import Breadcrumb from 'components/Breadcrumb';
+import Breadcrumb from 'components/common/Breadcrumb';
 
 const { Title } = Typography;
 

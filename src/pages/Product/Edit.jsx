@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom';
 
 import { Row, Col, Card, Typography, Space } from 'antd';
 
-import Breadcrumb from 'components/Breadcrumb';
-import Scanner from 'components/BarcodeScanner/Scanner';
+import Breadcrumb from 'components/common/Breadcrumb';
+import BarcodeScanner from 'components/common/BarcodeScanner';
 
 import usePageHeader from 'utils/hooks/usePageHeader';
 import useCustomForm from 'utils/hooks/useCustomForm';
@@ -84,7 +84,7 @@ const EditProduct = (props) => {
             <Row style={{ padding: '35px' }} justify="center">
                 <Col span={15}>
                     <Card bordered={false} style={{ marginBottom: '24px' }}>
-                        <Scanner onClick={onChangeBarcode} />
+                        <BarcodeScanner onClick={onChangeBarcode} />
                     </Card>
                     <CustomForm />
                 </Col>

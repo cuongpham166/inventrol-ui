@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import { Col, Row, Card, Typography } from 'antd';
 
-import Breadcrumb from 'components/Breadcrumb';
+import Breadcrumb from 'components/common/Breadcrumb';
 
 import usePageHeader from 'utils/hooks/usePageHeader';
 import useDataTable from 'utils/hooks/useDataTable';

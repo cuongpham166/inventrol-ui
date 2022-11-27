@@ -13,11 +13,11 @@ import {
     CreateAttributeValue,
     EditAttributeValue,
 } from 'pages/AttributeValue';
-import { PurchaseDetail, PurchaseList } from 'pages/Purchase';
+import { PurchaseDetail, PurchaseList, PurchaseShipping } from 'pages/Purchase';
 
 import { DiscountList, DiscountDetail, EditDiscount, CreateDiscount } from 'pages/Discount';
 import { CustomerList, CustomerDetail, EditCustomer, CreateCustomer, AddressBook, NewOrder } from 'pages/Customer';
-import { OrderList, OrderDetail } from 'pages/Order';
+import { OrderList, OrderDetail, OrderShipping, OrderPayment } from 'pages/Order';
 
 const publicRoutes = [
     { path: '/', component: Home },
@@ -64,8 +64,8 @@ const publicRoutes = [
     { path: '/discount/:id/edit', component: EditDiscount },
 
     { path: '/purchase', component: PurchaseList },
+    { path: '/purchase/shipping', component: PurchaseShipping },
     { path: '/purchase/:id', component: PurchaseDetail },
-    //{ path: '/purchase/add', component: CreatePurchase },
     //{ path: '/purchase/:id/edit', component: EditPurchase },
 
     { path: '/customer', component: CustomerList },
@@ -76,6 +76,8 @@ const publicRoutes = [
     { path: '/customer/:id/order/add', component: NewOrder },
 
     { path: '/order', component: OrderList },
+    { path: '/order/shipping', component: OrderShipping },
+    { path: '/order/payment', component: OrderPayment },
     { path: '/order/:id', component: OrderDetail },
 
     { path: '*', component: NoMatch },

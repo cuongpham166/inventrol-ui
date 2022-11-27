@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { Button, Modal, List, Typography, Tag, Space, Table, Divider, Col, Row } from 'antd';
 import { CarOutlined } from '@ant-design/icons';
 const { Text } = Typography;
-const PurchaseShippingModal = ({ data }) => {
+const PurchaseShippingInfoModal = ({ data }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    console.log(data);
     const showModal = () => {
         setIsModalOpen(true);
     };
@@ -13,11 +14,11 @@ const PurchaseShippingModal = ({ data }) => {
     let listData = [
         {
             title: 'Service',
-            text: data.courier,
+            text: data.purchaseshipping.service,
         },
         {
             title: 'Tracking Number',
-            text: data.trackingNumber,
+            text: data.purchaseshipping.trackingNumber,
         },
     ];
 
@@ -47,4 +48,4 @@ const PurchaseShippingModal = ({ data }) => {
     );
 };
 
-export default PurchaseShippingModal;
+export default PurchaseShippingInfoModal;

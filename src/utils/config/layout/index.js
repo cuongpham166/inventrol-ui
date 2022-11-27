@@ -15,6 +15,8 @@ import {
     FileExcelOutlined,
     TableOutlined,
     ShoppingCartOutlined,
+    CreditCardOutlined,
+    CarOutlined,
 } from '@ant-design/icons';
 
 const { Option } = Select;
@@ -82,26 +84,32 @@ const getItem = (label, key, icon, children, type) => {
 
 export const sidebarItems = [
     getItem('Dashboard', 'dashboard', <AppstoreOutlined />),
+
     getItem('Inventory', 'product', <ShopOutlined />),
-    getItem('Purchase', 'purchase', <ShoppingCartOutlined />),
-    getItem(
-        'Management ',
-        'management',
-        null,
-        [
-            getItem('Table', 'table', <TableOutlined />, [
-                getItem('Attribute', 'attribute', <TagOutlined />),
-                getItem('Attribute Value', 'attribute-value', <TagOutlined />),
-                getItem('Brand', 'brand', <TagOutlined />),
-                getItem('Category', 'category', <TagOutlined />),
-                getItem('Discount', 'discount', <TagOutlined />),
-                getItem('Subcategory', 'subcategory', <TagsOutlined />),
-            ]),
-            getItem('Suppliers', 'supplier', <SolutionOutlined />),
-            getItem('Customers', 'customer', <UserOutlined />),
-        ],
-        'group',
-    ),
+
+    getItem('Purchase', 'purchase-overview', <ShoppingCartOutlined />, [
+        getItem('Overview', 'purchase', <TableOutlined />),
+        getItem('Purchase Shipping', 'purchase/shipping', <CarOutlined />),
+    ]),
+
+    getItem('Order', 'order-overview', <ShoppingCartOutlined />, [
+        getItem('Overview', 'order', <TableOutlined />),
+        getItem('Order Shipping', 'order/shipping', <CarOutlined />),
+        getItem('Order Payment', 'order/payment', <CreditCardOutlined />),
+    ]),
+
+    getItem('Product', 'table', <CodeSandboxOutlined />, [
+        getItem('Attribute', 'attribute', <TagOutlined />),
+        getItem('Attribute Value', 'attribute-value', <TagsOutlined />),
+        getItem('Brand', 'brand', <TagOutlined />),
+        getItem('Category', 'category', <TagOutlined />),
+        getItem('Discount', 'discount', <TagOutlined />),
+        getItem('Subcategory', 'subcategory', <TagsOutlined />),
+    ]),
+
+    getItem('Suppliers', 'supplier', <SolutionOutlined />),
+
+    getItem('Customers', 'customer', <UserOutlined />),
 ];
 
 export const exportItems = [

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Popover, Tag, Button, Modal, Table } from 'antd';
 import { Link } from 'react-router-dom';
 import { EyeOutlined, ExpandAltOutlined } from '@ant-design/icons';
-import DateTimeFormatter from 'components/DateTimeFormatter';
+import DateTimeFormatter from 'components/common/DateTimeFormatter';
 import NoticeModal from 'components/ModalTable/NoticeModal';
 const subcategoryTableColumns = [
     {

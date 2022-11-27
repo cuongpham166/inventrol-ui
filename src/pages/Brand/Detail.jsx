@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import { Col, Row, Card, Typography } from 'antd';
 
-import Breadcrumb from 'components/Breadcrumb';
+import Breadcrumb from 'components/common/Breadcrumb';
 
 import usePageHeader from 'utils/hooks/usePageHeader';
 import useDataTable from 'utils/hooks/useDataTable';
@@ -11,7 +11,6 @@ import useDataTable from 'utils/hooks/useDataTable';
 import * as service from '@services';
 
 import * as brandProps from '../Brand/props';
-import * as productProps from '../Product/props';
 
 const { Title, Text } = Typography;
 
@@ -30,7 +29,7 @@ const BrandDetail = (props) => {
     });
 
     const { DataTable, currentPage, pageSize, resetPagination } = useDataTable({
-        columns: productProps.productTableColumns,
+        columns: brandProps.brandProductTableColumns,
         table: 'product',
         dataUrl: 'brand/' + dataId + '/products',
     });

@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Button, Modal, List, Typography, Tag, Space } from 'antd';
 import { Link } from 'react-router-dom';
 import { ExpandAltOutlined } from '@ant-design/icons';
-import DateTimeFormatter from 'components/DateTimeFormatter';
+import DateTimeFormatter from 'components/common/DateTimeFormatter';
+import { $ } from 'moneysafe';
 const { Text } = Typography;
 
 const AttributeListElement = ({ data }) => {
@@ -33,6 +34,7 @@ const AttributeList = ({ data }) => {
 };
 
 const ProductModal = ({ data }) => {
+    console.log(data);
     let discountValue;
     let tagColor = data.productstock.stockStatus === 'Out of Stock' ? 'red' : 'yellow';
     if (data.productstock.stockStatus === 'In Stock') {
@@ -62,9 +64,14 @@ const ProductModal = ({ data }) => {
         {
             title: 'Category',
             text: (
-                <Link to={'/subcategory/' + data.subcategory.id}>
-                    <Tag color={data.subcategory.tagColor}>{data.subcategory.name}</Tag>
-                </Link>
+                <Space>
+                    <Link to={'/category/' + data.subcategory.category.id}>
+                        <Tag color={data.subcategory.category.tagColor}>{data.subcategory.category.name}</Tag>
+                    </Link>
+                    <Link to={'/subcategory/' + data.subcategory.id}>
+                        <Tag color={data.subcategory.tagColor}>{data.subcategory.name}</Tag>
+                    </Link>
+                </Space>
             ),
         },
         {
@@ -81,11 +88,11 @@ const ProductModal = ({ data }) => {
         },
         {
             title: 'Listing Price',
-            text: data.listingPrice,
+            text: <Text>{$(data.listingPrice).toFixed()} </Text>,
         },
         {
             title: 'Retail Price',
-            text: data.retailPrice,
+            text: <Text>{$(data.retailPrice).toFixed()} </Text>,
         },
         {
             title: 'VAT',

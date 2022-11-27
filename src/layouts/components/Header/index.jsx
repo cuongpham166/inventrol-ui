@@ -1,7 +1,7 @@
 import React from 'react';
 import { Layout, Row, Col } from 'antd';
 
-import Breadcrumb from '../../../components/Breadcrumb';
+import Breadcrumb from '../../../components/common/Breadcrumb';
 import HeaderControl from './HeaderControl';
 import HeaderClock from './HeaderClock';
 import HeaderSearch from './HeaderControl/components/HeaderSearch';

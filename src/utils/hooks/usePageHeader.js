@@ -22,7 +22,8 @@ const usePageHeader = ({
             let ignore = false;
             const getDataById = async (dataId) => {
                 const result = await service.getById(table, dataId);
-                let titleValue = result.name;
+                let titleValue;
+                result.name != undefined ? (titleValue = result.name) : (titleValue = table + ' #' + result.id);
                 if (!ignore) {
                     setPageHeaderTitle(titleValue);
                 }

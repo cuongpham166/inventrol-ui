@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BlockPicker } from 'react-color';
 import { Colorpicker, ColorPickerValue } from 'antd-colorpicker';
-import Scanner from 'components/BarcodeScanner/Scanner';
+import Scanner from 'components/common/BarcodeScanner';
 const DashboardPage = (props) => {
     const [blockPickerColor, setBlockPickerColor] = useState('#37d67a');
     const onChangeColor = (color) => {

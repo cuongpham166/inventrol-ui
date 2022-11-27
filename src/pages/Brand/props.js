@@ -1,11 +1,14 @@
-import { Form, Input, Popover, Descriptions, Button, Card, Typography } from 'antd';
+import { Form, Input, Popover, Descriptions, Button, Card, Typography, Space, Tag, Tooltip } from 'antd';
 import { Link } from 'react-router-dom';
 import { EyeOutlined, EditOutlined, SaveOutlined } from '@ant-design/icons';
 
 import * as layoutConfig from 'utils/config/layout';
 
 import NoticeModal from 'components/ModalTable/NoticeModal';
-import DateTimeFormatter from 'components/DateTimeFormatter';
+import ProductAttributeColum from 'components/ProductTableColumns/ProductAttributeColum';
+import ProductModal from 'components/ModalTable/ProductModal';
+import DateTimeFormatter from 'components/common/DateTimeFormatter';
+import DateFormatter from 'components/common/DateFormatter';
 
 const { Title } = Typography;
 
@@ -55,27 +58,85 @@ export const brandTableColumns = [
     },
 ];
 
+export const brandProductTableColumns = [
+    {
+        title: '#',
+        key: 'index',
+        render: (text, record, index) => index + 1,
+        width: 60,
+    },
+    {
+        title: 'Name',
+        dataIndex: 'name',
+        key: 'name',
+        render: (text, record) => <Link to={'/product/' + record.id}>{text}</Link>,
+    },
+    {
+        title: 'Category',
+        dataIndex: 'subcategory',
+        key: 'subcategory',
+        render: (subcategory) => (
+            <Space size={0}>
+                <Link to={'/category/' + subcategory.category.id}>
+                    <Tag color={subcategory.category.tagColor}>{subcategory.category.name}</Tag>
+                </Link>
+                <Link to={'/subcategory/' + subcategory.id}>
+                    <Tag color={subcategory.tagColor}>{subcategory.name}</Tag>
+                </Link>
+            </Space>
+        ),
+    },
+    {
+        title: 'Type',
+        dataIndex: 'attributeValue',
+        key: 'attributeValue',
+        render: (attributeValue) => <ProductAttributeColum data={attributeValue} />,
+    },
+    {
+        title: 'Status',
+        dataIndex: 'productstock',
+        key: 'productstock',
+        render: (productstock) => {
+            let tagColor = productstock.stockStatus === 'Out of Stock' ? 'red' : 'yellow';
+            if (productstock.stockStatus === 'In Stock') {
+                tagColor = 'green';
+            }
+            return <Tag color={tagColor}>{productstock.stockStatus}</Tag>;
+        },
+    },
+    {
+        title: () => <Tooltip title="Detailed Information">Info.</Tooltip>,
+        dataIndex: 'name',
+        key: 'name',
+        width: '50px',
+        render: (text, record) => <ProductModal data={record} />,
+    },
+    {
+        title: 'Notice',
+        dataIndex: 'notice',
+        key: 'notice',
+        width: '50px',
+        align: 'center',
+        render: (notice) => <NoticeModal data={notice} />,
+    },
+];
 export const initialFormValues = {
     notice: '',
 };
 
 export const brandPageHeader = (data) => {
     let pageHeaderObj = {};
-    let popoverContent = (
-        <div>
-            <p>{data.notice}</p>
-        </div>
-    );
-
     let mainContent = (
         <Descriptions size="small" column={3}>
-            <Descriptions.Item label="Notice">
-                <Popover content={popoverContent} title="Notice">
-                    <EyeOutlined />
-                </Popover>
+            <Descriptions.Item label="Created on">
+                <DateFormatter data={data.createdOn} />
             </Descriptions.Item>
-            <Descriptions.Item label="Created on">{data.createdDate}</Descriptions.Item>
-            <Descriptions.Item label="Updated on">{data.updatedDate}</Descriptions.Item>
+            <Descriptions.Item label="Updated on">
+                <DateFormatter data={data.updatedOn} />
+            </Descriptions.Item>
+            <Descriptions.Item label="Notice">
+                <NoticeModal data={data.notice} />
+            </Descriptions.Item>
         </Descriptions>
     );
 
