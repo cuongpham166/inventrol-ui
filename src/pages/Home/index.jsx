@@ -1,32 +1,53 @@
 import React, { useState, useEffect } from 'react';
-import { BlockPicker } from 'react-color';
-import { Colorpicker, ColorPickerValue } from 'antd-colorpicker';
-import Scanner from 'components/common/BarcodeScanner';
+import { Col, Row } from 'antd';
+import {
+    PurchaseOverviewCard,
+    OrderOverviewCard,
+    InventorySummaryCard,
+    ProductSummaryCard,
+    UserSummaryCard,
+    OrderPurchaseChart,
+    OrderPaymentOverviewCard,
+    OrderShippingOverviewCard,
+} from 'components/Dashboard';
 const DashboardPage = (props) => {
-    const [blockPickerColor, setBlockPickerColor] = useState('#37d67a');
-    const onChangeColor = (color) => {
-        console.log(color.hex);
-        setBlockPickerColor(color.hex);
-    };
-
     return (
         <>
-            <div>Dashboard</div>
+            <Row gutter={[24, 24]} style={{ marginBottom: '24px' }}>
+                <Col span={12}>
+                    <PurchaseOverviewCard />
+                </Col>
+                <Col span={12}>
+                    <OrderOverviewCard />
+                </Col>
+            </Row>
 
-            <div>
-                <Scanner />
-                <Colorpicker
-                    popup
-                    blockStyles={{
-                        width: '30px',
-                        height: '30px',
-                        borderRadius: '50%',
-                    }}
-                    picker={'SketchPicker'}
-                    onChange={onChangeColor}
-                    value={blockPickerColor}
-                />
-            </div>
+            <Row gutter={[24, 24]} style={{ marginBottom: '24px' }}>
+                <Col span={8}>
+                    <InventorySummaryCard />
+                </Col>
+                <Col span={8}>
+                    <ProductSummaryCard />
+                </Col>
+                <Col span={8}>
+                    <UserSummaryCard />
+                </Col>
+            </Row>
+
+            <Row gutter={[24, 24]} style={{ marginBottom: '24px' }}>
+                <Col span={24}>
+                    <OrderPurchaseChart />
+                </Col>
+            </Row>
+
+            <Row gutter={[24, 24]}>
+                <Col span={12}>
+                    <OrderPaymentOverviewCard />
+                </Col>
+                <Col span={12}>
+                    <OrderShippingOverviewCard />
+                </Col>
+            </Row>
         </>
     );
 };
