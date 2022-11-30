@@ -1,6 +1,7 @@
 import React from 'react';
 import { Col, Row, Space, Card, Typography, Tag } from 'antd';
 import { Trend, TrendTwo, TransactionOrder, Funds } from '@icon-park/react';
+
 const { Text, Title } = Typography;
 const OrderOverviewCard = (props) => {
     return (
@@ -8,12 +9,12 @@ const OrderOverviewCard = (props) => {
             <Row gutter={[24, 24]} style={{ marginBottom: '24px' }}>
                 <Col span={12}>
                     <Space size={12}>
-                        <Tag className="dashboard_icon_container" color="purple">
-                            <TransactionOrder theme="filled" className="dashboard_icon" />
+                        <Tag className="dashboard_icon_container--large" color="purple">
+                            <TransactionOrder theme="filled" className="dashboard_icon--large" />
                         </Tag>
 
                         <Space direction="vertical" size={0}>
-                            <Title level={3} className="dashboard_card_subtitle">
+                            <Title level={3} className="dashboard_card_subtitle--large">
                                 5
                             </Title>
                             <Text strong type="secondary">
@@ -24,12 +25,12 @@ const OrderOverviewCard = (props) => {
                 </Col>
                 <Col span={12}>
                     <Space size={12}>
-                        <Tag className="dashboard_icon_container" color="magenta">
-                            <Trend theme="filled" className="dashboard_icon" />
+                        <Tag className="dashboard_icon_container--large" color="magenta">
+                            <Trend theme="filled" className="dashboard_icon--large" />
                         </Tag>
 
                         <Space direction="vertical" size={0}>
-                            <Title level={3} className="dashboard_card_subtitle">
+                            <Title level={3} className="dashboard_card_subtitle--large">
                                 0
                             </Title>
                             <Text strong type="secondary">
@@ -42,12 +43,12 @@ const OrderOverviewCard = (props) => {
             <Row gutter={[24, 24]}>
                 <Col span={12}>
                     <Space size={12}>
-                        <Tag className="dashboard_icon_container" color="gold">
-                            <Funds theme="filled" className="dashboard_icon" />
+                        <Tag className="dashboard_icon_container--large" color="gold">
+                            <Funds theme="filled" className="dashboard_icon--large" />
                         </Tag>
 
                         <Space direction="vertical" size={0}>
-                            <Title level={3} className="dashboard_card_subtitle">
+                            <Title level={3} className="dashboard_card_subtitle--large">
                                 250,00€
                             </Title>
                             <Text strong type="secondary">
@@ -58,12 +59,12 @@ const OrderOverviewCard = (props) => {
                 </Col>
                 <Col span={12}>
                     <Space size={12}>
-                        <Tag className="dashboard_icon_container" color="cyan">
-                            <TrendTwo theme="filled" className="dashboard_icon" />
+                        <Tag className="dashboard_icon_container--large" color="cyan">
+                            <TrendTwo theme="filled" className="dashboard_icon--large" />
                         </Tag>
 
                         <Space direction="vertical" size={0}>
-                            <Title level={3} className="dashboard_card_subtitle">
+                            <Title level={3} className="dashboard_card_subtitle--large">
                                 0
                             </Title>
                             <Text strong type="secondary">

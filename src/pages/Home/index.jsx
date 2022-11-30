@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Col, Row } from 'antd';
 import {
     PurchaseOverviewCard,
+    PurchaseShippingOverviewCard,
+    PurchasePaymentOverviewCard,
     OrderOverviewCard,
     InventorySummaryCard,
     ProductSummaryCard,
@@ -9,7 +11,12 @@ import {
     OrderPurchaseChart,
     OrderPaymentOverviewCard,
     OrderShippingOverviewCard,
+    TopPurchasedProductCard,
+    TopOrderedProductCard,
+    TopCustomerCard,
+    TopSupplierCard,
 } from 'components/Dashboard';
+import 'assets/styles/dashboard.less';
 const DashboardPage = (props) => {
     return (
         <>
@@ -40,7 +47,25 @@ const DashboardPage = (props) => {
                 </Col>
             </Row>
 
-            <Row gutter={[24, 24]}>
+            <Row gutter={[24, 24]} style={{ marginBottom: '24px' }}>
+                <Col span={12}>
+                    <Row gutter={[24, 24]} style={{ marginBottom: '24px' }}>
+                        <Col span={24}>
+                            <TopPurchasedProductCard />
+                        </Col>
+                    </Row>
+                    <Row gutter={[24, 24]}>
+                        <Col span={24}>
+                            <TopOrderedProductCard />
+                        </Col>
+                    </Row>
+                </Col>
+                <Col span={12}>
+                    <PurchaseShippingOverviewCard />
+                </Col>
+            </Row>
+
+            <Row gutter={[24, 24]} style={{ marginBottom: '24px' }}>
                 <Col span={12}>
                     <OrderPaymentOverviewCard />
                 </Col>
