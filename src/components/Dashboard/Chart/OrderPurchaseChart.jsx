@@ -4,7 +4,7 @@ import { Line } from '@ant-design/plots';
 import * as lineChartConfig from 'utils/config/charts/line';
 const { Title } = Typography;
 const heightLineChart = {
-    height: 300,
+    height: 280,
 };
 
 const chartTransactionData = {
@@ -72,7 +72,7 @@ const OrderPurchaseChart = (props) => {
                         <Title level={5}>Order and Purchase Statistics</Title>
                     </Col>
                     <Col span={19} style={{ textAlign: 'right' }}>
-                        <Segmented options={['Daily', 'Weekly', 'Monthly', 'Quarterly', 'Yearly']} />
+                        <Segmented options={['Weekly', 'Monthly', 'Quarterly', 'Yearly']} />
                     </Col>
                 </Row>
             }

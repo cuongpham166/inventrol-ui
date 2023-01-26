@@ -5,7 +5,7 @@ const { Text, Title } = Typography;
 const PurchaseOverviewCard = (props) => {
     return (
         <Card bordered={false} title="Purchase Overview">
-            <Row gutter={[24, 24]} style={{ marginBottom: '24px' }}>
+            <Row gutter={[24, 24]} style={{ marginBottom: '36px' }}>
                 <Col span={12}>
                     <Space size={12}>
                         <Tag className="dashboard_icon_container--large" color="purple">

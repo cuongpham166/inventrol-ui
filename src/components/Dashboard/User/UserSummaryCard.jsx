@@ -4,38 +4,39 @@ import { PeoplesTwo, Peoples } from '@icon-park/react';
 const { Title, Text } = Typography;
 const UserSummaryCard = (props) => {
     return (
-        <Card bordered={false} title="No. of users">
+        <Card bordered={false} title="User Summary">
             <Row gutter={[12, 12]} justify="space-between">
                 <Col span={12}>
-                    <Card style={{ backgroundColor: '#f9f9f9' }}>
-                        <Space direction="vertical" align="center" size={8} style={{ width: '100%' }}>
-                            <Tag className="dashboard_icon_container--vertical" color="blue">
-                                <PeoplesTwo theme="filled" size="24" className="dashboard_icon--vertical" />
-                            </Tag>
+                    <Space size={12}>
+                        <Tag className="dashboard_icon_container--large" color="blue">
+                            <PeoplesTwo theme="filled" className="dashboard_icon--large" />
+                        </Tag>
 
-                            <Text strong type="secondary" className="dashboard_card_title--vertical">
+                        <Space direction="vertical" size={0}>
+                            <Title level={3} className="dashboard_card_subtitle--large">
+                                5
+                            </Title>
+                            <Text strong type="secondary">
                                 Total Suppliers
                             </Text>
-                            <Title level={2} className="dashboard_card_subtitle--vertical">
-                                5
-                            </Title>
                         </Space>
-                    </Card>
+                    </Space>
                 </Col>
                 <Col span={12}>
-                    <Card style={{ backgroundColor: '#f9f9f9' }}>
-                        <Space direction="vertical" align="center" size={8} style={{ width: '100%' }}>
-                            <Tag className="dashboard_icon_container--vertical" color="geekblue">
-                                <Peoples theme="filled" size="24" className="dashboard_icon--vertical" />
-                            </Tag>
-                            <Text strong type="secondary" className="dashboard_card_title--vertical">
-                                Total Customers
-                            </Text>
-                            <Title level={2} className="dashboard_card_subtitle--vertical">
+                    <Space size={12}>
+                        <Tag className="dashboard_icon_container--large" color="geekblue">
+                            <PeoplesTwo theme="filled" className="dashboard_icon--large" />
+                        </Tag>
+
+                        <Space direction="vertical" size={0}>
+                            <Title level={3} className="dashboard_card_subtitle--large">
                                 5
                             </Title>
+                            <Text strong type="secondary">
+                                Total Customers
+                            </Text>
                         </Space>
-                    </Card>
+                    </Space>
                 </Col>
             </Row>
         </Card>

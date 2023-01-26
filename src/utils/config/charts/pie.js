@@ -4,50 +4,12 @@ export const pie = {
     appendPadding: 10,
     angleField: 'value',
     colorField: 'type',
-    radius: 0.75,
-    legend: false,
+    legend: true,
+    radius: 0.8,
     label: {
-        type: 'spider',
-        labelHeight: 40,
-        formatter: (data, mappingData) => {
-            const group = new G.Group({});
-            group.addShape({
-                type: 'circle',
-                attrs: {
-                    x: 0,
-                    y: 0,
-                    width: 40,
-                    height: 50,
-                    r: 5,
-                    fill: mappingData.color,
-                },
-            });
-            group.addShape({
-                type: 'text',
-                attrs: {
-                    x: 10,
-                    y: 8,
-                    text: `${data.type}`,
-                    fill: mappingData.color,
-                },
-            });
-            group.addShape({
-                type: 'text',
-                attrs: {
-                    x: 0,
-                    y: 25,
-                    text: `${data.value}`,
-                    fill: 'rgba(0, 0, 0, 0.65)',
-                    fontWeight: 700,
-                },
-            });
-            return group;
-        },
+        type: 'outer',
     },
     interactions: [
-        {
-            type: 'element-selected',
-        },
         {
             type: 'element-active',
         },

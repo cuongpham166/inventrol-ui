@@ -8,7 +8,7 @@ const InventorySummaryCard = (props) => {
     return (
         <Card bordered={false} title="Inventory Summary">
             <Row gutter={[24, 24]} style={{ marginBottom: '12px' }}>
-                <Col span={12}>
+                <Col span={16}>
                     <Space size={12}>
                         <Tag className="dashboard_icon_container--small" color="purple">
                             <AdProduct theme="filled" className="dashboard_icon--small" />
@@ -18,7 +18,7 @@ const InventorySummaryCard = (props) => {
                         </Text>
                     </Space>
                 </Col>
-                <Col span={12}>
+                <Col span={8}>
                     <Title level={3} className="dashboard_card_subtitle--small">
                         5
                     </Title>
@@ -26,7 +26,7 @@ const InventorySummaryCard = (props) => {
             </Row>
 
             <Row gutter={[24, 24]} style={{ marginBottom: '12px' }}>
-                <Col span={12}>
+                <Col span={16}>
                     <Space size={12}>
                         <Tag className="dashboard_icon_container--small" color="success">
                             <ArrowCircleUp theme="filled" className="dashboard_icon--small" />
@@ -36,7 +36,7 @@ const InventorySummaryCard = (props) => {
                         </Text>
                     </Space>
                 </Col>
-                <Col span={12}>
+                <Col span={8}>
                     <Title level={3} className="dashboard_card_subtitle--small">
                         5
                     </Title>
@@ -44,7 +44,7 @@ const InventorySummaryCard = (props) => {
             </Row>
 
             <Row gutter={[24, 24]} style={{ marginBottom: '12px' }}>
-                <Col span={12}>
+                <Col span={16}>
                     <Space size={12}>
                         <Tag className="dashboard_icon_container--small" color="warning">
                             <CircleRightDown theme="filled" className="dashboard_icon--small" />
@@ -54,7 +54,7 @@ const InventorySummaryCard = (props) => {
                         </Text>
                     </Space>
                 </Col>
-                <Col span={12}>
+                <Col span={8}>
                     <Title level={3} className="dashboard_card_subtitle--small">
                         5
                     </Title>
@@ -62,7 +62,7 @@ const InventorySummaryCard = (props) => {
             </Row>
 
             <Row gutter={[24, 24]}>
-                <Col span={12}>
+                <Col span={16}>
                     <Space size={12}>
                         <Tag className="dashboard_icon_container--small" color="error">
                             <ArrowCircleDown theme="filled" className="dashboard_icon--small" />
@@ -72,7 +72,7 @@ const InventorySummaryCard = (props) => {
                         </Text>
                     </Space>
                 </Col>
-                <Col span={12}>
+                <Col span={8}>
                     <Title level={3} className="dashboard_card_subtitle--small">
                         5
                     </Title>
