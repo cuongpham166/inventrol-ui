@@ -8,7 +8,6 @@ export const create = async (table, data) => {
             name: data.name,
             notice: data.notice,
         };
-        console.log(data);
         let res = await httpRequest.post(table, newElement);
         notification = {
             status: res.status,
