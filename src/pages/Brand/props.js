@@ -162,34 +162,22 @@ export const CustomFormMainItems = () => {
 
     return (
         <>
-            <Card bordered={false} style={{ padding: '0px' }}>
-                <div className="card_header">
-                    <Title level={4}>Brand Information</Title>
-                </div>
-                <div className="card_content">
-                    <Form.Item
-                        label="Name"
-                        name="name"
-                        hasFeedback
-                        rules={[
-                            {
-                                required: true,
-                            },
-                        ]}
-                    >
-                        <Input placeholder="Name" />
-                    </Form.Item>
+            <Form.Item
+                label="Name"
+                name="name"
+                hasFeedback
+                rules={[
+                    {
+                        required: true,
+                    },
+                ]}
+            >
+                <Input placeholder="Name" />
+            </Form.Item>
 
-                    <Form.Item label="Notice" name="notice">
-                        <Input.TextArea allowClear showCount placeholder="Notice" />
-                    </Form.Item>
-                    <Form.Item {...formLayout.tailLayout} style={{ textAlign: 'right' }}>
-                        <Button type="primary" htmlType="submit" icon={<SaveOutlined />} className="form_button">
-                            Submit
-                        </Button>
-                    </Form.Item>
-                </div>
-            </Card>
+            <Form.Item label="Notice" name="notice">
+                <Input.TextArea allowClear showCount placeholder="Notice" />
+            </Form.Item>
         </>
     );
 };

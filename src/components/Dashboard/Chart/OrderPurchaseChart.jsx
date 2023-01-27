@@ -67,9 +67,11 @@ const OrderPurchaseChart = (props) => {
         <Card
             bordered={false}
             title={
-                <Row justify="space-between">
+                <Row>
                     <Col span={5}>
-                        <Title level={5}>Order and Purchase Statistics</Title>
+                        <Title level={5} className="dashboard_chart_title">
+                            Order and Purchase Statistics
+                        </Title>
                     </Col>
                     <Col span={19} style={{ textAlign: 'right' }}>
                         <Segmented options={['Weekly', 'Monthly', 'Quarterly', 'Yearly']} />
