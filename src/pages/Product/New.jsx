@@ -6,19 +6,12 @@ import Breadcrumb from 'components/common/Breadcrumb';
 import BarcodeScanner from 'components/common/BarcodeScanner';
 
 import useCustomForm from 'utils/hooks/useCustomForm';
-import usePageHeader from 'utils/hooks/usePageHeader';
 
 import * as productProps from '../Product/props';
 const { Title } = Typography;
 
 const CreateProduct = (props) => {
     const [initialFormValues, setInitialFormValues] = useState(productProps.initialFormValues);
-
-    const { PageHeader } = usePageHeader({
-        title: 'New Product',
-        dataId: '',
-        table: 'product',
-    });
 
     const { CustomForm, form } = useCustomForm({
         table: 'product',
@@ -36,9 +29,6 @@ const CreateProduct = (props) => {
         <div style={{}}>
             <Row>
                 <Breadcrumb />
-            </Row>
-            <Row>
-                <PageHeader />
             </Row>
             <Row style={{ padding: '35px' }} justify="center">
                 <Col span={15}>

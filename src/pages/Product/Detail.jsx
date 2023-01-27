@@ -8,7 +8,6 @@ import { Line } from '@ant-design/plots';
 import Breadcrumb from 'components/common/Breadcrumb';
 
 import useStatisticCard from 'utils/hooks/useStatisticCard';
-import usePageHeader from 'utils/hooks/usePageHeader';
 
 import * as lineChartConfig from 'utils/config/charts/line';
 
@@ -168,29 +167,9 @@ const ProductDetail = (props) => {
 
     const [supplierTabSource, setSupplierTabSource] = useState([]);
 
-    const [pageHeaderExtraContent, setPageHeaderExtraContent] = useState([]);
-    const [pageHeaderMainContent, setPageHeaderMainContent] = useState([]);
-    const [pageHeaderTag, setPageHeaderTag] = useState([]);
-    const [pageHeaderExtra, setPageHeaderExtra] = useState([]);
-
-    const { PageHeader } = usePageHeader({
-        title: '',
-        dataId: dataId,
-        table: 'product',
-        mainContent: pageHeaderMainContent,
-        extraContent: pageHeaderExtraContent,
-        pageHeaderTag: pageHeaderTag,
-        pageHeaderExtra: pageHeaderExtra,
-    });
     const getProductDetailInfo = async (dataId) => {
         let productInfoRes = await service.getById('product', dataId);
-        let productPageHeaderObj = productProps.productPageHeader(productInfoRes);
         renderSupplierTab(productInfoRes.supplier);
-        //console.log(productPageHeaderObj);
-        setPageHeaderMainContent(productPageHeaderObj.mainContent);
-        setPageHeaderExtraContent(productPageHeaderObj.extraContent);
-        setPageHeaderTag(productPageHeaderObj.pageHeaderTag);
-        setPageHeaderExtra(productPageHeaderObj.pageHeaderExtra);
     };
 
     const renderSupplierTab = (supplierData) => {
@@ -230,9 +209,7 @@ const ProductDetail = (props) => {
             <Row>
                 <Breadcrumb />
             </Row>
-            <Row>
-                <PageHeader />
-            </Row>
+
             <Row gutter={[24, 24]}>
                 <StatisticCard />
             </Row>

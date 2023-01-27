@@ -22,7 +22,7 @@ const HeaderNotification = (props) => {
                     <Button type="primary" shape="circle" onClick={showDrawer} icon={<NotificationOutlined />}></Button>
                 </Badge>
             </Tooltip>
-            <Drawer title="Notification" placement="right" onClose={onClose} visible={visible}>
+            <Drawer title="Notification" placement="right" onClose={onClose} open={visible}>
                 <Card
                     style={{
                         width: 300,

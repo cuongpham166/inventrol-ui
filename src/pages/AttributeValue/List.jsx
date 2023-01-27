@@ -7,20 +7,9 @@ import { PlusOutlined } from '@ant-design/icons';
 import Breadcrumb from 'components/common/Breadcrumb';
 
 import useDataTable from '../../utils/hooks/useDataTable';
-import usePageHeader from 'utils/hooks/usePageHeader';
 
 import * as service from '../../api/services';
 import * as attributeValueProps from '../AttributeValue/props';
-
-const pageHeaderExtra = (
-    <>
-        <Link to={'/attribute-value/add'}>
-            <Button key="1" type="primary" icon={<PlusOutlined />} style={{ textTransform: 'capitalize' }}>
-                Create New Attribute Value
-            </Button>
-        </Link>
-    </>
-);
 
 const AttributeValueList = (props) => {
     const [dataTableSource, setDataTableSource] = useState([]);
@@ -28,13 +17,6 @@ const AttributeValueList = (props) => {
         columns: attributeValueProps.attributeValueTableColumns,
         table: 'attribute-value',
         dataUrl: 'attribute-value',
-    });
-
-    const { PageHeader } = usePageHeader({
-        title: 'List of Attribute Values',
-        dataId: '',
-        table: 'attribute-value',
-        pageHeaderExtra: pageHeaderExtra,
     });
 
     const getAllData = async () => {
@@ -51,9 +33,6 @@ const AttributeValueList = (props) => {
         <>
             <Row>
                 <Breadcrumb />
-            </Row>
-            <Row>
-                <PageHeader />
             </Row>
 
             <Row gutter={[16, 16]}>

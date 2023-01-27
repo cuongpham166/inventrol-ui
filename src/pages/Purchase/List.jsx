@@ -7,7 +7,6 @@ import { PlusOutlined } from '@ant-design/icons';
 import Breadcrumb from 'components/common/Breadcrumb';
 
 import useDataTable from '../../utils/hooks/useDataTable';
-import usePageHeader from 'utils/hooks/usePageHeader';
 
 import * as service from '../../api/services';
 import * as purchaseProps from '../Purchase/props';
@@ -19,20 +18,10 @@ const PurchaseList = (props) => {
         dataUrl: 'purchase',
     });
 
-    const { PageHeader } = usePageHeader({
-        title: 'List of Purchases',
-        dataId: '',
-        table: 'purchase',
-        pageHeaderExtra: <></>,
-    });
-
     return (
         <>
             <Row>
                 <Breadcrumb />
-            </Row>
-            <Row>
-                <PageHeader />
             </Row>
 
             <Row gutter={[16, 16]}>

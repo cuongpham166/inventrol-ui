@@ -7,7 +7,6 @@ import SupplierPurchaseChart from 'components/Supplier/SupplierDetail/SupplierPu
 import SupplierPurchaseTimeline from 'components/Supplier/SupplierDetail/SupplierPurchaseTimeline';
 import SupplierDatatStatistics from 'components/Supplier/SupplierDetail/SupplierDataStatistics';
 
-import usePageHeader from 'utils/hooks/usePageHeader';
 import useDataTable from 'utils/hooks/useDataTable';
 
 import * as service from '@services';
@@ -22,13 +21,6 @@ const SupplierDetail = (props) => {
 
     const [pageHeaderMainContent, setPageHeaderMainContent] = useState([]);
     const [pageHeaderExtra, setPageHeaderExtra] = useState([]);
-    const { PageHeader } = usePageHeader({
-        title: '',
-        dataId: dataId,
-        table: 'supplier',
-        mainContent: pageHeaderMainContent,
-        pageHeaderExtra: pageHeaderExtra,
-    });
 
     const { DataTable, currentPage, pageSize, resetPagination } = useDataTable({
         columns: productProps.productTableColumns,
@@ -36,23 +28,10 @@ const SupplierDetail = (props) => {
         dataUrl: 'supplier/' + dataId + '/products',
     });
 
-    const getSupplierDataById = async (dataId) => {
-        let supplierInfoRes = await service.getById('supplier', dataId);
-        let supplierPageHeaderObj = supplierProps.supplierPageHeader(supplierInfoRes);
-        setPageHeaderMainContent(supplierPageHeaderObj.mainContent);
-        setPageHeaderExtra(supplierPageHeaderObj.pageHeaderExtra);
-    };
-
-    useEffect(() => {
-        getSupplierDataById(dataId);
-    }, []);
     return (
         <>
             <Row>
                 <Breadcrumb />
-            </Row>
-            <Row>
-                <PageHeader />
             </Row>
             <Row gutter={[24, 24]}>
                 <SupplierDatatStatistics />

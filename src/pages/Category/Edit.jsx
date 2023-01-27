@@ -7,7 +7,6 @@ import { Row, Col } from 'antd';
 import Breadcrumb from 'components/common/Breadcrumb';
 
 import useCustomForm from 'utils/hooks/useCustomForm';
-import usePageHeader from 'utils/hooks/usePageHeader';
 
 import * as categoryProps from '../Category/props';
 import * as service from '../../api/services/index';
@@ -16,12 +15,6 @@ const EditCategory = (props) => {
     const [initialFormValues, setInitialFormValues] = useState({});
     const { id } = useParams();
     const dataId = parseInt(id);
-
-    const { PageHeader } = usePageHeader({
-        title: 'Update Category',
-        dataId: '',
-        table: 'category',
-    });
 
     const { CustomForm } = useCustomForm({
         table: 'category',
@@ -57,9 +50,7 @@ const EditCategory = (props) => {
             <Row>
                 <Breadcrumb />
             </Row>
-            <Row>
-                <PageHeader />
-            </Row>
+
             <Row style={{ padding: '35px' }} justify="center">
                 <Col span={15}>
                     <CustomForm />

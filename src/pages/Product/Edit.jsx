@@ -6,7 +6,6 @@ import { Row, Col, Card, Typography, Space } from 'antd';
 import Breadcrumb from 'components/common/Breadcrumb';
 import BarcodeScanner from 'components/common/BarcodeScanner';
 
-import usePageHeader from 'utils/hooks/usePageHeader';
 import useCustomForm from 'utils/hooks/useCustomForm';
 
 import * as service from '../../api/services';
@@ -17,12 +16,6 @@ const EditProduct = (props) => {
     const dataId = parseInt(id);
 
     const [initialFormValues, setInitialFormValues] = useState({});
-
-    const { PageHeader } = usePageHeader({
-        title: 'Update Product',
-        dataId: '',
-        table: 'product',
-    });
 
     const { CustomForm, form } = useCustomForm({
         table: 'product',
@@ -37,7 +30,6 @@ const EditProduct = (props) => {
         let typeList = [];
         let supplierList = [];
 
-        console.log(result);
         if (result.attributeValue.length > 0) {
             result.attributeValue.map((attrVal) => {
                 typeList.push(attrVal.name);
@@ -77,9 +69,6 @@ const EditProduct = (props) => {
         <div style={{}}>
             <Row>
                 <Breadcrumb />
-            </Row>
-            <Row>
-                <PageHeader />
             </Row>
             <Row style={{ padding: '35px' }} justify="center">
                 <Col span={15}>

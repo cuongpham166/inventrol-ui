@@ -7,7 +7,6 @@ import { Row, Col } from 'antd';
 import Breadcrumb from 'components/common/Breadcrumb';
 
 import useCustomForm from 'utils/hooks/useCustomForm';
-import usePageHeader from 'utils/hooks/usePageHeader';
 
 import * as brandProps from '../Brand/props';
 import * as service from '../../api/services/index';
@@ -16,12 +15,6 @@ const EditBrand = (props) => {
     const [initialFormValues, setInitialFormValues] = useState({});
     const { id } = useParams();
     const dataId = parseInt(id);
-
-    const { PageHeader } = usePageHeader({
-        title: 'Update Brand',
-        dataId: '',
-        table: 'brand',
-    });
 
     const { CustomForm } = useCustomForm({
         table: 'brand',
@@ -48,9 +41,6 @@ const EditBrand = (props) => {
         <div>
             <Row>
                 <Breadcrumb />
-            </Row>
-            <Row>
-                <PageHeader />
             </Row>
             <Row style={{ padding: '35px' }} justify="center">
                 <Col span={15}>

@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 import { Row, Col } from 'antd';
 import Breadcrumb from 'components/common/Breadcrumb';
 
-import usePageHeader from 'utils/hooks/usePageHeader';
 import useCustomForm from 'utils/hooks/useCustomForm';
 
 import * as service from '../../api/services';
@@ -15,12 +14,6 @@ const EditSubcategory = (props) => {
     const dataId = parseInt(id);
 
     const [initialFormValues, setInitialFormValues] = useState({});
-
-    const { PageHeader } = usePageHeader({
-        title: 'Update Subcategory',
-        dataId: '',
-        table: 'subcategory',
-    });
 
     const { CustomForm } = useCustomForm({
         table: 'subcategory',
@@ -48,9 +41,6 @@ const EditSubcategory = (props) => {
         <div style={{}}>
             <Row>
                 <Breadcrumb />
-            </Row>
-            <Row>
-                <PageHeader />
             </Row>
             <Row style={{ padding: '35px' }} justify="center">
                 <Col span={15}>

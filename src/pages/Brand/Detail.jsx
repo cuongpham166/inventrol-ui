@@ -5,7 +5,6 @@ import { Col, Row, Card, Typography } from 'antd';
 
 import Breadcrumb from 'components/common/Breadcrumb';
 
-import usePageHeader from 'utils/hooks/usePageHeader';
 import useDataTable from 'utils/hooks/useDataTable';
 
 import * as service from '@services';
@@ -20,13 +19,6 @@ const BrandDetail = (props) => {
 
     const [pageHeaderMainContent, setPageHeaderMainContent] = useState([]);
     const [pageHeaderExtra, setPageHeaderExtra] = useState([]);
-    const { PageHeader } = usePageHeader({
-        title: '',
-        dataId: dataId,
-        table: 'brand',
-        mainContent: pageHeaderMainContent,
-        pageHeaderExtra: pageHeaderExtra,
-    });
 
     const { DataTable, currentPage, pageSize, resetPagination } = useDataTable({
         columns: brandProps.brandProductTableColumns,
@@ -34,24 +26,10 @@ const BrandDetail = (props) => {
         dataUrl: 'brand/' + dataId + '/products',
     });
 
-    const getBrandDataById = async (dataId) => {
-        let brandInfoRes = await service.getById('brand', dataId);
-        let brandPageHeaderObj = brandProps.brandPageHeader(brandInfoRes);
-        setPageHeaderMainContent(brandPageHeaderObj.mainContent);
-        setPageHeaderExtra(brandPageHeaderObj.pageHeaderExtra);
-    };
-
-    useEffect(() => {
-        getBrandDataById(dataId);
-    }, []);
-
     return (
         <>
             <Row>
                 <Breadcrumb />
-            </Row>
-            <Row>
-                <PageHeader />
             </Row>
             <Row gutter={[24, 0]}>
                 <Col span={24}>

@@ -17,10 +17,10 @@ const HeaderSetting = (props) => {
 
     return (
         <span>
-            <Tooltip title="Settings" visible={visibleTooltip}>
+            <Tooltip title="Settings" open={visibleTooltip}>
                 <Button shape="circle" type="primary" icon={<SettingOutlined />} onClick={showDrawer}></Button>
             </Tooltip>
-            <Drawer title="Configurator" placement="right" onClose={handleCloseDrawer} visible={visibleDrawer}>
+            <Drawer title="Configurator" placement="right" onClose={handleCloseDrawer} open={visibleDrawer}>
                 <p>Some contents...</p>
                 <p>Some contents...</p>
                 <p>Some contents...</p>

@@ -7,19 +7,8 @@ import { PlusOutlined } from '@ant-design/icons';
 import Breadcrumb from 'components/common/Breadcrumb';
 
 import useDataTable from '../../utils/hooks/useDataTable';
-import usePageHeader from 'utils/hooks/usePageHeader';
 
 import * as discountProps from '../Discount/props';
-
-const pageHeaderExtra = (
-    <>
-        <Link to={'/discount/add'}>
-            <Button key="1" type="primary" icon={<PlusOutlined />} style={{ textTransform: 'capitalize' }}>
-                Create New Discount
-            </Button>
-        </Link>
-    </>
-);
 
 const DiscountList = (props) => {
     const { DataTable, currentPage, pageSize, resetPagination } = useDataTable({
@@ -28,20 +17,10 @@ const DiscountList = (props) => {
         dataUrl: 'discount',
     });
 
-    const { PageHeader } = usePageHeader({
-        title: 'List of Discount Values',
-        dataId: '',
-        table: 'discount',
-        pageHeaderExtra: pageHeaderExtra,
-    });
-
     return (
         <>
             <Row>
                 <Breadcrumb />
-            </Row>
-            <Row>
-                <PageHeader />
             </Row>
 
             <Row gutter={[16, 16]}>
