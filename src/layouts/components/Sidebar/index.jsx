@@ -28,11 +28,6 @@ const Sidebar = (props) => {
         setSelectedKey(selectedKeyValue);
     }, [location]);
 
-    const logoStyle = {
-        height: '32px',
-        margin: '16px',
-        background: 'rgba(255, 255, 255, 0.3)',
-    };
     return (
         <Sider
             theme="dark"
@@ -43,13 +38,13 @@ const Sidebar = (props) => {
                 overflow: 'auto',
             }}
         >
-            <div className="logo" style={logoStyle} />
             <Menu
                 theme="dark"
                 selectedKeys={[selectedKey]}
                 mode="vertical"
                 items={sidebarItems}
                 onClick={onClickMenu}
+                style={{ marginTop: '40px' }}
             />
         </Sider>
     );

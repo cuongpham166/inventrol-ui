@@ -17,6 +17,7 @@ import {
     ShoppingCartOutlined,
     CreditCardOutlined,
     CarOutlined,
+    SettingOutlined,
 } from '@ant-design/icons';
 
 const { Option } = Select;
@@ -110,6 +111,8 @@ export const sidebarItems = [
     getItem('Suppliers', 'supplier', <SolutionOutlined />),
 
     getItem('Customers', 'customer', <UserOutlined />),
+
+    getItem('Settings', 'setting', <SettingOutlined />),
 ];
 
 export const exportItems = [

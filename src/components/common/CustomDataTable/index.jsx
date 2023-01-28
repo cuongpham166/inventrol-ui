@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Table, message, Row, Col, Space, Button, Popconfirm, Dropdown } from 'antd';
-import CustomModalForm from '../CustomModalForm';
+import CustomModalNewForm from '../CustomModalNewForm';
 import DetailBrandModal from 'components/Brand/DetailBrandModal';
 import { CaretDownOutlined, EyeOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import * as service from '../../../api/services';
@@ -12,32 +12,6 @@ const CustomDataTable = ({ dataSource, columns, table, dataUrl, CustomFormItems,
 
     const [currentPage, setCurrentPage] = useState(DEFAULT_PAGE_NUMBER);
     const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
-
-    const handleMenuClick = (e) => {
-        console.log('click', e);
-    };
-
-    const items = [
-        {
-            label: 'View',
-            key: 'view',
-            icon: <EyeOutlined />,
-        },
-        {
-            label: 'Edit',
-            key: 'edit',
-            icon: <EditOutlined />,
-        },
-        {
-            label: 'Delete',
-            key: 'delete',
-            icon: <DeleteOutlined />,
-        },
-    ];
-    const menuProps = {
-        items,
-        onClick: handleMenuClick,
-    };
 
     const resetPagination = () => {
         setCurrentPage(DEFAULT_PAGE_NUMBER);
@@ -53,11 +27,10 @@ const CustomDataTable = ({ dataSource, columns, table, dataUrl, CustomFormItems,
                 <Col span={6}></Col>
                 <Col span={18}>
                     <Space style={{ float: 'right' }}>
-                        <CustomModalForm
+                        <CustomModalNewForm
                             CustomFormItems={CustomFormItems}
                             initialFormValues={initialFormValues}
                             table={table}
-                            formType={formType}
                         />
                     </Space>
                 </Col>

@@ -26,6 +26,8 @@ import { DiscountList, DiscountDetail, EditDiscount, CreateDiscount } from 'page
 import { CustomerList, CustomerDetail, EditCustomer, CreateCustomer, AddressBook, NewOrder } from 'pages/Customer';
 import { OrderList, OrderDetail, OrderShipping, OrderPayment } from 'pages/Order';
 
+import { SettingList } from 'pages/Setting';
+
 const publicRoutes = [
     { path: '/', component: Home },
 
@@ -86,6 +88,8 @@ const publicRoutes = [
     { path: '/order/shipping', component: OrderShipping },
     { path: '/order/payment', component: OrderPayment },
     { path: '/order/:id', component: OrderDetail },
+
+    { path: '/setting', component: SettingList },
 
     { path: '*', component: NoMatch },
 ];

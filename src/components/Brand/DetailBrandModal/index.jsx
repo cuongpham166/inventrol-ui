@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Modal } from 'antd';
-import CustomDataTable from 'components/common/CustomDataTable';
+
+import CustomModalDataTable from 'components/common/CustomModalDataTable';
 
 import * as service from '../../../api/services';
+import * as brandProps from '../../../pages/Brand/props';
 
-const DetailBrandModal = ({ isModalOpen, handleModalOk, handleModalCancel, dataID }) => {
+const DetailBrandModal = ({ isViewModalOpen, handleViewModalOk, dataID }) => {
+    const [dataSource, setDataSource] = useState(null);
+    const [modalTile, setModalTitle] = useState('');
+    const [tableDataSource, setTableDataSource] = useState([]);
     const getDetailBrand = async (dataID) => {
         try {
             const result = await service.getById('brand', dataID);
-            console.log('Result', result);
+            setDataSource(result);
+            setModalTitle(result.name);
+            setTableDataSource(result.product);
         } catch (error) {
             console.error(error);
         }
@@ -19,10 +26,16 @@ const DetailBrandModal = ({ isModalOpen, handleModalOk, handleModalCancel, dataI
 
     return (
         <>
-            <Modal title={dataID} open={isModalOpen} onOk={handleModalOk} onCancel={handleModalCancel} width={1200}>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
+            <Modal
+                title={modalTile}
+                open={isViewModalOpen}
+                onOk={handleViewModalOk}
+                okText={'Close'}
+                width={1200}
+                cancelButtonProps={{ style: { display: 'none' } }}
+                closable={false}
+            >
+                <CustomModalDataTable dataSource={tableDataSource} columns={brandProps.brandProductTableColumns} />
             </Modal>
         </>
     );

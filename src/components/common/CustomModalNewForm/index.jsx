@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Form, Modal, message } from 'antd';
-
+import { PlusOutlined } from '@ant-design/icons';
 import * as layoutConfig from '../../../utils/config/layout';
-const CustomModalForm = ({ CustomFormItems, initialFormValues, table, formType }) => {
+const CustomModalNewForm = ({ CustomFormItems, initialFormValues, table }) => {
     const formLayout = layoutConfig.form;
     const validateMessages = formLayout.validateMessages;
 
@@ -11,7 +11,6 @@ const CustomModalForm = ({ CustomFormItems, initialFormValues, table, formType }
     const [form] = Form.useForm();
 
     const [modalformTitle, setModalformTitle] = useState('');
-    const [modalformOkText, setModalformOkText] = useState('');
     const [openModalformText, setOpenModalformText] = useState('');
 
     const [open, setOpen] = useState(false);
@@ -27,13 +26,8 @@ const CustomModalForm = ({ CustomFormItems, initialFormValues, table, formType }
     };
 
     useEffect(() => {
-        if (formType === 'create') {
-            setModalformTitle('Create a new ' + table);
-            setModalformOkText('Create');
-            setOpenModalformText('New ' + table);
-        } else {
-            //setFormButtonText('Update ' + table);
-        }
+        setModalformTitle('Create a new ' + table);
+        setOpenModalformText('New ' + table);
     }, []);
 
     return (
@@ -43,13 +37,14 @@ const CustomModalForm = ({ CustomFormItems, initialFormValues, table, formType }
                 onClick={() => {
                     setOpen(true);
                 }}
+                icon={<PlusOutlined />}
             >
                 {openModalformText}
             </Button>
             <Modal
                 open={open}
                 title={modalformTitle}
-                okText={modalformOkText}
+                okText="Create"
                 cancelText="Cancel"
                 destroyOnClose
                 onCancel={onCancel}
@@ -78,4 +73,4 @@ const CustomModalForm = ({ CustomFormItems, initialFormValues, table, formType }
     );
 };
 
-export default CustomModalForm;
+export default CustomModalNewForm;

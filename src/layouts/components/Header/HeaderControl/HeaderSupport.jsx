@@ -5,7 +5,7 @@ import { Button, Tooltip } from 'antd';
 const HeaderSupport = (props) => {
     return (
         <Tooltip title="Support">
-            <Button shape="circle" type="primary" icon={<CustomerServiceOutlined />}></Button>
+            <Button icon={<CustomerServiceOutlined />} className="header_button" size="large"></Button>
         </Tooltip>
     );
 };

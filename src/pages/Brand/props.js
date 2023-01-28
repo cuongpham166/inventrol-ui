@@ -13,6 +13,8 @@ import CustomDataTableCell from 'components/common/CustomDataTable/CustomDataTab
 import DateFormatter from 'components/common/DateFormatter';
 import CustomActionMenu from 'components/common/CustomActionMenu';
 
+import BrandProductModal from 'components/Brand/BrandProductModal';
+
 const { Title } = Typography;
 
 export const brandTableColumns = [
@@ -67,14 +69,15 @@ export const brandProductTableColumns = [
     {
         title: '#',
         key: 'index',
-        render: (text, record, index) => index + 1,
+        render: (text, record, index) => record.id,
         width: 60,
     },
     {
         title: 'Name',
         dataIndex: 'name',
         key: 'name',
-        render: (text, record) => <Link to={'/product/' + record.id}>{text}</Link>,
+        render: (text, record) => <CustomDataTableCell data={record} type="brand" />,
+        sorter: (a, b) => a.name.localeCompare(b.name),
     },
     {
         title: 'Category',
@@ -110,19 +113,21 @@ export const brandProductTableColumns = [
         },
     },
     {
-        title: () => <Tooltip title="Detailed Information">Info.</Tooltip>,
+        title: 'Action',
         dataIndex: 'name',
-        key: 'name',
-        width: '50px',
-        render: (text, record) => <ProductModal data={record} />,
-    },
-    {
-        title: 'Notice',
-        dataIndex: 'notice',
-        key: 'notice',
+        key: 'action',
         width: '50px',
         align: 'center',
-        render: (notice) => <NoticeModal data={notice} />,
+        render: (text, record) => (
+            <Space>
+                <BrandProductModal data={record} />
+                <Link to={'/product/' + record.id}>
+                    <Tooltip title="View Detail">
+                        <Button type="primary" icon={<EyeOutlined />} size={'small'} />
+                    </Tooltip>
+                </Link>
+            </Space>
+        ),
     },
 ];
 export const initialFormValues = {

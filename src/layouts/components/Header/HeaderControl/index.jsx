@@ -1,17 +1,17 @@
 import React from 'react';
 import { Space } from 'antd';
 
-import HeaderSearch from './components/HeaderSearch';
-import HeaderSetting from './components/HeaderSetting';
-import HeaderNotification from './components/HeaderNotification';
-import HeaderSupport from './components/HeaderSupport';
-import HeaderUser from './components/HeaderUser';
+import HeaderNotification from './HeaderNotification';
+import HeaderSupport from './HeaderSupport';
+import HeaderUser from './HeaderUser';
+
+import '../../../../assets/styles/header.less';
+
 const HeaderControl = (props) => {
     return (
         <Space size={'middle'} style={{ float: 'right' }}>
             <Space size={'middle'}>
                 <HeaderSupport />
-                <HeaderSetting />
                 <HeaderNotification />
                 <HeaderUser />
             </Space>

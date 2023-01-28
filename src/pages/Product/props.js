@@ -35,10 +35,8 @@ import * as service from '../../api/services';
 import * as layoutConfig from 'utils/config/layout';
 import { $ } from 'moneysafe';
 
-import NoticeModal from 'components/ModalTable/NoticeModal';
-import ProductAttributeColum from 'components/ProductTableColumns/ProductAttributeColum';
-import ProductModal from 'components/ModalTable/ProductModal';
 import ProductStockStatusCard from 'components/Product/ProductStockStatusCard';
+import CustomDataTableCell from 'components/common/CustomDataTable/CustomDataTableCell';
 
 const { Option, OptGroup } = Select;
 const { Title } = Typography;
@@ -186,174 +184,55 @@ export const productDataList = (data) => {
     return listData;
 };
 
-export const productPageHeader = (data) => {
-    let statusTagColor;
-    let pageHeaderObj = {};
-    let productTypeList = [];
-
-    let popoverContent = (
-        <div>
-            <p>{data.notice}</p>
-        </div>
-    );
-    let stockStatus = data.stockStatus;
-
-    stockStatus === 'Out of Stock' ? (statusTagColor = 'red') : (statusTagColor = 'yellow');
-    if (stockStatus === 'In Stock') {
-        statusTagColor = 'green';
-    }
-
-    data.attributeValue.map((val, index) => {
-        let productTypeElement = (
-            <Link to={'/attribute-value/' + val.id}>
-                <Tag key={index} color={val.attribute.tagColor}>
-                    {val.name}
-                </Tag>
-            </Link>
-        );
-        productTypeList.push(productTypeElement);
-    });
-
-    let mainContent = (
-        <Descriptions size="small" column={2}>
-            <Descriptions.Item label="Brand">
-                <Link to={'/brand/' + data.brand.id}>{data.brand.name}</Link>
-            </Descriptions.Item>
-            <Descriptions.Item label="SKU">{data.sku}</Descriptions.Item>
-            <Descriptions.Item label="Category">
-                <Link to={'/subcategory/' + data.subcategory.id}>
-                    <Tag color={data.subcategory.tagColor}>{data.subcategory.name}</Tag>
-                </Link>
-                <Link to={'/category/' + data.subcategory.category.id}>
-                    <Tag color={data.subcategory.category.tagColor}>{data.subcategory.category.name}</Tag>
-                </Link>
-            </Descriptions.Item>
-            <Descriptions.Item label="Barcode">{data.barcode}</Descriptions.Item>
-            <Descriptions.Item label="Type">{productTypeList}</Descriptions.Item>
-            <Descriptions.Item label="Created on">{data.createdDate}</Descriptions.Item>
-            <Descriptions.Item label="Notice">
-                <Popover content={popoverContent} title="Notice">
-                    <EyeOutlined />
-                </Popover>
-            </Descriptions.Item>
-        </Descriptions>
-    );
-
-    let extraContent = (
-        <div
-            style={{
-                display: 'flex',
-                width: 'max-content',
-                justifyContent: 'flex-end',
-                gap: '30px',
-            }}
-        >
-            <Statistic title="Retail Price" prefix="€" precision={2} value={data.retailPrice} />
-            <Statistic title="Listing Price" prefix="€" precision={2} value={data.listingPrice} />
-            <Statistic title="VAT" suffix="%" value={data.vat * 100} />
-        </div>
-    );
-
-    let pageHeaderTag = (
-        <span>
-            <Tag color={statusTagColor} style={{ marginRight: '8px' }}>
-                {stockStatus.toUpperCase()}
-            </Tag>
-            <Tooltip placement="top" title={'Current Quantity: ' + data.quantity}>
-                <QuestionCircleOutlined />
-            </Tooltip>
-        </span>
-    );
-
-    let pageHeaderExtra = (
-        <>
-            <Link to={'/inventory/' + data.id + '/edit'}>
-                <Button key="1" type="primary" icon={<EditOutlined />}>
-                    Update Product
-                </Button>
-            </Link>
-        </>
-    );
-
-    pageHeaderObj = {
-        mainContent: mainContent,
-        extraContent: extraContent,
-        pageHeaderTag: pageHeaderTag,
-        pageHeaderExtra: pageHeaderExtra,
-    };
-    return pageHeaderObj;
-};
-
 export const productTableColumns = [
     {
-        title: '#',
+        title: 'Id',
         key: 'index',
-        render: (text, record, index) => index + 1,
+        render: (text, record, index) => record.id,
         width: 60,
     },
     {
         title: 'Name',
         dataIndex: 'name',
         key: 'name',
-        render: (text, record) => <Link to={'/product/' + record.id}>{text}</Link>,
+        render: (text, record) => <CustomDataTableCell data={record} type="product" />,
+        sorter: (a, b) => a.name.localeCompare(b.name),
     },
     {
         title: 'Brand',
         dataIndex: 'brand',
         key: 'brand',
         render: (brand) => <Link to={'/brand/' + brand.id}>{brand.name}</Link>,
-    },
-    {
-        title: 'Category',
-        dataIndex: 'subcategory',
-        key: 'subcategory',
-        render: (subcategory) => (
-            <Space size={0}>
-                <Link to={'/category/' + subcategory.category.id}>
-                    <Tag color={subcategory.category.tagColor}>{subcategory.category.name}</Tag>
-                </Link>
-                <Link to={'/subcategory/' + subcategory.id}>
-                    <Tag color={subcategory.tagColor}>{subcategory.name}</Tag>
-                </Link>
-            </Space>
-        ),
-    },
-    {
-        title: 'Type',
-        dataIndex: 'attributeValue',
-        key: 'attributeValue',
-        render: (attributeValue) => <ProductAttributeColum data={attributeValue} />,
+        sorter: (a, b) => a.brand.localeCompare(b.brand),
     },
     {
         title: 'Status',
         dataIndex: 'productstock',
         key: 'productstock',
         render: (productstock) => <ProductStockStatusCard status={productstock.stockStatus} />,
+        sorter: (a, b) => a.productstock.stockStatus.localeCompare(b.productstock.stockStatus),
     },
     {
-        title: () => <Tooltip title="Detailed Information">Info.</Tooltip>,
-        dataIndex: 'name',
-        key: 'name',
-        width: '50px',
-        render: (text, record) => <ProductModal data={record} />,
-    },
-    /*{
-        title: 'Retail Price',
-        dataIndex: 'retailPrice',
-        key: 'retailPrice',
+        title: 'Category',
+        dataIndex: 'subcategory',
+        key: 'subcategory',
+        render: (subcategory) => (
+            <Link to={'/category/' + subcategory.category.id}>
+                <Tag color={subcategory.category.tagColor}>{subcategory.category.name}</Tag>
+            </Link>
+        ),
+        sorter: (a, b) => a.subcategory.category.name.localeCompare(b.subcategory.category.name),
     },
     {
-        title: 'Listing Price',
-        dataIndex: 'listingPrice',
-        key: 'listingPrice',
-    },*/
-    {
-        title: 'Notice',
-        dataIndex: 'notice',
-        key: 'notice',
-        width: '50px',
-        align: 'center',
-        render: (notice) => <NoticeModal data={notice} />,
+        title: 'Subcategory',
+        dataIndex: 'subcategory',
+        key: 'subcategory',
+        render: (subcategory) => (
+            <Link to={'/subcategory/' + subcategory.id}>
+                <Tag color={subcategory.tagColor}>{subcategory.name}</Tag>
+            </Link>
+        ),
+        sorter: (a, b) => a.subcategory.name.localeCompare(b.subcategory.name),
     },
 ];
 
