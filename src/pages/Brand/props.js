@@ -8,28 +8,33 @@ import NoticeModal from 'components/ModalTable/NoticeModal';
 import ProductAttributeColum from 'components/ProductTableColumns/ProductAttributeColum';
 import ProductModal from 'components/ModalTable/ProductModal';
 import DateTimeFormatter from 'components/common/DateTimeFormatter';
+import CustomDataTableCell from 'components/common/CustomDataTable/CustomDataTableCell';
+
 import DateFormatter from 'components/common/DateFormatter';
+import CustomActionMenu from 'components/common/CustomActionMenu';
 
 const { Title } = Typography;
 
 export const brandTableColumns = [
     {
-        title: '#',
+        title: 'Id',
         key: 'index',
-        render: (text, record, index) => index + 1,
+        render: (text, record, index) => record.id,
         width: 60,
     },
     {
         title: 'Name',
         dataIndex: 'name',
         key: 'name',
-        render: (text, record) => <Link to={'/brand/' + record.id}>{text}</Link>,
+        render: (text, record) => <CustomDataTableCell data={record} type="brand" />,
+        sorter: (a, b) => a.name.localeCompare(b.name),
     },
     {
         title: 'Created on',
         dataIndex: 'createdOn',
         key: 'createdOn',
         render: (createdOn) => <DateTimeFormatter data={createdOn} />,
+        sorter: (a, b) => a.createdOn.localeCompare(b.createdOn),
     },
     {
         title: 'Created by',
@@ -49,12 +54,12 @@ export const brandTableColumns = [
         key: 'updatedBy',
     },
     {
-        title: 'Notice',
-        dataIndex: 'notice',
-        key: 'notice',
+        title: 'Actions',
+        dataIndex: 'name',
+        key: 'action',
         width: '50px',
         align: 'center',
-        render: (notice) => <NoticeModal data={notice} />,
+        render: (text, record) => <CustomActionMenu id={record.id} table="brand" />,
     },
 ];
 
@@ -122,39 +127,6 @@ export const brandProductTableColumns = [
 ];
 export const initialFormValues = {
     notice: '',
-};
-
-export const brandPageHeader = (data) => {
-    let pageHeaderObj = {};
-    let mainContent = (
-        <Descriptions size="small" column={3}>
-            <Descriptions.Item label="Created on">
-                <DateFormatter data={data.createdOn} />
-            </Descriptions.Item>
-            <Descriptions.Item label="Updated on">
-                <DateFormatter data={data.updatedOn} />
-            </Descriptions.Item>
-            <Descriptions.Item label="Notice">
-                <NoticeModal data={data.notice} />
-            </Descriptions.Item>
-        </Descriptions>
-    );
-
-    let pageHeaderExtra = (
-        <>
-            <Link to={'/brand/' + data.id + '/edit'}>
-                <Button key="1" type="primary" icon={<EditOutlined />}>
-                    Update Brand
-                </Button>
-            </Link>
-        </>
-    );
-
-    pageHeaderObj = {
-        mainContent: mainContent,
-        pageHeaderExtra: pageHeaderExtra,
-    };
-    return pageHeaderObj;
 };
 
 export const CustomFormMainItems = () => {

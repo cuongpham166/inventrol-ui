@@ -4,7 +4,7 @@ import { Select, Form, Input } from 'antd';
 import {
     AppstoreOutlined,
     ShopOutlined,
-    CodeSandboxOutlined,
+    BorderlessTableOutlined,
     TagOutlined,
     TagsOutlined,
     SolutionOutlined,
@@ -98,7 +98,7 @@ export const sidebarItems = [
         getItem('Order Payment', 'order/payment', <CreditCardOutlined />),
     ]),
 
-    getItem('Product', 'table', <CodeSandboxOutlined />, [
+    getItem('Metadata', 'table', <BorderlessTableOutlined />, [
         getItem('Attribute', 'attribute', <TagOutlined />),
         getItem('Attribute Value', 'attribute-value', <TagsOutlined />),
         getItem('Brand', 'brand', <TagOutlined />),

@@ -1,31 +1,20 @@
 import React, { useState } from 'react';
-import { Popover, Tag, Button, Modal, Table } from 'antd';
-import { Link } from 'react-router-dom';
-import { EyeOutlined } from '@ant-design/icons';
+import { Popover, Tag, Button, Modal, Tooltip } from 'antd';
+import { InfoOutlined } from '@ant-design/icons';
 
 const NoticeModal = ({ data }) => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const showModal = () => {
-        setIsModalOpen(true);
+    const [open, setOpen] = useState(false);
+    const hide = () => {
+        setOpen(false);
     };
-    const handleOk = () => {
-        setIsModalOpen(false);
+    const handleOpenChange = (newOpen) => {
+        setOpen(newOpen);
     };
 
     return (
-        <>
-            <Button onClick={showModal} icon={<EyeOutlined />}></Button>
-            <Modal
-                title="Notice"
-                open={isModalOpen}
-                onOk={handleOk}
-                okText={'Close'}
-                closable={false}
-                cancelButtonProps={{ style: { display: 'none' } }}
-            >
-                <p>{data}</p>
-            </Modal>
-        </>
+        <Popover content={data} title="Notice" trigger="click" open={open} onOpenChange={handleOpenChange}>
+            <Button icon={<InfoOutlined />} size={'small'} shape="circle" type="primary"></Button>
+        </Popover>
     );
 };
 
