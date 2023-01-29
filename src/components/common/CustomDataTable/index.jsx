@@ -4,9 +4,11 @@ import CustomModalNewForm from '../CustomModalNewForm';
 
 import CustomerDataTableColumnFilter from './CustomDataTableColumnFilter';
 import CustomDataTableExporter from './CustomDataTableExporter';
+
 import CustomDataTableDataFilter from './CustomDataTableDataFilter';
 import CustomDataTableSearchBar from './CustomDataTableSearchBar';
 
+import CustomDataTableCustomize from './CustomDataTableCustomize';
 const CustomDataTable = ({ dataSource, columns, table, dataUrl, CustomFormItems, initialFormValues, formType }) => {
     const DEFAULT_PAGE_SIZE = 10;
     const DEFAULT_PAGE_NUMBER = 0;
@@ -59,14 +61,15 @@ const CustomDataTable = ({ dataSource, columns, table, dataUrl, CustomFormItems,
                     <CustomDataTableSearchBar />
                 </Col>
                 <Col span={15}>
-                    <Space style={{ float: 'right' }}>
+                    <Space style={{ float: 'right' }} size="middle">
                         <CustomDataTableExporter />
                         <CustomDataTableDataFilter />
-                        <CustomerDataTableColumnFilter
+                        {/*<CustomerDataTableColumnFilter
                             options={columnOptionList}
                             value={columnValueList}
                             onChange={onCheckboxChange}
-                        />
+                        />*/}
+                        <CustomDataTableCustomize />
                         <CustomModalNewForm
                             CustomFormItems={CustomFormItems}
                             initialFormValues={initialFormValues}

@@ -7,7 +7,6 @@ import CheckBoxMenu from 'components/common/CheckboxMenu';
 import ActionButton from 'components/common/ActionButton';
 
 import useSearchbar from './useSearchbar';
-import useExportData from './useExportData';
 
 import * as service from '../../api/services';
 import * as layoutConfig from '../../utils/config/layout';
@@ -69,7 +68,6 @@ const useDataTable = ({ columns, table, dataUrl }) => {
     const [totalElements, setTotalElements] = useState(0);
 
     const { Searchbar, searchValue } = useSearchbar({ table });
-    const { DataExporter } = useExportData({ dataSource, table });
 
     const resetPagination = () => {
         setCurrentPage(DEFAULT_PAGE_NUMBER);
@@ -136,9 +134,8 @@ const useDataTable = ({ columns, table, dataUrl }) => {
     };
 
     let searchbarComponent;
-    let exportComponent;
+
     table === 'discount' ? (searchbarComponent = <></>) : (searchbarComponent = <Searchbar />);
-    table === 'discount' ? (exportComponent = <></>) : (exportComponent = <DataExporter />);
 
     const DataTable = () => (
         <>
@@ -147,7 +144,6 @@ const useDataTable = ({ columns, table, dataUrl }) => {
                 <Col span={12}>
                     <Space style={{ float: 'right' }}>
                         <CheckBoxMenu options={columnOptionList} value={columnValueList} onChange={onCheckboxChange} />
-                        {exportComponent}
                     </Space>
                 </Col>
             </Row>

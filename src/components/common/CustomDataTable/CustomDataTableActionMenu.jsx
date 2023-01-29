@@ -8,7 +8,7 @@ import DetailBrandModal from 'components/Brand/DetailBrandModal';
 
 import * as brandProps from '../../../pages/Brand/props';
 
-const CustomActionMenu = ({ id, table }) => {
+const CustomDataTableActionMenu = ({ id, table }) => {
     const [isClicked, setIsClicked] = useState(-1);
 
     const [isViewModalOpen, setIsViewModalOpen] = useState(false);
@@ -115,4 +115,4 @@ const CustomActionMenu = ({ id, table }) => {
     );
 };
 
-export default CustomActionMenu;
+export default CustomDataTableActionMenu;

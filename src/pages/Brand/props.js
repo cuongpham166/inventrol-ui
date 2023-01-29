@@ -4,16 +4,10 @@ import { EyeOutlined, EditOutlined, SaveOutlined } from '@ant-design/icons';
 
 import * as layoutConfig from 'utils/config/layout';
 
-import NoticeModal from 'components/ModalTable/NoticeModal';
-import ProductAttributeColum from 'components/ProductTableColumns/ProductAttributeColum';
-import ProductModal from 'components/ModalTable/ProductModal';
 import DateTimeFormatter from 'components/common/DateTimeFormatter';
 import CustomDataTableCell from 'components/common/CustomDataTable/CustomDataTableCell';
 
-import DateFormatter from 'components/common/DateFormatter';
-import CustomActionMenu from 'components/common/CustomActionMenu';
-
-import BrandProductModal from 'components/Brand/BrandProductModal';
+import CustomDataTableActionMenu from 'components/common/CustomDataTable/CustomDataTableActionMenu';
 
 const { Title } = Typography;
 
@@ -35,25 +29,9 @@ export const brandTableColumns = [
         title: 'Created on',
         dataIndex: 'createdOn',
         key: 'createdOn',
+        align: 'right',
         render: (createdOn) => <DateTimeFormatter data={createdOn} />,
         sorter: (a, b) => a.createdOn.localeCompare(b.createdOn),
-    },
-    {
-        title: 'Created by',
-        dataIndex: 'createdBy',
-        key: 'createdBy',
-        width: '120px',
-    },
-    {
-        title: 'Updated on',
-        dataIndex: 'updatedOn',
-        key: 'updatedOn',
-        render: (updatedOn) => <DateTimeFormatter data={updatedOn} />,
-    },
-    {
-        title: 'Updated by',
-        dataIndex: 'updatedBy',
-        key: 'updatedBy',
     },
     {
         title: 'Actions',
@@ -61,7 +39,7 @@ export const brandTableColumns = [
         key: 'action',
         width: '50px',
         align: 'center',
-        render: (text, record) => <CustomActionMenu id={record.id} table="brand" />,
+        render: (text, record) => <CustomDataTableActionMenu id={record.id} table="brand" />,
     },
 ];
 
@@ -76,7 +54,7 @@ export const brandProductTableColumns = [
         title: 'Name',
         dataIndex: 'name',
         key: 'name',
-        render: (text, record) => <CustomDataTableCell data={record} type="brand" />,
+        render: (text, record) => <CustomDataTableCell data={record} type="product" />,
         sorter: (a, b) => a.name.localeCompare(b.name),
     },
     {
@@ -93,12 +71,6 @@ export const brandProductTableColumns = [
                 </Link>
             </Space>
         ),
-    },
-    {
-        title: 'Type',
-        dataIndex: 'attributeValue',
-        key: 'attributeValue',
-        render: (attributeValue) => <ProductAttributeColum data={attributeValue} />,
     },
     {
         title: 'Status',
@@ -120,7 +92,6 @@ export const brandProductTableColumns = [
         align: 'center',
         render: (text, record) => (
             <Space>
-                <BrandProductModal data={record} />
                 <Link to={'/product/' + record.id}>
                     <Tooltip title="View Detail">
                         <Button type="primary" icon={<EyeOutlined />} size={'small'} />

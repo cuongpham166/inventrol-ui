@@ -10,7 +10,6 @@ import * as layoutConfig from 'utils/config/layout';
 
 import NoticeModal from 'components/ModalTable/NoticeModal';
 import DateTimeFormatter from 'components/common/DateTimeFormatter';
-import ProductAttributeColum from 'components/ProductTableColumns/ProductAttributeColum';
 import ProductModal from 'components/ModalTable/ProductModal';
 import DateFormatter from 'components/common/DateFormatter';
 import { $ } from 'moneysafe';
@@ -228,12 +227,6 @@ export const subcategoryProductTableColumns = [
         render: (listingPrice) => <Text>{$(listingPrice).toFixed()} </Text>,
     },
     {
-        title: 'Type',
-        dataIndex: 'attributeValue',
-        key: 'attributeValue',
-        render: (attributeValue) => <ProductAttributeColum data={attributeValue} />,
-    },
-    {
         title: 'Status',
         dataIndex: 'productstock',
         key: 'productstock',
@@ -254,41 +247,3 @@ export const subcategoryProductTableColumns = [
         render: (notice) => <NoticeModal data={notice} />,
     },
 ];
-
-export const subcategoryPageHeader = (data) => {
-    let pageHeaderObj = {};
-    let mainContent = (
-        <Descriptions size="small" column={4}>
-            <Descriptions.Item label="Category">
-                <Link to={'/category/' + data.category.id}>
-                    <Tag color={data.category.tagColor}>{data.category.name}</Tag>
-                </Link>
-            </Descriptions.Item>
-            <Descriptions.Item label="Created on">
-                <DateFormatter data={data.createdOn} />
-            </Descriptions.Item>
-            <Descriptions.Item label="Updated on">
-                <DateFormatter data={data.updatedOn} />
-            </Descriptions.Item>
-            <Descriptions.Item label="Notice">
-                <NoticeModal data={data.notice} />
-            </Descriptions.Item>
-        </Descriptions>
-    );
-
-    let pageHeaderExtra = (
-        <>
-            <Link to={'/subcategory/' + data.id + '/edit'}>
-                <Button key="1" type="primary" icon={<EditOutlined />}>
-                    Update Subcategory
-                </Button>
-            </Link>
-        </>
-    );
-
-    pageHeaderObj = {
-        mainContent: mainContent,
-        pageHeaderExtra: pageHeaderExtra,
-    };
-    return pageHeaderObj;
-};

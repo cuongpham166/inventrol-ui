@@ -12,18 +12,9 @@ const DateTimeFormatter = ({ data }) => {
     if (data != null) {
         dateElement = (
             <Space direction="vertical" size={0}>
-                <Text>{dayjs().to(dayjs(data))}</Text>
-                <Text type="secondary">{dayjs(data).format('LLLL')}</Text>
+                <Text>{dayjs(data).format('DD/MM/YYYY')}</Text>
+                <Text type="secondary">{dayjs().to(dayjs(data))}</Text>
             </Space>
-
-            /*<Space>
-                <span>{dayjs().to(dayjs(data))}</span>
-                <Tooltip title={dayjs(data).format('LLLL')}>
-                    <span>
-                        <ClockCircleFilled />
-                    </span>
-                </Tooltip>
-            </Space>*/
         );
     } else {
         dateElement = <></>;

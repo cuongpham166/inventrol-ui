@@ -9,10 +9,6 @@ import {
     TagsOutlined,
     SolutionOutlined,
     UserOutlined,
-    FileTextOutlined,
-    FilePdfOutlined,
-    FileOutlined,
-    FileExcelOutlined,
     TableOutlined,
     ShoppingCartOutlined,
     CreditCardOutlined,
@@ -113,22 +109,4 @@ export const sidebarItems = [
     getItem('Customers', 'customer', <UserOutlined />),
 
     getItem('Settings', 'setting', <SettingOutlined />),
-];
-
-export const exportItems = [
-    {
-        label: 'Export as PDF',
-        key: 'pdf',
-        icon: <FilePdfOutlined />,
-    },
-    {
-        label: 'Export as CSV',
-        key: 'csv',
-        icon: <FileTextOutlined />,
-    },
-    {
-        label: 'Export as JSON',
-        key: 'json',
-        icon: <FileOutlined />,
-    },
 ];

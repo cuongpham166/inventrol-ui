@@ -1,9 +1,17 @@
 import React from 'react';
 import { Space, Typography } from 'antd';
 import NoticePopover from '../NoticePopover';
+import * as dayjs from 'dayjs';
+
+const relativeTime = require('dayjs/plugin/relativeTime');
+const localizedFormat = require('dayjs/plugin/localizedFormat');
+dayjs.extend(relativeTime);
+dayjs.extend(localizedFormat);
+
 const { Text } = Typography;
 
 const CustomDataTableCell = ({ data, type }) => {
+    console.log(data);
     let customCell;
     switch (type) {
         case 'product':
@@ -14,6 +22,11 @@ const CustomDataTableCell = ({ data, type }) => {
                         <Text strong>
                             {data.name} - {data.attributeValue[0].name}
                         </Text>
+                        {data.updatedOn == null ? (
+                            <></>
+                        ) : (
+                            <Text type="secondary">Last update: {dayjs(data.updatedOn).format('DD/MM/YYYY')}</Text>
+                        )}
                     </Space>
                 );
             } else {
@@ -25,6 +38,11 @@ const CustomDataTableCell = ({ data, type }) => {
                             <Text strong>
                                 {data.name} - {data.attributeValue[0].name}
                             </Text>
+                            {data.updatedOn == null ? (
+                                <></>
+                            ) : (
+                                <Text type="secondary">Last update: {dayjs(data.updatedOn).format('DD/MM/YYYY')}</Text>
+                            )}
                         </Space>
                     </Space>
                 );
@@ -32,12 +50,28 @@ const CustomDataTableCell = ({ data, type }) => {
             break;
         default:
             if (data.notice == '') {
-                customCell = <Text strong>{data.name}</Text>;
+                customCell = (
+                    <Space direction="vertical" size={0}>
+                        <Text strong>{data.name}</Text>
+                        {data.updatedOn == null ? (
+                            <></>
+                        ) : (
+                            <Text type="secondary">Last update: {dayjs(data.updatedOn).format('DD/MM/YYYY')}</Text>
+                        )}
+                    </Space>
+                );
             } else {
                 customCell = (
-                    <Space>
-                        <Text strong>{data.name}</Text>
-                        <NoticePopover data={data.notice} />
+                    <Space direction="vertical" size={0}>
+                        <Space>
+                            <Text strong>{data.name}</Text>
+                            <NoticePopover data={data.notice} />
+                        </Space>
+                        {data.updatedOn == null ? (
+                            <></>
+                        ) : (
+                            <Text type="secondary">Last update: {dayjs(data.updatedOn).format('DD/MM/YYYY')}</Text>
+                        )}
                     </Space>
                 );
             }

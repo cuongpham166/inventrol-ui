@@ -27,7 +27,7 @@ const CustomModalNewForm = ({ CustomFormItems, initialFormValues, table }) => {
 
     useEffect(() => {
         setModalformTitle('Create a new ' + table);
-        setOpenModalformText('Create new ' + table);
+        setOpenModalformText('New ' + table);
     }, []);
 
     return (
@@ -65,6 +65,7 @@ const CustomModalNewForm = ({ CustomFormItems, initialFormValues, table }) => {
                     name="form_in_modal"
                     initialValues={initialFormValues}
                     validateMessages={validateMessages}
+                    requiredMark={true}
                 >
                     {CustomFormItems}
                 </Form>

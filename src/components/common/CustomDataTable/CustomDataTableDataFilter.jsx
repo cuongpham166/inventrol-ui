@@ -1,12 +1,14 @@
 import React from 'react';
-import { Space, Button, Dropdown, Menu, Modal, Form } from 'antd';
+import { Space, Button, Dropdown, Menu, Modal, Form, Tooltip } from 'antd';
 
 import { FilterOutlined } from '@ant-design/icons';
 const CustomDataTableDataFilter = (props) => {
     return (
-        <div>
-            <Button icon={<FilterOutlined />}>Filter Data</Button>
-        </div>
+        <>
+            <Tooltip title="Filter Data">
+                <Button icon={<FilterOutlined />}></Button>
+            </Tooltip>
+        </>
     );
 };
 

@@ -12,7 +12,6 @@ import SubcategoryModal from 'components/ModalTable/SubcategoryModal';
 import NoticeModal from 'components/ModalTable/NoticeModal';
 import DateTimeFormatter from 'components/common/DateTimeFormatter';
 import DateFormatter from 'components/common/DateFormatter';
-import ProductAttributeColum from 'components/ProductTableColumns/ProductAttributeColum';
 
 const { Option } = Select;
 const { Title, Text } = Typography;
@@ -186,12 +185,7 @@ export const categoryProductTableColumns = [
             </Link>
         ),
     },
-    {
-        title: 'Type',
-        dataIndex: 'attributeValue',
-        key: 'attributeValue',
-        render: (attributeValue) => <ProductAttributeColum data={attributeValue} />,
-    },
+
     {
         title: 'Status',
         dataIndex: 'productstock',
