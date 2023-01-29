@@ -135,7 +135,7 @@ const useExportData = ({ dataSource, table }) => {
 
     const DataExporter = () => (
         <>
-            <Dropdown overlay={menu}>
+            <Dropdown menu={menu}>
                 <Button>
                     <Space>
                         Export

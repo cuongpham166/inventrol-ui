@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Table, message, Row, Col, Space, Button, Popconfirm, Dropdown } from 'antd';
 import CustomModalNewForm from '../CustomModalNewForm';
-import DetailBrandModal from 'components/Brand/DetailBrandModal';
-import { CaretDownOutlined, EyeOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import * as service from '../../../api/services';
-import CustomActionMenu from '../CustomActionMenu';
+
+import CustomerDataTableColumnFilter from './CustomDataTableColumnFilter';
+import CustomDataTableExporter from './CustomDataTableExporter';
+import CustomDataTableDataFilter from './CustomDataTableDataFilter';
+import CustomDataTableSearchBar from './CustomDataTableSearchBar';
 
 const CustomDataTable = ({ dataSource, columns, table, dataUrl, CustomFormItems, initialFormValues, formType }) => {
     const DEFAULT_PAGE_SIZE = 10;
@@ -13,20 +14,59 @@ const CustomDataTable = ({ dataSource, columns, table, dataUrl, CustomFormItems,
     const [currentPage, setCurrentPage] = useState(DEFAULT_PAGE_NUMBER);
     const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
 
-    const resetPagination = () => {
-        setCurrentPage(DEFAULT_PAGE_NUMBER);
-    };
+    const [tableColumns, setTableColumns] = useState(columns);
+    const tableColumnsRef = useRef(tableColumns);
+
+    const [columnOptionList, setColumnOptionList] = useState([]);
+    const [columnValueList, setColumnValueList] = useState([]);
 
     const handleTableChange = (pagination) => {
         setCurrentPage(pagination.current - 1);
     };
 
+    const getTableColumnList = () => {
+        let columnNameList = [];
+        tableColumns.map((value, index) => {
+            columnNameList.push(value.title);
+        });
+        setColumnOptionList(columnNameList);
+        setColumnValueList(columnNameList);
+    };
+
+    const onCheckboxChange = (selectedColums) => {
+        if (selectedColums.length > tableColumns.length) {
+            tableColumnsRef.current = columns;
+            setTableColumns(columns);
+        }
+        let columnListFiltered = tableColumnsRef.current.filter((colVal) => {
+            return selectedColums.find((element) => {
+                return element === colVal.title;
+            });
+        });
+        tableColumnsRef.current = columnListFiltered;
+        setTableColumns(columnListFiltered);
+        setColumnValueList(selectedColums);
+    };
+
+    useEffect(() => {
+        getTableColumnList();
+    }, []);
+
     return (
         <>
             <Row gutter={[64, 64]} justify="space-between" style={{ marginBottom: '20px' }}>
-                <Col span={6}></Col>
-                <Col span={18}>
+                <Col span={9}>
+                    <CustomDataTableSearchBar />
+                </Col>
+                <Col span={15}>
                     <Space style={{ float: 'right' }}>
+                        <CustomDataTableExporter />
+                        <CustomDataTableDataFilter />
+                        <CustomerDataTableColumnFilter
+                            options={columnOptionList}
+                            value={columnValueList}
+                            onChange={onCheckboxChange}
+                        />
                         <CustomModalNewForm
                             CustomFormItems={CustomFormItems}
                             initialFormValues={initialFormValues}
@@ -38,7 +78,7 @@ const CustomDataTable = ({ dataSource, columns, table, dataUrl, CustomFormItems,
             <Row>
                 <Col span={24}>
                     <Table
-                        columns={columns}
+                        columns={tableColumnsRef.current}
                         dataSource={dataSource}
                         rowKey="id"
                         bordered

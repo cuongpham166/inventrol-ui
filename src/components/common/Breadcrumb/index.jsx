@@ -12,7 +12,8 @@ const Breadcrumb = () => {
         <div>
             <AntBreadcrumb
                 style={{
-                    marginBottom: 10,
+                    marginBottom: 20,
+                    fontWeight: 'bold',
                 }}
             >
                 {pathnames.length > 0 ? (
