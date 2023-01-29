@@ -1,19 +1,21 @@
 import { Link } from 'react-router-dom';
 import DateTimeFormatter from 'components/common/DateTimeFormatter';
-import NoticeModal from 'components/ModalTable/NoticeModal';
+
+import CustomDataTableCell from 'components/common/CustomDataTable/CustomDataTableCell';
 
 export const customerTableColumns = [
     {
-        title: '#',
+        title: 'Id',
         key: 'index',
-        render: (text, record, index) => index + 1,
+        render: (text, record, index) => record.id,
         width: 50,
     },
     {
         title: 'Name',
         dataIndex: 'name',
         key: 'name',
-        render: (text, record) => <Link to={'/customer/' + record.id}>{text}</Link>,
+        render: (text, record) => <CustomDataTableCell data={record} type="customer" />,
+        sorter: (a, b) => a.name.localeCompare(b.name),
     },
     {
         title: 'Email',
@@ -24,36 +26,13 @@ export const customerTableColumns = [
         title: 'Mobile Number',
         dataIndex: 'mobileNumber',
         key: 'mobileNumber',
+        align: 'right',
     },
     {
         title: 'Created on',
         dataIndex: 'createdOn',
-        key: 'createdOn',
+        align: 'right',
         render: (createdOn) => <DateTimeFormatter data={createdOn} />,
-    },
-    {
-        title: 'Created by',
-        dataIndex: 'createdBy',
-        key: 'createdBy',
-    },
-    {
-        title: 'Updated on',
-        dataIndex: 'updatedOn',
-        key: 'updatedOn',
-        render: (updatedOn) => <DateTimeFormatter data={updatedOn} />,
-    },
-    {
-        title: 'Updated by',
-        dataIndex: 'updatedBy',
-        key: 'updatedBy',
-    },
-
-    {
-        title: 'Notice',
-        dataIndex: 'notice',
-        key: 'notice',
-        width: '50px',
-        align: 'center',
-        render: (notice) => <NoticeModal data={notice} />,
+        sorter: (a, b) => a.createdOn.localeCompare(b.createdOn),
     },
 ];

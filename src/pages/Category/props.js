@@ -8,10 +8,10 @@ import { EyeOutlined, SaveOutlined, ExpandAltOutlined, EditOutlined } from '@ant
 import * as service from '../../api/services';
 import { $ } from 'moneysafe';
 import * as layoutConfig from 'utils/config/layout';
-import SubcategoryModal from 'components/ModalTable/SubcategoryModal';
-import NoticeModal from 'components/ModalTable/NoticeModal';
+
 import DateTimeFormatter from 'components/common/DateTimeFormatter';
-import DateFormatter from 'components/common/DateFormatter';
+
+import CustomDataTableCell from 'components/common/CustomDataTable/CustomDataTableCell';
 
 const { Option } = Select;
 const { Title, Text } = Typography;
@@ -86,61 +86,25 @@ export const CustomFormMainItems = () => {
 
 export const categoryTableColumns = [
     {
-        title: '#',
+        title: 'Id',
         key: 'index',
-        render: (text, record, index) => index + 1,
+        render: (text, record, index) => record.id,
         width: 50,
     },
     {
         title: 'Name',
         dataIndex: 'name',
         key: 'name',
-        render: (text, record) => <Link to={'/category/' + record.id}>{text}</Link>,
-    },
-    {
-        title: 'Color',
-        dataIndex: 'tagColor',
-        key: 'tagColor',
-        width: '50px',
-        render: (tagColor) => <Tag color={tagColor}>{tagColor}</Tag>,
+        render: (text, record) => <CustomDataTableCell data={record} type="category" />,
+        sorter: (a, b) => a.name.localeCompare(b.name),
     },
     {
         title: 'Created on',
         dataIndex: 'createdOn',
         key: 'createdOn',
+        align: 'right',
         render: (createdOn) => <DateTimeFormatter data={createdOn} />,
-    },
-    {
-        title: 'Created by',
-        dataIndex: 'createdBy',
-        key: 'createdBy',
-    },
-    {
-        title: 'Updated on',
-        dataIndex: 'updatedOn',
-        key: 'updatedOn',
-        render: (updatedOn) => <DateTimeFormatter data={updatedOn} />,
-    },
-    {
-        title: 'Updated by',
-        dataIndex: 'updatedBy',
-        key: 'updatedBy',
-    },
-    {
-        title: () => <Tooltip title="Subcategory">Subcat.</Tooltip>,
-        dataIndex: 'subcategory',
-        key: 'subcategory',
-        align: 'center',
-        width: '50px',
-        render: (subcategory) => <SubcategoryModal data={subcategory} />,
-    },
-    {
-        title: 'Notice',
-        dataIndex: 'notice',
-        key: 'notice',
-        width: '50px',
-        align: 'center',
-        render: (notice) => <NoticeModal data={notice} />,
+        sorter: (a, b) => a.createdOn.localeCompare(b.createdOn),
     },
 ];
 
@@ -198,45 +162,4 @@ export const categoryProductTableColumns = [
             return <Tag color={tagColor}>{productstock.stockStatus}</Tag>;
         },
     },
-    {
-        title: 'Notice',
-        dataIndex: 'notice',
-        key: 'notice',
-        width: '50px',
-        align: 'center',
-        render: (notice) => <NoticeModal data={notice} />,
-    },
 ];
-
-export const categoryPageHeader = (data) => {
-    let pageHeaderObj = {};
-    let mainContent = (
-        <Descriptions size="small" column={4}>
-            <Descriptions.Item label="Created on">
-                <DateFormatter data={data.createdOn} />
-            </Descriptions.Item>
-            <Descriptions.Item label="Updated on">
-                <DateFormatter data={data.updatedOn} />
-            </Descriptions.Item>
-            <Descriptions.Item label="Notice">
-                <NoticeModal data={data.notice} />
-            </Descriptions.Item>
-        </Descriptions>
-    );
-
-    let pageHeaderExtra = (
-        <>
-            <Link to={'/category/' + data.id + '/edit'}>
-                <Button key="1" type="primary" icon={<EditOutlined />}>
-                    Update Category
-                </Button>
-            </Link>
-        </>
-    );
-
-    pageHeaderObj = {
-        mainContent: mainContent,
-        pageHeaderExtra: pageHeaderExtra,
-    };
-    return pageHeaderObj;
-};

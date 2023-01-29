@@ -6,12 +6,11 @@ import { EyeOutlined, SaveOutlined, PlusOutlined } from '@ant-design/icons';
 import * as service from '../../api/services';
 import * as layoutConfig from 'utils/config/layout';
 
-import NoticeModal from 'components/ModalTable/NoticeModal';
 import DateTimeFormatter from 'components/common/DateTimeFormatter';
-import AttributeValueModal from 'components/ModalTable/AttributeValueModal';
 
+import CustomDataTableCell from 'components/common/CustomDataTable/CustomDataTableCell';
 const { Option } = Select;
-const { Title } = Typography;
+const { Title, Text } = Typography;
 export const initialFormValues = {
     notice: '',
     tagColor: '#7a3db8',
@@ -29,52 +28,16 @@ export const attributeTableColumns = [
         title: 'Name',
         dataIndex: 'name',
         key: 'name',
+        render: (text, record) => <CustomDataTableCell data={record} type="attribute" />,
+        sorter: (a, b) => a.name.localeCompare(b.name),
     },
-    {
-        title: 'Color',
-        dataIndex: 'tagColor',
-        key: 'tagColor',
-        align: 'center',
-        width: '60px',
-        render: (tagColor) => <Tag color={tagColor}>{tagColor}</Tag>,
-    },
+
     {
         title: 'Created on',
         dataIndex: 'createdOn',
         key: 'createdOn',
+        align: 'right',
         render: (createdOn) => <DateTimeFormatter data={createdOn} />,
-    },
-    {
-        title: 'Created by',
-        dataIndex: 'createdBy',
-        key: 'createdBy',
-    },
-    {
-        title: 'Updated on',
-        dataIndex: 'updatedOn',
-        key: 'updatedOn',
-        render: (updatedOn) => <DateTimeFormatter data={updatedOn} />,
-    },
-    {
-        title: 'Updated by',
-        dataIndex: 'updatedBy',
-        key: 'updatedBy',
-    },
-    {
-        title: () => <Tooltip title="Attribute Value">AttrVal.</Tooltip>,
-        dataIndex: 'attributevalue',
-        key: 'attributevalue',
-        align: 'center',
-        width: '50px',
-        render: (attributevalue) => <AttributeValueModal data={attributevalue} />,
-    },
-    {
-        title: 'Notice',
-        dataIndex: 'notice',
-        key: 'notice',
-        width: '50px',
-        align: 'center',
-        render: (notice) => <NoticeModal data={notice} />,
     },
 ];
 

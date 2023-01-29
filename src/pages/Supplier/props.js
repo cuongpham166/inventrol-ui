@@ -14,13 +14,14 @@ import {
 } from '@ant-design/icons';
 import * as layoutConfig from 'utils/config/layout';
 
-import NoticeModal from 'components/ModalTable/NoticeModal';
 import DateTimeFormatter from 'components/common/DateTimeFormatter';
-import SupplierModal from 'components/ModalTable/SupplierModal';
+
 import PurchasedItemModal from 'components/Purchase/PurchaseList/PurchasedItemModal';
 import PurchaseShippingStatusCard from 'components/Purchase/PurchaseShipping/PurchaseShippingStatusCard';
 import DateFormatter from 'components/common/DateFormatter';
 import PurchaseShippingInfoModal from 'components/Purchase/PurchaseList/PurchaseShippingInfoModal';
+
+import CustomDataTableCell from 'components/common/CustomDataTable/CustomDataTableCell';
 
 const { Option } = Select;
 const { Title } = Typography;
@@ -127,56 +128,6 @@ export const supplierDataList = (data) => {
     return listData;
 };
 
-export const supplierPageHeader = (data) => {
-    let pageHeaderObj = {};
-    let mainContent = (
-        <Descriptions size="small" column={3}>
-            <Descriptions.Item label="Contact Person">{data.contactPerson}</Descriptions.Item>
-            <Descriptions.Item label="Phone Number">{data.contact.phoneNumber}</Descriptions.Item>
-            <Descriptions.Item label="Mobile Number">{data.contact.mobileNumber}</Descriptions.Item>
-            <Descriptions.Item label="Homepage">
-                <a href={data.contact.website}>Visit Homepage</a>
-            </Descriptions.Item>
-            <Descriptions.Item label="Email">
-                <a href={data.contact.email}>Send Email</a>
-            </Descriptions.Item>
-            <Descriptions.Item label="Address">
-                {data.contact.mainAddressLine + ', ' + data.contact.cityInfo + ', ' + data.contact.country}
-            </Descriptions.Item>
-            <Descriptions.Item label="Notice">
-                <NoticeModal data={data.notice} />
-            </Descriptions.Item>
-            <Descriptions.Item label="Created on">{data.createdDate}</Descriptions.Item>
-            <Descriptions.Item label="Address Line 2">{data.contact.additionalAddressLine}</Descriptions.Item>
-        </Descriptions>
-    );
-
-    let pageHeaderExtra = (
-        <>
-            <Link to={'/supplier/' + data.id + '/edit'}>
-                <Button key="1" type="primary" icon={<EditOutlined />}>
-                    Update Supplier
-                </Button>
-            </Link>
-        </>
-    );
-
-    pageHeaderObj = {
-        mainContent: mainContent,
-        pageHeaderExtra: pageHeaderExtra,
-    };
-    return pageHeaderObj;
-};
-
-/*export const extraActionColums = () => {
-    let table, record;
-    return (
-        <Link to={'/' + table + '/'}>
-            <Button type="primary" icon={<EditOutlined />}></Button>
-        </Link>
-    );
-};*/
-
 export const initialFormValues = {
     email: '',
     website: '',
@@ -188,53 +139,25 @@ export const initialFormValues = {
 
 export const supplierTableColumns = [
     {
-        title: '#',
+        title: 'Id',
         key: 'index',
-        render: (text, record, index) => index + 1,
+        render: (text, record, index) => record.id,
         width: 60,
     },
     {
         title: 'Name',
         dataIndex: 'name',
         key: 'name',
-        render: (text, record) => <Link to={'/supplier/' + record.id}>{text}</Link>,
+        render: (text, record) => <CustomDataTableCell data={record} type="supplier" />,
+        sorter: (a, b) => a.name.localeCompare(b.name),
     },
     {
         title: 'Created on',
         dataIndex: 'createdOn',
         key: 'createdOn',
+        align: 'right',
         render: (createdOn) => <DateTimeFormatter data={createdOn} />,
-    },
-    {
-        title: 'Created by',
-        dataIndex: 'createdBy',
-        key: 'createdBy',
-    },
-    {
-        title: 'Updated on',
-        dataIndex: 'updatedOn',
-        key: 'updatedOn',
-        render: (updatedOn) => <DateTimeFormatter data={updatedOn} />,
-    },
-    {
-        title: 'Updated by',
-        dataIndex: 'updatedBy',
-        key: 'updatedBy',
-    },
-    {
-        title: () => <Tooltip title="Detailed Information">Info.</Tooltip>,
-        dataIndex: 'name',
-        key: 'name',
-        width: '50px',
-        render: (text, record) => <SupplierModal data={record} />,
-    },
-    {
-        title: 'Notice',
-        dataIndex: 'notice',
-        key: 'notice',
-        width: '50px',
-        align: 'center',
-        render: (notice) => <NoticeModal data={notice} />,
+        sorter: (a, b) => a.createdOn.localeCompare(b.createdOn),
     },
 ];
 
@@ -285,14 +208,6 @@ export const supplierPurchaseTableColumns = [
         width: '50px',
         align: 'center',
         render: (text, record, index) => <PurchaseShippingInfoModal data={record} />,
-    },
-    {
-        title: 'Notice',
-        dataIndex: 'notice',
-        key: 'notice',
-        width: '50px',
-        align: 'center',
-        render: (notice) => <NoticeModal data={notice} />,
     },
 ];
 

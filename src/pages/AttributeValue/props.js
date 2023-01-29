@@ -6,11 +6,11 @@ import { EyeOutlined, EditOutlined, SaveOutlined, PlusOutlined } from '@ant-desi
 import * as service from '../../api/services';
 import * as layoutConfig from 'utils/config/layout';
 
-import NoticeModal from 'components/ModalTable/NoticeModal';
 import DateTimeFormatter from 'components/common/DateTimeFormatter';
+import CustomDataTableCell from 'components/common/CustomDataTable/CustomDataTableCell';
 
 const { Option } = Select;
-const { Title } = Typography;
+const { Title, Text } = Typography;
 export const initialFormValues = {
     notice: '',
 };
@@ -102,52 +102,32 @@ export const CustomFormMainItems = () => {
 
 export const attributeValueTableColumns = [
     {
-        title: '#',
+        title: 'Id',
         key: 'index',
-        render: (text, record, index) => index + 1,
+        render: (text, record, index) => record.id,
         width: 60,
     },
     {
         title: 'Name',
         dataIndex: 'name',
         key: 'name',
-        render: (text, record) => <Link to={'/attribute-value/' + record.id}>{text}</Link>,
+        render: (text, record) => <CustomDataTableCell data={record} type="attributeValue" />,
+        sorter: (a, b) => a.name.localeCompare(b.name),
     },
     {
         title: 'Attribute',
         dataIndex: 'attribute',
         key: 'attribute',
-        render: (attribute) => <Tag color={attribute.tagColor}>{attribute.name}</Tag>,
+        render: (attribute) => <Text>{attribute.name}</Text>,
+        sorter: (a, b) => a.attribute.name.localeCompare(b.attribute.name),
     },
     {
         title: 'Created on',
         dataIndex: 'createdOn',
         key: 'createdOn',
+        align: 'right',
         render: (createdOn) => <DateTimeFormatter data={createdOn} />,
-    },
-    {
-        title: 'Created by',
-        dataIndex: 'createdBy',
-        key: 'createdBy',
-    },
-    {
-        title: 'Updated on',
-        dataIndex: 'updatedOn',
-        key: 'updatedOn',
-        render: (updatedOn) => <DateTimeFormatter data={updatedOn} />,
-    },
-    {
-        title: 'Updated by',
-        dataIndex: 'updatedBy',
-        key: 'updatedBy',
-    },
-    {
-        title: 'Notice',
-        dataIndex: 'notice',
-        key: 'notice',
-        width: '50px',
-        align: 'center',
-        render: (notice) => <NoticeModal data={notice} />,
+        sorter: (a, b) => a.createdOn.localeCompare(b.createdOn),
     },
 ];
 

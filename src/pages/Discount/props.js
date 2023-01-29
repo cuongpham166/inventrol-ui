@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { Typography } from 'antd';
-import NoticeModal from 'components/ModalTable/NoticeModal';
 import DateTimeFormatter from 'components/common/DateTimeFormatter';
 const { Text } = Typography;
 export const discountTableColumns = [
@@ -37,13 +36,5 @@ export const discountTableColumns = [
         title: 'Updated by',
         dataIndex: 'updatedBy',
         key: 'updatedBy',
-    },
-    {
-        title: 'Notice',
-        dataIndex: 'notice',
-        key: 'notice',
-        width: '50px',
-        align: 'center',
-        render: (notice) => <NoticeModal data={notice} />,
     },
 ];

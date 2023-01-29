@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Form, Input, Select, Tag, Tooltip, Button, Card, Typography } from 'antd';
 import { SaveOutlined } from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router-dom';
-import NoticeModal from 'components/ModalTable/NoticeModal';
 import DateFormatter from 'components/common/DateFormatter';
 import PurchasedItemModal from 'components/Purchase/PurchaseList/PurchasedItemModal';
 import PurchaseShippingInfoModal from 'components/Purchase/PurchaseList/PurchaseShippingInfoModal';
@@ -116,14 +115,6 @@ export const purchaseTableColumns = [
         width: '50px',
         align: 'center',
         render: (text, record, index) => <PurchaseShippingInfoModal data={record} />,
-    },
-    {
-        title: 'Notice',
-        dataIndex: 'notice',
-        key: 'notice',
-        width: '50px',
-        align: 'center',
-        render: (notice) => <NoticeModal data={notice} />,
     },
 ];
 
