@@ -3,7 +3,7 @@ import { Space, Button, Dropdown, Menu, Modal, Form, Tooltip, message, Select, I
 
 import { ExportOutlined } from '@ant-design/icons';
 
-import * as layoutConfig from '../../../utils/config/layout';
+import * as layoutConfig from '../../../../utils/config/layout';
 
 const { Option } = Select;
 

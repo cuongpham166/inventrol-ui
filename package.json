@@ -19,6 +19,7 @@
     "dayjs": "^1.11.6",
     "decimal.js": "^10.4.2",
     "file-saver": "^2.0.5",
+    "framer-motion": "^8.5.5",
     "html5-qrcode": "^2.2.8",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.5.25",

@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Table, message, Row, Col, Space, Button, Popconfirm, Dropdown } from 'antd';
 import CustomModalNewForm from '../CustomModalNewForm';
+import {
+    CustomDataTableSortColumns,
+    CustomDataTableDataFilter,
+    CustomDataTableExporter,
+    CustomDataTableColumnFilter,
+    CustomDataTableSearchbar,
+    CustomDataTableDisplay,
+} from './CustomDataTableToolbar';
 
-import CustomerDataTableColumnFilter from './CustomDataTableColumnFilter';
-import CustomDataTableExporter from './CustomDataTableExporter';
-
-import CustomDataTableDataFilter from './CustomDataTableDataFilter';
-import CustomDataTableSearchBar from './CustomDataTableSearchBar';
-
-import CustomDataTableCustomize from './CustomDataTableCustomize';
 const CustomDataTable = ({ dataSource, columns, table, dataUrl, CustomFormItems, initialFormValues, formType }) => {
     const DEFAULT_PAGE_SIZE = 10;
     const DEFAULT_PAGE_NUMBER = 0;
@@ -21,6 +22,7 @@ const CustomDataTable = ({ dataSource, columns, table, dataUrl, CustomFormItems,
 
     const [columnOptionList, setColumnOptionList] = useState([]);
     const [columnValueList, setColumnValueList] = useState([]);
+    const [tableSize, setTableSize] = useState('large');
 
     const handleTableChange = (pagination) => {
         setCurrentPage(pagination.current - 1);
@@ -50,6 +52,10 @@ const CustomDataTable = ({ dataSource, columns, table, dataUrl, CustomFormItems,
         setColumnValueList(selectedColums);
     };
 
+    const onTableDisplay = (value) => {
+        setTableSize(value);
+    };
+
     useEffect(() => {
         getTableColumnList();
     }, []);
@@ -58,18 +64,19 @@ const CustomDataTable = ({ dataSource, columns, table, dataUrl, CustomFormItems,
         <>
             <Row gutter={[64, 64]} justify="space-between" style={{ marginBottom: '20px' }}>
                 <Col span={9}>
-                    <CustomDataTableSearchBar />
+                    <CustomDataTableSearchbar />
                 </Col>
                 <Col span={15}>
-                    <Space style={{ float: 'right' }} size="middle">
+                    <Space style={{ float: 'right' }} size="small">
                         <CustomDataTableExporter />
                         <CustomDataTableDataFilter />
-                        {/*<CustomerDataTableColumnFilter
+                        <CustomDataTableSortColumns />
+                        <CustomDataTableColumnFilter
                             options={columnOptionList}
                             value={columnValueList}
                             onChange={onCheckboxChange}
-                        />*/}
-                        <CustomDataTableCustomize />
+                        />
+                        <CustomDataTableDisplay onChange={onTableDisplay} />
                         <CustomModalNewForm
                             CustomFormItems={CustomFormItems}
                             initialFormValues={initialFormValues}
@@ -83,6 +90,7 @@ const CustomDataTable = ({ dataSource, columns, table, dataUrl, CustomFormItems,
                     <Table
                         columns={tableColumnsRef.current}
                         dataSource={dataSource}
+                        size={tableSize}
                         rowKey="id"
                         bordered
                         onChange={handleTableChange}

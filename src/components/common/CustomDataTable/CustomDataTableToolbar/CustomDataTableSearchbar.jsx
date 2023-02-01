@@ -1,7 +1,7 @@
 import React from 'react';
 import { Input } from 'antd';
 const { Search } = Input;
-const CustomDataTableSearchBar = (props) => {
+const CustomDataTableSearchbar = (props) => {
     const onSearch = (value) => console.log(value);
     return (
         <div>
@@ -10,4 +10,4 @@ const CustomDataTableSearchBar = (props) => {
     );
 };
 
-export default CustomDataTableSearchBar;
+export default CustomDataTableSearchbar;

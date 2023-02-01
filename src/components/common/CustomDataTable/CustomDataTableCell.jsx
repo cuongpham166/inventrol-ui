@@ -11,7 +11,6 @@ dayjs.extend(localizedFormat);
 const { Text } = Typography;
 
 const CustomDataTableCell = ({ data, type }) => {
-    console.log(data);
     let customCell;
     switch (type) {
         case 'product':

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
-import { FilterOutlined } from '@ant-design/icons';
-import { Space, Col, Input, Row, Checkbox, Popover, Button } from 'antd';
+import { EyeOutlined } from '@ant-design/icons';
+import { Space, Col, Input, Row, Checkbox, Popover, Button, Tooltip } from 'antd';
 
 const CustomerDataTableColumnFilter = (props) => {
     const onChange = (value) => {
@@ -33,7 +33,9 @@ const CustomerDataTableColumnFilter = (props) => {
     return (
         <>
             <Popover placement="bottom" content={<CheckboxGroupRender />} title={'Columns'} trigger="click">
-                <Button icon={<FilterOutlined />}>Filter Columns</Button>
+                <Tooltip title="Show/hide columns">
+                    <Button icon={<EyeOutlined />}></Button>
+                </Tooltip>
             </Popover>
         </>
     );
