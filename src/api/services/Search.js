@@ -42,3 +42,12 @@ export const updateDocument = async (index, documents) => {
         console.error(error);
     }
 };
+
+export const searchRecordByText = async (index, text) => {
+    try {
+        let result = await meilisearchCient.index(index).search(text);
+        return result;
+    } catch (error) {
+        console.error(error);
+    }
+};
