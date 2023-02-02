@@ -22,6 +22,9 @@ const CustomDataTable = ({ dataSource, columns, table, dataUrl, CustomFormItems,
 
     const [columnOptionList, setColumnOptionList] = useState([]);
     const [columnValueList, setColumnValueList] = useState([]);
+
+    const [sortableListItems, setsortableListItems] = useState([]);
+
     const [tableSize, setTableSize] = useState('large');
 
     const handleTableChange = (pagination) => {
@@ -35,6 +38,7 @@ const CustomDataTable = ({ dataSource, columns, table, dataUrl, CustomFormItems,
         });
         setColumnOptionList(columnNameList);
         setColumnValueList(columnNameList);
+        setsortableListItems(columnNameList);
     };
 
     const onCheckboxChange = (selectedColums) => {
@@ -56,6 +60,26 @@ const CustomDataTable = ({ dataSource, columns, table, dataUrl, CustomFormItems,
         setTableSize(value);
     };
 
+    const onChangeTableColumns = () => {
+        let sortableList = sortableListItems;
+        let columnList = tableColumnsRef.current;
+
+        let sortedColumnList = columnList.sort((a, b) => {
+            let eleA = a['title'];
+            let eleB = b['title'];
+            if (sortableList.indexOf(eleA) > sortableList.indexOf(eleB)) {
+                return 1;
+            } else {
+                return -1;
+            }
+        });
+
+        tableColumnsRef.current = sortedColumnList;
+        setTableColumns(sortedColumnList);
+        console.log(tableColumnsRef.current);
+        console.log(tableColumns);
+    };
+
     useEffect(() => {
         getTableColumnList();
     }, []);
@@ -70,7 +94,11 @@ const CustomDataTable = ({ dataSource, columns, table, dataUrl, CustomFormItems,
                     <Space style={{ float: 'right' }} size="small">
                         <CustomDataTableExporter />
                         <CustomDataTableDataFilter />
-                        <CustomDataTableSortColumns />
+                        <CustomDataTableSortColumns
+                            items={sortableListItems}
+                            setListItems={setsortableListItems}
+                            onChange={onChangeTableColumns}
+                        />
                         <CustomDataTableColumnFilter
                             options={columnOptionList}
                             value={columnValueList}

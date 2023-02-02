@@ -8,8 +8,7 @@ import { Reorder } from 'framer-motion';
 
 import 'assets/styles/sortablelist.less';
 
-const CustomDataTableSortColumns = (props) => {
-    const [listItems, setListItems] = useState(['Id', 'Name', 'Created on', 'Actions']);
+const CustomDataTableSortColumns = ({ items, setListItems, onChange }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const showModal = () => {
@@ -17,17 +16,11 @@ const CustomDataTableSortColumns = (props) => {
     };
     const handleOk = () => {
         setIsModalOpen(false);
+        return onChange();
     };
     const handleCancel = () => {
         setIsModalOpen(false);
     };
-
-    useEffect(() => {
-        //Runs on the first render
-        //And any time any dependency value changes
-        console.log('change');
-        console.log(listItems);
-    }, [listItems]);
 
     return (
         <>
@@ -35,9 +28,16 @@ const CustomDataTableSortColumns = (props) => {
                 <Button onClick={showModal} icon={<DragOutlined />}></Button>
             </Tooltip>
 
-            <Modal title="Sort columns" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} width={300}>
-                <Reorder.Group axis="y" values={listItems} onReorder={setListItems} className="sortableList">
-                    {listItems.map((item) => (
+            <Modal
+                title="Sort columns"
+                open={isModalOpen}
+                onOk={handleOk}
+                onCancel={handleCancel}
+                width={300}
+                okText="Sort"
+            >
+                <Reorder.Group axis="y" values={items} onReorder={setListItems} className="sortableList">
+                    {items.map((item) => (
                         <Reorder.Item key={item} value={item} className="sortableList_element">
                             {item}
                         </Reorder.Item>

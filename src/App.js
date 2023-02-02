@@ -1,8 +1,14 @@
 import React from 'react';
+
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { publicRoutes, privateRoutes } from './routes';
 import DefaultLayout from './layouts/DefaultLayout';
 import { ConfigProvider } from 'antd';
+import { ReactKeycloakProvider } from '@react-keycloak/web';
+import keycloak from 'utils/config/auth/keycloak';
+
+import PrivateRoute from 'utils/helpers/PrivateRoute';
+
 import './App.less';
 function App() {
     return (
@@ -16,7 +22,7 @@ function App() {
             <Router>
                 <div className="App">
                     <Routes>
-                        {publicRoutes.map((route, index) => {
+                        {privateRoutes.map((route, index) => {
                             const Page = route.component;
                             let Layout = DefaultLayout;
 

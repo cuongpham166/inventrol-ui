@@ -19,12 +19,7 @@ const HeaderNotification = (props) => {
         <span>
             <Tooltip title="Notification">
                 <Badge dot>
-                    <Button
-                        onClick={showDrawer}
-                        icon={<NotificationOutlined />}
-                        className="header_button"
-                        size="large"
-                    ></Button>
+                    <Button onClick={showDrawer} icon={<NotificationOutlined />} size="large"></Button>
                 </Badge>
             </Tooltip>
             <Drawer title="Notification" placement="right" onClose={onClose} open={visible}>

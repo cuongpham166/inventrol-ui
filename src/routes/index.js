@@ -28,7 +28,7 @@ import { OrderList, OrderDetail, OrderShipping, OrderPayment } from 'pages/Order
 
 import { SettingList } from 'pages/Setting';
 
-const publicRoutes = [
+const privateRoutes = [
     { path: '/', component: Home },
 
     { path: '/category', component: CategoryList },
@@ -94,6 +94,6 @@ const publicRoutes = [
     { path: '*', component: NoMatch },
 ];
 
-const privateRoutes = [];
+const publicRoutes = [];
 
 export { publicRoutes, privateRoutes };
