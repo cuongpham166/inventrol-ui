@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Input } from 'antd';
+import * as searchService from '../../../../api/services/Search';
 const { Search } = Input;
 const CustomDataTableSearchbar = (props) => {
-    const onSearch = (value) => console.log(value);
-    return (
-        <div>
-            <Search placeholder="input search text" onSearch={onSearch} enterButton />
-        </div>
-    );
+    const [search, setSearch] = useState(false);
+    const onSearch = async (value) => {
+        let result = await searchService.searchRecordByText('brand', value);
+        return props.onChange(result.hits);
+    };
+    return <Search placeholder="input search text" onSearch={onSearch} enterButton />;
 };
 
 export default CustomDataTableSearchbar;

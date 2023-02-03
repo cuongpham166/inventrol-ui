@@ -27,6 +27,8 @@ const CustomDataTable = ({ dataSource, columns, table, dataUrl, CustomFormItems,
 
     const [tableSize, setTableSize] = useState('large');
 
+    const [dataTableSource, setDataTableSource] = useState(dataSource);
+
     const handleTableChange = (pagination) => {
         setCurrentPage(pagination.current - 1);
     };
@@ -64,7 +66,7 @@ const CustomDataTable = ({ dataSource, columns, table, dataUrl, CustomFormItems,
         let sortableList = sortableListItems;
         let columnList = tableColumnsRef.current;
 
-        let sortedColumnList = columnList.sort((a, b) => {
+        columnList.sort((a, b) => {
             let eleA = a['title'];
             let eleB = b['title'];
             if (sortableList.indexOf(eleA) > sortableList.indexOf(eleB)) {
@@ -74,21 +76,29 @@ const CustomDataTable = ({ dataSource, columns, table, dataUrl, CustomFormItems,
             }
         });
 
-        tableColumnsRef.current = sortedColumnList;
-        setTableColumns(sortedColumnList);
-        console.log(tableColumnsRef.current);
-        console.log(tableColumns);
+        tableColumnsRef.current = [...columnList];
+        setTableColumns([...columnList]);
+    };
+
+    const onChangeDataTableSource = (value) => {
+        console.log('onChangeDataTableSource', value);
+        setDataTableSource(value);
     };
 
     useEffect(() => {
         getTableColumnList();
     }, []);
 
+    useEffect(() => {
+        setDataTableSource(dataSource);
+        //console.log('dataTableSource', dataTableSource);
+    }, [dataSource]);
+
     return (
         <>
             <Row gutter={[64, 64]} justify="space-between" style={{ marginBottom: '20px' }}>
                 <Col span={9}>
-                    <CustomDataTableSearchbar />
+                    <CustomDataTableSearchbar onChange={onChangeDataTableSource} />
                 </Col>
                 <Col span={15}>
                     <Space style={{ float: 'right' }} size="small">
@@ -117,7 +127,7 @@ const CustomDataTable = ({ dataSource, columns, table, dataUrl, CustomFormItems,
                 <Col span={24}>
                     <Table
                         columns={tableColumnsRef.current}
-                        dataSource={dataSource}
+                        dataSource={dataTableSource}
                         size={tableSize}
                         rowKey="id"
                         bordered

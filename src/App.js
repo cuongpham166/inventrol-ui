@@ -10,6 +10,7 @@ import keycloak from 'utils/config/auth/keycloak';
 import PrivateRoute from 'utils/helpers/PrivateRoute';
 
 import './App.less';
+
 function App() {
     return (
         <ConfigProvider
