@@ -3,12 +3,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Table, message, Row, Col, Space, Button, Popconfirm, Dropdown } from 'antd';
 import { CaretDownOutlined, EyeOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
-import CustomModalEditForm from '../CustomModalEditForm';
+import CustomModalEditForm from 'components/common/CustomModalEditForm';
 import DetailBrandModal from 'components/Brand/DetailBrandModal';
 
 import * as brandProps from '../../../pages/Brand/props';
 
-const CustomDataTableActionMenu = ({ id, table }) => {
+const BrandActionMenu = ({ id, table }) => {
     const [isClicked, setIsClicked] = useState(-1);
 
     const [isViewModalOpen, setIsViewModalOpen] = useState(false);
@@ -115,4 +115,4 @@ const CustomDataTableActionMenu = ({ id, table }) => {
     );
 };
 
-export default CustomDataTableActionMenu;
+export default BrandActionMenu;

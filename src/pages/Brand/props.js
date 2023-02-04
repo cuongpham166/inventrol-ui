@@ -7,7 +7,7 @@ import * as layoutConfig from 'utils/config/layout';
 import DateTimeFormatter from 'components/common/DateTimeFormatter';
 import CustomDataTableCell from 'components/common/CustomDataTable/CustomDataTableCell';
 
-import CustomDataTableActionMenu from 'components/common/CustomDataTable/CustomDataTableActionMenu';
+import BrandActionMenu from 'components/Brand/BrandActionMenu';
 
 const { Title } = Typography;
 
@@ -39,7 +39,7 @@ export const brandTableColumns = [
         key: 'action',
         width: '50px',
         align: 'center',
-        render: (text, record) => <CustomDataTableActionMenu id={record.id} table="brand" />,
+        render: (text, record) => <BrandActionMenu id={record.id} table="brand" />,
     },
 ];
 

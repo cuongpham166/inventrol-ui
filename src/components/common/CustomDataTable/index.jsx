@@ -98,7 +98,7 @@ const CustomDataTable = ({ dataSource, columns, table, dataUrl, CustomFormItems,
         <>
             <Row gutter={[64, 64]} justify="space-between" style={{ marginBottom: '20px' }}>
                 <Col span={9}>
-                    <CustomDataTableSearchbar onChange={onChangeDataTableSource} />
+                    <CustomDataTableSearchbar onChange={onChangeDataTableSource} table={table} />
                 </Col>
                 <Col span={15}>
                     <Space style={{ float: 'right' }} size="small">
