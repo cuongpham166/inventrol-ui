@@ -8,7 +8,7 @@ import { ProductList, ProductDetail } from 'pages/Product';
 import { BrandList } from 'pages/Brand';
 import { AttributeList } from 'pages/Attribute';
 import { AttributeValueList } from 'pages/AttributeValue';
-import { PurchaseDetail, PurchaseList, PurchaseShipping } from 'pages/Purchase';
+import { PurchaseDetail, PurchaseList } from 'pages/Purchase';
 
 import { DiscountList } from 'pages/Discount';
 import { CustomerList, CustomerDetail, EditCustomer, CreateCustomer, AddressBook, NewOrder } from 'pages/Customer';
@@ -38,7 +38,6 @@ const privateRoutes = [
     { path: '/product/:id', component: ProductDetail },
 
     { path: '/purchase', component: PurchaseList },
-    { path: '/purchase/shipping', component: PurchaseShipping },
     { path: '/purchase/:id', component: PurchaseDetail },
     //{ path: '/purchase/:id/edit', component: EditPurchase },
 

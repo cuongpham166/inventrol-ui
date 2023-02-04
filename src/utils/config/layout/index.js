@@ -86,7 +86,7 @@ export const sidebarItems = [
 
     getItem('Purchase', 'purchase-overview', <ShoppingCartOutlined />, [
         getItem('Overview', 'purchase', <TableOutlined />),
-        getItem('Purchase Shipping', 'purchase/shipping', <CarOutlined />),
+        //getItem('Purchase Shipping', 'purchase/shipping', <CarOutlined />),
     ]),
 
     getItem('Order', 'order-overview', <ShoppingCartOutlined />, [

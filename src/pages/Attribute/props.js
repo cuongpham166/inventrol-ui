@@ -1,16 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Popover, Tag, Form, Input, Select, Card, Typography, Button, Tooltip } from 'antd';
-import { Link, useNavigate } from 'react-router-dom';
-import { Colorpicker, ColorPickerValue } from 'antd-colorpicker';
-import { EyeOutlined, SaveOutlined, PlusOutlined } from '@ant-design/icons';
-import * as service from '../../api/services';
-import * as layoutConfig from 'utils/config/layout';
+import { Popover, Tag, Form, Input } from 'antd';
 
-import DateTimeFormatter from 'components/common/DateTimeFormatter';
+import DateTimeFormatter from 'components/common/CustomFormatter/DateTimeFormatter';
 
 import CustomDataTableCell from 'components/common/CustomDataTable/CustomDataTableCell';
-const { Option } = Select;
-const { Title, Text } = Typography;
+
 export const initialFormValues = {
     notice: '',
     attributevalue: [],

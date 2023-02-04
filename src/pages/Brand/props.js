@@ -4,7 +4,7 @@ import { EyeOutlined, EditOutlined, SaveOutlined } from '@ant-design/icons';
 
 import * as layoutConfig from 'utils/config/layout';
 
-import DateTimeFormatter from 'components/common/DateTimeFormatter';
+import DateTimeFormatter from 'components/common/CustomFormatter/DateTimeFormatter';
 import CustomDataTableCell from 'components/common/CustomDataTable/CustomDataTableCell';
 
 import BrandActionMenu from 'components/Brand/BrandActionMenu';

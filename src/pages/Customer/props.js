@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import DateTimeFormatter from 'components/common/DateTimeFormatter';
+import DateTimeFormatter from 'components/common/CustomFormatter/DateTimeFormatter';
 
 import CustomDataTableCell from 'components/common/CustomDataTable/CustomDataTableCell';
 

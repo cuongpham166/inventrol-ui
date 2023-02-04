@@ -21,7 +21,7 @@ const PurchaseHistory = (props) => {
         }
     }
     return (
-        <Card title="Purchase History" bordered={false}>
+        <Card title="History" bordered={false}>
             <Timeline>
                 {purchaseStatus.map((status, index) => {
                     return <PurchaseHistoryItem data={status} key={index} />;

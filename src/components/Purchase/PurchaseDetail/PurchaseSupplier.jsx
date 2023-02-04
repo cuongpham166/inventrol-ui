@@ -1,5 +1,6 @@
 import React from 'react';
-import { Card, Descriptions } from 'antd';
+import { Card, Descriptions, Typography, Space } from 'antd';
+const { Text, Link } = Typography;
 const PurchaseSupplier = (props) => {
     let supplierData = props.data;
     let name, email, address, contactPerson, phoneNumber, addressNotice, mobileNumber, website;
@@ -13,17 +14,62 @@ const PurchaseSupplier = (props) => {
         mobileNumber = supplierData.contact.mobileNumber;
         addressNotice = supplierData.contact.additionalAddressLine;
     }
+
+    let homepage;
+    let emailLink;
+
+    website != ''
+        ? (homepage = (
+              <Link href={website} target="_blank">
+                  Visit Homepage
+              </Link>
+          ))
+        : (homepage = (
+              <Link href="#" target="_blank" disabled>
+                  Visit Homepage
+              </Link>
+          ));
+
+    email != ''
+        ? (emailLink = (
+              <Link href={email} target="_blank">
+                  Send Email
+              </Link>
+          ))
+        : (emailLink = (
+              <Link href="#" target="_blank" disabled>
+                  Send Email
+              </Link>
+          ));
+
     return (
-        <Card title="Supplier Details" bordered={false}>
-            <Descriptions>
-                <Descriptions.Item label="Name">{name}</Descriptions.Item>
-                <Descriptions.Item label="Email">{email}</Descriptions.Item>
-                <Descriptions.Item label="1.Address">{address}</Descriptions.Item>
-                <Descriptions.Item label="Contact Person">{contactPerson}</Descriptions.Item>
-                <Descriptions.Item label="Phone Number">{phoneNumber}</Descriptions.Item>
-                <Descriptions.Item label="2.Address">{addressNotice}</Descriptions.Item>
-                <Descriptions.Item label="Mobile Number">{mobileNumber}</Descriptions.Item>
-                <Descriptions.Item label="Website">{website}</Descriptions.Item>
+        <Card title="Supplier" bordered={false}>
+            <Descriptions bordered column={4}>
+                <Descriptions.Item label="Name" span={2}>
+                    {name}
+                </Descriptions.Item>
+                <Descriptions.Item label="Contact Person" span={2}>
+                    {contactPerson}
+                </Descriptions.Item>
+                <Descriptions.Item label="Phone Number" span={2}>
+                    <Space direction="vertical">
+                        <Text>{phoneNumber}</Text>
+                        <Text>{mobileNumber}</Text>
+                    </Space>
+                </Descriptions.Item>
+
+                <Descriptions.Item label="Email" span={1}>
+                    {emailLink}
+                </Descriptions.Item>
+                <Descriptions.Item label="Website" span={1}>
+                    {homepage}
+                </Descriptions.Item>
+                <Descriptions.Item label="Address" span={2}>
+                    {address}
+                </Descriptions.Item>
+                <Descriptions.Item label="Additional line" span={2}>
+                    {addressNotice}
+                </Descriptions.Item>
             </Descriptions>
         </Card>
     );

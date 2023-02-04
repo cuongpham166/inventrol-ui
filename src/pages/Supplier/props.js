@@ -14,17 +14,16 @@ import {
 } from '@ant-design/icons';
 import * as layoutConfig from 'utils/config/layout';
 
-import DateTimeFormatter from 'components/common/DateTimeFormatter';
+import DateTimeFormatter from 'components/common/CustomFormatter/DateTimeFormatter';
 
-import PurchasedItemModal from 'components/Purchase/PurchaseList/PurchasedItemModal';
-import PurchaseShippingStatusCard from 'components/Purchase/PurchaseShipping/PurchaseShippingStatusCard';
-import DateFormatter from 'components/common/DateFormatter';
-import PurchaseShippingInfoModal from 'components/Purchase/PurchaseList/PurchaseShippingInfoModal';
+import PurchasedItemModal from 'components/Purchase/PurchaseModal/PurchaseItemModal';
+import DateFormatter from 'components/common/CustomFormatter/DateFormatter';
+import PurchaseShippingInfoModal from 'components/Purchase/PurchaseModal/PurchaseShippingModal';
 
 import CustomDataTableCell from 'components/common/CustomDataTable/CustomDataTableCell';
 
 const { Option } = Select;
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 export const supplierDataList = (data) => {
     let address;
@@ -188,7 +187,7 @@ export const supplierPurchaseTableColumns = [
         title: 'Status',
         dataIndex: 'purchaseshipping',
         key: 'purchaseshipping',
-        render: (purchaseshipping) => <PurchaseShippingStatusCard status={purchaseshipping.status} />,
+        render: (purchaseshipping) => <Text>{purchaseshipping.status}</Text>,
     },
     {
         title: 'Payment',

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Typography } from 'antd';
-import DateTimeFormatter from 'components/common/DateTimeFormatter';
+import DateTimeFormatter from 'components/common/CustomFormatter/DateTimeFormatter';
 const { Text } = Typography;
 export const discountTableColumns = [
     {

@@ -54,7 +54,7 @@ const PurchaseItemList = (props) => {
         },
     ];
     return (
-        <Card title={<Title level={5}>Purchase Items</Title>} bordered={false} style={{ height: '100%' }}>
+        <Card title={<Title level={5}>Purchased Items</Title>} bordered={false} style={{ height: '100%' }}>
             <Table columns={purchaseItemsTableColumns} dataSource={purchaseItems} rowKey="id" />
             <Divider />
             <Row justify="space-between" align="middle" style={{ marginTop: '30px' }}>

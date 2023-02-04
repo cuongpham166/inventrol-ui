@@ -115,11 +115,15 @@ const CustomDataTable = ({ dataSource, columns, table, dataUrl, CustomFormItems,
                             onChange={onCheckboxChange}
                         />
                         <CustomDataTableDisplay onChange={onTableDisplay} />
-                        <CustomModalNewForm
-                            CustomFormItems={CustomFormItems}
-                            initialFormValues={initialFormValues}
-                            table={table}
-                        />
+                        {table != 'purchase' ? (
+                            <CustomModalNewForm
+                                CustomFormItems={CustomFormItems}
+                                initialFormValues={initialFormValues}
+                                table={table}
+                            />
+                        ) : (
+                            <></>
+                        )}
                     </Space>
                 </Col>
             </Row>

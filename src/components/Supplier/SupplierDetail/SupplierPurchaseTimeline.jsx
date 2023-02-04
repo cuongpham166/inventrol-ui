@@ -3,7 +3,7 @@ import { Card, Col, Row, Typography, Tooltip, Radio, Timeline, Button, Tag, Spac
 import { UnorderedListOutlined, RetweetOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import * as service from '@services';
-import PurchaseShippingStatusCard from 'components/Purchase/PurchaseShipping/PurchaseShippingStatusCard';
+
 import * as dayjs from 'dayjs';
 
 const { Title, Text } = Typography;
@@ -47,7 +47,7 @@ const SupplierPurchaseTimeline = (props) => {
                             <Space direction="vertical">
                                 <Space>
                                     <Text strong>New Purchase #{data.id}</Text>
-                                    <PurchaseShippingStatusCard status={data.purchaseshipping.status} />
+                                    <Text>{data.purchaseshipping.status}</Text>
                                 </Space>
 
                                 <Text type="secondary">{dayjs(data.createdOn).format('LLL')}</Text>

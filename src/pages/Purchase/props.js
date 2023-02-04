@@ -2,15 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Form, Input, Select, Tag, Tooltip, Button, Card, Typography } from 'antd';
 import { SaveOutlined } from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router-dom';
-import DateFormatter from 'components/common/DateFormatter';
-import PurchasedItemModal from 'components/Purchase/PurchaseList/PurchasedItemModal';
-import PurchaseShippingInfoModal from 'components/Purchase/PurchaseList/PurchaseShippingInfoModal';
-import PurchaseShippingStatusCard from 'components/Purchase/PurchaseShipping/PurchaseShippingStatusCard';
 
+import DateTimeFormatter from 'components/common/CustomFormatter/DateTimeFormatter';
+import PurchaseActionMenu from 'components/Purchase/PurchaseActionMenu';
 import * as layoutConfig from 'utils/config/layout';
 
 const { Option } = Select;
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 const paymentOptions = [
     {
@@ -69,27 +67,22 @@ export const purchaseTableColumns = [
         render: (text, record, index) => <Link to={'/purchase/' + record.id}>#{record.id}</Link>,
     },
     {
-        title: () => <Tooltip title="Purchased Items">Items</Tooltip>,
-        dataIndex: 'index',
-        key: 'index',
-        width: '50px',
-        render: (text, record, index) => <PurchasedItemModal data={record} />,
-    },
-    {
         title: 'Total Cost (€)',
         dataIndex: 'total',
         key: 'total',
+        align: 'right',
     },
     {
         title: 'No. of items',
         dataIndex: 'numberOfItems',
         key: 'numberOfItems',
+        align: 'right',
     },
     {
         title: 'Status',
         dataIndex: 'purchaseshipping',
         key: 'purchaseshipping',
-        render: (purchaseshipping) => <PurchaseShippingStatusCard status={purchaseshipping.status} />,
+        render: (purchaseshipping) => <Text>{purchaseshipping.status}</Text>,
     },
     {
         title: 'Payment',
@@ -100,21 +93,22 @@ export const purchaseTableColumns = [
         title: 'Supplier',
         dataIndex: 'supplier',
         key: 'supplier',
-        render: (supplier) => <Link to={'/supplier/' + supplier.id}>{supplier.name}</Link>,
+        render: (supplier) => <Text>{supplier.name}</Text>,
     },
     {
         title: 'Purchased on',
         dataIndex: 'createdOn',
-        key: 'createdOn',
-        render: (createdOn) => <DateFormatter data={createdOn} />,
+        align: 'right',
+        render: (createdOn) => <DateTimeFormatter data={createdOn} />,
+        sorter: (a, b) => a.createdOn.localeCompare(b.createdOn),
     },
     {
-        title: () => <Tooltip title="Shipping Information">Shipping</Tooltip>,
-        dataIndex: 'index',
-        key: 'index',
+        title: 'Actions',
+        dataIndex: 'name',
+        key: 'action',
         width: '50px',
         align: 'center',
-        render: (text, record, index) => <PurchaseShippingInfoModal data={record} />,
+        render: (text, record, index) => <PurchaseActionMenu id={record.id} />,
     },
 ];
 

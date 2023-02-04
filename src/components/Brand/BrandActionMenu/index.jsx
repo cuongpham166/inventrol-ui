@@ -4,7 +4,7 @@ import { Table, message, Row, Col, Space, Button, Popconfirm, Dropdown } from 'a
 import { CaretDownOutlined, EyeOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
 import CustomModalEditForm from 'components/common/CustomModalEditForm';
-import DetailBrandModal from 'components/Brand/DetailBrandModal';
+import DetailBrandModal from 'components/Brand/BrandModal/DetailBrandModal';
 
 import * as brandProps from '../../../pages/Brand/props';
 
@@ -56,17 +56,17 @@ const BrandActionMenu = ({ id, table }) => {
 
     const items = [
         {
-            label: 'View',
+            label: 'View Detail',
             key: 'view',
             icon: <EyeOutlined />,
         },
         {
-            label: 'Edit',
+            label: 'Update Brand',
             key: 'edit',
             icon: <EditOutlined />,
         },
         {
-            label: 'Delete',
+            label: 'Delete Brand',
             key: 'delete',
             icon: <DeleteOutlined />,
         },

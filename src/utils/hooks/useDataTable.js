@@ -3,9 +3,6 @@ import { Link } from 'react-router-dom';
 import { Table, message, Row, Col, Space, Button, Popconfirm } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 
-import CheckBoxMenu from 'components/common/CheckboxMenu';
-import ActionButton from 'components/common/ActionButton';
-
 import * as service from '../../api/services';
 import * as layoutConfig from '../../utils/config/layout';
 
@@ -41,7 +38,6 @@ const useDataTable = ({ columns, table, dataUrl }) => {
             align: 'center',
             render: (text, record) => (
                 <Space>
-                    <ActionButton table={table} id={record.id} />
                     <Popconfirm
                         title="Are you sure to delete this element?"
                         onConfirm={() => {
@@ -129,9 +125,7 @@ const useDataTable = ({ columns, table, dataUrl }) => {
         <>
             <Row gutter={[64, 64]} justify="space-between" style={{ marginBottom: '20px' }}>
                 <Col span={12}>
-                    <Space style={{ float: 'right' }}>
-                        <CheckBoxMenu options={columnOptionList} value={columnValueList} onChange={onCheckboxChange} />
-                    </Space>
+                    <Space style={{ float: 'right' }}></Space>
                 </Col>
             </Row>
             <Row>
