@@ -1,22 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 
-import { Col, Row, Button, Card } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
-
+import { Col, Row, Card } from 'antd';
 import Breadcrumb from 'components/common/Breadcrumb';
 
 import * as service from '../../api/services';
 import * as categoryProps from '../Category/props';
 
-import useDataTable from '../../utils/hooks/useDataTable';
+import CustomDataTable from 'components/common/CustomDataTable';
 
 const CategoryList = (props) => {
-    const { DataTable, currentPage, pageSize, resetPagination } = useDataTable({
-        columns: categoryProps.categoryTableColumns,
-        table: 'category',
-        dataUrl: 'category',
-    });
+    const [dataSource, setDataSource] = useState(null);
+    const getAllData = async () => {
+        const result = await service.getAll('category');
+        if (result != undefined) {
+            result.sort((a, b) => {
+                return a.id - b.id;
+            });
+            setDataSource(result);
+        } else {
+            setDataSource([]);
+        }
+    };
+
+    useEffect(() => {
+        getAllData();
+    }, []);
 
     return (
         <>
@@ -27,7 +35,15 @@ const CategoryList = (props) => {
                 <Col span={24}>
                     <Card bordered={false}>
                         <div className="card_content">
-                            <DataTable />
+                            <CustomDataTable
+                                dataSource={dataSource}
+                                columns={categoryProps.categoryTableColumns}
+                                table="category"
+                                dataUrl="category"
+                                CustomFormItems={categoryProps.CustomFormMainItems}
+                                initialFormValues={categoryProps.initialFormValues}
+                                formType="create"
+                            />
                         </div>
                     </Card>
                 </Col>

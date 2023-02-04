@@ -17,69 +17,28 @@ const { Option } = Select;
 const { Title, Text } = Typography;
 export const initialFormValues = {
     notice: '',
-    tagColor: '#7a3db8',
     subategory: [],
 };
 
 export const CustomFormMainItems = () => {
-    const [blockPickerColor, setBlockPickerColor] = useState('#7a3db8');
-    const formLayout = layoutConfig.form;
-
-    const onChangeColor = (color) => {
-        setBlockPickerColor(color.hex);
-    };
-
     return (
         <>
-            <Card bordered={false} style={{ padding: '0px' }}>
-                <div className="card_header">
-                    <Title level={4}>Category Information</Title>
-                </div>
-                <div className="card_content">
-                    <Form.Item
-                        label="Name"
-                        name="name"
-                        hasFeedback
-                        rules={[
-                            {
-                                required: true,
-                            },
-                        ]}
-                    >
-                        <Input placeholder="Name" />
-                    </Form.Item>
-                    <Form.Item
-                        label="Tag Color"
-                        name="tagColor"
-                        hasFeedback
-                        rules={[
-                            {
-                                required: true,
-                            },
-                        ]}
-                    >
-                        <Colorpicker
-                            popup
-                            blockStyles={{
-                                width: '30px',
-                                height: '30px',
-                                borderRadius: '50%',
-                            }}
-                            picker={'SketchPicker'}
-                            onChange={onChangeColor}
-                            value={blockPickerColor}
-                        />
-                    </Form.Item>
-                    <Form.Item label="Notice" name="notice">
-                        <Input.TextArea allowClear showCount placeholder="Notice" />
-                    </Form.Item>
-                    <Form.Item {...formLayout.tailLayout} style={{ textAlign: 'right' }}>
-                        <Button type="primary" htmlType="submit" icon={<SaveOutlined />} className="form_button">
-                            Submit
-                        </Button>
-                    </Form.Item>
-                </div>
-            </Card>
+            <Form.Item
+                label="Name"
+                name="name"
+                hasFeedback
+                rules={[
+                    {
+                        required: true,
+                    },
+                ]}
+            >
+                <Input placeholder="Name" />
+            </Form.Item>
+
+            <Form.Item label="Notice" name="notice">
+                <Input.TextArea allowClear showCount placeholder="Notice" />
+            </Form.Item>
         </>
     );
 };

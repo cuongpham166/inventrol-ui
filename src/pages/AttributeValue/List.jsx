@@ -1,28 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-
-import { Col, Row, Button, Card } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { Col, Row, Card } from 'antd';
 
 import Breadcrumb from 'components/common/Breadcrumb';
 
-import useDataTable from '../../utils/hooks/useDataTable';
+import CustomDataTable from 'components/common/CustomDataTable';
 
 import * as service from '../../api/services';
 import * as attributeValueProps from '../AttributeValue/props';
 
 const AttributeValueList = (props) => {
-    const [dataTableSource, setDataTableSource] = useState([]);
-    const { DataTable, currentPage, pageSize, resetPagination } = useDataTable({
-        columns: attributeValueProps.attributeValueTableColumns,
-        table: 'attribute-value',
-        dataUrl: 'attribute-value',
-    });
-
+    const [dataSource, setDataSource] = useState(null);
     const getAllData = async () => {
         const result = await service.getAll('attribute-value');
-        const tableData = result.filter((element) => element.deleted === false);
-        setDataTableSource(tableData);
+        if (result != undefined) {
+            result.sort((a, b) => {
+                return a.id - b.id;
+            });
+            setDataSource(result);
+        } else {
+            setDataSource([]);
+        }
     };
 
     useEffect(() => {
@@ -39,7 +36,15 @@ const AttributeValueList = (props) => {
                 <Col span={24}>
                     <Card bordered={false}>
                         <div className="card_content">
-                            <DataTable />
+                            <CustomDataTable
+                                dataSource={dataSource}
+                                columns={attributeValueProps.attributeValueTableColumns}
+                                table="attribute-value"
+                                dataUrl="attribute-value"
+                                CustomFormItems={attributeValueProps.CustomFormMainItems}
+                                initialFormValues={attributeValueProps.initialFormValues}
+                                formType="create"
+                            />
                         </div>
                     </Card>
                 </Col>

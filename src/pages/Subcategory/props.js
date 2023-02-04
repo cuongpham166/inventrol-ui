@@ -17,18 +17,12 @@ const { Title, Text } = Typography;
 
 export const initialFormValues = {
     notice: '',
-    tagColor: '#7a3db8',
 };
 
 export const CustomFormMainItems = () => {
     const [categoryDataSource, setCategpryDataSource] = useState([]);
-    const [blockPickerColor, setBlockPickerColor] = useState('#7a3db8');
     const navigate = useNavigate();
-    const formLayout = layoutConfig.form;
 
-    const onChangeColor = (color) => {
-        setBlockPickerColor(color.hex);
-    };
     useEffect(() => {
         getAllCategories();
     }, []);
@@ -39,95 +33,58 @@ export const CustomFormMainItems = () => {
     };
     return (
         <>
-            <Card bordered={false} style={{ padding: '0px' }}>
-                <div className="card_header">
-                    <Title level={4}>Subcategory Information</Title>
-                </div>
-                <div className="card_content">
+            <Form.Item
+                label="Name"
+                name="name"
+                hasFeedback
+                rules={[
+                    {
+                        required: true,
+                    },
+                ]}
+            >
+                <Input placeholder="Name" />
+            </Form.Item>
+
+            <Form.Item label="Category">
+                <Input.Group compact>
                     <Form.Item
-                        label="Name"
-                        name="name"
+                        name="category"
+                        label="Category"
                         hasFeedback
+                        noStyle
                         rules={[
                             {
                                 required: true,
                             },
                         ]}
                     >
-                        <Input placeholder="Name" />
+                        <Select placeholder="Please select a category" style={{ width: '65%' }}>
+                            {categoryDataSource.map((option) => (
+                                <Option key={option.id} value={option.name}>
+                                    {option.name}
+                                </Option>
+                            ))}
+                        </Select>
                     </Form.Item>
-
-                    <Form.Item label="Category">
-                        <Input.Group compact>
-                            <Form.Item
-                                name="category"
-                                label="Category"
-                                hasFeedback
-                                noStyle
-                                rules={[
-                                    {
-                                        required: true,
-                                    },
-                                ]}
-                            >
-                                <Select
-                                    placeholder="Please select a category"
-                                    style={{ width: '65%', marginRight: '8px' }}
-                                >
-                                    {categoryDataSource.map((option) => (
-                                        <Option key={option.id} value={option.name}>
-                                            {option.name}
-                                        </Option>
-                                    ))}
-                                </Select>
-                            </Form.Item>
-                            <Form.Item noStyle>
-                                <Button
-                                    style={{ width: 'calc(35% - 8px)' }}
-                                    icon={<PlusOutlined />}
-                                    type={'primary'}
-                                    onClick={() => {
-                                        navigate('/category/add');
-                                    }}
-                                >
-                                    New Category
-                                </Button>
-                            </Form.Item>
-                        </Input.Group>
-                    </Form.Item>
-
-                    <Form.Item
-                        label="Tag Color"
-                        name="tagColor"
-                        hasFeedback
-                        rules={[
-                            {
-                                required: true,
-                            },
-                        ]}
-                    >
-                        <Colorpicker
-                            popup
-                            blockStyles={{
-                                width: '30px',
-                                height: '30px',
-                                borderRadius: '50%',
+                    <Form.Item noStyle>
+                        <Button
+                            style={{ width: '35%' }}
+                            icon={<PlusOutlined />}
+                            type={'primary'}
+                            onClick={() => {
+                                navigate('/category/add');
                             }}
-                            picker={'SketchPicker'}
-                            onChange={onChangeColor}
-                            value={blockPickerColor}
-                        />
-                    </Form.Item>
-                    <Form.Item label="Notice" name="notice">
-                        <Input.TextArea allowClear showCount placeholder="Notice" />
-                    </Form.Item>
-                    <Form.Item {...formLayout.tailLayout} style={{ textAlign: 'right' }}>
-                        <Button type="primary" htmlType="submit" icon={<SaveOutlined />} className="form_button">
-                            Submit
+                        >
+                            New Category
                         </Button>
                     </Form.Item>
-                </div>
-            </Card>
+                </Input.Group>
+            </Form.Item>
+
+            <Form.Item label="Notice" name="notice">
+                <Input.TextArea allowClear showCount placeholder="Notice" />
+            </Form.Item>
         </>
     );
 };

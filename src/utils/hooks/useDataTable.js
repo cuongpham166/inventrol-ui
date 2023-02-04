@@ -1,12 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Table, message, Row, Col, Space, Button, Popconfirm } from 'antd';
-import { EyeOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { DeleteOutlined } from '@ant-design/icons';
 
 import CheckBoxMenu from 'components/common/CheckboxMenu';
 import ActionButton from 'components/common/ActionButton';
-
-import useSearchbar from './useSearchbar';
 
 import * as service from '../../api/services';
 import * as layoutConfig from '../../utils/config/layout';
@@ -67,8 +65,6 @@ const useDataTable = ({ columns, table, dataUrl }) => {
 
     const [totalElements, setTotalElements] = useState(0);
 
-    const { Searchbar, searchValue } = useSearchbar({ table });
-
     const resetPagination = () => {
         setCurrentPage(DEFAULT_PAGE_NUMBER);
     };
@@ -112,12 +108,6 @@ const useDataTable = ({ columns, table, dataUrl }) => {
         setDataSource(result);
     };
 
-    useEffect(() => {
-        if (searchValue != null) {
-            getSearchData(searchValue);
-        }
-    }, [searchValue]);
-
     const onCheckboxChange = (selectedColums) => {
         if (selectedColums.length > tableColumns.length) {
             tableColumnsRef.current = defaultColumns;
@@ -135,12 +125,9 @@ const useDataTable = ({ columns, table, dataUrl }) => {
 
     let searchbarComponent;
 
-    table === 'discount' ? (searchbarComponent = <></>) : (searchbarComponent = <Searchbar />);
-
     const DataTable = () => (
         <>
             <Row gutter={[64, 64]} justify="space-between" style={{ marginBottom: '20px' }}>
-                <Col span={6}>{searchbarComponent}</Col>
                 <Col span={12}>
                     <Space style={{ float: 'right' }}>
                         <CheckBoxMenu options={columnOptionList} value={columnValueList} onChange={onCheckboxChange} />

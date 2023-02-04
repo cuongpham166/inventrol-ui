@@ -44,6 +44,7 @@ const CustomModalNewForm = ({ CustomFormItems, initialFormValues, table }) => {
             <Modal
                 open={open}
                 title={modalformTitle}
+                centered={true}
                 okText="Create"
                 cancelText="Cancel"
                 destroyOnClose

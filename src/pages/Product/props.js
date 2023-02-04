@@ -353,12 +353,13 @@ export const CustomFormMainItems = () => {
         if (discountValues.length > 0) {
             let discountList = [];
             discountValues.map((value) => {
-                let opt = { label: value.discountPercent, value: value.id, id: value.id };
-                if (value.discountPercent == 0) {
+                let opt = { label: value.discountPercent, value: value.id, id: value.id }; //convert to value, key
+                opt.label = value.discountPercent + '%';
+                /*if (value.discountPercent == 0) {
                     opt.label = 'No Discount';
                 } else {
                     opt.label = value.discountPercent + '%';
-                }
+                }*/
                 discountList.push(opt);
             });
             setDiscountList(discountList);
@@ -377,240 +378,207 @@ export const CustomFormMainItems = () => {
     };
     return (
         <>
-            <Card bordered={false} style={{ padding: '0px' }}>
-                <div className="card_header">
-                    <Title level={4}>Product Information</Title>
-                </div>
-                <div className="card_content">
+            <Form.Item
+                label="Name"
+                name="name"
+                hasFeedback
+                rules={[
+                    {
+                        required: true,
+                    },
+                ]}
+            >
+                <Input placeholder="Name" />
+            </Form.Item>
+
+            <Form.Item label="Brand">
+                <Input.Group compact>
                     <Form.Item
-                        label="Name"
-                        name="name"
+                        name="brand"
+                        label="Brand"
                         hasFeedback
+                        noStyle
                         rules={[
                             {
                                 required: true,
                             },
                         ]}
                     >
-                        <Input placeholder="Name" />
+                        <Select placeholder="Please select a brand" style={{ width: '70%' }} options={brandList} />
                     </Form.Item>
-
-                    <Form.Item label="Brand">
-                        <Input.Group compact>
-                            <Form.Item
-                                name="brand"
-                                label="Brand"
-                                hasFeedback
-                                noStyle
-                                rules={[
-                                    {
-                                        required: true,
-                                    },
-                                ]}
-                            >
-                                <Select
-                                    placeholder="Please select a brand"
-                                    style={{ width: '70%', marginRight: '8px' }}
-                                    options={brandList}
-                                />
-                            </Form.Item>
-                            <Form.Item noStyle>
-                                <Button
-                                    style={{ width: 'calc(30% - 8px)' }}
-                                    icon={<PlusOutlined />}
-                                    type={'primary'}
-                                    onClick={() => {
-                                        navigate('/brand/add');
-                                    }}
-                                >
-                                    New Brand
-                                </Button>
-                            </Form.Item>
-                        </Input.Group>
-                    </Form.Item>
-                    <Form.Item
-                        label="Barcode"
-                        name="barcode"
-                        hasFeedback
-                        rules={[
-                            {
-                                required: true,
-                            },
-                        ]}
-                    >
-                        <Input placeholder="barcode" disabled />
-                    </Form.Item>
-
-                    <Form.Item label="Price">
-                        <Input.Group compact>
-                            <Form.Item
-                                name="listingPrice"
-                                noStyle
-                                rules={[{ required: true, message: 'Listing Price is required' }]}
-                            >
-                                <InputNumber
-                                    style={{ width: '50%', marginRight: '8px' }}
-                                    placeholder="Listing Price"
-                                    min="0"
-                                    max="1000000"
-                                    step="1"
-                                />
-                            </Form.Item>
-                            <Form.Item
-                                name="retailPrice"
-                                noStyle
-                                rules={[{ required: true, message: 'Retail Price is required' }]}
-                            >
-                                <InputNumber
-                                    style={{ width: 'calc(50% - 8px)' }}
-                                    placeholder="Retail Price"
-                                    min="0"
-                                    max="1000000"
-                                    step="1"
-                                />
-                            </Form.Item>
-                        </Input.Group>
-                    </Form.Item>
-
-                    <Form.Item label="VAT & Discount">
-                        <Input.Group compact>
-                            <Form.Item name="vat" noStyle rules={[{ required: true, message: ' VAT is required' }]}>
-                                <Select
-                                    style={{ width: '40%', marginRight: '8px' }}
-                                    placeholder="Please select VAT value"
-                                    options={vatList}
-                                />
-                            </Form.Item>
-                            <Form.Item
-                                name="discount"
-                                noStyle
-                                rules={[{ required: true, message: 'Discount Value is required' }]}
-                            >
-                                <Select
-                                    placeholder="Please select a discount value"
-                                    style={{ width: 'calc(60% - 8px)' }}
-                                    options={discountList}
-                                />
-                            </Form.Item>
-                        </Input.Group>
-                    </Form.Item>
-
-                    <Form.Item label="Attribute">
-                        <Input.Group compact>
-                            <Form.Item
-                                name="attributeValue"
-                                label="Attribute"
-                                hasFeedback
-                                noStyle
-                                rules={[
-                                    {
-                                        required: true,
-                                    },
-                                ]}
-                            >
-                                <Select
-                                    mode="multiple"
-                                    allowClear
-                                    style={{ width: '70%', marginRight: '8px' }}
-                                    placeholder="Please select types"
-                                    options={attributeValueList}
-                                />
-                            </Form.Item>
-                            <Form.Item noStyle>
-                                <Button
-                                    style={{ width: 'calc(30% - 8px)' }}
-                                    icon={<PlusOutlined />}
-                                    type={'primary'}
-                                    onClick={() => {
-                                        navigate('/attribute-value/add');
-                                    }}
-                                >
-                                    New Type
-                                </Button>
-                            </Form.Item>
-                        </Input.Group>
-                    </Form.Item>
-
-                    <Form.Item label="Subcategory">
-                        <Input.Group compact>
-                            <Form.Item
-                                name="subcategory"
-                                label="Subcategory"
-                                hasFeedback
-                                noStyle
-                                rules={[
-                                    {
-                                        required: true,
-                                    },
-                                ]}
-                            >
-                                <Select
-                                    placeholder="Please select a subcategory"
-                                    style={{ width: '65%', marginRight: '8px' }}
-                                    options={subcategoryList}
-                                />
-                            </Form.Item>
-                            <Form.Item noStyle>
-                                <Button
-                                    style={{ width: 'calc(35% - 8px)' }}
-                                    icon={<PlusOutlined />}
-                                    type={'primary'}
-                                    onClick={() => {
-                                        navigate('/subcategory/add');
-                                    }}
-                                >
-                                    New Subcategory
-                                </Button>
-                            </Form.Item>
-                        </Input.Group>
-                    </Form.Item>
-
-                    <Form.Item label="Supplier">
-                        <Input.Group compact>
-                            <Form.Item
-                                name="supplier"
-                                label="Supplier"
-                                hasFeedback
-                                noStyle
-                                rules={[
-                                    {
-                                        required: true,
-                                    },
-                                ]}
-                            >
-                                <Select
-                                    mode="multiple"
-                                    allowClear
-                                    style={{ width: '70%', marginRight: '8px' }}
-                                    placeholder="Please select supplier(s)"
-                                    options={supplierList}
-                                />
-                            </Form.Item>
-                            <Form.Item noStyle>
-                                <Button
-                                    style={{ width: 'calc(30% - 8px)' }}
-                                    icon={<PlusOutlined />}
-                                    type={'primary'}
-                                    onClick={() => {
-                                        navigate('/supplier/add');
-                                    }}
-                                >
-                                    New Supplier
-                                </Button>
-                            </Form.Item>
-                        </Input.Group>
-                    </Form.Item>
-
-                    <Form.Item label="Notice" name="notice">
-                        <Input.TextArea allowClear showCount placeholder="Notice" />
-                    </Form.Item>
-                    <Form.Item {...formLayout.tailLayout} style={{ textAlign: 'right' }}>
-                        <Button type="primary" htmlType="submit" icon={<SaveOutlined />} className="form_button">
-                            Submit
+                    <Form.Item noStyle>
+                        <Button
+                            style={{ width: '30%' }}
+                            icon={<PlusOutlined />}
+                            type={'primary'}
+                            onClick={() => {
+                                navigate('/brand/add');
+                            }}
+                        >
+                            New Brand
                         </Button>
                     </Form.Item>
-                </div>
-            </Card>
+                </Input.Group>
+            </Form.Item>
+            <Form.Item
+                label="Barcode"
+                name="barcode"
+                hasFeedback
+                rules={[
+                    {
+                        required: true,
+                    },
+                ]}
+            >
+                <Input placeholder="barcode" disabled />
+            </Form.Item>
+
+            <Form.Item label="Price">
+                <Input.Group compact>
+                    <Form.Item
+                        name="listingPrice"
+                        noStyle
+                        rules={[{ required: true, message: 'Listing Price is required' }]}
+                    >
+                        <InputNumber
+                            style={{ width: '25%' }}
+                            placeholder="Listing Price"
+                            min="0"
+                            max="1000000"
+                            step="1"
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        name="retailPrice"
+                        noStyle
+                        rules={[{ required: true, message: 'Retail Price is required' }]}
+                    >
+                        <InputNumber
+                            style={{ width: '25%' }}
+                            placeholder="Retail Price"
+                            min="0"
+                            max="1000000"
+                            step="1"
+                        />
+                    </Form.Item>
+                    <Form.Item name="vat" noStyle rules={[{ required: true, message: ' VAT is required' }]}>
+                        <Select style={{ width: '25%' }} placeholder="VAT" options={vatList} />
+                    </Form.Item>
+                    <Form.Item name="discount" noStyle rules={[{ required: true, message: 'Discount' }]}>
+                        <Select placeholder="Discount" style={{ width: '25%' }} options={discountList} />
+                    </Form.Item>
+                </Input.Group>
+            </Form.Item>
+
+            <Form.Item label="Attribute">
+                <Input.Group compact>
+                    <Form.Item
+                        name="attributeValue"
+                        label="Attribute"
+                        hasFeedback
+                        noStyle
+                        rules={[
+                            {
+                                required: true,
+                            },
+                        ]}
+                    >
+                        <Select
+                            mode="multiple"
+                            allowClear
+                            style={{ width: '70%' }}
+                            placeholder="Please select types"
+                            options={attributeValueList}
+                        />
+                    </Form.Item>
+                    <Form.Item noStyle>
+                        <Button
+                            style={{ width: '30%' }}
+                            icon={<PlusOutlined />}
+                            type={'primary'}
+                            onClick={() => {
+                                navigate('/attribute-value/add');
+                            }}
+                        >
+                            New Attribute
+                        </Button>
+                    </Form.Item>
+                </Input.Group>
+            </Form.Item>
+
+            <Form.Item label="Subcategory">
+                <Input.Group compact>
+                    <Form.Item
+                        name="subcategory"
+                        label="Subcategory"
+                        hasFeedback
+                        noStyle
+                        rules={[
+                            {
+                                required: true,
+                            },
+                        ]}
+                    >
+                        <Select
+                            placeholder="Please select a subcategory"
+                            style={{ width: '65%' }}
+                            options={subcategoryList}
+                        />
+                    </Form.Item>
+                    <Form.Item noStyle>
+                        <Button
+                            style={{ width: '35%' }}
+                            icon={<PlusOutlined />}
+                            type={'primary'}
+                            onClick={() => {
+                                navigate('/subcategory/add');
+                            }}
+                        >
+                            New Subcategory
+                        </Button>
+                    </Form.Item>
+                </Input.Group>
+            </Form.Item>
+
+            <Form.Item label="Supplier">
+                <Input.Group compact>
+                    <Form.Item
+                        name="supplier"
+                        label="Supplier"
+                        hasFeedback
+                        noStyle
+                        rules={[
+                            {
+                                required: true,
+                            },
+                        ]}
+                    >
+                        <Select
+                            mode="multiple"
+                            allowClear
+                            style={{ width: '70%' }}
+                            placeholder="Please select supplier(s)"
+                            options={supplierList}
+                        />
+                    </Form.Item>
+                    <Form.Item noStyle>
+                        <Button
+                            style={{ width: '30%' }}
+                            icon={<PlusOutlined />}
+                            type={'primary'}
+                            onClick={() => {
+                                navigate('/supplier/add');
+                            }}
+                        >
+                            New Supplier
+                        </Button>
+                    </Form.Item>
+                </Input.Group>
+            </Form.Item>
+
+            <Form.Item label="Notice" name="notice">
+                <Input.TextArea allowClear showCount placeholder="Notice" />
+            </Form.Item>
         </>
     );
 };
