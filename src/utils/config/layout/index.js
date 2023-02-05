@@ -81,20 +81,9 @@ const getItem = (label, key, icon, children, type) => {
 
 export const sidebarItems = [
     getItem('Dashboard', 'dashboard', <AppstoreOutlined />),
-
     getItem('Inventory', 'product', <ShopOutlined />),
-
-    getItem('Purchase', 'purchase-overview', <ShoppingCartOutlined />, [
-        getItem('Overview', 'purchase', <TableOutlined />),
-        //getItem('Purchase Shipping', 'purchase/shipping', <CarOutlined />),
-    ]),
-
-    getItem('Order', 'order-overview', <ShoppingCartOutlined />, [
-        getItem('Overview', 'order', <TableOutlined />),
-        getItem('Order Shipping', 'order/shipping', <CarOutlined />),
-        getItem('Order Payment', 'order/payment', <CreditCardOutlined />),
-    ]),
-
+    getItem('Purchase', 'purchase', <ShoppingCartOutlined />),
+    getItem('Order', 'order', <ShoppingCartOutlined />),
     getItem('Metadata', 'table', <BorderlessTableOutlined />, [
         getItem('Attribute', 'attribute', <TagOutlined />),
         getItem('Attribute Value', 'attribute-value', <TagsOutlined />),
@@ -103,10 +92,7 @@ export const sidebarItems = [
         getItem('Discount', 'discount', <TagOutlined />),
         getItem('Subcategory', 'subcategory', <TagsOutlined />),
     ]),
-
     getItem('Suppliers', 'supplier', <SolutionOutlined />),
-
     getItem('Customers', 'customer', <UserOutlined />),
-
     getItem('Settings', 'setting', <SettingOutlined />),
 ];

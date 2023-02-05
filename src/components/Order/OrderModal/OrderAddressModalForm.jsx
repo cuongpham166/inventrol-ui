@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Popover, Tag, Button, Modal, Table, Form, Input, Checkbox } from 'antd';
-import * as layoutConfig from '../../utils/config/layout';
-import * as service from '../../api/services/index';
+import * as layoutConfig from '../../../utils/config/layout';
+import * as service from '../../../api/services/index';
 const OrderAddressModalForm = (props) => {
     const [form] = Form.useForm();
     const formLayout = layoutConfig.form;

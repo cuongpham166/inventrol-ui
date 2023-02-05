@@ -5,6 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import DateTimeFormatter from 'components/common/CustomFormatter/DateTimeFormatter';
 import PurchaseActionMenu from 'components/Purchase/PurchaseActionMenu';
+import PurchaseShippingCard from 'components/Purchase/PurchaseCard/PurchaseShippingCard';
+
 import * as layoutConfig from 'utils/config/layout';
 
 const { Option } = Select;
@@ -64,25 +66,14 @@ export const purchaseTableColumns = [
     {
         title: 'ID',
         key: 'index',
-        render: (text, record, index) => <Link to={'/purchase/' + record.id}>#{record.id}</Link>,
-    },
-    {
-        title: 'Total Cost (€)',
-        dataIndex: 'total',
-        key: 'total',
-        align: 'right',
-    },
-    {
-        title: 'No. of items',
-        dataIndex: 'numberOfItems',
-        key: 'numberOfItems',
-        align: 'right',
+        render: (text, record, index) => <Text strong>#{record.id}</Text>,
     },
     {
         title: 'Status',
         dataIndex: 'purchaseshipping',
         key: 'purchaseshipping',
-        render: (purchaseshipping) => <Text>{purchaseshipping.status}</Text>,
+        render: (purchaseshipping) => <PurchaseShippingCard status={purchaseshipping.status} />,
+        sorter: (a, b) => a.purchaseshipping.status.localeCompare(b.purchaseshipping.status),
     },
     {
         title: 'Payment',
@@ -94,6 +85,18 @@ export const purchaseTableColumns = [
         dataIndex: 'supplier',
         key: 'supplier',
         render: (supplier) => <Text>{supplier.name}</Text>,
+    },
+    {
+        title: 'Items',
+        dataIndex: 'numberOfItems',
+        key: 'numberOfItems',
+        align: 'right',
+    },
+    {
+        title: 'Total Cost',
+        dataIndex: 'total',
+        key: 'total',
+        align: 'right',
     },
     {
         title: 'Purchased on',

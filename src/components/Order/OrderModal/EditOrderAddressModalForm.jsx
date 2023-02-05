@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Popover, Tag, Button, Modal, Table, Form, Input, Checkbox, message } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import OrderAddressModalForm from './OrderAddressModalForm';
-import * as layoutConfig from '../../utils/config/layout';
-import * as service from '../../api/services/index';
+import * as layoutConfig from '../../../utils/config/layout';
+import * as service from '../../../api/services/index';
 const EditOrderAddressModalFrom = (props) => {
     message.config(layoutConfig.message);
     const [isModalOpen, setIsModalOpen] = useState(false);

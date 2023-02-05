@@ -3,6 +3,8 @@ import DateTimeFormatter from 'components/common/CustomFormatter/DateTimeFormatt
 
 import CustomDataTableCell from 'components/common/CustomDataTable/CustomDataTableCell';
 
+import CustomerActionMenu from 'components/Customer/CustomerActionMenu';
+
 export const customerTableColumns = [
     {
         title: 'Id',
@@ -34,5 +36,13 @@ export const customerTableColumns = [
         align: 'right',
         render: (createdOn) => <DateTimeFormatter data={createdOn} />,
         sorter: (a, b) => a.createdOn.localeCompare(b.createdOn),
+    },
+    {
+        title: 'Actions',
+        dataIndex: 'name',
+        key: 'action',
+        width: '50px',
+        align: 'center',
+        render: (text, record) => <CustomerActionMenu id={record.id} />,
     },
 ];

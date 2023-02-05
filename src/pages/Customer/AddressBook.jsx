@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Row, Card } from 'antd';
 import Breadcrumb from 'components/common/Breadcrumb';
-import AddressList from 'components/Customer/AddressList';
+import CustomerAddressBook from 'components/Customer/CustomerAddressBook';
 
 const AddressBook = (props) => {
     return (
@@ -11,7 +11,7 @@ const AddressBook = (props) => {
             </Row>
 
             <Row gutter={[16, 16]}>
-                <AddressList />
+                <CustomerAddressBook />
             </Row>
         </>
     );

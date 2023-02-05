@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 import { Table, message, Row, Col, Space, Button, Popconfirm, Dropdown } from 'antd';
 import {
     CaretDownOutlined,
@@ -14,6 +14,8 @@ import PurchaseShippingModal from '../PurchaseModal/PurchaseShippingModal';
 import PurchaseItemModal from '../PurchaseModal/PurchaseItemModal';
 
 const PurchaseActionMenu = ({ id }) => {
+    const navigate = useNavigate();
+
     const [isClicked, setIsClicked] = useState(-1);
 
     const [isViewShippingModalOpen, setIsViewShippingModalOpen] = useState(false);
@@ -21,6 +23,10 @@ const PurchaseActionMenu = ({ id }) => {
 
     const handleMenuClick = (e) => {
         switch (e.key) {
+            case 'viewDetail':
+                navigate(`/purchase/${id}`);
+                setIsClicked(id);
+                break;
             case 'viewShipping':
                 setIsClicked(id);
                 setIsViewShippingModalOpen(true);

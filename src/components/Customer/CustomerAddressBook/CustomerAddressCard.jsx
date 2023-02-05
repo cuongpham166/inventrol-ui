@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { Card, Col, Row, Tag, Space, Typography, Tooltip } from 'antd';
 import { EditOutlined, DeleteOutlined, StarOutlined } from '@ant-design/icons';
 const { Text } = Typography;
-const AddressCard = ({ data }) => {
+const CustomerAddressCard = ({ data }) => {
     const { id } = useParams();
     const customerId = parseInt(id);
     let cardTitel;
@@ -73,4 +73,4 @@ const AddressCard = ({ data }) => {
     );
 };
 
-export default AddressCard;
+export default CustomerAddressCard;

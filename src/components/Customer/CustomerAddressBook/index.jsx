@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import AddressCard from './AddressCard';
+import CustomerAddressCard from './CustomerAddressCard';
 import { useParams } from 'react-router-dom';
 import * as service from '@services';
 
-const AddressList = (props) => {
+const CustomerAddressBook = (props) => {
     const [dataSource, setDataSource] = useState([]);
     const dataSourceRef = useRef(dataSource);
     const { id } = useParams();
@@ -22,10 +22,10 @@ const AddressList = (props) => {
     return (
         <>
             {dataSourceRef.current.map((address, index) => {
-                return <AddressCard data={address} key={index} />;
+                return <CustomerAddressCard data={address} key={index} />;
             })}
         </>
     );
 };
 
-export default AddressList;
+export default CustomerAddressBook;

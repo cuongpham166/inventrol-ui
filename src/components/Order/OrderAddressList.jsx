@@ -18,8 +18,8 @@ import {
     Radio,
     Checkbox,
 } from 'antd';
-import NewOrderAddressModalForm from './NewOrderAddressModalForm';
-import EditOrderAddressModalFrom from './EditOrderAddressModalForm';
+import NewOrderAddressModalForm from './OrderModal/NewOrderAddressModalForm';
+import EditOrderAddressModalFrom from './OrderModal/EditOrderAddressModalForm';
 const { Text, Title } = Typography;
 const { TextArea } = Input;
 const OrderAddressList = (props) => {
@@ -62,7 +62,9 @@ const OrderAddressList = (props) => {
     return (
         <div className="order_address_list">
             <div className="order_address_section">
-                <Title level={5}>Choose a Shipping Address</Title>
+                <Title level={5} style={{ marginTop: '0' }}>
+                    Choose a Shipping Address
+                </Title>
                 <Radio.Group onChange={handleChangeShippingAddress} value={shippingAddValue}>
                     {dataSource.map((data, i) => {
                         return (

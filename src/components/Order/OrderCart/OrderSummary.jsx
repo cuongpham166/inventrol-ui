@@ -191,7 +191,7 @@ const OrderSummary = (props) => {
 
     return (
         <>
-            <Card title={'Purchase Summary'} bordered={false} style={{}}>
+            <Card title={'Order Summary'} bordered={false} style={{}}>
                 <Table columns={productSummaryTableColumns} dataSource={_.cloneDeep(props.data)} rowKey="id" />
 
                 <Row justify="space-between" align="middle" style={{ marginTop: '30px' }}>

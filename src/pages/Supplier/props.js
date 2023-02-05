@@ -151,6 +151,12 @@ export const supplierTableColumns = [
         sorter: (a, b) => a.name.localeCompare(b.name),
     },
     {
+        title: 'Contact Person',
+        dataIndex: 'contactPerson',
+        key: 'contactPerson',
+        sorter: (a, b) => a.contactPerson.localeCompare(b.contactPerson),
+    },
+    {
         title: 'Created on',
         dataIndex: 'createdOn',
         key: 'createdOn',
