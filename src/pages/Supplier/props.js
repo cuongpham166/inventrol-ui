@@ -1,4 +1,4 @@
-import { Tooltip, Popover, Button, Descriptions, Form, Input, Select, Card, Typography } from 'antd';
+import { Tooltip, Popover, Button, Descriptions, Form, Input, Select, Card, Typography, Space } from 'antd';
 import { Link } from 'react-router-dom';
 import {
     PhoneOutlined,
@@ -19,9 +19,11 @@ import DateTimeFormatter from 'components/common/CustomFormatter/DateTimeFormatt
 import PurchasedItemModal from 'components/Purchase/PurchaseModal/PurchaseItemModal';
 import DateFormatter from 'components/common/CustomFormatter/DateFormatter';
 import PurchaseShippingInfoModal from 'components/Purchase/PurchaseModal/PurchaseShippingModal';
-
 import CustomDataTableCell from 'components/common/CustomDataTable/CustomDataTableCell';
 
+import SupplierActionMenu from 'components/Supplier/SupplierActionMenu';
+import PurchaseShippingCard from 'components/Purchase/PurchaseCard/PurchaseShippingCard';
+import PurchaseActionMenu from 'components/Purchase/PurchaseActionMenu';
 const { Option } = Select;
 const { Title, Text } = Typography;
 
@@ -164,36 +166,28 @@ export const supplierTableColumns = [
         render: (createdOn) => <DateTimeFormatter data={createdOn} />,
         sorter: (a, b) => a.createdOn.localeCompare(b.createdOn),
     },
+    {
+        title: 'Actions',
+        dataIndex: 'name',
+        key: 'action',
+        width: '50px',
+        align: 'center',
+        render: (text, record) => <SupplierActionMenu id={record.id} />,
+    },
 ];
 
 export const supplierPurchaseTableColumns = [
     {
         title: 'ID',
         key: 'index',
-        render: (text, record, index) => <Link to={'/purchase/' + record.id}>#{record.id}</Link>,
-    },
-    {
-        title: () => <Tooltip title="Purchased Items">Items</Tooltip>,
-        dataIndex: 'index',
-        key: 'index',
-        width: '50px',
-        render: (text, record, index) => <PurchasedItemModal data={record} />,
-    },
-    {
-        title: 'Total Cost (€)',
-        dataIndex: 'total',
-        key: 'total',
-    },
-    {
-        title: 'No. of items',
-        dataIndex: 'numberOfItems',
-        key: 'numberOfItems',
+        render: (text, record, index) => <Text strong>#{record.id}</Text>,
     },
     {
         title: 'Status',
         dataIndex: 'purchaseshipping',
         key: 'purchaseshipping',
-        render: (purchaseshipping) => <Text>{purchaseshipping.status}</Text>,
+        render: (purchaseshipping) => <PurchaseShippingCard status={purchaseshipping.status} />,
+        sorter: (a, b) => a.purchaseshipping.status.localeCompare(b.purchaseshipping.status),
     },
     {
         title: 'Payment',
@@ -201,128 +195,161 @@ export const supplierPurchaseTableColumns = [
         key: 'paymentType',
     },
     {
-        title: 'Purchased on',
-        dataIndex: 'createdOn',
-        key: 'createdOn',
-        render: (createdOn) => <DateFormatter data={createdOn} />,
+        title: 'Items',
+        dataIndex: 'numberOfItems',
+        key: 'numberOfItems',
+        align: 'right',
     },
     {
-        title: () => <Tooltip title="Shipping Information">Shipping</Tooltip>,
-        dataIndex: 'index',
-        key: 'index',
+        title: 'Total Cost',
+        dataIndex: 'total',
+        key: 'total',
+        align: 'right',
+    },
+    {
+        title: 'Purchased on',
+        dataIndex: 'createdOn',
+        align: 'right',
+        render: (createdOn) => <DateTimeFormatter data={createdOn} />,
+        sorter: (a, b) => a.createdOn.localeCompare(b.createdOn),
+    },
+    {
+        title: 'Actions',
+        dataIndex: 'name',
+        key: 'action',
         width: '50px',
         align: 'center',
-        render: (text, record, index) => <PurchaseShippingInfoModal data={record} />,
+        render: (text, record, index) => <PurchaseActionMenu id={record.id} />,
     },
+];
+
+const countryOptions = [
+    { label: 'Germany', value: 'Germany' },
+    { label: 'Vietnam', value: 'Vietnam' },
 ];
 
 export const CustomFormMainItems = () => {
     const formLayout = layoutConfig.form;
     return (
         <>
-            <Card bordered={false} style={{ marginBottom: '24px' }}>
-                <div className="card_header">
-                    <Title level={4}>General Information</Title>
-                </div>
-                <div className="card_content">
-                    <Form.Item
-                        label="Name"
-                        name="name"
-                        hasFeedback
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Name is required',
-                            },
-                        ]}
-                    >
-                        <Input placeholder={'Name'} />
-                    </Form.Item>
-                    <Form.Item
-                        label="Contact Person"
-                        name="contactPerson"
-                        hasFeedback
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Contact Person is required',
-                            },
-                        ]}
-                    >
-                        <Input placeholder={'Contact Person'} />
-                    </Form.Item>
-                    <Form.Item label="Website" name="website" hasFeedback>
-                        <Input placeholder={'Website'} />
-                    </Form.Item>
+            <Form.Item
+                label="Name"
+                name="name"
+                hasFeedback
+                rules={[
+                    {
+                        required: true,
+                        message: 'Name is required',
+                    },
+                ]}
+            >
+                <Input placeholder={'Name'} />
+            </Form.Item>
+            <Form.Item
+                label="Contact Person"
+                name="contactPerson"
+                hasFeedback
+                rules={[
+                    {
+                        required: true,
+                        message: 'Contact Person is required',
+                    },
+                ]}
+            >
+                <Input placeholder={'Contact Person'} />
+            </Form.Item>
+            <Form.Item label="Website" name="website" hasFeedback>
+                <Input placeholder={'Website'} />
+            </Form.Item>
 
-                    <Form.Item label="Notice" name="notice">
-                        <Input.TextArea allowClear showCount placeholder={'Notice'} />
-                    </Form.Item>
-                </div>
-            </Card>
-            <Card bordered={false}>
-                <div className="card_header">
-                    <Title level={4}>Contact Information</Title>
-                </div>
-                <div className="card_content">
-                    <Form.Item label="Email" name="email" hasFeedback>
-                        <Input placeholder={'Email'} />
-                    </Form.Item>
-                    <Form.Item label="Phone Number" name="phoneNumber" hasFeedback>
-                        <Input placeholder={'Phone Number'} />
-                    </Form.Item>
-                    <Form.Item label="Mobile Number" name="mobileNumber" hasFeedback>
-                        <Input placeholder={'Mobile Number'} />
-                    </Form.Item>
-                    <Form.Item label="Address">
-                        <Input.Group compact>
-                            <Form.Item
-                                name="streetName"
-                                noStyle
-                                rules={[{ required: true, message: ' Street Name is required' }]}
-                            >
-                                <Input style={{ width: 'calc(70% - 8px)' }} placeholder="Street Name" />
-                            </Form.Item>
-                            <Form.Item
-                                name="streetNumber"
-                                noStyle
-                                rules={[{ required: true, message: 'Street Number is required' }]}
-                            >
-                                <Input style={{ width: '30%', marginLeft: '8px' }} placeholder="Street Number" />
-                            </Form.Item>
-                        </Input.Group>
+            <Form.Item label="Email" name="email" hasFeedback>
+                <Input placeholder={'Email'} />
+            </Form.Item>
 
-                        <Form.Item name="additionalAddressLine" noStyle>
-                            <Input style={{ width: '100%', marginTop: '8px' }} placeholder="Additional Address Line" />
+            <Form.Item label="Phone Number">
+                <Input.Group compact>
+                    <Form.Item name="phoneNumber" noStyle hasFeedback>
+                        <Input placeholder="Phone Number" style={{ width: '50%' }} />
+                    </Form.Item>
+                    <Form.Item name="mobileNumber" noStyle hasFeedback>
+                        <Input placeholder="Mobile Number" style={{ width: '50%' }} />
+                    </Form.Item>
+                </Input.Group>
+            </Form.Item>
+
+            <Form.Item label="Main Address">
+                <Space direction="vertical">
+                    <Input.Group compact>
+                        <Form.Item
+                            name="streetName"
+                            noStyle
+                            rules={[{ required: true, message: ' Street Name is required' }]}
+                        >
+                            <Input style={{ width: '70%' }} placeholder="Street Name" />
                         </Form.Item>
+                        <Form.Item
+                            name="streetNumber"
+                            noStyle
+                            rules={[{ required: true, message: 'Street Number is required' }]}
+                        >
+                            <Input style={{ width: '30%' }} placeholder="Street Number" />
+                        </Form.Item>
+                    </Input.Group>
+                    <Input.Group compact>
+                        <Form.Item
+                            name="postcode"
+                            label="Postcode"
+                            hasFeedback
+                            noStyle
+                            rules={[
+                                {
+                                    required: true,
+                                },
+                            ]}
+                        >
+                            <Input placeholder="Postcode" style={{ width: '20%' }} />
+                        </Form.Item>
+                        <Form.Item
+                            name="city"
+                            label="City"
+                            hasFeedback
+                            noStyle
+                            rules={[
+                                {
+                                    required: true,
+                                },
+                            ]}
+                        >
+                            <Input placeholder="City" style={{ width: '40%' }} />
+                        </Form.Item>
+                        <Form.Item
+                            name="country"
+                            label="Country"
+                            hasFeedback
+                            noStyle
+                            rules={[
+                                {
+                                    required: true,
+                                },
+                            ]}
+                        >
+                            <Select
+                                allowClear
+                                style={{ width: '40%' }}
+                                placeholder="Please select country"
+                                options={countryOptions}
+                            />
+                        </Form.Item>
+                    </Input.Group>
+                </Space>
+            </Form.Item>
+            <Form.Item label="Additional Address Line" name="additionalAddressLine">
+                <Input placeholder="Additional Address Line" />
+            </Form.Item>
 
-                        <Input.Group compact style={{ marginTop: '8px' }}>
-                            <Form.Item
-                                name="postcode"
-                                noStyle
-                                rules={[{ required: true, message: 'Postcode is required' }]}
-                            >
-                                <Input style={{ width: 'calc(20% - 8px)' }} placeholder="Postcode" />
-                            </Form.Item>
-                            <Form.Item name="city" noStyle rules={[{ required: true, message: 'City is required' }]}>
-                                <Input style={{ width: 'calc(40% - 8px)', margin: '0 8px' }} placeholder="City" />
-                            </Form.Item>
-                            <Form.Item
-                                name="country"
-                                noStyle
-                                rules={[{ required: true, message: 'Country is required' }]}
-                            >
-                                <Input style={{ width: '40%' }} placeholder="Country" />
-                            </Form.Item>
-                        </Input.Group>
-                    </Form.Item>
-                    <Form.Item {...formLayout.tailLayout} style={{ textAlign: 'right' }}>
-                        <Button type="primary" htmlType="submit" icon={<SaveOutlined />} className="form_button">
-                            Save
-                        </Button>
-                    </Form.Item>
-                </div>
-            </Card>
+            <Form.Item label="Notice" name="notice">
+                <Input.TextArea allowClear showCount placeholder={'Notice'} />
+            </Form.Item>
         </>
     );
 };

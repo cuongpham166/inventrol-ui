@@ -6,7 +6,7 @@ import CustomModalDataTable from 'components/common/CustomModalDataTable';
 import * as service from '../../../api/services';
 import * as brandProps from '../../../pages/Brand/props';
 
-const DetailBrandModal = ({ isViewModalOpen, handleViewModalOk, dataID }) => {
+const BrandDetailModal = ({ isViewModalOpen, handleViewModalOk, dataID }) => {
     const [dataSource, setDataSource] = useState(null);
     const [modalTile, setModalTitle] = useState('');
     const [tableDataSource, setTableDataSource] = useState([]);
@@ -41,4 +41,4 @@ const DetailBrandModal = ({ isViewModalOpen, handleViewModalOk, dataID }) => {
     );
 };
 
-export default DetailBrandModal;
+export default BrandDetailModal;

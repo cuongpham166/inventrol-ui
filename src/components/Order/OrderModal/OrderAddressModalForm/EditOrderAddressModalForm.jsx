@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Popover, Tag, Button, Modal, Table, Form, Input, Checkbox, message } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
+
 import OrderAddressModalForm from './OrderAddressModalForm';
-import * as layoutConfig from '../../../utils/config/layout';
-import * as service from '../../../api/services/index';
-const EditOrderAddressModalFrom = (props) => {
+
+import * as layoutConfig from '../../../../utils/config/layout';
+import * as service from '../../../../api/services/index';
+
+const EditOrderAddressModalForm = (props) => {
     message.config(layoutConfig.message);
     const [isModalOpen, setIsModalOpen] = useState(false);
     //const [initialFormValues, setInitialFormValues] = useState({ notice: '', additionalAddressLine: '' });
@@ -58,6 +61,7 @@ const EditOrderAddressModalFrom = (props) => {
     return (
         <>
             <Button onClick={showModal} type="primary" icon={<EditOutlined />}></Button>
+
             <OrderAddressModalForm
                 open={isModalOpen}
                 onCancel={handleCancel}
@@ -73,4 +77,4 @@ const EditOrderAddressModalFrom = (props) => {
     );
 };
 
-export default EditOrderAddressModalFrom;
+export default EditOrderAddressModalForm;

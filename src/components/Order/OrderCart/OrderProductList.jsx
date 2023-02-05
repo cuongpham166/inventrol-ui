@@ -6,7 +6,7 @@ import * as service from '../../../api/services';
 import { $ } from 'moneysafe';
 import { $$, subtractPercent, addPercent } from 'moneysafe/ledger';
 import ProductNameColumn from 'components/Product/ProductNameColumn';
-import OrderAddressList from '../OrderAddressList';
+import OrderAddressList from './OrderAddressList';
 const { Text, Title } = Typography;
 
 const OrderProductList = (props) => {

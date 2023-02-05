@@ -7,8 +7,6 @@ import { Line } from '@ant-design/plots';
 
 import Breadcrumb from 'components/common/Breadcrumb';
 
-import useStatisticCard from 'utils/hooks/useStatisticCard';
-
 import * as lineChartConfig from 'utils/config/charts/line';
 
 import * as service from '@services';
@@ -131,39 +129,11 @@ const chartTransactionData = {
     ],
 };
 
-const statisticCardData = [
-    {
-        icon: <TagOutlined />,
-        title: '5',
-        text: "Today's Orders",
-        percentage: '-2',
-    },
-    {
-        icon: <CodeSandboxOutlined />,
-        title: '10',
-        text: 'New Products',
-        percentage: '+3',
-    },
-    {
-        icon: <TagOutlined />,
-        title: '6',
-        text: 'Total Order',
-        percentage: '+9',
-    },
-    {
-        icon: <CodeSandboxOutlined />,
-        title: '9',
-        text: 'Total Product',
-        percentage: '+3',
-    },
-];
-
 const ProductDetail = (props) => {
     const { id } = useParams();
     const dataId = parseInt(id);
     const multiLineChartConfig = { ...chartData, ...lineChartConfig.multiLine, ...heightLineChart };
     const transactionChartConfig = { ...chartTransactionData, ...lineChartConfig.multiLine, ...heightLineChart };
-    const { StatisticCard } = useStatisticCard({ data: statisticCardData });
 
     const [supplierTabSource, setSupplierTabSource] = useState([]);
 
@@ -210,34 +180,23 @@ const ProductDetail = (props) => {
                 <Breadcrumb />
             </Row>
 
-            <Row gutter={[24, 24]}>
-                <StatisticCard />
-            </Row>
-
             <Row gutter={[24, 24]} style={{ marginTop: '24px' }}>
                 <Col span={17}>
-                    <Card bordered={false} style={{ height: 'calc(50% - 12px)' }}>
-                        <div className="card_header">
-                            <Title level={4}>Price</Title>
-                        </div>
-                        <div className="card_content">{<Line {...multiLineChartConfig} />}</div>
+                    <Card bordered={false} style={{ height: 'calc(50% - 12px)' }} title="Price">
+                        <Line {...multiLineChartConfig} />
                     </Card>
 
-                    <Card bordered={false} style={{ marginTop: '24px', height: 'calc(50% - 12px)' }}>
-                        <div className="card_header">
-                            <Title level={4}>Transaction</Title>
-                        </div>
-                        <div className="card_content">{<Line {...transactionChartConfig} />}</div>
+                    <Card
+                        bordered={false}
+                        style={{ marginTop: '24px', height: 'calc(50% - 12px)' }}
+                        title="Transaction"
+                    >
+                        <Line {...transactionChartConfig} />
                     </Card>
                 </Col>
                 <Col span={7}>
-                    <Card bordered={false}>
-                        <div className="card_header">
-                            <Title level={4}>Suppliers</Title>
-                        </div>
-                        <div className="card_content">
-                            <Tabs items={supplierTabSource} onChange={onChange} />
-                        </div>
+                    <Card bordered={false} title="Suppliers">
+                        <Tabs items={supplierTabSource} onChange={onChange} />
                     </Card>
                 </Col>
             </Row>

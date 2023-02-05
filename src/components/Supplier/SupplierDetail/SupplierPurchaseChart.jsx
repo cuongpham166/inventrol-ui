@@ -1,8 +1,11 @@
 import React from 'react';
-import { Card, Typography, Segmented } from 'antd';
+import { Card, Typography, Segmented, Col, Row } from 'antd';
 import { Column } from '@ant-design/plots';
 import * as columnChartConfig from 'utils/config/charts/column';
 const { Title } = Typography;
+const heightLineChart = {
+    height: 300,
+};
 const chartData = {
     data: [
         {
@@ -37,16 +40,24 @@ const chartData = {
 };
 
 const SupplierPurchaseChart = (props) => {
-    const basicColumnChartConfig = { ...chartData, ...columnChartConfig.basicColumn };
+    const basicColumnChartConfig = { ...chartData, ...columnChartConfig.basicColumn, ...heightLineChart };
     return (
-        <Card bordered={false} style={{ height: '100%' }}>
-            <div className="card_header">
-                <Title level={4}>Purchases</Title>
-                <Segmented options={['Weekly', 'Monthly', 'Quarterly', 'Yearly']} />
-            </div>
-            <div className="card_content">
-                <Column {...basicColumnChartConfig} />
-            </div>
+        <Card
+            bordered={false}
+            title={
+                <Row>
+                    <Col span={5}>
+                        <Title level={5} className="dashboard_chart_title">
+                            Purchases
+                        </Title>
+                    </Col>
+                    <Col span={19} style={{ textAlign: 'right' }}>
+                        <Segmented options={['Weekly', 'Monthly', 'Quarterly', 'Yearly']} />
+                    </Col>
+                </Row>
+            }
+        >
+            <Column {...basicColumnChartConfig} />
         </Card>
     );
 };

@@ -123,11 +123,6 @@ const useDataTable = ({ columns, table, dataUrl }) => {
 
     const DataTable = () => (
         <>
-            <Row gutter={[64, 64]} justify="space-between" style={{ marginBottom: '20px' }}>
-                <Col span={12}>
-                    <Space style={{ float: 'right' }}></Space>
-                </Col>
-            </Row>
             <Row>
                 <Col span={24}>
                     <Table

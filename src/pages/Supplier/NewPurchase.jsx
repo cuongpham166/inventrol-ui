@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import { Row, Col, Table } from 'antd';
 
+import Breadcrumb from 'components/common/Breadcrumb';
 import PurchaseProductList from 'components/Purchase/PurchaseCart/PurchaseProductList';
 import PurchaseSummary from 'components/Purchase/PurchaseCart/PurchaseSummary';
 const CreatePurchase = (props) => {
@@ -12,7 +13,11 @@ const CreatePurchase = (props) => {
     const dataId = parseInt(id);
 
     return (
-        <div>
+        <>
+            <Row>
+                <Breadcrumb />
+            </Row>
+
             <Row style={{}} justify="center" gutter={[24, 24]}>
                 <Col span={11} style={{}}>
                     <PurchaseProductList supplierId={dataId} setCartData={setCartData} data={cartData} />
@@ -21,7 +26,7 @@ const CreatePurchase = (props) => {
                     <PurchaseSummary setCartData={setCartData} data={cartData} />
                 </Col>
             </Row>
-        </div>
+        </>
     );
 };
 

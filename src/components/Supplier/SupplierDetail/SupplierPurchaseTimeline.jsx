@@ -31,36 +31,44 @@ const SupplierPurchaseTimeline = (props) => {
     }, []);
 
     return (
-        <Card bordered={false}>
-            <div className="card_header">
-                <Title level={4}>Purchase History</Title>
-                <Tooltip placement="top" title="Reverse" color="#7A3DB8">
-                    <Button type="primary" className="width-100" onClick={() => setReverse(!reverse)}>
-                        {<RetweetOutlined />}
-                    </Button>
-                </Tooltip>
-            </div>
-            <div className="card_content">
-                <Timeline className="timelinelist" reverse={reverse}>
-                    {datasource.map((data, index) => (
-                        <Timeline.Item key={index}>
-                            <Space direction="vertical">
-                                <Space>
-                                    <Text strong>New Purchase #{data.id}</Text>
-                                    <Text>{data.purchaseshipping.status}</Text>
-                                </Space>
-
-                                <Text type="secondary">{dayjs(data.createdOn).format('LLL')}</Text>
+        <Card
+            bordered={false}
+            title={
+                <Row>
+                    <Col span={5}>
+                        <Title level={5} className="dashboard_chart_title">
+                            Purchase History
+                        </Title>
+                    </Col>
+                    <Col span={19} style={{ textAlign: 'right' }}>
+                        <Tooltip placement="top" title="Reverse" color="#7A3DB8">
+                            <Button type="primary" className="width-100" onClick={() => setReverse(!reverse)}>
+                                {<RetweetOutlined />}
+                            </Button>
+                        </Tooltip>
+                    </Col>
+                </Row>
+            }
+        >
+            <Timeline className="timelinelist" reverse={reverse}>
+                {datasource.map((data, index) => (
+                    <Timeline.Item key={index}>
+                        <Space direction="vertical">
+                            <Space>
+                                <Text strong>New Purchase #{data.id}</Text>
+                                <Text>{data.purchaseshipping.status}</Text>
                             </Space>
-                        </Timeline.Item>
-                    ))}
-                </Timeline>
-                <Link to={'/supplier/' + supplierId + '/purchase'}>
-                    <Button type="primary" className="width-100" style={{ marginTop: '20px' }}>
-                        {<UnorderedListOutlined />} See All Purchases
-                    </Button>
-                </Link>
-            </div>
+
+                            <Text type="secondary">{dayjs(data.createdOn).format('LLL')}</Text>
+                        </Space>
+                    </Timeline.Item>
+                ))}
+            </Timeline>
+            <Link to={'/supplier/' + supplierId + '/purchase'}>
+                <Button type="primary" className="width-100" style={{ marginTop: '20px' }}>
+                    {<UnorderedListOutlined />} See All Purchases
+                </Button>
+            </Link>
         </Card>
     );
 };

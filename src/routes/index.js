@@ -11,7 +11,7 @@ import { AttributeValueList } from 'pages/AttributeValue';
 import { PurchaseDetail, PurchaseList } from 'pages/Purchase';
 
 import { DiscountList } from 'pages/Discount';
-import { CustomerList, CustomerDetail, EditCustomer, CreateCustomer, AddressBook, NewOrder } from 'pages/Customer';
+import { CustomerList, CustomerDetail, AddressBook, NewOrder } from 'pages/Customer';
 import { OrderList, OrderDetail, OrderShipping, OrderPayment } from 'pages/Order';
 
 import { SettingList } from 'pages/Setting';
@@ -44,8 +44,6 @@ const privateRoutes = [
     { path: '/customer', component: CustomerList },
     { path: '/customer/:id', component: CustomerDetail },
     { path: '/customer/:id/address', component: AddressBook },
-    { path: '/customer/add', component: CreateCustomer },
-    { path: '/customer/:id/edit', component: EditCustomer },
     { path: '/customer/:id/order/add', component: NewOrder },
 
     { path: '/order', component: OrderList },

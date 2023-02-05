@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Button, Form, Modal, message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import * as layoutConfig from '../../../utils/config/layout';
+import 'assets/styles/form.less';
+
 const CustomModalNewForm = ({ CustomFormItems, initialFormValues, table }) => {
     const formLayout = layoutConfig.form;
     const validateMessages = formLayout.validateMessages;

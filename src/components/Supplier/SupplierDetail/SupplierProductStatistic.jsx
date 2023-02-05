@@ -3,15 +3,15 @@ import { Col, Row, Space, Card, Typography, Tag } from 'antd';
 import { PeoplesTwo, Peoples } from '@icon-park/react';
 import CustomStatisticCard from 'components/common/CustomStatisticCard';
 
-const UserSummaryCard = (props) => {
+const SupplierProductStatistic = (props) => {
     return (
-        <Card bordered={false} title="User Summary">
+        <Card bordered={false} title="Product Summary">
             <Row gutter={[12, 12]} justify="space-between">
                 <Col span={12}>
                     <CustomStatisticCard
                         icon={<PeoplesTwo theme="filled" className="dashboard_icon--large" />}
                         number="5"
-                        text="Total Suppliers"
+                        text="New Products"
                         color="blue"
                     />
                 </Col>
@@ -19,7 +19,7 @@ const UserSummaryCard = (props) => {
                     <CustomStatisticCard
                         icon={<Peoples theme="filled" className="dashboard_icon--large" />}
                         number="5"
-                        text=" Total Customers"
+                        text="Total Products"
                         color="geekblue"
                     />
                 </Col>
@@ -28,4 +28,4 @@ const UserSummaryCard = (props) => {
     );
 };
 
-export default UserSummaryCard;
+export default SupplierProductStatistic;

@@ -4,7 +4,7 @@ import { Table, message, Row, Col, Space, Button, Popconfirm, Dropdown } from 'a
 import { CaretDownOutlined, EyeOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
 import CustomModalEditForm from 'components/common/CustomModalEditForm';
-import DetailBrandModal from 'components/Brand/BrandModal/DetailBrandModal';
+import BrandDetailModal from 'components/Brand/BrandModal/BrandDetailModal';
 
 import * as brandProps from '../../../pages/Brand/props';
 
@@ -84,7 +84,7 @@ const BrandActionMenu = ({ id, table }) => {
             </Dropdown>
             {id == isClicked ? (
                 <>
-                    <DetailBrandModal
+                    <BrandDetailModal
                         isViewModalOpen={isViewModalOpen}
                         handleViewModalOk={handleViewModalOk}
                         dataID={id}

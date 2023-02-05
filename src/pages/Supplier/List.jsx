@@ -1,23 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 
 import { Col, Row, Button, Card } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
 
 import Breadcrumb from 'components/common/Breadcrumb';
-
-import useDataTable from '../../utils/hooks/useDataTable';
+import CustomDataTable from 'components/common/CustomDataTable';
 
 import * as service from '../../api/services';
 import * as supplierProps from '../Supplier/props';
 
 const SupplierList = (props) => {
-    const { DataTable, currentPage, pageSize, resetPagination } = useDataTable({
-        columns: supplierProps.supplierTableColumns,
-        table: 'supplier',
-        dataUrl: 'supplier',
-    });
+    const [dataSource, setDataSource] = useState(null);
+    const getAllData = async () => {
+        const result = await service.getAll('supplier');
+        if (result != undefined) {
+            result.sort((a, b) => {
+                return a.id - b.id;
+            });
+            setDataSource(result);
+        } else {
+            setDataSource([]);
+        }
+    };
 
+    useEffect(() => {
+        getAllData();
+    }, []);
     return (
         <>
             <Row>
@@ -28,7 +35,15 @@ const SupplierList = (props) => {
                 <Col span={24}>
                     <Card bordered={false}>
                         <div className="card_content">
-                            <DataTable />
+                            <CustomDataTable
+                                dataSource={dataSource}
+                                columns={supplierProps.supplierTableColumns}
+                                table="supplier"
+                                dataUrl="supplier"
+                                CustomFormItems={supplierProps.CustomFormMainItems}
+                                initialFormValues={supplierProps.initialFormValues}
+                                formType="create"
+                            />
                         </div>
                     </Card>
                 </Col>

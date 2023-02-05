@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+
 import { useParams } from 'react-router-dom';
 import { Col, Row, Button, Card, Typography } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
 
 import Breadcrumb from 'components/common/Breadcrumb';
 
-import useDataTable from '../../utils/hooks/useDataTable';
+import CustomDataTable from 'components/common/CustomDataTable';
 
 import * as service from '../../api/services';
 import * as supplierProps from '../Supplier/props';
@@ -17,11 +16,23 @@ const SupplierPurchaseList = (props) => {
     const { id } = useParams();
     const dataId = parseInt(id);
 
-    const { DataTable, currentPage, pageSize, resetPagination } = useDataTable({
-        columns: supplierProps.supplierPurchaseTableColumns,
-        table: 'product',
-        dataUrl: 'supplier/' + dataId + '/purchases',
-    });
+    const [dataSource, setDataSource] = useState(null);
+
+    const getAllData = async () => {
+        const result = await service.getAll('supplier/' + dataId + '/purchases');
+        if (result != undefined) {
+            result.sort((a, b) => {
+                return a.id - b.id;
+            });
+            setDataSource(result);
+        } else {
+            setDataSource([]);
+        }
+    };
+
+    useEffect(() => {
+        getAllData();
+    }, []);
 
     return (
         <>
@@ -29,14 +40,19 @@ const SupplierPurchaseList = (props) => {
                 <Breadcrumb />
             </Row>
 
-            <Row gutter={[24, 0]}>
+            <Row gutter={[16, 16]}>
                 <Col span={24}>
                     <Card bordered={false}>
-                        <div className="card_header">
-                            <Title level={4}>Purchases</Title>
-                        </div>
                         <div className="card_content">
-                            <DataTable />
+                            <CustomDataTable
+                                dataSource={dataSource}
+                                columns={supplierProps.supplierPurchaseTableColumns}
+                                table="purchase"
+                                dataUrl="purchase"
+                                CustomFormItems={<></>}
+                                initialFormValues={{}}
+                                formType="create"
+                            />
                         </div>
                     </Card>
                 </Col>

@@ -18,8 +18,9 @@ import {
     Radio,
     Checkbox,
 } from 'antd';
-import NewOrderAddressModalForm from './OrderModal/NewOrderAddressModalForm';
-import EditOrderAddressModalFrom from './OrderModal/EditOrderAddressModalForm';
+import NewOrderAddressModalForm from '../OrderModal/OrderAddressModalForm/NewOrderAddressModalForm';
+import EditOrderAddressModalForm from '../OrderModal/OrderAddressModalForm/EditOrderAddressModalForm';
+
 const { Text, Title } = Typography;
 const { TextArea } = Input;
 const OrderAddressList = (props) => {
@@ -89,7 +90,7 @@ const OrderAddressList = (props) => {
                                         {data.postcode} {data.city},
                                     </Text>
                                     <Text>{data.country}</Text>
-                                    <EditOrderAddressModalFrom
+                                    <EditOrderAddressModalForm
                                         customerId={customerId}
                                         addressId={data.id}
                                         setDataSource={setDataSource}
@@ -131,7 +132,7 @@ const OrderAddressList = (props) => {
                                             {data.postcode} {data.city},
                                         </Text>
                                         <Text>{data.country}</Text>
-                                        <EditOrderAddressModalFrom
+                                        <EditOrderAddressModalForm
                                             customerId={customerId}
                                             addressId={data.id}
                                             setDataSource={setDataSource}
