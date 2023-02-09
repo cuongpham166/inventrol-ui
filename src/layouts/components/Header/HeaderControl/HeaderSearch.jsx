@@ -48,7 +48,7 @@ const HeaderSearch = (props) => {
         <Space.Compact block>
             <Select
                 defaultValue={searchOptions[0].value}
-                style={{ width: 120 }}
+                style={{ width: 130 }}
                 onChange={handleChangeSelect}
                 options={searchOptions}
             />

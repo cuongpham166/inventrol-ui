@@ -17,7 +17,7 @@ const HeaderNotificationCard = (props) => {
         <>
             <Card
                 style={{
-                    width: 300,
+                    width: '100%',
                 }}
                 title={props.notificationType}
                 extra={

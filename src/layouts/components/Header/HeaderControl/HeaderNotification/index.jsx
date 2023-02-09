@@ -9,6 +9,7 @@ const { Meta } = Card;
 const HeaderNotification = (props) => {
     const [visible, setVisible] = useState(false);
     const [notidot, setNotidot] = useState(false);
+    const [notiCount, setNotiCount] = useState(0);
     const notifications = useSelector((state) => state.notifications);
 
     const showDrawer = () => {
@@ -21,17 +22,24 @@ const HeaderNotification = (props) => {
 
     useEffect(() => {
         notifications.length > 0 ? setNotidot(true) : setNotidot(false);
+        setNotiCount(notifications.length);
     }, [notifications]);
 
     return (
         <span>
             <Tooltip title="Notification">
-                <Badge dot={notidot}>
+                <Badge count={notiCount} overflowCount={10}>
                     <Button onClick={showDrawer} icon={<NotificationOutlined />} size="large"></Button>
                 </Badge>
             </Tooltip>
             <Drawer title="Notification" placement="right" onClose={onClose} open={visible}>
-                <Space direction="vertical" size="middle">
+                <Space
+                    direction="vertical"
+                    size="middle"
+                    style={{
+                        width: '100%',
+                    }}
+                >
                     {notifications.map((value, index) => {
                         return (
                             <HeaderNotificationCard
