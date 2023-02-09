@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Col, Row, Typography, Tooltip, Radio, Timeline, Button, Tag, Space } from 'antd';
 import { UnorderedListOutlined, RetweetOutlined } from '@ant-design/icons';
+
+import PurchaseShippingCard from 'components/Purchase/PurchaseCard/PurchaseShippingCard';
+
 import { Link } from 'react-router-dom';
 import * as service from '@services';
 
@@ -56,7 +59,7 @@ const SupplierPurchaseTimeline = (props) => {
                         <Space direction="vertical">
                             <Space>
                                 <Text strong>New Purchase #{data.id}</Text>
-                                <Text>{data.purchaseshipping.status}</Text>
+                                <PurchaseShippingCard status={data.purchaseshipping.status} />
                             </Space>
 
                             <Text type="secondary">{dayjs(data.createdOn).format('LLL')}</Text>

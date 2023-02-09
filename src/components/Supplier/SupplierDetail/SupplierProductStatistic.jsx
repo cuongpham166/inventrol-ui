@@ -1,6 +1,6 @@
 import React from 'react';
 import { Col, Row, Space, Card, Typography, Tag } from 'antd';
-import { PeoplesTwo, Peoples } from '@icon-park/react';
+import { AdProduct } from '@icon-park/react';
 import CustomStatisticCard from 'components/common/CustomStatisticCard';
 
 const SupplierProductStatistic = (props) => {
@@ -9,7 +9,7 @@ const SupplierProductStatistic = (props) => {
             <Row gutter={[12, 12]} justify="space-between">
                 <Col span={12}>
                     <CustomStatisticCard
-                        icon={<PeoplesTwo theme="filled" className="dashboard_icon--large" />}
+                        icon={<AdProduct theme="filled" className="dashboard_icon--large" />}
                         number="5"
                         text="New Products"
                         color="blue"
@@ -17,7 +17,7 @@ const SupplierProductStatistic = (props) => {
                 </Col>
                 <Col span={12}>
                     <CustomStatisticCard
-                        icon={<Peoples theme="filled" className="dashboard_icon--large" />}
+                        icon={<AdProduct theme="filled" className="dashboard_icon--large" />}
                         number="5"
                         text="Total Products"
                         color="geekblue"
