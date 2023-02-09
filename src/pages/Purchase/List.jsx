@@ -1,32 +1,32 @@
-import React, { useState, useEffect } from 'react';
-
-import { Col, Row, Button, Card } from 'antd';
-
+import React from 'react';
+import { Col, Row, Card, Skeleton, Result } from 'antd';
 import Breadcrumb from 'components/common/Breadcrumb';
-
 import CustomDataTable from 'components/common/CustomDataTable';
-
-import * as service from '../../api/services';
 import * as purchaseProps from '../Purchase/props';
+import { useGetPurchasesQuery } from 'features/api/apiSlice';
 
 const PurchaseList = (props) => {
-    const [dataSource, setDataSource] = useState(null);
+    let content;
+    const { data: purchases, isLoading, isSuccess, isError, error } = useGetPurchasesQuery();
 
-    const getAllData = async () => {
-        const result = await service.getAll('purchase');
-        if (result != undefined) {
-            result.sort((a, b) => {
-                return a.id - b.id;
-            });
-            setDataSource(result);
-        } else {
-            setDataSource([]);
-        }
-    };
-
-    useEffect(() => {
-        getAllData();
-    }, []);
+    if (isLoading) {
+        content = <Skeleton />;
+    } else if (isSuccess) {
+        content = (
+            <CustomDataTable
+                dataSource={purchases}
+                columns={purchaseProps.purchaseTableColumns}
+                table="purchase"
+                dataUrl="purchase"
+                CustomFormItems={<></>}
+                initialFormValues={{}}
+                formType="create"
+            />
+        );
+    } else if (isError) {
+        let errorStatus = `[${error.status}] - ${error.error}`;
+        content = <Result status="warning" title={errorStatus} />;
+    }
 
     return (
         <>
@@ -37,17 +37,7 @@ const PurchaseList = (props) => {
             <Row gutter={[16, 16]}>
                 <Col span={24}>
                     <Card bordered={false}>
-                        <div className="card_content">
-                            <CustomDataTable
-                                dataSource={dataSource}
-                                columns={purchaseProps.purchaseTableColumns}
-                                table="purchase"
-                                dataUrl="purchase"
-                                CustomFormItems={<></>}
-                                initialFormValues={{}}
-                                formType="create"
-                            />
-                        </div>
+                        <div className="card_content">{content}</div>
                     </Card>
                 </Col>
             </Row>

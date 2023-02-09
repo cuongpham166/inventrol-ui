@@ -1,30 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
-import { Col, Row, Card } from 'antd';
+import { Col, Row, Card, Skeleton, Result } from 'antd';
 import Breadcrumb from 'components/common/Breadcrumb';
 
-import * as service from '../../api/services';
 import * as categoryProps from '../Category/props';
 
 import CustomDataTable from 'components/common/CustomDataTable';
+import { useGetCategoriesQuery } from 'features/api/apiSlice';
 
 const CategoryList = (props) => {
-    const [dataSource, setDataSource] = useState(null);
-    const getAllData = async () => {
-        const result = await service.getAll('category');
-        if (result != undefined) {
-            result.sort((a, b) => {
-                return a.id - b.id;
-            });
-            setDataSource(result);
-        } else {
-            setDataSource([]);
-        }
-    };
+    let content;
+    const { data: categories, isLoading, isSuccess, isError, error } = useGetCategoriesQuery();
 
-    useEffect(() => {
-        getAllData();
-    }, []);
+    if (isLoading) {
+        content = <Skeleton />;
+    } else if (isSuccess) {
+        content = (
+            <CustomDataTable
+                dataSource={categories}
+                columns={categoryProps.categoryTableColumns}
+                table="category"
+                dataUrl="category"
+                CustomFormItems={categoryProps.CustomFormMainItems}
+                initialFormValues={categoryProps.initialFormValues}
+                formType="create"
+            />
+        );
+    } else if (isError) {
+        let errorStatus = `[${error.status}] - ${error.error}`;
+        content = <Result status="warning" title={errorStatus} />;
+    }
 
     return (
         <>
@@ -34,17 +39,7 @@ const CategoryList = (props) => {
             <Row gutter={[16, 16]}>
                 <Col span={24}>
                     <Card bordered={false}>
-                        <div className="card_content">
-                            <CustomDataTable
-                                dataSource={dataSource}
-                                columns={categoryProps.categoryTableColumns}
-                                table="category"
-                                dataUrl="category"
-                                CustomFormItems={categoryProps.CustomFormMainItems}
-                                initialFormValues={categoryProps.initialFormValues}
-                                formType="create"
-                            />
-                        </div>
+                        <div className="card_content">{content}</div>
                     </Card>
                 </Col>
             </Row>

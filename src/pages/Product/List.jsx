@@ -1,32 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-
-import { Col, Row, Button, Typography, Card } from 'antd';
-
+import React from 'react';
+import { Col, Row, Card, Skeleton, Result } from 'antd';
 import Breadcrumb from 'components/common/Breadcrumb';
-
 import CustomDataTable from 'components/common/CustomDataTable';
-
-import * as service from '../../api/services';
 import * as productProps from '../Product/props';
+import { useGetProductsQuery } from 'features/api/apiSlice';
 
 const ProductList = (props) => {
-    const [dataSource, setDataSource] = useState(null);
-    const getAllData = async () => {
-        const result = await service.getAll('product');
-        if (result != undefined) {
-            result.sort((a, b) => {
-                return a.id - b.id;
-            });
-            setDataSource(result);
-        } else {
-            setDataSource([]);
-        }
-    };
+    let content;
+    const { data: products, isLoading, isSuccess, isError, error } = useGetProductsQuery();
 
-    useEffect(() => {
-        getAllData();
-    }, []);
+    if (isLoading) {
+        content = <Skeleton />;
+    } else if (isSuccess) {
+        content = (
+            <CustomDataTable
+                dataSource={products}
+                columns={productProps.productTableColumns}
+                table="product"
+                dataUrl="product"
+                CustomFormItems={productProps.CustomFormMainItems}
+                initialFormValues={productProps.initialFormValues}
+                formType="create"
+            />
+        );
+    } else if (isError) {
+        let errorStatus = `[${error.status}] - ${error.error}`;
+        content = <Result status="warning" title={errorStatus} />;
+    }
 
     return (
         <>
@@ -38,15 +38,7 @@ const ProductList = (props) => {
                 <Col span={24}>
                     <Card bordered={false}>
                         <div className="card_content">
-                            <CustomDataTable
-                                dataSource={dataSource}
-                                columns={productProps.productTableColumns}
-                                table="product"
-                                dataUrl="product"
-                                CustomFormItems={productProps.CustomFormMainItems}
-                                initialFormValues={productProps.initialFormValues}
-                                formType="create"
-                            />
+                            <div className="card_content">{content}</div>
                         </div>
                     </Card>
                 </Col>

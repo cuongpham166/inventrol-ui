@@ -9,5 +9,7 @@ export const store = configureStore({
     reducer: {
         dashboard: dashboardReducer,
         notifications: notificationReducer,
+        [apiSlice.reducerPath]: apiSlice.reducer,
     },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiSlice.middleware),
 });

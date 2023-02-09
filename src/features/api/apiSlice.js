@@ -11,9 +11,43 @@ export const apiSlice = createApi({
         getBrands: builder.query({
             query: () => 'brand',
         }),
+        getCategories: builder.query({
+            query: () => 'category',
+        }),
+        getSubcategories: builder.query({
+            query: () => 'subcategory',
+        }),
+        getAttributes: builder.query({
+            query: () => 'attribute',
+        }),
+        getAttributeValues: builder.query({
+            query: () => 'attribute-value',
+        }),
+        getCustomers: builder.query({
+            query: () => 'customer',
+        }),
+        getSuppliers: builder.query({
+            query: () => 'supplier',
+        }),
+        getPurchases: builder.query({
+            query: () => 'purchase',
+        }),
+        getProducts: builder.query({
+            query: () => 'product',
+        }),
     }),
 });
 
 //use + endpoints attribute name (getAlbums) + Query = useGetAlbumsQuery.
 
-export const { useGetBrandsQuery } = apiSlice;
+export const {
+    useGetBrandsQuery,
+    useGetCategoriesQuery,
+    useGetSubcategoriesQuery,
+    useGetAttributesQuery,
+    useGetAttributeValuesQuery,
+    useGetCustomersQuery,
+    useGetSuppliersQuery,
+    useGetPurchasesQuery,
+    useGetProductsQuery,
+} = apiSlice;

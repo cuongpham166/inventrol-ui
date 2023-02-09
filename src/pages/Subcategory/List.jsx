@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Col, Row, Button, Card } from 'antd';
+import { Col, Row, Skeleton, Result, Card } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
 import Breadcrumb from 'components/common/Breadcrumb';
@@ -11,23 +11,30 @@ import CustomDataTable from 'components/common/CustomDataTable';
 import * as service from '../../api/services';
 import * as subcategoryProps from '../Subcategory/props';
 
-const SubcategoryList = (props) => {
-    const [dataSource, setDataSource] = useState(null);
-    const getAllData = async () => {
-        const result = await service.getAll('subcategory');
-        if (result != undefined) {
-            result.sort((a, b) => {
-                return a.id - b.id;
-            });
-            setDataSource(result);
-        } else {
-            setDataSource([]);
-        }
-    };
+import { useGetSubcategoriesQuery } from 'features/api/apiSlice';
 
-    useEffect(() => {
-        getAllData();
-    }, []);
+const SubcategoryList = (props) => {
+    let content;
+    const { data: subcategories, isLoading, isSuccess, isError, error } = useGetSubcategoriesQuery();
+
+    if (isLoading) {
+        content = <Skeleton />;
+    } else if (isSuccess) {
+        content = (
+            <CustomDataTable
+                dataSource={subcategories}
+                columns={subcategoryProps.subcategoryTableColumns}
+                table="subcategory"
+                dataUrl="subcategory"
+                CustomFormItems={subcategoryProps.CustomFormMainItems}
+                initialFormValues={subcategoryProps.initialFormValues}
+                formType="subcategory"
+            />
+        );
+    } else if (isError) {
+        let errorStatus = `[${error.status}] - ${error.error}`;
+        content = <Result status="warning" title={errorStatus} />;
+    }
 
     return (
         <>
@@ -38,17 +45,7 @@ const SubcategoryList = (props) => {
             <Row gutter={[16, 16]}>
                 <Col span={24}>
                     <Card bordered={false}>
-                        <div className="card_content">
-                            <CustomDataTable
-                                dataSource={dataSource}
-                                columns={subcategoryProps.subcategoryTableColumns}
-                                table="subcategory"
-                                dataUrl="subcategory"
-                                CustomFormItems={subcategoryProps.CustomFormMainItems}
-                                initialFormValues={subcategoryProps.initialFormValues}
-                                formType="subcategory"
-                            />
-                        </div>
+                        <div className="card_content">{content}</div>
                     </Card>
                 </Col>
             </Row>
