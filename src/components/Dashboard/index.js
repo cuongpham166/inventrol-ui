@@ -1,19 +1,17 @@
-export { default as PurchaseOverviewCard } from './Purchase/PurchaseOverviewCard';
-export { default as PurchaseShippingOverviewCard } from './Purchase/PurchaseShippingOverviewCard';
-export { default as PurchasePaymentOverviewCard } from './Purchase/PurchasePaymentOverviewCard';
+export { default as PurchaseShippingChart } from './ChartCard/PurchaseShippingChart';
+export { default as PurchasePaymentChart } from './ChartCard/PurchasePaymentChart';
+export { default as OrderPaymentChart } from './ChartCard/OrderPaymentChart';
+export { default as OrderShippingChart } from './ChartCard/OrderShippingChart';
+export { default as OrderPurchaseChart } from './ChartCard/OrderPurchaseChart';
 
-export { default as OrderOverviewCard } from './Order/OrderOverviewCard';
-export { default as OrderPaymentOverviewCard } from './Order/OrderPaymentOverviewCard';
-export { default as OrderShippingOverviewCard } from './Order/OrderShippingOverviewCard';
+export { default as PurchaseOverviewCard } from './OverviewCard/PurchaseOverviewCard';
+export { default as OrderOverviewCard } from './OverviewCard/OrderOverviewCard';
+export { default as UserOverviewCard } from './OverviewCard/UserOverviewCard';
 
-export { default as InventorySummaryCard } from './Inventory/InventorySummaryCard';
+export { default as InventorySummaryCard } from './SummaryCard/InventorySummaryCard';
+export { default as MetadataSummaryCard } from './SummaryCard/MetadataSummaryCard';
 
-export { default as ProductSummaryCard } from './Product/ProductSummaryCard';
-export { default as TopPurchasedProductCard } from './Product/TopPurchasedProductCard';
-export { default as TopOrderedProductCard } from './Product/TopOrderedProductCard';
-
-export { default as UserSummaryCard } from './User/UserSummaryCard';
-export { default as TopCustomerCard } from './User/TopCustomerCard';
-export { default as TopSupplierCard } from './User/TopSupplierCard';
-
-export { default as OrderPurchaseChart } from './Chart/OrderPurchaseChart';
+export { default as TopPurchasedProductCard } from './TableCard/TopPurchasedProductCard';
+export { default as TopOrderedProductCard } from './TableCard/TopOrderedProductCard';
+export { default as TopCustomerCard } from './TableCard/TopCustomerCard';
+export { default as TopSupplierCard } from './TableCard/TopSupplierCard';

@@ -26,7 +26,7 @@ const chartData = {
     ],
 };
 
-const OrderPaymentOverviewCard = (props) => {
+const OrderPaymentChart = (props) => {
     const orderPaymentChartConfig = { ...chartData, ...pieChartConfig.pie, ...heightPieChart };
     return (
         <Card bordered={false} title="Order Payment Overview">
@@ -35,4 +35,4 @@ const OrderPaymentOverviewCard = (props) => {
     );
 };
 
-export default OrderPaymentOverviewCard;
+export default OrderPaymentChart;

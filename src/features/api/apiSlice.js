@@ -50,6 +50,9 @@ export const apiSlice = createApi({
         getDiscounts: builder.query({
             query: () => 'discount',
         }),
+        getDashboard: builder.query({
+            query: () => 'dashboard',
+        }),
     }),
 });
 
@@ -68,6 +71,7 @@ export const {
     useGetDiscountsQuery,
 
     useGetBrandQuery,
+    useGetDashboardQuery,
     useGetPurchaseQuery,
     useGetSupplierQuery,
     useGetSupplierPurchasesQuery,

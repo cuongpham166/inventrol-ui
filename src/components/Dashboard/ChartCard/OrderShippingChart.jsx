@@ -2,11 +2,9 @@ import React from 'react';
 import { Col, Row, Button, Card } from 'antd';
 import { Pie } from '@ant-design/plots';
 import * as pieChartConfig from 'utils/config/charts/pie';
-
 const heightPieChart = {
     height: 450,
 };
-
 const chartData = {
     data: [
         {
@@ -39,14 +37,13 @@ const chartData = {
         },
     ],
 };
-
-const PurchaseShippingOverviewCard = (props) => {
-    const purchaseShippingChartConfig = { ...chartData, ...pieChartConfig.pie, ...heightPieChart };
+const OrderShippingChart = (props) => {
+    const orderShippingChartConfig = { ...chartData, ...pieChartConfig.pie, ...heightPieChart };
     return (
-        <Card bordered={false} title="Purchase Shipping Overview" style={{ height: '100%' }}>
-            <Pie {...purchaseShippingChartConfig} />
+        <Card bordered={false} title="Order Shipping Overview">
+            <Pie {...orderShippingChartConfig} />
         </Card>
     );
 };
 
-export default PurchaseShippingOverviewCard;
+export default OrderShippingChart;
