@@ -1,17 +1,14 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Card, Table, Typography, Space, Divider, Col, Row, Tag } from 'antd';
 import { $ } from 'moneysafe';
 import { $$, subtractPercent, addPercent } from 'moneysafe/ledger';
 const { Text, Title } = Typography;
-const PurchaseItemList = (props) => {
-    let purchaseData = props.data;
-    let purchaseItems = purchaseData.purchaseItem;
-
-    if (purchaseItems != undefined) {
-        purchaseItems.sort((a, b) => {
-            return a.product.id - b.product.id;
-        });
-    }
+const PurchaseItemList = ({ data }) => {
+    const sortedPurchaseItems = useMemo(() => {
+        const sortedPurchaseItems = data.purchaseItem.slice();
+        sortedPurchaseItems.sort((a, b) => a.product.id - b.product.id);
+        return sortedPurchaseItems;
+    }, [data.purchaseItem]);
 
     const purchaseItemsTableColumns = [
         {
@@ -53,15 +50,16 @@ const PurchaseItemList = (props) => {
             render: (text, record, index) => <Text>{$(record.product.listingPrice * record.quantity).toFixed()} </Text>,
         },
     ];
+
     return (
         <Card title={<Title level={5}>Purchased Items</Title>} bordered={false} style={{ height: '100%' }}>
-            <Table columns={purchaseItemsTableColumns} dataSource={purchaseItems} rowKey="id" />
+            <Table columns={purchaseItemsTableColumns} dataSource={sortedPurchaseItems} rowKey="id" />
             <Divider />
             <Row justify="space-between" align="middle" style={{ marginTop: '30px' }}>
                 <Col span={19}>
                     <Space direction="vertical" size={0}>
                         <Title level={5}>Purchase Note</Title>
-                        <Text>{props.data.notice}</Text>
+                        <Text>{data.notice}</Text>
                     </Space>
                 </Col>
                 <Col span={5}>
@@ -69,19 +67,19 @@ const PurchaseItemList = (props) => {
                         <Title level={5} style={{ marginBottom: '0' }}>
                             Total:
                         </Title>
-                        <Text strong>{$(props.data.total).toFixed()}€</Text>
+                        <Text strong>{$(data.total).toFixed()}€</Text>
                     </Row>
                     <Row justify="space-between" align="middle" style={{ marginTop: '10px', marginBottom: '10px' }}>
                         <Title level={5} style={{ marginBottom: '0' }}>
                             Payment Method:
                         </Title>
-                        <Text strong>{props.data.paymentType}</Text>
+                        <Text strong>{data.paymentType}</Text>
                     </Row>
                     <Row justify="space-between" align="middle">
                         <Title level={5} style={{ marginBottom: '0' }}>
                             Number of items:
                         </Title>
-                        <Text strong>{props.data.numberOfItems}</Text>
+                        <Text strong>{data.numberOfItems}</Text>
                     </Row>
                 </Col>
             </Row>

@@ -1,38 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Modal, List, Typography, Tag, Space, Table, Divider, Col, Row } from 'antd';
-import { CarOutlined } from '@ant-design/icons';
+import React from 'react';
+import { Modal, List, Typography, Skeleton, Result } from 'antd';
 
-import * as service from '../../../api/services';
+import { useGetPurchaseQuery } from 'features/api/apiSlice';
 
 const { Text } = Typography;
 const PurchaseShippingModal = ({ isViewShippingModalOpen, handleViewShippingModalOk, dataID }) => {
-    const [shippingService, setShippingService] = useState(null);
-    const [shippingTracking, setShippingTracking] = useState(null);
+    let content;
+    const { data: purchase, isLoading, isSuccess, isError, error } = useGetPurchaseQuery(dataID);
 
-    const getDetailPurchaseShipping = async (dataID) => {
-        try {
-            const result = await service.getById('purchase', dataID);
-            setShippingService(result.purchaseshipping.service);
-            setShippingTracking(result.purchaseshipping.trackingNumber);
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    useEffect(() => {
-        getDetailPurchaseShipping(dataID);
-    }, []);
-
-    let listData = [
-        {
-            title: 'Service',
-            text: shippingService,
-        },
-        {
-            title: 'Tracking Number',
-            text: shippingTracking,
-        },
-    ];
+    if (isLoading) {
+        content = <Skeleton />;
+    } else if (isSuccess) {
+        content = (
+            <List>
+                <List.Item>
+                    <List.Item.Meta title="Service" key={'Service'} />
+                    <Text>{purchase.purchaseshipping.service}</Text>
+                </List.Item>
+                <List.Item>
+                    <List.Item.Meta title="Tracking Number" key={'Tracking Number'} />
+                    <Text>{purchase.purchaseshipping.trackingNumber}</Text>
+                </List.Item>
+            </List>
+        );
+    } else if (isError) {
+        let errorStatus = `[${error.status}] - ${error.error}`;
+        content = <Result status="warning" title={errorStatus} />;
+    }
 
     return (
         <>
@@ -44,15 +38,7 @@ const PurchaseShippingModal = ({ isViewShippingModalOpen, handleViewShippingModa
                 cancelButtonProps={{ style: { display: 'none' } }}
                 closable={false}
             >
-                <List
-                    dataSource={listData}
-                    renderItem={(item, index) => (
-                        <List.Item>
-                            <List.Item.Meta title={item.title} key={index} />
-                            <Text>{item.text}</Text>
-                        </List.Item>
-                    )}
-                />
+                {content}
             </Modal>
         </>
     );

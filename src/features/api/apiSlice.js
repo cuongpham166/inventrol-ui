@@ -11,6 +11,9 @@ export const apiSlice = createApi({
         getBrands: builder.query({
             query: () => 'brand',
         }),
+        getBrand: builder.query({
+            query: (brandId) => `/brand/${brandId}`,
+        }),
         getCategories: builder.query({
             query: () => 'category',
         }),
@@ -29,11 +32,23 @@ export const apiSlice = createApi({
         getSuppliers: builder.query({
             query: () => 'supplier',
         }),
+        getSupplier: builder.query({
+            query: (supplierId) => `/supplier/${supplierId}`,
+        }),
+        getSupplierPurchases: builder.query({
+            query: (supplierId) => `/supplier/${supplierId}/purchases`,
+        }),
         getPurchases: builder.query({
             query: () => 'purchase',
         }),
+        getPurchase: builder.query({
+            query: (purchaseId) => `/purchase/${purchaseId}`,
+        }),
         getProducts: builder.query({
             query: () => 'product',
+        }),
+        getDiscounts: builder.query({
+            query: () => 'discount',
         }),
     }),
 });
@@ -50,4 +65,10 @@ export const {
     useGetSuppliersQuery,
     useGetPurchasesQuery,
     useGetProductsQuery,
+    useGetDiscountsQuery,
+
+    useGetBrandQuery,
+    useGetPurchaseQuery,
+    useGetSupplierQuery,
+    useGetSupplierPurchasesQuery,
 } = apiSlice;

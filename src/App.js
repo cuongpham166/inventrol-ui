@@ -15,9 +15,9 @@ import { addNotification } from 'features/notification/notificationSlice';
 
 import './App.less';
 
-const socket = io('http://localhost:3004');
+//const socket = io('http://localhost:3004');
 function App() {
-    const [isConnected, setIsConnected] = useState(socket.connected);
+    /*const [isConnected, setIsConnected] = useState(socket.connected);
     const [lastPong, setLastPong] = useState(null);
     const dispatch = useDispatch();
 
@@ -52,7 +52,7 @@ function App() {
 
     const sendPing = () => {
         socket.emit('ping');
-    };
+    };*/
 
     return (
         <ConfigProvider

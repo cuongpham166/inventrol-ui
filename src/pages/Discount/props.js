@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom';
 import { Typography } from 'antd';
 import DateTimeFormatter from 'components/common/CustomFormatter/DateTimeFormatter';
+import CustomDataTableCell from 'components/common/CustomDataTable/CustomDataTableCell';
+
 const { Text } = Typography;
+
 export const discountTableColumns = [
     {
         title: '#',
@@ -13,12 +16,14 @@ export const discountTableColumns = [
         title: 'Discount Percent',
         dataIndex: 'discountPercent',
         key: 'discountPercent',
-        render: (text, record) => <Text>{text}%</Text>,
+        align: 'right',
+        render: (text, record) => <CustomDataTableCell data={record} type="discount" />,
     },
     {
         title: 'Created on',
         dataIndex: 'createdOn',
         key: 'createdOn',
+        align: 'right',
         render: (createdOn) => <DateTimeFormatter data={createdOn} />,
     },
     {

@@ -14,8 +14,9 @@ const CustomDataTableCell = ({ data, type }) => {
     let customCell;
     switch (type) {
         case 'product':
-            if (data.notice == '') {
-                customCell = (
+            customCell = (
+                <Space>
+                    {data.notice != '' ? <NoticePopover data={data.notice} /> : <></>}
                     <Space direction="vertical" size={0}>
                         <Text type="secondary">{data.sku}</Text>
                         <Text strong>
@@ -27,53 +28,39 @@ const CustomDataTableCell = ({ data, type }) => {
                             <Text type="secondary">Last update: {dayjs(data.updatedOn).format('DD/MM/YYYY')}</Text>
                         )}
                     </Space>
-                );
-            } else {
-                customCell = (
+                </Space>
+            );
+            break;
+        case 'discount':
+            customCell = (
+                <Space direction="vertical" size={0}>
                     <Space>
-                        <NoticePopover data={data.notice} />
-                        <Space direction="vertical" size={0}>
-                            <Text type="secondary">{data.sku}</Text>
-                            <Text strong>
-                                {data.name} - {data.attributeValue[0].name}
-                            </Text>
-                            {data.updatedOn == null ? (
-                                <></>
-                            ) : (
-                                <Text type="secondary">Last update: {dayjs(data.updatedOn).format('DD/MM/YYYY')}</Text>
-                            )}
-                        </Space>
+                        <Text strong>{data.discountPercent}%</Text>
+                        {data.notice != '' ? <NoticePopover data={data.notice} /> : <></>}
                     </Space>
-                );
-            }
+
+                    {data.updatedOn == null ? (
+                        <></>
+                    ) : (
+                        <Text type="secondary">Last update: {dayjs(data.updatedOn).format('DD/MM/YYYY')}</Text>
+                    )}
+                </Space>
+            );
             break;
         default:
-            if (data.notice == '') {
-                customCell = (
-                    <Space direction="vertical" size={0}>
+            customCell = (
+                <Space direction="vertical" size={0}>
+                    <Space>
                         <Text strong>{data.name}</Text>
-                        {data.updatedOn == null ? (
-                            <></>
-                        ) : (
-                            <Text type="secondary">Last update: {dayjs(data.updatedOn).format('DD/MM/YYYY')}</Text>
-                        )}
+                        {data.notice != '' ? <NoticePopover data={data.notice} /> : <></>}
                     </Space>
-                );
-            } else {
-                customCell = (
-                    <Space direction="vertical" size={0}>
-                        <Space>
-                            <Text strong>{data.name}</Text>
-                            <NoticePopover data={data.notice} />
-                        </Space>
-                        {data.updatedOn == null ? (
-                            <></>
-                        ) : (
-                            <Text type="secondary">Last update: {dayjs(data.updatedOn).format('DD/MM/YYYY')}</Text>
-                        )}
-                    </Space>
-                );
-            }
+                    {data.updatedOn == null ? (
+                        <></>
+                    ) : (
+                        <Text type="secondary">Last update: {dayjs(data.updatedOn).format('DD/MM/YYYY')}</Text>
+                    )}
+                </Space>
+            );
             break;
     }
 

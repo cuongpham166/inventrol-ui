@@ -1,43 +1,47 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Modal } from 'antd';
-
+import React from 'react';
+import { Modal, Skeleton, Result, Descriptions, Space } from 'antd';
 import CustomModalDataTable from 'components/common/CustomModalDataTable';
-
-import * as service from '../../../api/services';
 import * as brandProps from '../../../pages/Brand/props';
-
+import { useGetBrandQuery } from 'features/api/apiSlice';
+import CustomDataTableCell from 'components/common/CustomDataTable/CustomDataTableCell';
+import DateTimeFormatter from 'components/common/CustomFormatter/DateTimeFormatter';
 const BrandDetailModal = ({ isViewModalOpen, handleViewModalOk, dataID }) => {
-    const [dataSource, setDataSource] = useState(null);
-    const [modalTile, setModalTitle] = useState('');
-    const [tableDataSource, setTableDataSource] = useState([]);
-    const getDetailBrand = async (dataID) => {
-        try {
-            const result = await service.getById('brand', dataID);
-            setDataSource(result);
-            setModalTitle(result.name);
-            setTableDataSource(result.product);
-        } catch (error) {
-            console.error(error);
-        }
-    };
-    useEffect(() => {
-        getDetailBrand(dataID);
-    }, []);
+    let content;
+    const { data: brand, isLoading, isSuccess, isError, error } = useGetBrandQuery(dataID);
+
+    if (isLoading) {
+        content = <Skeleton />;
+    } else if (isSuccess) {
+        content = (
+            <Space direction="vertical" style={{ width: '100%' }} size="large">
+                <Descriptions bordered>
+                    <Descriptions.Item label="Name">
+                        <CustomDataTableCell data={brand} type="" />
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Created on">
+                        <DateTimeFormatter data={brand.createdOn} />
+                    </Descriptions.Item>
+                </Descriptions>
+                <CustomModalDataTable dataSource={brand.product} columns={brandProps.brandProductTableColumns} />
+            </Space>
+        );
+    } else if (isError) {
+        let errorStatus = `[${error.status}] - ${error.error}`;
+        content = <Result status="warning" title={errorStatus} />;
+    }
 
     return (
-        <>
-            <Modal
-                title={modalTile}
-                open={isViewModalOpen}
-                onOk={handleViewModalOk}
-                okText={'Close'}
-                width={1200}
-                cancelButtonProps={{ style: { display: 'none' } }}
-                closable={false}
-            >
-                <CustomModalDataTable dataSource={tableDataSource} columns={brandProps.brandProductTableColumns} />
-            </Modal>
-        </>
+        <Modal
+            title={'Brand Detail'}
+            open={isViewModalOpen}
+            onOk={handleViewModalOk}
+            okText={'Close'}
+            width={1200}
+            cancelButtonProps={{ style: { display: 'none' } }}
+            closable={false}
+        >
+            {content}
+        </Modal>
     );
 };
 

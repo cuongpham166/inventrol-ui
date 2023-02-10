@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Modal, List, Typography, Tag, Space, Table, Divider, Col, Row } from 'antd';
-import * as service from '../../../api/services';
+import React from 'react';
+import { Modal, Typography, Table, Divider, Col, Row, Skeleton, Result } from 'antd';
 import { Link } from 'react-router-dom';
 import { $ } from 'moneysafe';
+
+import { useGetPurchaseQuery } from 'features/api/apiSlice';
+
 const { Text, Title } = Typography;
 const itemTableColumns = [
     {
@@ -41,43 +43,36 @@ const itemTableColumns = [
 ];
 
 const PurchaseItemModal = ({ isViewItemModalOpen, handleViewItemModalOk, dataID }) => {
-    const [tableData, setTableData] = useState();
+    let content;
+    const { data: purchase, isLoading, isSuccess, isError, error } = useGetPurchaseQuery(dataID);
 
-    const [purchasedItems, setPurchasedItems] = useState();
-    const [totalCost, setTotalCost] = useState();
-    const [purchaseNotice, setPurchaseNotice] = useState();
-
-    const getPurchaseItems = async (dataID) => {
-        try {
-            const result = await service.getById('purchase', dataID);
-            console.log('result', result.purchaseItem);
-            setPurchasedItems(result.purchaseItem);
-            setTotalCost(result.total);
-            setPurchaseNotice(result.notice);
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    useEffect(() => {
-        getPurchaseItems(dataID);
-    }, []);
-
-    /*let status = data.purchaseshipping.status;
-    let tagColor = status === 'Completed' ? 'green' : 'yellow';
-    if (status == 'Cancelled' || status == 'Returned') {
-        tagColor = 'red';
-    }*/
+    if (isLoading) {
+        content = <Skeleton />;
+    } else if (isSuccess) {
+        content = (
+            <>
+                <Table dataSource={purchase.purchaseItem} columns={itemTableColumns} rowKey="id" />
+                <Divider />
+                <Row justify="space-between">
+                    <Col span={12}>
+                        <Title level={5}>Purchase Note</Title>
+                        <Text>{purchase.notice}</Text>
+                    </Col>
+                    <Col span={12} style={{ textAlign: 'right' }}>
+                        <Title level={5}>Total Cost: {purchase.total}€</Title>
+                    </Col>
+                </Row>
+            </>
+        );
+    } else if (isError) {
+        let errorStatus = `[${error.status}] - ${error.error}`;
+        content = <Result status="warning" title={errorStatus} />;
+    }
 
     return (
         <>
             <Modal
-                /*title={
-                    <Space>
-                        <Link to={'/purchase/' + data.id}>Purchase #{data.id}</Link>
-                        <Tag color={tagColor}>{status}</Tag>
-                    </Space>
-                }*/
+                title="Purchased Items"
                 open={isViewItemModalOpen}
                 onOk={handleViewItemModalOk}
                 okText={'Close'}
@@ -85,17 +80,7 @@ const PurchaseItemModal = ({ isViewItemModalOpen, handleViewItemModalOk, dataID 
                 closable={false}
                 width={900}
             >
-                <Table dataSource={purchasedItems} columns={itemTableColumns} rowKey="id" />
-                <Divider />
-                <Row justify="space-between">
-                    <Col span={12}>
-                        <Title level={5}>Purchase Note</Title>
-                        <Text>{purchaseNotice}</Text>
-                    </Col>
-                    <Col span={12} style={{ textAlign: 'right' }}>
-                        <Title level={5}>Total Cost: {totalCost}€</Title>
-                    </Col>
-                </Row>
+                {content}
             </Modal>
         </>
     );
