@@ -25,3 +25,24 @@ export const basicColumn = {
         },
     },
 };
+
+export const groupedColumns = {
+    isGroup: true,
+    xField: 'date',
+    yField: 'number',
+    seriesField: 'type',
+    label: {
+        position: 'middle',
+        layout: [
+            {
+                type: 'interval-adjust-position',
+            },
+            {
+                type: 'interval-hide-overlap',
+            },
+            {
+                type: 'adjust-color',
+            },
+        ],
+    },
+};

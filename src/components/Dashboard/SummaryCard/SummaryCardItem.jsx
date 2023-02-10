@@ -3,7 +3,7 @@ import { Col, Row, Button, Card, Space, Typography, Tag } from 'antd';
 const { Text, Title } = Typography;
 const SummaryCardItem = ({ color, icon, text, number }) => {
     return (
-        <Row gutter={[24, 24]} style={{ marginBottom: '12px' }}>
+        <Row gutter={[24, 24]} className="summarycard_item">
             <Col span={16}>
                 <Space size={12}>
                     <Tag className="dashboard_icon_container--small" color={color}>

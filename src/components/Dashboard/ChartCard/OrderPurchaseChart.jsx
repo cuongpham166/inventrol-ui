@@ -1,10 +1,11 @@
 import React from 'react';
 import { Col, Row, Button, Card, Segmented, Typography } from 'antd';
-import { Line } from '@ant-design/plots';
+import { Line, Column } from '@ant-design/plots';
 import * as lineChartConfig from 'utils/config/charts/line';
+import * as columnChartConfig from 'utils/config/charts/column';
 const { Title } = Typography;
 const heightLineChart = {
-    height: 280,
+    height: 290,
 };
 
 const chartTransactionData = {
@@ -62,7 +63,7 @@ const chartTransactionData = {
     ],
 };
 const OrderPurchaseChart = (props) => {
-    const transactionChartConfig = { ...chartTransactionData, ...lineChartConfig.multiLine, ...heightLineChart };
+    const transactionChartConfig = { ...chartTransactionData, ...columnChartConfig.groupedColumns, ...heightLineChart };
     return (
         <Card
             bordered={false}
@@ -79,7 +80,7 @@ const OrderPurchaseChart = (props) => {
                 </Row>
             }
         >
-            <Line {...transactionChartConfig} />
+            <Column {...transactionChartConfig} />
         </Card>
     );
 };

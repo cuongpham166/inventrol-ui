@@ -77,7 +77,7 @@ const DashboardPage = (props) => {
                     </Col>
                 </Row>
 
-                <Row gutter={[24, 24]} style={{ marginBottom: '24px' }}>
+                {/*<Row gutter={[24, 24]} style={{ marginBottom: '24px' }}>
                     <Col span={14}></Col>
                     <Col span={10}>
                         <Row gutter={[24, 24]} style={{ marginBottom: '24px' }}>
@@ -91,7 +91,7 @@ const DashboardPage = (props) => {
                             </Col>
                         </Row>
                     </Col>
-                </Row>
+                </Row> */}
 
                 <Row gutter={[24, 24]} style={{ marginBottom: '24px' }}>
                     <Col span={8}>
