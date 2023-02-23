@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import {
     Row,
     Col,
@@ -16,6 +16,8 @@ import {
 import { ShoppingCartOutlined, DeleteOutlined } from '@ant-design/icons';
 import { $ } from 'moneysafe';
 import { $$, subtractPercent, addPercent } from 'moneysafe/ledger';
+
+import { PurchaseCartContext } from 'pages/Supplier/NewPurchase';
 
 const _ = require('lodash');
 const { Text, Title } = Typography;
@@ -52,24 +54,25 @@ const PurchaseSummary = (props) => {
     const [paymentType, setPaymentType] = useState();
     const paymentTypeRef = useRef(paymentType);
 
-    const totalCost = props.data.reduce((total, item) => total + item.quantity * item.listingPrice, 0);
+    const { cartData, setCartData } = useContext(PurchaseCartContext);
+
+    const totalCost = cartData.reduce((total, item) => total + item.quantity * item.listingPrice, 0);
     const fixedTotalCost = $(totalCost).toFixed();
 
     const handleChangeQuantity = (value, productId) => {
-        let cartDataCopy = [...props.data];
-        let updatedProductIndex = props.data.findIndex((ele) => ele.id == productId);
-        let updatedProduct = props.data[updatedProductIndex];
+        let cartDataCopy = [...cartData];
+        let updatedProductIndex = cartData.findIndex((ele) => ele.id == productId);
+        let updatedProduct = cartData[updatedProductIndex];
         updatedProduct.quantity = value;
         cartDataCopy[updatedProductIndex] = updatedProduct;
         //handleAllChanges(cartDataCopy);
-        return props.setCartData(cartDataCopy);
+        return setCartData(cartDataCopy);
     };
 
     const handleRemoveProduct = (productId) => {
-        let updatedCart = props.data.filter((element) => element.id != productId);
-        console.log(updatedCart);
+        let updatedCart = cartData.filter((element) => element.id != productId);
         //handleAllChanges(updatedCart);
-        return props.setCartData(updatedCart);
+        return setCartData(updatedCart);
     };
 
     const handleChangePayment = (value) => {
@@ -147,7 +150,7 @@ const PurchaseSummary = (props) => {
     return (
         <>
             <Card title="Purchase Summary" bordered={false} style={{}}>
-                <Table columns={productSummaryTableColumns} dataSource={_.cloneDeep(props.data)} rowKey="id" />
+                <Table columns={productSummaryTableColumns} dataSource={_.cloneDeep(cartData)} rowKey="id" />
                 <Row justify="space-between" align="middle" style={{ marginTop: '30px' }}>
                     <Title level={4} style={{ marginTop: '0' }}>
                         Total Purchase Cost
@@ -188,7 +191,7 @@ const PurchaseSummary = (props) => {
                 </Row>
                 <Button
                     type="primary"
-                    disabled={props.data.length > 0 ? false : true}
+                    disabled={cartData.length > 0 ? false : true}
                     icon={<ShoppingCartOutlined />}
                     onClick={(e) => {
                         //e.stopPropagation();

@@ -1,8 +1,13 @@
 import React from 'react';
-import { Col, Row, Button, Card, Segmented, Typography } from 'antd';
+import { Col, Row, Button, Card, Segmented, Typography, Select, Space, DatePicker } from 'antd';
+
 import { Line, Column } from '@ant-design/plots';
 import * as lineChartConfig from 'utils/config/charts/line';
 import * as columnChartConfig from 'utils/config/charts/column';
+import * as mockupData from '../../../mockup/data';
+import dayjs from 'dayjs';
+import { useState } from 'react';
+const { RangePicker } = DatePicker;
 const { Title } = Typography;
 const heightLineChart = {
     height: 290,
@@ -40,11 +45,7 @@ const chartTransactionData = {
             date: '07.10.2020',
             number: 4,
         },
-        {
-            type: 'Ordered',
-            date: '17.11.2020',
-            number: 3,
-        },
+
         {
             type: 'Ordered',
             date: '20.11.2020',
@@ -62,8 +63,40 @@ const chartTransactionData = {
         },
     ],
 };
+
+const rangePresets = [
+    {
+        label: 'Last 7 Days',
+        value: [dayjs().add(-7, 'd'), dayjs()],
+    },
+    {
+        label: 'Last 14 Days',
+        value: [dayjs().add(-14, 'd'), dayjs()],
+    },
+    {
+        label: 'Last 30 Days',
+        value: [dayjs().add(-30, 'd'), dayjs()],
+    },
+    {
+        label: 'Last 90 Days',
+        value: [dayjs().add(-90, 'd'), dayjs()],
+    },
+];
+
 const OrderPurchaseChart = (props) => {
+    let data = mockupData.getMockupData();
+    //console.log('mockupData', data);
+    const defaultValue = 'week';
+    const [range, setRange] = useState(defaultValue);
+
     const transactionChartConfig = { ...chartTransactionData, ...columnChartConfig.groupedColumns, ...heightLineChart };
+    const onRangeChange = (value) => {
+        console.log(`selected ${value}`);
+    };
+    const handleChange = (value) => {
+        setRange(value);
+        console.log(`selected ${value}`);
+    };
     return (
         <Card
             bordered={false}
@@ -75,7 +108,32 @@ const OrderPurchaseChart = (props) => {
                         </Title>
                     </Col>
                     <Col span={19} style={{ textAlign: 'right' }}>
-                        <Segmented options={['Weekly', 'Monthly', 'Quarterly', 'Yearly']} />
+                        <Space.Compact>
+                            <Select
+                                defaultValue={defaultValue}
+                                style={{ width: 100, textAlign: 'center' }}
+                                onChange={handleChange}
+                                options={[
+                                    {
+                                        value: 'week',
+                                        label: 'Weekly',
+                                    },
+                                    {
+                                        value: 'month',
+                                        label: 'Monthly',
+                                    },
+                                    {
+                                        value: 'quarter',
+                                        label: 'Quarterly',
+                                    },
+                                    {
+                                        value: 'year',
+                                        label: 'Yearly',
+                                    },
+                                ]}
+                            />
+                            <RangePicker picker={range} onChange={onRangeChange} style={{ width: 260 }} />
+                        </Space.Compact>
                     </Col>
                 </Row>
             }

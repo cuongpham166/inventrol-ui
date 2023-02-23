@@ -53,6 +53,9 @@ export const apiSlice = createApi({
         getDashboard: builder.query({
             query: () => 'dashboard',
         }),
+        getPurchaseProductBySupplier: builder.query({
+            query: (supplierId) => `/supplier/${supplierId}/purchase/add`,
+        }),
     }),
 });
 
@@ -75,4 +78,5 @@ export const {
     useGetPurchaseQuery,
     useGetSupplierQuery,
     useGetSupplierPurchasesQuery,
+    useGetPurchaseProductBySupplierQuery,
 } = apiSlice;

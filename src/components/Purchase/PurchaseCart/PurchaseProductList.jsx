@@ -1,33 +1,68 @@
-import React, { useState, useEffect } from 'react';
-import { Table, Card, Tag, Tabs, Typography, Space, Button, Select } from 'antd';
+import React, { useState, useEffect, useMemo, useContext } from 'react';
+import { Table, Card, Tag, Tabs, Typography, Space, Button, Select, Result, Skeleton } from 'antd';
 import { ShoppingCartOutlined, PlusOutlined } from '@ant-design/icons';
 import * as service from '../../../api/services';
 import { $ } from 'moneysafe';
 import ProductNameColumn from '../../Product/ProductNameColumn';
+
+import { useGetPurchaseProductBySupplierQuery } from 'features/api/apiSlice';
+
+import { PurchaseCartContext } from 'pages/Supplier/NewPurchase';
+
 const { Text, Title } = Typography;
 
 const PurchaseProductList = (props) => {
-    const [defaultDatasource, setDefaultDatasource] = useState([]);
-    const [datasource, setDatasource] = useState([]);
-    const [tabItems, setTabItems] = useState([]);
+    let content;
     const supplierId = props.supplierId;
-    const getProductBySupplierId = async (supplierId) => {
-        let result = await service.getAll('supplier/' + supplierId + '/purchase/add');
-        result.sort((a, b) => {
-            return a.id - b.id;
+
+    const [selectedOption, setSelectedOption] = useState('All');
+
+    const { cartData, setCartData } = useContext(PurchaseCartContext);
+
+    const {
+        data: products = [],
+        isLoading,
+        isSuccess,
+        isError,
+        error,
+    } = useGetPurchaseProductBySupplierQuery(supplierId);
+
+    const selectOptionList = useMemo(() => {
+        let productList = products.slice();
+        productList.sort((a, b) => a.subcategory.category.name - b.subcategory.category.name);
+        let itemSet = new Set();
+        itemSet.add('All');
+        productList.map((value, index) => {
+            itemSet.add(value.subcategory.category.name);
         });
-        result.map((ele, index) => {
-            ele.quantity = 0;
+
+        let tempList = [...itemSet];
+        let optionList = [];
+
+        tempList.map((val, idx) => {
+            let ele = { value: val, label: val };
+            optionList.push(ele);
         });
-        let tabItemSet = new Set();
-        tabItemSet.add('All');
-        result.map((value, index) => {
-            tabItemSet.add(value.subcategory.category.name);
-        });
-        setTabItems([...tabItemSet]);
-        setDatasource(result);
-        setDefaultDatasource(result);
-    };
+        return optionList;
+    }, [products]);
+
+    const sortedProducts = useMemo(() => {
+        let productList;
+        let tempList = products.slice();
+        tempList.sort((a, b) => b.id - a.id);
+        tempList = tempList.map((item) => ({
+            ...item,
+            quantity: 0,
+        }));
+
+        if (selectedOption != 'All') {
+            productList = tempList.filter((value) => value.subcategory.category.name === selectedOption);
+        } else {
+            productList = tempList;
+        }
+
+        return productList;
+    }, [products, selectedOption]);
 
     const productListTableColumns = [
         {
@@ -61,62 +96,65 @@ const PurchaseProductList = (props) => {
         },
     ];
 
+    const handleChangeOption = (value) => {
+        setSelectedOption(value);
+    };
+
+    if (isLoading) {
+        content = <Skeleton />;
+    } else if (isSuccess) {
+        content = (
+            <>
+                <Space style={{ marginBottom: '20px' }}>
+                    Category
+                    <Select
+                        defaultValue="All"
+                        style={{ width: 120 }}
+                        options={selectOptionList}
+                        onChange={handleChangeOption}
+                    />
+                </Space>
+
+                <Table columns={productListTableColumns} dataSource={sortedProducts} rowKey="id" />
+            </>
+        );
+    } else if (isError) {
+        let errorStatus = `[${error.status}] - ${error.error}`;
+        content = <Result status="warning" title={errorStatus} />;
+    }
+
     const handleAddProduct = (e, productId) => {
-        let foundProduct = defaultDatasource.find((element) => element.id == productId);
-        console.log(foundProduct);
-        if (props.data.length == 0) {
+        let foundProduct = sortedProducts.find((element) => element.id == productId);
+
+        if (cartData.length == 0) {
             foundProduct.quantity = 1;
-            return props.setCartData((prevState) => [...(prevState || []), foundProduct]);
+            return setCartData((prevState) => [...(prevState || []), foundProduct]);
         } else {
-            let foundProductInCart = props.data.find((ele) => ele.id == productId);
+            let foundProductInCart = cartData.find((ele) => ele.id == productId);
             if (foundProductInCart) {
                 //exist
                 //increase quantity
                 //setCartData
-                let cartDataCopy = [...props.data];
-                let updatedProductIndex = props.data.findIndex((ele) => ele.id == productId);
-                let updatedProduct = props.data[updatedProductIndex];
+                let cartDataCopy = [...cartData];
+                let updatedProductIndex = cartData.findIndex((ele) => ele.id == productId);
+                let updatedProduct = cartData[updatedProductIndex];
                 updatedProduct.quantity += 1;
                 cartDataCopy[updatedProductIndex] = updatedProduct;
-                return props.setCartData(cartDataCopy);
+                return setCartData(cartDataCopy);
             } else {
                 //not exist
                 //set quantity = 1
                 //setCartData
                 foundProduct.quantity = 1;
-                return props.setCartData((prevState) => [...(prevState || []), foundProduct]);
+                return setCartData((prevState) => [...(prevState || []), foundProduct]);
             }
         }
     };
 
-    const onChange = (key) => {
-        if (key == 'All') {
-            setDatasource(defaultDatasource);
-        } else {
-            setDatasource(defaultDatasource);
-            let data = defaultDatasource.filter((value) => value.subcategory.category.name === key);
-            setDatasource(data);
-        }
-    };
-
-    useEffect(() => {
-        getProductBySupplierId(supplierId);
-    }, []);
-
     return (
         <>
             <Card title="Product List" bordered={false} style={{ marginBottom: '24px' }}>
-                <Tabs
-                    onChange={onChange}
-                    type="card"
-                    items={tabItems.map((value, index) => {
-                        return {
-                            label: value,
-                            key: value,
-                            children: <Table columns={productListTableColumns} dataSource={datasource} rowKey="id" />,
-                        };
-                    })}
-                />
+                {content}
             </Card>
         </>
     );
