@@ -51,10 +51,16 @@ const paymentOptions = [
 ];
 
 const PurchaseSummary = (props) => {
-    const [paymentType, setPaymentType] = useState();
-    const paymentTypeRef = useRef(paymentType);
-
-    const { cartData, setCartData } = useContext(PurchaseCartContext);
+    const {
+        cartData,
+        successfulPurchase,
+        paymentType,
+        purchaseNotice,
+        setCartData,
+        setSuccessfulPurchase,
+        setPaymentType,
+        setPurchaseNotice,
+    } = useContext(PurchaseCartContext);
 
     const totalCost = cartData.reduce((total, item) => total + item.quantity * item.listingPrice, 0);
     const fixedTotalCost = $(totalCost).toFixed();
@@ -76,12 +82,11 @@ const PurchaseSummary = (props) => {
     };
 
     const handleChangePayment = (value) => {
-        paymentTypeRef.current = value;
         setPaymentType(value);
     };
 
     const handleChangeNotice = (e) => {
-        console.log('Change:', e.target.value);
+        setPurchaseNotice(e.target.value);
     };
 
     const productSummaryTableColumns = [
@@ -165,7 +170,7 @@ const PurchaseSummary = (props) => {
                         Payment Method
                     </Title>
                     <Select
-                        defaultValue="Cash"
+                        value={paymentType}
                         style={{
                             width: 180,
                         }}
@@ -184,7 +189,7 @@ const PurchaseSummary = (props) => {
                             rows={4}
                             placeholder="Purchase Notice"
                             showCount
-                            defaultValue={''}
+                            value={purchaseNotice}
                             onChange={handleChangeNotice}
                         />
                     </Col>
@@ -195,6 +200,7 @@ const PurchaseSummary = (props) => {
                     icon={<ShoppingCartOutlined />}
                     onClick={(e) => {
                         //e.stopPropagation();
+                        setSuccessfulPurchase(true);
                     }}
                 >
                     Make Purchase
