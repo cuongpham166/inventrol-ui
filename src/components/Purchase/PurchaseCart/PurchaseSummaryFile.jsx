@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
-import { Button, Modal, Space, Input } from 'antd';
+import { Button, Modal, Space, Input, Typography } from 'antd';
 
 import { PurchaseCartContext } from 'pages/Supplier/NewPurchase';
+
+const { Text } = Typography;
 
 const PurchaseSummaryFile = (props) => {
     const {
@@ -23,7 +25,7 @@ const PurchaseSummaryFile = (props) => {
 
     return (
         <Modal
-            title="Basic Modal"
+            title="Export file"
             open={props.open}
             onOk={props.onOk}
             onCancel={props.onCancel}
@@ -34,7 +36,8 @@ const PurchaseSummaryFile = (props) => {
                 </Space>
             }
         >
-            <Input placeholder="Filename" value={filename} onChange={handleChangeFilename} />;
+            <Text>Filename</Text>
+            <Input placeholder="Filename" value={filename} onChange={handleChangeFilename} />
         </Modal>
     );
 };
