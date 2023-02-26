@@ -1,18 +1,30 @@
 import React from 'react';
 
-import POReportMainInfo from './POReportMainInfo';
+import { View } from '@react-pdf/renderer';
+
+import poreportMainStyles from './style';
+
+import POReportSupplierInfo from './POReportSupplierInfo';
+import POReportCustomerInfo from './POReportCustomerInfo';
 import POReportMainTable from './POReportMainTable';
-import POReportMainSummary from './POReportMainSummary';
-import POReportMainQr from './POReportMainQr';
+import POReportMainNotice from './POReportMainNotice';
+import POReportMainCost from './POReportMainCost';
 
 const POReportMain = (props) => {
     return (
-        <>
-            <POReportMainInfo />
-            <POReportMainTable />
-            <POReportMainSummary />
-            <POReportMainQr />
-        </>
+        <View style={poreportMainStyles.mainSectionContainer}>
+            <View style={poreportMainStyles.infosectionContainer}>
+                <POReportSupplierInfo />
+                <POReportCustomerInfo />
+            </View>
+            <View>
+                <POReportMainTable />
+            </View>
+            <View style={poreportMainStyles.summarysectionContainer}>
+                <POReportMainNotice />
+                <POReportMainCost />
+            </View>
+        </View>
     );
 };
 

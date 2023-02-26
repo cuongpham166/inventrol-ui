@@ -1,14 +1,18 @@
 import React from 'react';
 
+import { View } from '@react-pdf/renderer';
+
 import POReportFooterInfo from './POReportFooterInfo';
 import POReportFooterLogo from './POReportFooterLogo';
 
+import poreportFooterStyles from './style';
+
 const POReportFooter = (props) => {
     return (
-        <div>
+        <View style={poreportFooterStyles.footerContainer}>
             <POReportFooterLogo />
             <POReportFooterInfo />
-        </div>
+        </View>
     );
 };
 

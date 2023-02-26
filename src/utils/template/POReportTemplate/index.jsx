@@ -26,6 +26,11 @@ export const POReportDataContext = createContext();
 const PdfExportDocument = () => (
     <Document>
         <Page style={poreportStyles.body}>
+            <Text
+                style={poreportStyles.pageNumber}
+                render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`}
+                fixed
+            />
             <POReportHeader />
             <POReportMain />
             <POReportFooter />

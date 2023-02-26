@@ -8,10 +8,12 @@ import {
     DeleteOutlined,
     CodeSandboxOutlined,
     CarOutlined,
+    FilePdfOutlined,
 } from '@ant-design/icons';
 
 import PurchaseShippingModal from '../PurchaseModal/PurchaseShippingModal';
 import PurchaseItemModal from '../PurchaseModal/PurchaseItemModal';
+import PurchaseOrderReportModal from '../PurchaseModal/PurchaseOrderReportModal';
 
 const PurchaseActionMenu = ({ id }) => {
     const navigate = useNavigate();
@@ -20,6 +22,7 @@ const PurchaseActionMenu = ({ id }) => {
 
     const [isViewShippingModalOpen, setIsViewShippingModalOpen] = useState(false);
     const [isViewItemModalOpen, setIsViewItemModalOpen] = useState(false);
+    const [isPurchaseOrderReportModalOpen, setIsPurchaseOrderReportModalOpen] = useState(false);
 
     const handleMenuClick = (e) => {
         switch (e.key) {
@@ -34,6 +37,10 @@ const PurchaseActionMenu = ({ id }) => {
             case 'viewItems':
                 setIsClicked(id);
                 setIsViewItemModalOpen(true);
+                break;
+            case 'exportPO':
+                setIsClicked(id);
+                setIsPurchaseOrderReportModalOpen(true);
                 break;
             default:
                 break;
@@ -66,6 +73,11 @@ const PurchaseActionMenu = ({ id }) => {
             key: 'delete',
             icon: <DeleteOutlined />,
         },
+        {
+            label: 'Export PO Report',
+            key: 'exportPO',
+            icon: <FilePdfOutlined />,
+        },
     ];
 
     const menuProps = {
@@ -79,6 +91,10 @@ const PurchaseActionMenu = ({ id }) => {
 
     const handleViewItemModalOk = () => {
         setIsViewItemModalOpen(false);
+    };
+
+    const handlePurchaseOrderReportModalOk = () => {
+        setIsPurchaseOrderReportModalOpen(false);
     };
 
     return (
@@ -96,6 +112,11 @@ const PurchaseActionMenu = ({ id }) => {
                     <PurchaseItemModal
                         isViewItemModalOpen={isViewItemModalOpen}
                         handleViewItemModalOk={handleViewItemModalOk}
+                        dataID={id}
+                    />
+                    <PurchaseOrderReportModal
+                        isPurchaseOrderReportModalOpen={isPurchaseOrderReportModalOpen}
+                        handlePurchaseOrderReportModalOk={handlePurchaseOrderReportModalOk}
                         dataID={id}
                     />
                 </>

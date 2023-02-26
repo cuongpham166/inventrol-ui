@@ -5,6 +5,8 @@ import { PurchaseCartContext } from 'pages/Supplier/NewPurchase';
 
 import POReportTemplate from 'utils/template/POReportTemplate';
 
+import { $ } from 'moneysafe';
+
 const { Text: AntText } = Typography;
 
 const PurchaseSummaryFile = (props) => {
@@ -19,7 +21,7 @@ const PurchaseSummaryFile = (props) => {
         setPurchaseNotice,
     } = useContext(PurchaseCartContext);
 
-    const [filename, setFilename] = useState('exportFile');
+    const [filename, setFilename] = useState('PurchaseOrderReport');
     const [exportData, setExportData] = useState({});
 
     const createExportDataObject = (cartData) => {
@@ -27,11 +29,11 @@ const PurchaseSummaryFile = (props) => {
         cartData.map((value, index) => {
             let cartItem = {
                 code: value.barcode,
-                name: value.name,
+                name: value.name + '-' + value.attributeValue[0].name,
                 quantity: value.quantity,
                 type: value.attributeValue[0].name,
                 unitCost: value.listingPrice,
-                totalCost: value.quantity * value.listingPrice,
+                totalCost: $(value.quantity * value.listingPrice).toFixed(),
                 brand: value.brand.name,
             };
             cartItemList.push(cartItem);
@@ -57,7 +59,9 @@ const PurchaseSummaryFile = (props) => {
             footer={
                 <Space>
                     <POReportTemplate filename={filename} exportData={exportData} />
-                    <Button onClick={props.onCancel}>Close</Button>
+                    <Button onClick={props.onCancel} type="primary" danger>
+                        Close
+                    </Button>
                 </Space>
             }
         >
