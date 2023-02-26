@@ -82,8 +82,8 @@ const getItem = (label, key, icon, children, type) => {
 export const sidebarItems = [
     getItem('Dashboard', 'dashboard', <AppstoreOutlined />),
     getItem('Inventory', 'product', <ShopOutlined />),
-    getItem('Purchase', 'purchase', <ShoppingCartOutlined />),
-    getItem('Order', 'order', <ShoppingCartOutlined />),
+    getItem('Purchase Order', 'purchase', <ShoppingCartOutlined />),
+    getItem('Sales Order', 'order', <ShoppingCartOutlined />),
     getItem('Metadata', 'table', <BorderlessTableOutlined />, [
         getItem('Attribute', 'attribute', <TagOutlined />),
         getItem('Attribute Value', 'attribute-value', <TagsOutlined />),

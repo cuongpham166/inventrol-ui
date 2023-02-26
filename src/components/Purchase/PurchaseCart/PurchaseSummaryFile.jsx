@@ -3,7 +3,9 @@ import { Button, Modal, Space, Input, Typography } from 'antd';
 
 import { PurchaseCartContext } from 'pages/Supplier/NewPurchase';
 
-const { Text } = Typography;
+import POReportTemplate from 'utils/template/POReportTemplate';
+
+const { Text: AntText } = Typography;
 
 const PurchaseSummaryFile = (props) => {
     const {
@@ -18,6 +20,29 @@ const PurchaseSummaryFile = (props) => {
     } = useContext(PurchaseCartContext);
 
     const [filename, setFilename] = useState('exportFile');
+    const [exportData, setExportData] = useState({});
+
+    const createExportDataObject = (cartData) => {
+        let cartItemList = [];
+        cartData.map((value, index) => {
+            let cartItem = {
+                code: value.barcode,
+                name: value.name,
+                quantity: value.quantity,
+                type: value.attributeValue[0].name,
+                unitCost: value.listingPrice,
+                totalCost: value.quantity * value.listingPrice,
+                brand: value.brand.name,
+            };
+            cartItemList.push(cartItem);
+        });
+        let exportDataObj = { items: cartItemList };
+        setExportData(exportDataObj);
+    };
+
+    useEffect(() => {
+        createExportDataObject(cartData);
+    }, []);
 
     const handleChangeFilename = (e) => {
         setFilename(e.target.value);
@@ -31,12 +56,12 @@ const PurchaseSummaryFile = (props) => {
             onCancel={props.onCancel}
             footer={
                 <Space>
-                    <Button type="primary">Export File</Button>
+                    <POReportTemplate filename={filename} exportData={exportData} />
                     <Button onClick={props.onCancel}>Close</Button>
                 </Space>
             }
         >
-            <Text>Filename</Text>
+            <AntText>Filename</AntText>
             <Input placeholder="Filename" value={filename} onChange={handleChangeFilename} />
         </Modal>
     );

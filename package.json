@@ -5,6 +5,7 @@
   "dependencies": {
     "@ant-design/charts": "^1.4.2",
     "@craco/craco": "^6.4.3",
+    "@david.kucsai/react-pdf-table": "^0.4.1",
     "@icon-park/react": "^1.4.2",
     "@react-keycloak/web": "^3.4.0",
     "@react-pdf/renderer": "^3.1.6",

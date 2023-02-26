@@ -20,7 +20,6 @@ const PurchaseSummaryResult = (props) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const showModal = () => {
-        console.log('dfdfd');
         setIsModalOpen(true);
     };
 
