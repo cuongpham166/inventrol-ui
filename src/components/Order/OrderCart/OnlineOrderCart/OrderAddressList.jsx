@@ -18,8 +18,8 @@ import {
     Radio,
     Checkbox,
 } from 'antd';
-import NewOrderAddressModalForm from '../OrderModal/OrderAddressModalForm/NewOrderAddressModalForm';
-import EditOrderAddressModalForm from '../OrderModal/OrderAddressModalForm/EditOrderAddressModalForm';
+import NewOrderAddressModalForm from '../../OrderModal/OrderAddressModalForm/NewOrderAddressModalForm';
+import EditOrderAddressModalForm from '../../OrderModal/OrderAddressModalForm/EditOrderAddressModalForm';
 
 const { Text, Title } = Typography;
 const { TextArea } = Input;

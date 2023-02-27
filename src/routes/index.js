@@ -12,7 +12,16 @@ import { PurchaseDetail, PurchaseList } from 'pages/Purchase';
 
 import { DiscountList } from 'pages/Discount';
 import { CustomerList, CustomerDetail, AddressBook, NewOrder } from 'pages/Customer';
-import { OrderList, OrderDetail, OrderShipping, OrderPayment } from 'pages/Order';
+import {
+    OnlineOrderList,
+    OnlineOrderDetail,
+    OnlineOrderShipping,
+    OnlineOrderPayment,
+    DirectOrderDetail,
+    DirectOrderList,
+    OrderList,
+    NewDirectOrder,
+} from 'pages/Order';
 
 import { SettingList } from 'pages/Setting';
 
@@ -47,9 +56,13 @@ const privateRoutes = [
     { path: '/customer/:id/order/add', component: NewOrder },
 
     { path: '/order', component: OrderList },
-    { path: '/order/shipping', component: OrderShipping },
-    { path: '/order/payment', component: OrderPayment },
-    { path: '/order/:id', component: OrderDetail },
+    { path: '/online-order', component: OnlineOrderList },
+    { path: '/online-order/shipping', component: OnlineOrderDetail },
+    { path: '/online-order/payment', component: OnlineOrderShipping },
+    { path: '/online-order/:id', component: OnlineOrderPayment },
+
+    { path: '/direct-order', component: DirectOrderList },
+    { path: '/direct-order/new', component: NewDirectOrder },
 
     { path: '/setting', component: SettingList },
 

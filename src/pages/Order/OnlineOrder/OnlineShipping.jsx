@@ -3,8 +3,8 @@ import Breadcrumb from 'components/common/Breadcrumb';
 
 import { Col, Row } from 'antd';
 
-const OrderShipping = (props) => {
-    return <div>OrderShipping</div>;
+const OnlineOrderShipping = (props) => {
+    return <div>OnlineOrderShipping</div>;
 };
 
-export default OrderShipping;
+export default OnlineOrderShipping;

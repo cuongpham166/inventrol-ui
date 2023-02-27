@@ -83,7 +83,12 @@ export const sidebarItems = [
     getItem('Dashboard', 'dashboard', <AppstoreOutlined />),
     getItem('Inventory', 'product', <ShopOutlined />),
     getItem('Purchase Order', 'purchase', <ShoppingCartOutlined />),
-    getItem('Sales Order', 'order', <ShoppingCartOutlined />),
+    getItem('Sales Order', 'order', <ShoppingCartOutlined />, [
+        getItem('Sales Overview', 'order', <TableOutlined />),
+        getItem('Direct Sales', 'direct-order', <ShoppingCartOutlined />),
+        getItem('Online Sales', 'online-order', <ShoppingCartOutlined />),
+    ]),
+
     getItem('Metadata', 'table', <BorderlessTableOutlined />, [
         getItem('Attribute', 'attribute', <TagOutlined />),
         getItem('Attribute Value', 'attribute-value', <TagsOutlined />),
@@ -92,7 +97,8 @@ export const sidebarItems = [
         getItem('Discount', 'discount', <TagOutlined />),
         getItem('Subcategory', 'subcategory', <TagsOutlined />),
     ]),
+
     getItem('Suppliers', 'supplier', <SolutionOutlined />),
-    getItem('Customers', 'customer', <UserOutlined />),
+    //getItem('Customers', 'customer', <UserOutlined />),
     getItem('Settings', 'setting', <SettingOutlined />),
 ];
