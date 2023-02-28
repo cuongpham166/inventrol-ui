@@ -98,46 +98,6 @@ const PurchaseSummary = (props) => {
                 <Space direction="vertical" size={0}>
                     <Text strong>{record.name}</Text>
                     <Text>{record.barcode}</Text>
-                </Space>
-            ),
-        },
-        {
-            title: 'Qty',
-            dataIndex: 'quantity',
-            key: 'quantity',
-            align: 'center',
-        },
-        {
-            title: 'Unit Cost',
-            dataIndex: 'listingPrice',
-            key: 'listingPrice',
-            align: 'center',
-            render: (listingPrice) => <Text>{$(listingPrice).toFixed()} </Text>,
-        },
-        {
-            title: 'Total',
-            dataIndex: 'index',
-            key: 'index',
-            align: 'center',
-            render: (text, record, index) => <Text>{$(record.listingPrice * record.quantity).toFixed()} </Text>,
-        },
-        {
-            title: 'Actions',
-            dataIndex: 'name',
-            key: 'action',
-            width: '50px',
-            align: 'left',
-            render: (text, record) => (
-                <Space direction="vertical">
-                    <InputNumber
-                        min={1}
-                        max={100}
-                        defaultValue={1}
-                        value={record.quantity}
-                        onChange={(e) => {
-                            handleChangeQuantity(e, record.id);
-                        }}
-                    />
                     <Popconfirm
                         title="Are you sure to remove this product ?"
                         onConfirm={() => {
@@ -150,6 +110,36 @@ const PurchaseSummary = (props) => {
                     </Popconfirm>
                 </Space>
             ),
+        },
+        {
+            title: 'Qty',
+            dataIndex: 'quantity',
+            key: 'quantity',
+            render: (text, record) => (
+                <InputNumber
+                    min={1}
+                    max={100}
+                    defaultValue={1}
+                    value={record.quantity}
+                    onChange={(e) => {
+                        handleChangeQuantity(e, record.id);
+                    }}
+                />
+            ),
+        },
+        {
+            title: 'Unit Cost',
+            dataIndex: 'listingPrice',
+            key: 'listingPrice',
+            align: 'right',
+            render: (listingPrice) => <Text>{$(listingPrice).toFixed()} </Text>,
+        },
+        {
+            title: 'Total',
+            dataIndex: 'index',
+            key: 'index',
+            align: 'right',
+            render: (text, record, index) => <Text>{$(record.listingPrice * record.quantity).toFixed()} </Text>,
         },
     ];
     return (

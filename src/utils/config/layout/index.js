@@ -14,6 +14,7 @@ import {
     CreditCardOutlined,
     CarOutlined,
     SettingOutlined,
+    ScanOutlined,
 } from '@ant-design/icons';
 
 const { Option } = Select;
@@ -81,9 +82,10 @@ const getItem = (label, key, icon, children, type) => {
 
 export const sidebarItems = [
     getItem('Dashboard', 'dashboard', <AppstoreOutlined />),
+    getItem('Point of sale', 'pos', <ScanOutlined />),
     getItem('Inventory', 'product', <ShopOutlined />),
     getItem('Purchase Order', 'purchase', <ShoppingCartOutlined />),
-    getItem('Sales Order', 'order', <ShoppingCartOutlined />, [
+    getItem('Sales Order', 'orders', <ShoppingCartOutlined />, [
         getItem('Sales Overview', 'order', <TableOutlined />),
         getItem('Direct Sales', 'direct-order', <ShoppingCartOutlined />),
         getItem('Online Sales', 'online-order', <ShoppingCartOutlined />),

@@ -62,7 +62,7 @@ const privateRoutes = [
     { path: '/online-order/:id', component: OnlineOrderPayment },
 
     { path: '/direct-order', component: DirectOrderList },
-    { path: '/direct-order/new', component: NewDirectOrder },
+    { path: '/pos', component: NewDirectOrder },
 
     { path: '/setting', component: SettingList },
 
