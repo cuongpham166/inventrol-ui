@@ -152,8 +152,8 @@ const DirectOrderSummary = (props) => {
         },
     ];
 
-    const myOnClick = () => {
-        console.log('Click');
+    const myOnClick = (value) => {
+        console.log('Click', value);
     };
 
     return (
@@ -208,35 +208,42 @@ const DirectOrderSummary = (props) => {
             </Card>
             <Card bordered={false} style={{}}>
                 <Row style={{ marginBottom: '15px' }}>
-                    <Space size="middle">
-                        <Card
-                            hoverable
-                            style={{ width: 110 }}
-                            bodyStyle={{ alignItems: 'center', display: 'flex', flexDirection: 'column' }}
-                            onClick={() => myOnClick()}
-                        >
-                            <DollarOutlined style={{ fontSize: '30px' }} />
-                            <Title level={5} style={{ marginTop: '10px', marginBottom: '0' }}>
-                                Cash
-                            </Title>
-                        </Card>
+                    <Col span={12}>
+                        <Title level={5} style={{ marginBottom: '15px', marginTop: '0' }}>
+                            Payment Method
+                        </Title>
+                        <Space size="middle">
+                            <Card
+                                hoverable
+                                style={{ width: 110 }}
+                                bodyStyle={{ alignItems: 'center', display: 'flex', flexDirection: 'column' }}
+                                onClick={() => myOnClick('cash')}
+                            >
+                                <DollarOutlined style={{ fontSize: '30px' }} />
+                                <Title level={5} style={{ marginTop: '10px', marginBottom: '0' }}>
+                                    Cash
+                                </Title>
+                            </Card>
 
-                        <Card
-                            hoverable
-                            style={{ width: 110 }}
-                            bodyStyle={{ alignItems: 'center', display: 'flex', flexDirection: 'column' }}
-                        >
-                            <CreditCardOutlined style={{ fontSize: '30px' }} />
-                            <Title level={5} style={{ marginTop: '10px', marginBottom: '0' }}>
-                                Card
-                            </Title>
-                        </Card>
-                    </Space>
+                            <Card
+                                hoverable
+                                style={{ width: 110 }}
+                                bodyStyle={{ alignItems: 'center', display: 'flex', flexDirection: 'column' }}
+                                onClick={() => myOnClick('card')}
+                            >
+                                <CreditCardOutlined style={{ fontSize: '30px' }} />
+                                <Title level={5} style={{ marginTop: '10px', marginBottom: '0' }}>
+                                    Card
+                                </Title>
+                            </Card>
+                        </Space>
+                    </Col>
                 </Row>
                 <Row>
                     <Button
                         type="primary"
                         disabled={directOrderCartData.length > 0 ? false : true}
+                        size="large"
                         icon={<ShoppingCartOutlined />}
                         onClick={(e) => {
                             //e.stopPropagation();
