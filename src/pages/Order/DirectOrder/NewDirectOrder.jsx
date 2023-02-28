@@ -16,10 +16,10 @@ const NewDirectOrder = (props) => {
             >
                 <Row style={{}} justify="center" gutter={[24, 24]}>
                     <>
-                        <Col span={13} style={{}}>
+                        <Col span={14} style={{}}>
                             <DirectOrderProductList />
                         </Col>
-                        <Col span={11}>
+                        <Col span={10}>
                             <DirectOrderSummary />
                         </Col>
                     </>
